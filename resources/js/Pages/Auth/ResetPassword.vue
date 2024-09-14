@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import BaseLayout from '@/Layouts/Base.vue'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Loader2 } from 'lucide-vue-next'
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
     email: string;
@@ -28,61 +30,59 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Reset Password" />
+    <BaseLayout>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <Head title="Criar nova senha" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+        <div class="min-h-screen flex flex-col justify-center items-center">
 
-                <InputError class="mt-2" :message="form.errors.email" />
+            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                {{ status }}
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+            <Card class="mx-auto w-1/3 max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-2xl">
+                        Criar nova senha
+                    </CardTitle>
+                    <CardDescription>
+                        Digite sua nova senha abaixo
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form @submit.prevent="submit">
+                        <div class="grid gap-4">
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="email">E-mail</Label>
+                                <Input v-model="form.email" id="email" type="email" placeholder="usuario@dominio.com" tabindex="1"/>
+                                <InputError class="mt-2" :message="form.errors.email" />
+                            </div>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="password">Senha</Label>
+                                <Input v-model="form.password" id="password" type="password" tabindex="2"/>
+                                <InputError class="mt-2" :message="form.errors.password"/>
+                            </div>
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="password_confirmation">Confirmação de senha</Label>
+                                <Input v-model="form.password_confirmation" id="password_confirmation" type="password" tabindex="3"/>
+                                <InputError class="mt-2" :message="form.errors.password_confirmation"/>
+                            </div>
 
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+                            <Button :disabled="form.processing" type="submit" class="w-full" tabindex="4">
+                                <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
+                                Confirmar
+                            </Button>
+                        </div>
+                    </form>
+                    <div class="mt-4 text-center text-sm">
+                        <Link :href="route('register')" class="underline" tabindex="5">
+                            Voltar ao início
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    </BaseLayout>
 </template>

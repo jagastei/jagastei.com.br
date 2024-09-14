@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import BaseLayout from '@/Layouts/Base.vue'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Loader2 } from 'lucide-vue-next'
+import InputError from '@/Components/InputError.vue';
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+    name: 'Test user',
+    email: 'test@example.com',
+    password: 'password',
+    password_confirmation: 'password',
 });
 
 const submit = () => {
@@ -23,83 +25,67 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Register" />
+    <BaseLayout>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+        <Head title="Cadastrar" />
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+        <div class="min-h-screen flex flex-col justify-center items-center">
 
-                <InputError class="mt-2" :message="form.errors.name" />
+            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+                {{ status }}
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+            <Card class="mx-auto max-w-sm">
+                <CardHeader>
+                    <CardTitle class="text-2xl">
+                        Cadastrar
+                    </CardTitle>
+                    <CardDescription>
+                        Preencha o formulário abaixo para criar sua conta
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form @submit.prevent="submit">
+                        <div class="grid gap-4">
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="name">Nome</Label>
+                                <Input v-model="form.name" id="name" type="text" placeholder="João" tabindex="1"/>
+                                <InputError class="mt-2" :message="form.errors.name" />
+                            </div>
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="email">E-mail</Label>
+                                <Input v-model="form.email" id="email" type="email" placeholder="usuario@dominio.com" tabindex="2"/>
+                                <InputError class="mt-2" :message="form.errors.email" />
+                            </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="password">Senha</Label>
+                                <Input v-model="form.password" id="password" type="password" tabindex="3"/>
+                                <InputError class="mt-2" :message="form.errors.password"/>
+                            </div>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+                            <div class="grid gap-2" v-auto-animate>
+                                <Label for="password_confirmation">Confirmação de senha</Label>
+                                <Input v-model="form.password_confirmation" id="password_confirmation" type="password" tabindex="4"/>
+                                <InputError class="mt-2" :message="form.errors.password_confirmation"/>
+                            </div>
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+                            <Button :disabled="form.processing" type="submit" class="w-full" tabindex="5">
+                                <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
+                                Cadastrar
+                            </Button>
+                        </div>
+                    </form>
+                    <div class="mt-4 text-center text-sm">
+                        Já tem uma conta?
+                        <Link :href="route('login')" class="underline" tabindex="6">
+                            Entrar
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    </BaseLayout>
 </template>
