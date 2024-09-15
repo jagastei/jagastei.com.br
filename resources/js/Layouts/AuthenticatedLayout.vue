@@ -1,152 +1,154 @@
 <script setup lang="ts">
+import UserNav from '@/Components/UserNav.vue'
+import { Button } from '@/Components/ui/button'
+import Nav, { type LinkProp } from '@/Components/Nav.vue'
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { cn } from '@/utils'
+import { TooltipProvider } from '@/Components/ui/tooltip'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/Components/ui/resizable'
+import { Separator } from '@/Components/ui/separator'
+import ThemeToggle from '@/Components/ThemeToggle.vue'
+import { ArrowRightFromLineIcon, BellIcon, CircleHelpIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
 
-const showingNavigationDropdown = ref(false);
+const isCollapsed = ref(false)
+
+const onCollapse = () => {
+    isCollapsed.value = true
+}
+
+const onExpand = () => {
+    isCollapsed.value = false
+}
+
+const links: LinkProp[] = [
+    {
+        title: 'Inbox',
+        label: '128',
+        icon: 'lucide:inbox',
+        variant: 'default',
+    },
+    {
+        title: 'Drafts',
+        label: '9',
+        icon: 'lucide:file',
+        variant: 'ghost',
+    },
+    {
+        title: 'Sent',
+        label: '',
+        icon: 'lucide:send',
+        variant: 'ghost',
+    },
+    {
+        title: 'Junk',
+        label: '23',
+        icon: 'lucide:archive',
+        variant: 'ghost',
+    },
+    {
+        title: 'Trash',
+        label: '',
+        icon: 'lucide:trash',
+        variant: 'ghost',
+    },
+    {
+        title: 'Archive',
+        label: '',
+        icon: 'lucide:archive',
+        variant: 'ghost',
+    },
+]
+
+const links2: LinkProp[] = [
+    {
+        title: 'Social',
+        label: '972',
+        icon: 'lucide:user-2',
+        variant: 'ghost',
+    },
+    {
+        title: 'Updates',
+        label: '342',
+        icon: 'lucide:alert-circle',
+        variant: 'ghost',
+    },
+    {
+        title: 'Forums',
+        label: '128',
+        icon: 'lucide:message-square',
+        variant: 'ghost',
+    },
+    {
+        title: 'Shopping',
+        label: '8',
+        icon: 'lucide:shopping-cart',
+        variant: 'ghost',
+    },
+    {
+        title: 'Promotions',
+        label: '21',
+        icon: 'lucide:archive',
+        variant: 'ghost',
+    },
+]
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ms-6">
-                            <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
-                                <Dropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg
-                                                    class="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
-                                        </DropdownLink>
-                                    </template>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex': !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex': showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+        <div class="hidden flex-col md:flex">
+            <div class="bg-white z-50 flex h-16 items-center pr-8  border-b sticky top-0">
+                    <div :class="[
+                        isCollapsed ? 'pl-2.5' : 'pl-5'
+                    ]">
+                        <img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12"/>
+                        <img src="@/../images/green-diamond-white.svg" class="hidden dark:block h-12 w-12"/>
                     </div>
-                </div>
+                    
+                    <div class="ml-auto flex items-center space-x-2">
+                        <Button variant="outline" size="sm" class="h-8 space-x-2">
+                            <SearchIcon class="h-4 w-4"/>
+                        </Button>
 
-                <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-                    class="sm:hidden"
-                >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
+                        <Button variant="outline" size="sm" class="h-8 space-x-2">
+                            <BellIcon class="h-4 w-4"/>
+                        </Button>
+
+                        <Button variant="outline" size="sm" class="h-8 space-x-2">
+                            <SparklesIcon class="h-4 w-4"/>
+                        </Button>
+
+                        <ThemeToggle />
+
+                        <Button variant="outline" size="sm" class="h-8 space-x-2">
+                            <CircleHelpIcon class="h-4 w-4"/>
+                            <span>Suporte</span>
+                        </Button>
+
+                        <UserNav />
                     </div>
+            </div>
 
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ $page.props.auth.user.name }}
+            <div class="md:flex flex-col h-[calc(100vh-64px)]">
+                <TooltipProvider :delay-duration="0">
+                    <ResizablePanelGroup auto-save-id="resize-panel-group-1" id="resize-panel-group-1" direction="horizontal">
+
+                        <ResizablePanel id="resize-panel-1" :default-size="5" collapsible :collapsed-size="5" :min-size="15" :max-size="15" :class="cn(isCollapsed && 'min-w-[64px] max-w-[64px] transition-all duration-300 ease-in-out')" @expand="onExpand" @collapse="onCollapse">
+                            <Nav :is-collapsed="isCollapsed" :links="links" />
+                            <Separator />
+                            <Nav :is-collapsed="isCollapsed" :links="links2" />
+                        </ResizablePanel>
+
+                        <ResizableHandle id="resize-handle-1" with-handle />
+
+                        <ResizablePanel id="resize-panel-2">
+                            <div class="p-8 h-full overflow-y-scroll">
+                                <slot />
                             </div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+                        </ResizablePanel>
+                        
+                    </ResizablePanelGroup>
+                </TooltipProvider>
+            </div>
         </div>
     </div>
 </template>
