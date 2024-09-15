@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import BaseLayout from '@/Layouts/Base.vue'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/Components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card'
+import { Input } from '@/Components/ui/input'
+import { Label } from '@/Components/ui/label'
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next'
 import InputError from '@/Components/InputError.vue';
@@ -35,10 +35,6 @@ const submit = () => {
         <Head title="Criar nova senha" />
 
         <div class="min-h-screen flex flex-col justify-center items-center">
-
-            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-                {{ status }}
-            </div>
 
             <Card class="mx-auto w-1/3 max-w-sm">
                 <CardHeader>

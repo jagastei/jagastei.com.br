@@ -28,6 +28,8 @@ import {
     <div>
         <Head title="Dashboard" />
 
+        <a href="/subscription-checkout">Subscribe</a>
+
         <div class="md:hidden">
         </div>
 
