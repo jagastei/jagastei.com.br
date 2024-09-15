@@ -4,11 +4,12 @@ import ThemeToggle from '@/Components/ThemeToggle.vue'
 
 <template>
    <div class="relative">
-        <div class="absolute top-5 right-5">
+        <!-- <div class="absolute bottom-5 right-5">
             <ThemeToggle />
+        </div> -->
+
+        <div class="">
+            <slot />
         </div>
-
-        <slot />
-
    </div>
 </template>

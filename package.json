@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@formkit/auto-animate": "^0.8.2",
+        "@tanstack/vue-table": "^8.20.5",
         "@unovis/ts": "^1.4.3-beta.0",
         "@unovis/vue": "^1.4.3-beta.0",
         "@vee-validate/zod": "^4.13.2",
