@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLayout from '@/Layouts/Base.vue'
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Button } from '@/Components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
@@ -28,7 +28,7 @@ const submit = () => {
 </script>
 
 <template>
-    <BaseLayout>
+    <GuestLayout>
 
         <Head title="Entrar" />
 
@@ -82,5 +82,5 @@ const submit = () => {
                 </CardContent>
             </Card>
         </div>
-    </BaseLayout>
+    </GuestLayout>
 </template>

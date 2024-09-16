@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserStartedTrial;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -43,6 +44,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        
+        $event = UserStartedTrial::fire();
+        $event->user_id;
 
         Auth::login($user);
 

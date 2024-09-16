@@ -7,15 +7,17 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from '@/Components/ui/tooltip'
+import { Link } from '@inertiajs/vue3';
 
 export interface LinkProp {
     title: string
     label?: string
     icon: string
-    variant: 'default' | 'ghost'
+    route?: string,
+    active: boolean,
 }
 
-interface NavProps {
+export interface NavProps {
     isCollapsed: boolean
     links: LinkProp[]
 }
@@ -24,20 +26,20 @@ defineProps<NavProps>()
 </script>
 
 <template>
-    <div :data-collapsed="isCollapsed" class="group flex flex-col gap-4 py-6 data-[collapsed=true]:py-6">
+    <div :data-collapsed="isCollapsed" class="group flex flex-col py-6">
         <nav class="grid gap-2 px-6 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
             <template v-for="(link, index) of links">
                 <Tooltip v-if="isCollapsed" :key="`1-${index}`" :delay-duration="0">
                     <TooltipTrigger as-child>
-                        <a href="#" :class="cn(
-                            buttonVariants({ variant: link.variant, size: 'icon' }),
+                        <Link :href="link.route ? link.route : '#'" :class="cn(
+                            buttonVariants({ variant: link.active ? 'default' : 'ghost', size: 'icon' }),
                             'h-10 w-10',
-                            link.variant === 'default'
+                            link.active
                             && 'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
                         )">
                             <Icon :icon="link.icon" class="size-4" />
                             <span class="sr-only">{{ link.title }}</span>
-                        </a>
+                        </Link>
                     </TooltipTrigger>
                     <TooltipContent side="right" class="ml-1 flex items-center gap-4">
                         {{ link.title }}
@@ -47,9 +49,9 @@ defineProps<NavProps>()
                     </TooltipContent>
                 </Tooltip>
 
-                <a v-else :key="`2-${index}`" href="#" :class="cn(
-                    buttonVariants({ variant: link.variant, size: 'sm' }),
-                    link.variant === 'default'
+                <Link v-else :key="`2-${index}`" :href="link.route ? link.route : '#'" :class="cn(
+                    buttonVariants({ variant: link.active ? 'default' : 'ghost', size: 'sm' }),
+                    link.active
                     && 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
                     'justify-start',
                 )">
@@ -57,12 +59,12 @@ defineProps<NavProps>()
                     {{ link.title }}
                     <span v-if="link.label" :class="cn(
                         'ml-auto',
-                        link.variant === 'default'
+                        link.active
                         && 'text-background dark:text-white',
                     )">
                         {{ link.label }}
                     </span>
-                </a>
+                </Link>
             </template>
         </nav>
     </div>

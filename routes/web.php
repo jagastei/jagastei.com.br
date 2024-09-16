@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Subscribed;
 use Illuminate\Foundation\Application;
@@ -17,21 +19,18 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/table', function () {
-    return Inertia::render('Table');
-})->middleware(['auth', 'verified'])->name('table');
-
 Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/table', [DashboardController::class, 'table'])->name('dashboard');
+
+    Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
+    Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::middleware('auth')->group(function () {
     Route::get('/billing', function (Request $request) {
         return $request->user()->redirectToBillingPortal(route('dashboard'));
     })->name('billing');
