@@ -2,13 +2,10 @@
 import UserNav from '@/Components/UserNav.vue'
 import { Button } from '@/Components/ui/button'
 import Nav, { type LinkProp } from '@/Components/Nav.vue'
-import { ref } from 'vue';
-import { cn } from '@/utils'
 import { TooltipProvider } from '@/Components/ui/tooltip'
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/Components/ui/resizable'
 import { Separator } from '@/Components/ui/separator'
 import ThemeToggle from '@/Components/ThemeToggle.vue'
-import { ArrowRightFromLineIcon, BellIcon, CircleHelpIcon, MenuIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
+import { BellIcon, CircleHelpIcon, GripVerticalIcon, MenuIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card'
 import {
     Sheet,
@@ -19,8 +16,14 @@ import {
     SheetTrigger,
 } from '@/Components/ui/sheet'
 import NavMobile from '@/Components/NavMobile.vue';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/Components/ui/collapsible'
+import { useStorage } from '@vueuse/core'
 
-const isCollapsed = ref(false)
+const isCollapsed = useStorage('is-collapsed', false)
 
 const onCollapse = () => {
     isCollapsed.value = true
@@ -152,14 +155,9 @@ const links2: LinkProp[] = [
 
             <div class="md:flex flex-col h-[calc(100vh-64px)]">
                 <TooltipProvider :delay-duration="0">
-                    <ResizablePanelGroup auto-save-id="resize-panel-group-1" id="resize-panel-group-1"
-                        direction="horizontal">
 
-                        <!-- min-w-[240px] max-w-[240px] -->
-                        <ResizablePanel id="resize-panel-1" :default-size="5" collapsible :collapsed-size="5"
-                            :min-size="15" :max-size="15"
-                            :class="cn(isCollapsed ? 'min-w-[64px] max-w-[64px] transition-all duration-300 ease-in-out' : '', 'hidden md:flex flex-col')"
-                            @expand="onExpand" @collapse="onCollapse">
+                    <div class="flex h-full">
+                        <div :class="['relative hidden md:flex flex-col border-r transition-all duration-300 ease-in-out', isCollapsed ? 'min-w-[64px] max-w-[64px]' : 'min-w-[280px] max-w-[280px]']">
 
                             <Nav :is-collapsed="isCollapsed" :links="links" />
                             <Separator />
@@ -181,17 +179,19 @@ const links2: LinkProp[] = [
                                     </CardContent>
                                 </Card>
                             </div> -->
-                        </ResizablePanel>
 
-                        <ResizableHandle id="resize-handle-1" with-handle class="hidden md:flex"/>
+                            <button @click="isCollapsed = !isCollapsed" class="absolute right-0 top-[calc(50%-64px)] -translate-y-1/2 translate-x-1/2">
+                                <GripVerticalIcon class="h-2.5 w-2.5" />
+                            </button>
+                        </div>
 
-                        <ResizablePanel id="resize-panel-2">
+                        <div class="w-full">
                             <div class="p-4 h-full overflow-y-scroll">
                                 <slot />
                             </div>
-                        </ResizablePanel>
+                        </div>
 
-                    </ResizablePanelGroup>
+                    </div>
                 </TooltipProvider>
             </div>
         </div>
