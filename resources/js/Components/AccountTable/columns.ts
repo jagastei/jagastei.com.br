@@ -1,23 +1,27 @@
 import type { ColumnDef } from "@tanstack/vue-table";
 import { h } from "vue";
+
 import DataTableColumnHeader from "./DataTableColumnHeader.vue";
 import DataTableRowActions from "./DataTableRowActions.vue";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { Badge } from "@/Components/ui/badge";
 import { z } from "zod";
+
 import { Icon } from '@iconify/vue';
 
-export const taskSchema = z.object({
+// We're keeping a simple non-relational schema here.
+// IRL, you will have a schema for your data models.
+export const accountSchema = z.object({
     id: z.string(),
-    title: z.string(),
-    status: z.string(),
-    label: z.string(),
-    priority: z.string(),
+    user_id: z.number(),
+    bank_id: z.number().nullable(),
+    name: z.string(),
+    balance: z.number(),
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export type Account = z.infer<typeof accountSchema>;
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Account>[] = [
     {
         id: "select",
         header: ({ table }) =>
@@ -54,6 +58,9 @@ export const columns: ColumnDef<Task>[] = [
             h(DataTableColumnHeader, { column, title: "Title" }),
 
         cell: ({ row }) => {
+
+            return h('div', {}, 'pinto');
+
             const label = labels.find(
                 (label) => label.value === row.original.label
             );
@@ -142,37 +149,27 @@ export const statuses = [
     {
         value: "backlog",
         label: "Backlog",
-        icon: h(Icon, {
-            icon: 'radix-icons:question-mark-circled'
-        }),
+        icon: h(Icon), // QuestionMarkCircledIcon
     },
     {
         value: "todo",
         label: "Todo",
-        icon: h(Icon, {
-            icon: 'radix-icons:circle'
-        }),
+        icon: h(Icon), // CircleIcon
     },
     {
         value: "in progress",
         label: "In Progress",
-        icon: h(Icon, {
-            icon: 'radix-icons:stopwatch'
-        }),
+        icon: h(Icon), // StopwatchIcon
     },
     {
         value: "done",
         label: "Done",
-        icon: h(Icon, {
-            icon: 'radix-icons:check-circled'
-        }),
+        icon: h(Icon), // CheckCircledIcon
     },
     {
         value: "canceled",
         label: "Canceled",
-        icon: h(Icon, {
-            icon: 'radix-icons:cross-circled'
-        }),
+        icon: h(Icon), // CrossCircledIcon
     },
 ];
 
@@ -180,22 +177,16 @@ export const priorities = [
     {
         value: "low",
         label: "Low",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-down'
-        }),
+        icon: h(Icon), // ArrowDownIcon
     },
     {
         value: "medium",
         label: "Medium",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-right'
-        }),
+        icon: h(Icon), // ArrowRightIcon
     },
     {
         value: "high",
         label: "High",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-up'
-        }),
+        icon: h(Icon), // ArrowUpIcon
     },
 ];

@@ -9,12 +9,15 @@ use Thunk\Verbs\Event;
 
 class AccountCreated extends Event
 {
-    #[StateId(AccountState::class)]
-    public ?int $account_id = null;
-
-    public int $user_id;
-
-    public int $initial_deposit = 0;
+    public function __construct(
+        #[StateId(AccountState::class)]
+        public ?int $account_id = null,
+        public int $user_id,
+        public ?int $bank_id,
+        public string $name,
+        public int $initial_balance = 0,
+    )
+    { }
 
     public function authorize()
     {
@@ -28,7 +31,7 @@ class AccountCreated extends Event
 
     public function apply(AccountState $account)
     {
-        $account->balance = $this->initial_deposit;
+        $account->balance = $this->initial_balance;
     }
 
     public function fired()
@@ -40,7 +43,9 @@ class AccountCreated extends Event
     {
         Account::create([
             'user_id' => $this->user_id,
-            'balance' => $this->initial_deposit,
+            'bank_id' => $this->bank_id,
+            'name' => $this->name,
+            'balance' => $this->initial_balance,
         ]);
 
         // Verbs::unlessReplaying(fn () => Mail::send(new WelcomeEmail($this->user_id)));

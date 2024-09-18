@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLayout from '@/Layouts/Base.vue'
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Button } from '@/Components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
@@ -23,7 +23,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <BaseLayout>
+    <GuestLayout>
 
         <Head title="Verificar e-mail" />
 
@@ -60,5 +60,5 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 </CardContent>
             </Card>
         </div>
-    </BaseLayout>
+    </GuestLayout>
 </template>

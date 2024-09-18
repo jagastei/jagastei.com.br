@@ -1,28 +1,41 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import Overview from '@/Components/Overview.vue'
-import DateRangePicker from '@/Components/DateRangePicker.vue'
-import RecentSales from '@/Components/RecentSales.vue'
-import { Button } from '@/Components/ui/button'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/Components/ui/card'
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from '@/Components/ui/tabs'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import { Button } from '@/Components/ui/button'
+import { ref } from 'vue'
+import CreateDialog from './CreateDialog.vue'
+import DataTable from '@/Components/AccountTable/DataTable.vue'
+
+export type Bank = {
+    id: number,
+    code: string,
+    short_name: string,
+    long_name: string,
+}
+
+type Account = {
+    id: number,
+    user_id: number,
+    bank_id: number,
+    name: string,
+    balance: number,
+    created_at: string,
+    updated_at: string,
+}
+
+defineProps<{
+    banks: Bank[],
+    accounts: Account[],
+}>()
+
+const createAccountDialogOpen = ref(false)
 </script>
 
 <template>
-
     <Head title="Contas" />
+
+    <CreateDialog :banks="banks" :open="createAccountDialogOpen" @close="createAccountDialogOpen = false"/>
+
     <AuthenticatedLayout>
         <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 h-full">
             <div class="flex items-center justify-between">
@@ -34,12 +47,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                         Todas as suas contas ficam aqui.
                     </p> -->
                 </div>
-                <!-- <div class="flex items-center space-x-2">
-                    <Button>Adicionar conta</Button>
-                </div> -->
+                <div class="flex items-center space-x-2">
+                    <Button @click="createAccountDialogOpen = true">Adicionar conta</Button>
+                </div>
             </div>
 
-            <div class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+            <div v-if="accounts.length === 0" class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
                 <div class="flex flex-col items-center gap-1 text-center">
                     <h3 class="text-2xl font-bold tracking-tight">
                         Você ainda não adicionou uma conta.
@@ -48,11 +61,18 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                         Você pode começar a acompanhar sua evolução financeira após adicionar sua primeira conta.
                         <!-- Adiciona sua primeira conta para começar sua evolução financeira. -->
                     </p>
-                    <Button class="mt-4">
+
+                    <Button @click="createAccountDialogOpen = true" class="mt-4">
                         Adicionar conta
                     </Button>
                 </div>
             </div>
+
+            <div v-else>
+                <DataTable :data="accounts" />
+            </div>
+
+            {{ accounts }}
 
         </div>
     </AuthenticatedLayout>
