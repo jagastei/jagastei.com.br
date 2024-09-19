@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
+
+    Route::get('/cartoes', [CardController::class, 'index'])->name('cartoes.index');
+    Route::post('/cartoes', [CardController::class, 'store'])->name('cartoes.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
