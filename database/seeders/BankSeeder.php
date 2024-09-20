@@ -19,6 +19,24 @@ class BankSeeder extends Seeder
         try  {
             $banks = json_decode(file_get_contents(database_path('seeders/fixtures/banks.json')), true);
 
+            // $banks = [
+            //     [
+            //         'COMPE' => '',
+            //         'ShortName' => '',
+            //         'LongName' => '',
+            //     ],
+            //     [
+            //         'COMPE' => '',
+            //         'ShortName' => '',
+            //         'LongName' => '',
+            //     ],
+            //     [
+            //         'COMPE' => '',
+            //         'ShortName' => '',
+            //         'LongName' => '',
+            //     ],
+            // ];
+
             foreach($banks as $bank) {
                 Bank::create([
                     'code' => $bank['COMPE'],

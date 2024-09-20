@@ -17,6 +17,9 @@ class AccountController extends Controller
             ->get();
 
         $accounts = Account::query()
+            ->with([
+                'bank',
+            ])
             ->get();
 
         return Inertia::render('Accounts/Index', [

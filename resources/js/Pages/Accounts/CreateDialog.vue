@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
-import landmark from '@/../images/banks/landmark.svg'
+import { useColorMode } from '@vueuse/core'
+import landmarkW from '@/../images/banks/landmark-white.svg'
+import landmarkB from '@/../images/banks/landmark-black.svg'
 import { Bank } from './Index.vue';
 import { useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils'
@@ -15,6 +17,13 @@ import {
     DialogTrigger,
 } from '@/Components/ui/dialog'
 import { type DialogContentEmits, type DialogContentProps, useEmitAsProps, } from 'radix-vue'
+import {
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from '@/components/ui/number-field'
 
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next'
 import {
@@ -58,8 +67,11 @@ const { inputRef, numberValue, setValue } = useCurrencyInput({
 
 const bankDialogOpen = ref(false)
 
+const mode = useColorMode()
+
 const replaceBankImage = (ev: any) => {
-    ev.target.src = landmark
+    console.log(mode.value)
+    ev.target.src = mode.value === 'light' ? landmarkB : landmarkW
 }
 
 const query = ref<string>('')
@@ -96,19 +108,23 @@ const submit = () => {
     form.transform(data => ({
         ...data,
         bank: data.bank?.id,
-        initial_balance: numberValue.value,
+        // initial_balance: numberValue.value,
     })).post(route('accounts.store'), {
-        onFinish: () => {
+        onSuccess: () => {
             onClose()
+        },
+        onError: (error) => {
+            console.log(error)
         },
     });
 };
 
 const onClose = () => {
     emit('close')
+
     setTimeout(() => {
-            form.reset()
-        }, 250)
+        form.reset()
+    }, 250)
 }
 
 const reset = (open: boolean) => {
@@ -150,10 +166,25 @@ const reset = (open: boolean) => {
                         Saldo inicial
                     </Label>
 
-                    <Input ref="inputRef" id="initial_balance" v-model="form.initial_balance" class="mt-2"
-                        tabindex="2" />
-                    <!-- <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
-                        prefix: 'R$ ',
+                    <!-- <NumberField id="balance" :default-value="0" v-model="form.initial_balance" locale="pt-BR" :format-options="{
+                        style: 'currency',
+                        currency: 'BRL',
+                        currencyDisplay: 'symbol',
+                        currencySign: 'accounting',
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                    }">
+                        <Label for="initial_balance">Saldo inicial</Label>
+                        <NumberFieldContent>
+                            <NumberFieldInput class="text-left pl-3"/>
+                        </NumberFieldContent>
+                    </NumberField> -->
+
+                    <!-- <Input ref="inputRef" v-model="form.initial_balance" id="initial_balance" class="mt-2"
+                        tabindex="2" /> -->
+
+                    <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
+                        prefix: 'R$',
                         suffix: '',
                         thousands: '.',
                         decimal: ',',
@@ -169,7 +200,7 @@ const reset = (open: boolean) => {
                         modelModifiers: {
                             number: false,
                         },
-                    }" tabindex="2" /> -->
+                    }" tabindex="2" />
                 </div>
 
                 <div class="flex flex-col">
@@ -211,8 +242,7 @@ const reset = (open: boolean) => {
                                         <CommandItem v-for="bank in resultList" :key="bank.id" :value="bank"
                                             @select="onSelected" class="flex">
                                             <div class="min-w-4">
-                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
-                                                    @error="replaceBankImage" class="size-4 rounded-xl" />
+                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`" @error="replaceBankImage" class="size-4 rounded-xl" />
                                             </div>
                                             <span class="ml-3 block truncate">{{ bank.long_name
                                                 }}</span>

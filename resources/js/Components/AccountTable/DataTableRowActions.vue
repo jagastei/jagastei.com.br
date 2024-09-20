@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { labels } from './columns'
 import { accountSchema } from './columns'
 import type { Account } from './columns'
 import { Icon } from '@iconify/vue'
@@ -42,24 +41,13 @@ const account = computed(() => accountSchema.parse(props.row.original))
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
-      <DropdownMenuItem>Edit</DropdownMenuItem>
-      <DropdownMenuItem>Make a copy</DropdownMenuItem>
-      <DropdownMenuItem>Favorite</DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuSub>
-        <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="account.name">
-            <DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
-              {{ label.label }}
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuSubContent>
-      </DropdownMenuSub>
+      <DropdownMenuItem>Editar</DropdownMenuItem>
+      <!-- <DropdownMenuItem>Make a copy</DropdownMenuItem> -->
+      <DropdownMenuItem>Favoritar</DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        Delete
-        <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+        Excluir
+        <!-- <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut> -->
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

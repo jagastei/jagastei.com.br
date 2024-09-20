@@ -72,8 +72,6 @@ const createAccountDialogOpen = ref(false)
                 <DataTable :data="accounts" />
             </div>
 
-            {{ accounts }}
-
         </div>
     </AuthenticatedLayout>
 </template>

@@ -4,7 +4,7 @@ import { Icon } from '@iconify/vue'
 import { Button } from '@/Components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/Components/ui/dropdown-menu'
 
-const mode = useColorMode()
+const { store } = useColorMode()
 </script>
 
 <template>
@@ -17,14 +17,17 @@ const mode = useColorMode()
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-            <DropdownMenuItem @click="mode = 'light'">
+            <DropdownMenuItem @click="store = 'light'" class="justify-between">
                 Light
+                <Icon icon="lucide:check" v-if="store === 'light'"/>
             </DropdownMenuItem>
-            <DropdownMenuItem @click="mode = 'dark'">
+            <DropdownMenuItem @click="store = 'dark'" class="justify-between">
                 Dark
+                <Icon icon="lucide:check" v-if="store === 'dark'"/>
             </DropdownMenuItem>
-            <DropdownMenuItem @click="mode = 'auto'">
+            <DropdownMenuItem @click="store = 'auto'" class="justify-between">
                 System
+                <Icon icon="lucide:check" v-if="store === 'auto'"/>
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

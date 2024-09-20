@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Akaunting\Money\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,15 @@ class Account extends Model
         'name',
         'balance',
     ];
+
+    protected $appends = [
+        'formatted_balance',
+    ];
+
+    public function getFormattedBalanceAttribute()
+    {
+        return Money::BRL($this->balance ?? 0)->format();
+    }
 
     public function user()
     {

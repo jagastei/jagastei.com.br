@@ -22,6 +22,7 @@ import {
     CollapsibleTrigger,
 } from '@/Components/ui/collapsible'
 import { useStorage } from '@vueuse/core'
+import { ScrollArea } from '@/Components/ui/scroll-area'
 
 const isCollapsed = useStorage('is-collapsed', false)
 
@@ -187,9 +188,11 @@ const links2: LinkProp[] = [
                         </div>
 
                         <div class="w-full">
-                            <div class="p-4 h-full overflow-y-scroll">
-                                <slot />
-                            </div>
+                            <ScrollArea class="h-full">
+                                <div class="p-4">
+                                    <slot />
+                                </div>
+                            </ScrollArea>
                         </div>
 
                     </div>

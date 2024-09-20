@@ -67,7 +67,7 @@ const table = useVueTable({
 
 <template>
     <div class="space-y-4">
-        <DataTableToolbar :table="table" />
+        <!-- <DataTableToolbar :table="table" /> -->
         
         <div class="rounded-md border">
             <Table>
@@ -98,6 +98,6 @@ const table = useVueTable({
             </Table>
         </div>
 
-        <DataTablePagination :table="table" />
+        <!-- <DataTablePagination :table="table" /> -->
     </div>
 </template>

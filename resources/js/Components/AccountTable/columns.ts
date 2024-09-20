@@ -17,176 +17,71 @@ export const accountSchema = z.object({
     bank_id: z.number().nullable(),
     name: z.string(),
     balance: z.number(),
+    bank: z.object({
+        code: z.number(),
+    })
 });
 
 export type Account = z.infer<typeof accountSchema>;
 
 export const columns: ColumnDef<Account>[] = [
+    // {
+    //     id: "select",
+    //     header: ({ table }) =>
+    //         h(Checkbox, {
+    //             checked:
+    //                 table.getIsAllPageRowsSelected() ||
+    //                 (table.getIsSomePageRowsSelected() && "indeterminate"),
+    //             "onUpdate:checked": (value) =>
+    //                 table.toggleAllPageRowsSelected(!!value),
+    //             ariaLabel: "Select all",
+    //             class: "translate-y-0.5",
+    //         }),
+    //     cell: ({ row }) =>
+    //         h(Checkbox, {
+    //             checked: row.getIsSelected(),
+    //             "onUpdate:checked": (value) => row.toggleSelected(!!value),
+    //             ariaLabel: "Select row",
+    //             class: "translate-y-0.5",
+    //         }),
+    //     enableSorting: false,
+    //     enableHiding: false,
+    // },
     {
-        id: "select",
-        header: ({ table }) =>
-            h(Checkbox, {
-                checked:
-                    table.getIsAllPageRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && "indeterminate"),
-                "onUpdate:checked": (value) =>
-                    table.toggleAllPageRowsSelected(!!value),
-                ariaLabel: "Select all",
-                class: "translate-y-0.5",
-            }),
-        cell: ({ row }) =>
-            h(Checkbox, {
-                checked: row.getIsSelected(),
-                "onUpdate:checked": (value) => row.toggleSelected(!!value),
-                ariaLabel: "Select row",
-                class: "translate-y-0.5",
-            }),
+        accessorKey: "name",
+        header: ({ column }) =>
+            h(DataTableColumnHeader, { column, title: "Nome" }),
+        cell: ({ row }) => {
+            return h("div", { class: 'flex items-center' }, [
+                h('img', {
+                    src: `https://jagastei.com.br.test/images/banks/${row.original.bank.code}.png`,
+                    class: 'size-6 rounded-xl',
+                }, row.getValue("name")),
+                h('span', { class: 'ml-3' }, row.getValue("name")),
+            ])
+        },
         enableSorting: false,
         enableHiding: false,
     },
     {
-        accessorKey: "id",
+        accessorKey: "formatted_balance",
         header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Task" }),
-        cell: ({ row }) => h("div", { class: "w-20" }, row.getValue("id")),
+            h(DataTableColumnHeader, { column, title: "Saldo" }),
+
+        cell: ({ row }) => {
+            return h('div', {}, row.getValue('formatted_balance'));
+        },
         enableSorting: false,
         enableHiding: false,
-    },
-    {
-        accessorKey: "title",
-        header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Title" }),
-
-        cell: ({ row }) => {
-
-            return h('div', {}, 'pinto');
-
-            const label = labels.find(
-                (label) => label.value === row.original.label
-            );
-
-            return h("div", { class: "flex space-x-2" }, [
-                label
-                    ? h(Badge, { variant: "outline" }, () => label.label)
-                    : null,
-                h(
-                    "span",
-                    { class: "max-w-[500px] truncate font-medium" },
-                    row.getValue("title")
-                ),
-            ]);
-        },
-    },
-    {
-        accessorKey: "status",
-        header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Status" }),
-
-        cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue("status")
-            );
-
-            if (!status) return null;
-
-            return h("div", { class: "flex w-[100px] items-center" }, [
-                status.icon &&
-                    h(status.icon, {
-                        class: "mr-2 h-4 w-4 text-muted-foreground",
-                    }),
-                h("span", status.label),
-            ]);
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id));
-        },
-    },
-    {
-        accessorKey: "priority",
-        header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Priority" }),
-        cell: ({ row }) => {
-            const priority = priorities.find(
-                (priority) => priority.value === row.getValue("priority")
-            );
-
-            if (!priority) return null;
-
-            return h("div", { class: "flex items-center" }, [
-                priority.icon &&
-                    h(priority.icon, {
-                        class: "mr-2 h-4 w-4 text-muted-foreground",
-                    }),
-                h("span", {}, priority.label),
-            ]);
-        },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id));
-        },
     },
     {
         id: "actions",
-        cell: ({ row }) => h(DataTableRowActions, { row }),
-    },
-];
-
-export const labels = [
-    {
-        value: "bug",
-        label: "Bug",
-    },
-    {
-        value: "feature",
-        label: "Feature",
-    },
-    {
-        value: "documentation",
-        label: "Documentation",
-    },
-];
-
-export const statuses = [
-    {
-        value: "backlog",
-        label: "Backlog",
-        icon: h(Icon), // QuestionMarkCircledIcon
-    },
-    {
-        value: "todo",
-        label: "Todo",
-        icon: h(Icon), // CircleIcon
-    },
-    {
-        value: "in progress",
-        label: "In Progress",
-        icon: h(Icon), // StopwatchIcon
-    },
-    {
-        value: "done",
-        label: "Done",
-        icon: h(Icon), // CheckCircledIcon
-    },
-    {
-        value: "canceled",
-        label: "Canceled",
-        icon: h(Icon), // CrossCircledIcon
-    },
-];
-
-export const priorities = [
-    {
-        value: "low",
-        label: "Low",
-        icon: h(Icon), // ArrowDownIcon
-    },
-    {
-        value: "medium",
-        label: "Medium",
-        icon: h(Icon), // ArrowRightIcon
-    },
-    {
-        value: "high",
-        label: "High",
-        icon: h(Icon), // ArrowUpIcon
+        cell: ({ row }) => {
+            return h('div', {
+                class: 'flex justify-end'
+            }, [
+                h(DataTableRowActions, { row })
+            ])
+        },
     },
 ];

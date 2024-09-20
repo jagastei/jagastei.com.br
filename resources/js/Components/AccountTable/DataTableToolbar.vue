@@ -3,7 +3,6 @@ import type { Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
 import type { Account } from './columns'
 
-import { priorities, statuses } from './columns'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import { Icon } from '@iconify/vue'
@@ -23,12 +22,12 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
   <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Filter tasks..."
+        placeholder="Buscar contas..."
         :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''"
         class="h-8 w-[150px] lg:w-[250px]"
         @input="table.getColumn('title')?.setFilterValue($event.target.value)"
       />
-      <DataTableFacetedFilter
+      <!-- <DataTableFacetedFilter
         v-if="table.getColumn('status')"
         :column="table.getColumn('status')"
         title="Status"
@@ -39,7 +38,7 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
         :column="table.getColumn('priority')"
         title="Priority"
         :options="priorities"
-      />
+      /> -->
 
       <Button
         v-if="isFiltered"
