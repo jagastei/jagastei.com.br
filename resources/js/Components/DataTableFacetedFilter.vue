@@ -31,6 +31,16 @@ const props = defineProps<DataTableFacetedFilter>()
 
 const facets = computed(() => props.column?.getFacetedUniqueValues())
 const selectedValues = computed(() => new Set(props.column?.getFilterValue() as string[]))
+
+const filterFn = (
+  val: string[] | number[] | false[] | true[] | Record<string, any>[], term: string
+): string[] | number[] | false[] | true[] | Record<string, any>[] => {
+  const options = val as DataTableFacetedFilter['options'];
+
+  return options.filter(option =>
+    option.label?.toLowerCase().includes(term.toLowerCase())
+  );
+}
 </script>
 
 <template>
@@ -73,7 +83,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
     </PopoverTrigger>
     <PopoverContent class="w-[200px] p-0" align="start">
       <Command
-        :filter-function="(list: DataTableFacetedFilter['options'], term) => list.filter(i => i.label.toLowerCase()?.includes(term)) "
+        :filter-function="filterFn"
       >
         <CommandInput :placeholder="title" />
         <CommandList>
