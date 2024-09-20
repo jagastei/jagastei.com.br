@@ -9,6 +9,13 @@ import { z } from "zod";
 
 import { Icon } from '@iconify/vue';
 
+export const bankSchema = z.object({
+    id: z.number(),
+    code: z.number(),
+    short_name: z.string(),
+    long_name: z.string(),
+})
+
 // We're keeping a simple non-relational schema here.
 // IRL, you will have a schema for your data models.
 export const accountSchema = z.object({
@@ -17,11 +24,13 @@ export const accountSchema = z.object({
     bank_id: z.number().nullable(),
     name: z.string(),
     balance: z.number(),
-    bank: z.object({
-        code: z.number(),
-    })
+    formatted_balance: z.string(),
+    created_at: z.string(),
+    updated_at: z.string(),
+    bank: bankSchema,
 });
 
+export type Bank = z.infer<typeof bankSchema>;
 export type Account = z.infer<typeof accountSchema>;
 
 export const columns: ColumnDef<Account>[] = [

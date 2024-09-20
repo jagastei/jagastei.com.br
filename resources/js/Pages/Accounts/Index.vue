@@ -5,23 +5,7 @@ import { Button } from '@/Components/ui/button'
 import { ref } from 'vue'
 import CreateDialog from './CreateDialog.vue'
 import DataTable from '@/Components/AccountTable/DataTable.vue'
-
-export type Bank = {
-    id: number,
-    code: string,
-    short_name: string,
-    long_name: string,
-}
-
-type Account = {
-    id: number,
-    user_id: number,
-    bank_id: number,
-    name: string,
-    balance: number,
-    created_at: string,
-    updated_at: string,
-}
+import { Account, Bank } from '@/Components/AccountTable/columns';
 
 defineProps<{
     banks: Bank[],

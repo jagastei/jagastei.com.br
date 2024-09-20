@@ -4,7 +4,6 @@ import { useFuse } from '@vueuse/integrations/useFuse'
 import { useColorMode } from '@vueuse/core'
 import landmarkW from '@/../images/banks/landmark-white.svg'
 import landmarkB from '@/../images/banks/landmark-black.svg'
-import { Bank } from './Index.vue';
 import { useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils'
 import {
@@ -23,7 +22,7 @@ import {
     NumberFieldDecrement,
     NumberFieldIncrement,
     NumberFieldInput,
-} from '@/components/ui/number-field'
+} from '@/Components/ui/number-field'
 
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next'
 import {
@@ -43,6 +42,7 @@ import { Button } from '@/Components/ui/button'
 import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
 import { CurrencyDisplay, useCurrencyInput, ValueScaling } from 'vue-currency-input'
+import { Bank } from '@/Components/AccountTable/columns'
 
 const props = defineProps<{
     banks: Bank[],
