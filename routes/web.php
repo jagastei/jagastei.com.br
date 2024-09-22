@@ -28,8 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
     Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
-    Route::get('/cartoes', [CardController::class, 'index'])->name('cartoes.index');
-    Route::post('/cartoes', [CardController::class, 'store'])->name('cartoes.store');
+    Route::get('/cartoes', [CardController::class, 'index'])->name('cards.index');
+    Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store');
+    Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button'
 import { ref } from 'vue'
 import CardDialog from './CardDialog.vue'
-import DataTable from '@/Components/AccountTable/DataTable.vue'
+import DataTable from '@/Components/CardTable/DataTable.vue'
 
 type Card = {
     id: number,

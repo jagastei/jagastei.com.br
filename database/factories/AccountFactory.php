@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Bank;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'bank_id' => Bank::factory(),
+            'name' => fake()->name(),
+            'balance' => fake()->numberBetween(500_00, 10_000_00),
         ];
     }
 }

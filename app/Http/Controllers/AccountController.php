@@ -19,6 +19,7 @@ class AccountController extends Controller
             ->get();
 
         $accounts = Account::query()
+            ->ofUser(auth('web')->user())
             ->with([
                 'bank',
             ])
@@ -34,7 +35,7 @@ class AccountController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth()->id();
+        $userId = auth('web')->id();
 
         AccountCreated::fire(
             user_id: $userId,

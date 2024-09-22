@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,6 +27,11 @@ class Account extends Model
     public function getFormattedBalanceAttribute()
     {
         return Money::BRL($this->balance ?? 0)->format();
+    }
+
+    public function scopeOfUser(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id', $user->id);
     }
 
     public function user()

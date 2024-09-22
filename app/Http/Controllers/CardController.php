@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
-use App\Http\Requests\StoreAccountRequest;
+use App\Http\Requests\StoreCardRequest;
 use Illuminate\Http\Request;
 use App\Models\Card;
 use Inertia\Inertia;
@@ -13,6 +13,14 @@ class CardController extends Controller
     public function index()
     {
         $cards = Card::query()
+            ->ofUser(auth('web')->user())
+            ->with([
+                'account' => function ($query) {
+                    $query->with([
+                        'bank'
+                    ]);
+                },
+            ])
             ->get();
 
         return Inertia::render('Cards/Index', [
@@ -20,7 +28,7 @@ class CardController extends Controller
         ]);
     }
 
-    public function store(StoreAccountRequest $request)
+    public function store(StoreCardRequest $request)
     {
         $input = $request->validated();
 
@@ -32,6 +40,13 @@ class CardController extends Controller
             name: $input['name'],
             initial_balance: $input['initial_balance'],
         );
+
+        return back();
+    }
+
+    public function destroy(Card $card)
+    {
+        $card->delete();
 
         return back();
     }
