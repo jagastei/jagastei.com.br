@@ -79,8 +79,8 @@ const links2: LinkProp[] = [
         title: 'Cartões',
         // label: '342',
         icon: 'lucide:wallet-cards',
-        route: route('cartoes.index'),
-        active: route().current('cartoes.index'),
+        route: route('cards.index'),
+        active: route().current('cards.index'),
     },
     {
         title: 'Contas  ',

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cartoes', [CardController::class, 'index'])->name('cards.index');
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store');
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
+
+    Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store');
+    Route::delete('/categorias/{card}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
