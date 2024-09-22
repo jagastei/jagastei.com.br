@@ -14,6 +14,8 @@ class AccountController extends Controller
     public function index()
     {
         $banks = Bank::query()
+            ->enabled()
+            ->orderBy('code')
             ->get();
 
         $accounts = Account::query()
@@ -40,6 +42,13 @@ class AccountController extends Controller
             name: $input['name'],
             initial_balance: $input['initial_balance'],
         );
+
+        return back();
+    }
+
+    public function destroy(Account $account)
+    {
+        $account->delete();
 
         return back();
     }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
 import { useColorMode } from '@vueuse/core'
 import landmarkW from '@/../images/banks/landmark-white.svg'
@@ -70,7 +70,6 @@ const bankDialogOpen = ref(false)
 const mode = useColorMode()
 
 const replaceBankImage = (ev: any) => {
-    console.log(mode.value)
     ev.target.src = mode.value === 'light' ? landmarkB : landmarkW
 }
 
@@ -83,6 +82,7 @@ const { results } = useFuse(query, props.banks, {
         threshold: 0.5,
     },
     resultLimit: 50,
+    matchAllWhenSearchEmpty: true,
 })
 
 const resultList = computed(() => {
@@ -120,28 +120,13 @@ const submit = () => {
 };
 
 const onClose = () => {
+    form.reset()
     emit('close')
-
-    setTimeout(() => {
-        form.reset()
-    }, 250)
-}
-
-const reset = (open: boolean) => {
-    if (!open) {
-        onClose()
-    }
-
-    if (open) {
-        nextTick(() => {
-            setValue(0)
-        })
-    }
 }
 </script>
 
 <template>
-    <Dialog :open="open" @update:open="reset">
+    <Dialog :open="open">
         <DialogTrigger as-child>
             <slot />
         </DialogTrigger>
@@ -244,8 +229,8 @@ const reset = (open: boolean) => {
                                             <div class="min-w-4">
                                                 <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`" @error="replaceBankImage" class="size-4 rounded-xl" />
                                             </div>
-                                            <span class="ml-3 block truncate">{{ bank.long_name
-                                                }}</span>
+                                            <span class="ml-3 block truncate">
+                                                {{ bank.code }} - {{ bank.long_name }}</span>
                                             <Check
                                                 :class="cn('ml-auto h-4 w-4', form.bank?.id === bank.id ? 'opacity-100' : 'opacity-0')" />
                                         </CommandItem>

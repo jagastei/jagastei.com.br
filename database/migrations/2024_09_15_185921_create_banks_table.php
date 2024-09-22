@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('short_name');
             $table->string('long_name');
+            $table->boolean('enabled')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

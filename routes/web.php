@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
+    Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
     Route::get('/cartoes', [CardController::class, 'index'])->name('cartoes.index');
     Route::post('/cartoes', [CardController::class, 'store'])->name('cartoes.store');

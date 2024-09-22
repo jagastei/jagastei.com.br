@@ -18,15 +18,15 @@ const { store } = useColorMode()
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
             <DropdownMenuItem @click="store = 'light'" class="justify-between">
-                Light
+                Claro
                 <Icon icon="lucide:check" v-if="store === 'light'"/>
             </DropdownMenuItem>
             <DropdownMenuItem @click="store = 'dark'" class="justify-between">
-                Dark
+                Escuro
                 <Icon icon="lucide:check" v-if="store === 'dark'"/>
             </DropdownMenuItem>
             <DropdownMenuItem @click="store = 'auto'" class="justify-between">
-                System
+                Sistema
                 <Icon icon="lucide:check" v-if="store === 'auto'"/>
             </DropdownMenuItem>
         </DropdownMenuContent>
