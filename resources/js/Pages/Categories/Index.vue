@@ -30,7 +30,7 @@ const createAccountDialogOpen = ref(false)
                         Todas as suas categoria ficam aqui.
                     </p> -->
                 </div>
-                <div class="flex items-center space-x-2">
+                <div v-if="categories.length > 0" class="flex items-center space-x-2">
                     <Button @click="createAccountDialogOpen = true">Adicionar categoria</Button>
                 </div>
             </div>

@@ -67,8 +67,8 @@ const links2: LinkProp[] = [
         title: 'Categorias',
         // label: '342',
         icon: 'lucide:tags',
-        route: route('cards.index'),
-        active: route().current('cards.index'),
+        route: route('categories.index'),
+        active: route().current('categories.index'),
     },
     {
         title: 'Cartões',
@@ -183,8 +183,8 @@ const links2: LinkProp[] = [
                         </div>
 
                         <div class="w-full">
-                            <ScrollArea class="h-full">
-                                <div class="p-4">
+                            <ScrollArea id="scrollarea" as-child>
+                                <div class="h-full">
                                     <slot />
                                 </div>
                             </ScrollArea>

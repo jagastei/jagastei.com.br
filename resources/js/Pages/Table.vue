@@ -711,7 +711,7 @@ const tasks = [
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout>
-        <div class="flex-1 flex-col space-y-8 md:flex">
+        <div class="flex-1 flex-col space-y-8 md:flex p-4">
             <div class="flex items-center justify-between space-y-2">
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight">

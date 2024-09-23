@@ -92,3 +92,7 @@ body,
     height: 100%;
     overflow: hidden;
 }
+
+#scrollarea > div {
+    height: 100%;
+}
