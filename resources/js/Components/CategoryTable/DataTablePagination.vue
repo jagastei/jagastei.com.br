@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
-import type { Card } from './columns'
+import type { Category } from './columns'
 import { Icon } from '@iconify/vue'
 
 import { Button } from '@/Components/ui/button'
@@ -13,7 +13,7 @@ import {
 } from '@/Components/ui/select'
 
 interface DataTablePaginationProps {
-  table: Table<Card>
+  table: Table<Category>
 }
 defineProps<DataTablePaginationProps>()
 </script>

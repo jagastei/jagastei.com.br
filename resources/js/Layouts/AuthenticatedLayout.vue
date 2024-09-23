@@ -37,44 +37,39 @@ const onExpand = () => {
 const links: LinkProp[] = [
     {
         title: 'Dashboard',
-        label: '128',
+        label: '',
         icon: 'lucide:chart-pie',
         route: route('dashboard'),
         active: route().current('dashboard'),
     },
     {
-        title: 'Drafts',
-        label: '9',
-        icon: 'lucide:file',
-        active: false,
-    },
-    {
-        title: 'Sent',
+        title: 'Transações',
         label: '',
-        icon: 'lucide:send',
+        icon: 'lucide:arrow-left-right',
         active: false,
     },
     {
-        title: 'Junk',
-        label: '23',
-        icon: 'lucide:archive',
-        active: false,
-    },
-    {
-        title: 'Trash',
+        title: 'Orçamentos',
         label: '',
-        icon: 'lucide:trash',
+        icon: 'lucide:box',
         active: false,
     },
     {
-        title: 'Archive',
+        title: 'Metas',
         label: '',
-        icon: 'lucide:archive',
+        icon: 'lucide:goal',
         active: false,
     },
 ]
 
 const links2: LinkProp[] = [
+    {
+        title: 'Categorias',
+        // label: '342',
+        icon: 'lucide:tags',
+        route: route('cards.index'),
+        active: route().current('cards.index'),
+    },
     {
         title: 'Cartões',
         // label: '342',

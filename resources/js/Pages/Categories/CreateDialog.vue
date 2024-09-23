@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, watch } from 'vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
-import landmark from '@/../images/banks/landmark-white.svg'
+import { useColorMode } from '@vueuse/core'
+import landmarkW from '@/../images/banks/landmark-white.svg'
+import landmarkB from '@/../images/banks/landmark-black.svg'
 import { useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils'
 import {
@@ -14,6 +16,13 @@ import {
     DialogTrigger,
 } from '@/Components/ui/dialog'
 import { type DialogContentEmits, type DialogContentProps, useEmitAsProps, } from 'radix-vue'
+import {
+    NumberField,
+    NumberFieldContent,
+    NumberFieldDecrement,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from '@/Components/ui/number-field'
 
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next'
 import {
@@ -33,9 +42,10 @@ import { Button } from '@/Components/ui/button'
 import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
 import { CurrencyDisplay, useCurrencyInput, ValueScaling } from 'vue-currency-input'
+import { Bank } from '@/Components/AccountTable/columns'
 
 const props = defineProps<{
-    cards: Card[],
+    banks: Bank[],
     open: boolean,
 }>();
 
@@ -55,10 +65,12 @@ const { inputRef, numberValue, setValue } = useCurrencyInput({
     accountingSign: false,
 })
 
-const cardDialogOpen = ref(false)
+const bankDialogOpen = ref(false)
+
+const mode = useColorMode()
 
 const replaceBankImage = (ev: any) => {
-    ev.target.src = landmark
+    ev.target.src = mode.value === 'light' ? landmarkB : landmarkW
 }
 
 const query = ref<string>('')
@@ -70,6 +82,7 @@ const { results } = useFuse(query, props.banks, {
         threshold: 0.5,
     },
     resultLimit: 50,
+    matchAllWhenSearchEmpty: true,
 })
 
 const resultList = computed(() => {
@@ -78,7 +91,7 @@ const resultList = computed(() => {
 
 const onSelected = (ev: any) => {
     form.bank = ev.detail.value as Bank;
-    cardDialogOpen.value = false;
+    bankDialogOpen.value = false;
 }
 
 const form = useForm<{
@@ -95,44 +108,33 @@ const submit = () => {
     form.transform(data => ({
         ...data,
         bank: data.bank?.id,
-        initial_balance: numberValue.value,
+        // initial_balance: numberValue.value,
     })).post(route('accounts.store'), {
-        onFinish: () => {
+        onSuccess: () => {
             onClose()
+        },
+        onError: (error) => {
+            console.log(error)
         },
     });
 };
 
 const onClose = () => {
+    form.reset()
     emit('close')
-    setTimeout(() => {
-            form.reset()
-        }, 250)
-}
-
-const reset = (open: boolean) => {
-    if (!open) {
-        onClose()
-    }
-
-    if (open) {
-        nextTick(() => {
-            setValue(0)
-        })
-    }
 }
 </script>
 
 <template>
-    <Dialog :open="open" @update:open="reset">
+    <Dialog :open="open">
         <DialogTrigger as-child>
             <slot />
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px]" @interactOutside="onClose" @escapeKeyDown="onClose">
             <DialogHeader>
-                <DialogTitle>Adicionar cartão</DialogTitle>
+                <DialogTitle>Adicionar conta</DialogTitle>
                 <DialogDescription>
-                    Adicione seu cartão para melhorar seus controles financeiros.
+                    Identifique sua conta bancária e clique em adicionar.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
@@ -149,10 +151,25 @@ const reset = (open: boolean) => {
                         Saldo inicial
                     </Label>
 
-                    <Input ref="inputRef" id="initial_balance" v-model="form.initial_balance" class="mt-2"
-                        tabindex="2" />
-                    <!-- <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
-                        prefix: 'R$ ',
+                    <!-- <NumberField id="balance" :default-value="0" v-model="form.initial_balance" locale="pt-BR" :format-options="{
+                        style: 'currency',
+                        currency: 'BRL',
+                        currencyDisplay: 'symbol',
+                        currencySign: 'accounting',
+                        maximumFractionDigits: 2,
+                        minimumFractionDigits: 2,
+                    }">
+                        <Label for="initial_balance">Saldo inicial</Label>
+                        <NumberFieldContent>
+                            <NumberFieldInput class="text-left pl-3"/>
+                        </NumberFieldContent>
+                    </NumberField> -->
+
+                    <!-- <Input ref="inputRef" v-model="form.initial_balance" id="initial_balance" class="mt-2"
+                        tabindex="2" /> -->
+
+                    <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
+                        prefix: 'R$',
                         suffix: '',
                         thousands: '.',
                         decimal: ',',
@@ -168,7 +185,7 @@ const reset = (open: boolean) => {
                         modelModifiers: {
                             number: false,
                         },
-                    }" tabindex="2" /> -->
+                    }" tabindex="2" />
                 </div>
 
                 <div class="flex flex-col">
@@ -179,7 +196,7 @@ const reset = (open: boolean) => {
                         </button>
                     </div>
 
-                    <Popover v-model:open="cardDialogOpen">
+                    <Popover v-model:open="bankDialogOpen">
                         <PopoverTrigger as-child>
                             <Button tabindex="3" id="bank" variant="outline" role="combobox"
                                 class="w-[375px] justify-between mt-2 p-3">
@@ -210,11 +227,10 @@ const reset = (open: boolean) => {
                                         <CommandItem v-for="bank in resultList" :key="bank.id" :value="bank"
                                             @select="onSelected" class="flex">
                                             <div class="min-w-4">
-                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
-                                                    @error="replaceBankImage" class="size-4 rounded-xl" />
+                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`" @error="replaceBankImage" class="size-4 rounded-xl" />
                                             </div>
-                                            <span class="ml-3 block truncate">{{ bank.long_name
-                                                }}</span>
+                                            <span class="ml-3 block truncate">
+                                                {{ bank.code }} - {{ bank.long_name }}</span>
                                             <Check
                                                 :class="cn('ml-auto h-4 w-4', form.bank?.id === bank.id ? 'opacity-100' : 'opacity-0')" />
                                         </CommandItem>

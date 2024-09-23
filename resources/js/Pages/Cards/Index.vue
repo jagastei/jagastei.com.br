@@ -5,17 +5,7 @@ import { Button } from '@/Components/ui/button'
 import { ref } from 'vue'
 import CardDialog from './CardDialog.vue'
 import DataTable from '@/Components/CardTable/DataTable.vue'
-
-type Card = {
-    id: number,
-    card_security: number,
-    card_validation: number,
-    card_user_name: string,
-    card_short_name: string,
-    user_personal_identification: number,
-    user_id: number,
-    user_bank: number
-}
+import type { Card } from '@/Components/CardTable/columns'
 
 defineProps<{
     cards: Card[],

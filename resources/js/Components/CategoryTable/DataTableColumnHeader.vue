@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
-import type { Card } from './columns'
+import type { Category } from './columns'
 import { Icon } from '@iconify/vue'
 
 import { cn } from '@/utils'
@@ -14,7 +14,7 @@ import {
 } from '@/Components/ui/dropdown-menu'
 
 interface DataTableColumnHeaderProps {
-    column: Column<Card, any>
+    column: Column<Category, any>
     title: string
 }
 

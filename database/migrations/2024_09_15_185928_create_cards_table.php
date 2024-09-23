@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('account_id');
             $table->string('name');
+            $table->bigInteger('limit')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

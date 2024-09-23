@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { cardSchema } from './columns'
-import type { Card } from './columns'
+import { categorySchema } from './columns'
+import type { Category } from './columns'
 import { Icon } from '@iconify/vue'
 import { router } from '@inertiajs/vue3'
 import { Button } from '@/Components/ui/button'
@@ -33,14 +33,14 @@ import {
 } from '@/Components/ui/alert-dialog'
 
 interface DataTableRowActionsProps {
-  row: Row<Card>
+  row: Row<Category>
 }
 const props = defineProps<DataTableRowActionsProps>()
 
-const card = computed(() => cardSchema.parse(props.row.original))
+const category = computed(() => categorySchema.parse(props.row.original))
 
 const destroy = () => {
-  router.delete(route('cards.destroy', card.value.id))
+  router.delete(route('categories.destroy', category.value.id))
 }
 </script>
 
@@ -70,7 +70,7 @@ const destroy = () => {
       <AlertDialogHeader>
         <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
         <AlertDialogDescription>
-          Você está prestes a remover o cartão <b>{{ card.name }}</b>. Não será possível desfazer essa ação.
+          Você está prestes a categoria <b>{{ category.name }}</b>. Não será possível desfazer essa ação.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>

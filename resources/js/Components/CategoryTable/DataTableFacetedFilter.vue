@@ -2,7 +2,7 @@
 import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
 import { computed } from 'vue'
-import type { Card } from './columns'
+import type { Category } from './columns'
 import { Icon } from '@iconify/vue'
 
 import { Badge } from '@/Components/ui/badge'
@@ -18,7 +18,7 @@ import { Separator } from '@/Components/ui/separator'
 import { cn } from '@/utils'
 
 interface DataTableFacetedFilter {
-  column?: Column<Card, any>
+  column?: Column<Category, any>
   title?: string
   options: {
     label: string

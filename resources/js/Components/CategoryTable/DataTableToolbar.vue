@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import type { Card } from './columns'
+import type { Category } from './columns'
 
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
@@ -10,7 +10,7 @@ import { Button } from '@/Components/ui/button'
 import { Input } from '@/Components/ui/input'
 
 interface DataTableToolbarProps {
-  table: Table<Card>
+  table: Table<Category>
 }
 
 const props = defineProps<DataTableToolbarProps>()

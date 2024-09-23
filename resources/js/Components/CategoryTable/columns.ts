@@ -8,22 +8,18 @@ import { Badge } from "@/Components/ui/badge";
 import { z } from "zod";
 
 import { Icon } from '@iconify/vue';
-import { accountSchema } from "../AccountTable/columns";
 
-export const cardSchema = z.object({
+export const categorySchema = z.object({
     id: z.number(),
-    account_id: z.number(),
+    user_id: z.number(),
     name: z.string(),
-    limit: z.number(),
-    formatted_limit: z.string(),
     created_at: z.string(),
     updated_at: z.string(),
-    account: accountSchema,
 });
 
-export type Card = z.infer<typeof cardSchema>;
+export type Category = z.infer<typeof categorySchema>;
 
-export const columns: ColumnDef<Card>[] = [
+export const columns: ColumnDef<Category>[] = [
     // {
     //     id: "select",
     //     header: ({ table }) =>
@@ -51,24 +47,7 @@ export const columns: ColumnDef<Card>[] = [
         header: ({ column }) =>
             h(DataTableColumnHeader, { column, title: "Nome" }),
         cell: ({ row }) => {
-            return h("div", { class: 'flex items-center' }, [
-                // h('img', {
-                //     src: `https://jagastei.com.br.test/images/banks/${row.original.bank.code}.png`,
-                //     class: 'size-6 rounded-xl',
-                // }, row.getValue("name")),
-                h('span', { class: 'ml-3' }, row.getValue("name")),
-            ])
-        },
-        enableSorting: false,
-        enableHiding: false,
-    },
-    {
-        accessorKey: "formatted_limit",
-        header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Limite" }),
-
-        cell: ({ row }) => {
-            return h('div', {}, row.getValue('formatted_limit'));
+            return h('span', {}, row.getValue("name"));
         },
         enableSorting: false,
         enableHiding: false,

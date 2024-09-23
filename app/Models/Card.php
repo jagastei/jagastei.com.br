@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Akaunting\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,17 @@ class Card extends Model
     protected $fillable = [
         'account_id',
         'name',
+        'limit',
     ];
+
+    protected $appends = [
+        'formatted_limit',
+    ];
+
+    public function getFormattedLimitAttribute()
+    {
+        return Money::BRL($this->limit ?? 0)->format();
+    }
 
     public function scopeOfUser(Builder $query, User $user): Builder
     {
