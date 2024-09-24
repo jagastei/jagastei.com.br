@@ -22,7 +22,13 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/transacoes', [DashboardController::class, 'index'])->name('transactions.index');
+
+    Route::get('/orcamentos', [DashboardController::class, 'index'])->name('budgets.index');
+
+    Route::get('/metas', [DashboardController::class, 'index'])->name('goals.index');
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
