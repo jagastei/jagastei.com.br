@@ -13,6 +13,7 @@ export const categorySchema = z.object({
     id: z.number(),
     user_id: z.number(),
     name: z.string(),
+    color: z.string().nullable(),
     created_at: z.string(),
     updated_at: z.string(),
 });
@@ -47,7 +48,15 @@ export const columns: ColumnDef<Category>[] = [
         header: ({ column }) =>
             h(DataTableColumnHeader, { column, title: "Nome" }),
         cell: ({ row }) => {
-            return h('span', {}, row.getValue("name"));
+            return h("div", { class: 'flex items-center' }, [
+                h('span', {
+                    class: 'block size-6 rounded-xl',
+                    style: {
+                        'background-color': row.original.color,
+                    },
+                }),
+                h('span', { class: 'ml-3' }, row.getValue("name")),
+            ])
         },
         enableSorting: false,
         enableHiding: false,

@@ -11,9 +11,4 @@ class DashboardController extends Controller
     {
         return Inertia::render('Dashboard');
     }
-
-    public function table(Request $request)
-    {
-        return Inertia::render('Table');
-    }
 }

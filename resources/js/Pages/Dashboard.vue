@@ -23,7 +23,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout>
-        <div>
+        <div class="p-4">
             <div class="flex items-center justify-between">
                 <h2 class="text-3xl font-bold tracking-tight">
                     Dashboard

@@ -125,21 +125,21 @@ const links2: LinkProp[] = [
                 </Sheet>
 
                 <div class="ml-auto flex items-center space-x-2">
-                    <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+                    <!-- <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
                         <SearchIcon class="h-4 w-4" />
-                    </Button>
+                    </Button> -->
 
-                    <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+                    <!-- <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
                         <BellIcon class="h-4 w-4" />
-                    </Button>
-
-                    <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
-                        <SparklesIcon class="h-4 w-4" />
-                    </Button>
+                    </Button> -->
 
                     <div class="hidden md:flex">
                         <ThemeToggle />
                     </div>
+
+                    <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+                        <SparklesIcon class="h-4 w-4" />
+                    </Button>
 
                     <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
                         <CircleHelpIcon class="h-4 w-4" />

@@ -96,3 +96,14 @@ body,
 #scrollarea > div {
     height: 100%;
 }
+
+input[type="color"] {
+	-webkit-appearance: none;
+    @apply p-2 w-10;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}

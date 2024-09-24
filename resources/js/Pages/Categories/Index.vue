@@ -11,27 +11,27 @@ defineProps<{
     categories: Category[],
 }>()
 
-const createAccountDialogOpen = ref(false)
+const createCategoryDialog = ref(false)
 </script>
 
 <template>
-    <Head title="Contas" />
+    <Head title="Categorias" />
 
-    <!-- <CreateDialog :banks="banks" :open="createAccountDialogOpen" @close="createAccountDialogOpen = false"/> -->
+    <CreateDialog :open="createCategoryDialog" @close="createCategoryDialog = false"/>
 
     <AuthenticatedLayout>
         <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 h-full">
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-3xl font-bold tracking-tight">
-                        Contas
+                        Categorias
                     </h2>
                     <!-- <p class="text-muted-foreground">
                         Todas as suas categoria ficam aqui.
                     </p> -->
                 </div>
                 <div v-if="categories.length > 0" class="flex items-center space-x-2">
-                    <Button @click="createAccountDialogOpen = true">Adicionar categoria</Button>
+                    <Button @click="createCategoryDialog = true">Adicionar categoria</Button>
                 </div>
             </div>
 
@@ -45,7 +45,7 @@ const createAccountDialogOpen = ref(false)
                         <!-- Adiciona sua primeira categoria para começar sua evolução financeira. -->
                     </p>
 
-                    <Button @click="createAccountDialogOpen = true" class="mt-4">
+                    <Button @click="createCategoryDialog = true" class="mt-4">
                         Adicionar categoria
                     </Button>
                 </div>
@@ -54,7 +54,6 @@ const createAccountDialogOpen = ref(false)
             <div v-else>
                 <DataTable :data="categories" />
             </div>
-
         </div>
     </AuthenticatedLayout>
 </template>

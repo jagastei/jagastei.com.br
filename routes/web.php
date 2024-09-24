@@ -23,7 +23,6 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/table', [DashboardController::class, 'table'])->name('dashboard');
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
@@ -35,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store');
-    Route::delete('/categorias/{card}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

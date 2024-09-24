@@ -65,7 +65,7 @@ export const columns: ColumnDef<Account>[] = [
                 h('img', {
                     src: `https://jagastei.com.br.test/images/banks/${row.original.bank.code}.png`,
                     class: 'size-6 rounded-xl',
-                }, row.getValue("name")),
+                }),
                 h('span', { class: 'ml-3' }, row.getValue("name")),
             ])
         },
