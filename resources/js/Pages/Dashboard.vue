@@ -33,7 +33,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                     <Button>Download</Button>
                 </div>
             </div>
-            <Tabs default-value="overview" class="space-y-4">
+            <Tabs default-value="overview" class="space-y-4 mt-4">
                 <TabsList>
                     <TabsTrigger value="overview">
                         Overview

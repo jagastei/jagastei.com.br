@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,11 +27,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/transacoes', [DashboardController::class, 'index'])->name('transactions.index');
+    Route::get('/transacoes', [TransactionController::class, 'index'])->name('transactions.index');
 
-    Route::get('/orcamentos', [DashboardController::class, 'index'])->name('budgets.index');
+    Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
 
-    Route::get('/metas', [DashboardController::class, 'index'])->name('goals.index');
+    Route::get('/metas', [GoalController::class, 'index'])->name('goals.index');
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
