@@ -11,19 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cards', function (Blueprint $table) {
+        Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id');
+            $table->string('identifier');
             $table->string('name');
-            $table->bigInteger('limit')->default(0);
-            
-            $table->string('digits')->nullable();
-            $table->foreignId('brand_id')->nullable();
-
-            $table->boolean('digital')->default(false);
-            $table->boolean('credit')->default(false);
-            $table->boolean('international')->default(false);
-
+            $table->boolean('enabled')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cards');
+        Schema::dropIfExists('brands');
     }
 };

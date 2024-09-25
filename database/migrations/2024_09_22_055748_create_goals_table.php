@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('name');
-            $table->bigInteger('value')->default(0);
+            $table->bigInteger('total')->default(0);
+            $table->bigInteger('current')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

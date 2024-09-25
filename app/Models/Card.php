@@ -15,8 +15,19 @@ class Card extends Model
 
     protected $fillable = [
         'account_id',
+        'brand_id',
         'name',
         'limit',
+        'digits',
+        'digital',
+        'credit',
+        'international',
+    ];
+
+    protected $casts = [
+        'digital' => 'boolean',
+        'credit' => 'boolean',
+        'international' => 'boolean',
     ];
 
     protected $appends = [
@@ -38,5 +49,10 @@ class Card extends Model
     public function account()
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }
