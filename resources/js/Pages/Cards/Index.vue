@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button'
 import { ref } from 'vue'
-import CardDialog from './CardDialog.vue'
+import CreateDialog from './CreateDialog.vue'
 import DataTable from '@/Components/CardTable/DataTable.vue'
 import type { Card } from '@/Components/CardTable/columns'
 
@@ -18,7 +18,7 @@ const createCardDialogOpen = ref(false)
 
     <Head title="Cartões" />
 
-    <CardDialog :cards="cards" :open="createCardDialogOpen" @close="createCardDialogOpen = false" />
+    <CreateDialog :cards="cards" :open="createCardDialogOpen" @close="createCardDialogOpen = false" />
 
     <AuthenticatedLayout>
         <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 h-full">
@@ -56,9 +56,6 @@ const createCardDialogOpen = ref(false)
             <div v-else>
                 <DataTable :data="cards" />
             </div>
-
-            {{ cards }}
-
         </div>
     </AuthenticatedLayout>
 </template>

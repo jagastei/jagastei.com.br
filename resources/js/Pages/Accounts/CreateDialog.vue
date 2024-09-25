@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
-import { useColorMode } from '@vueuse/core'
-import landmarkW from '@/../images/banks/landmark-white.svg'
-import landmarkB from '@/../images/banks/landmark-black.svg'
 import { useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils'
 import {
@@ -15,15 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/Components/ui/dialog'
-import { type DialogContentEmits, type DialogContentProps, useEmitAsProps, } from 'radix-vue'
-import {
-    NumberField,
-    NumberFieldContent,
-    NumberFieldDecrement,
-    NumberFieldIncrement,
-    NumberFieldInput,
-} from '@/Components/ui/number-field'
-
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next'
 import {
     Command,
@@ -41,7 +29,6 @@ import {
 import { Button } from '@/Components/ui/button'
 import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
-import { CurrencyDisplay, useCurrencyInput, ValueScaling } from 'vue-currency-input'
 import { Bank } from '@/Components/AccountTable/columns'
 
 const props = defineProps<{
@@ -51,27 +38,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['close'])
 
-const { inputRef, numberValue, setValue } = useCurrencyInput({
-    locale: 'pt-BR',
-    currency: 'BRL',
-    currencyDisplay: CurrencyDisplay.symbol,
-    precision: 2,
-    hideCurrencySymbolOnFocus: false,
-    hideGroupingSeparatorOnFocus: false,
-    hideNegligibleDecimalDigitsOnFocus: false,
-    autoDecimalDigits: true,
-    valueScaling: ValueScaling.precision,
-    useGrouping: true,
-    accountingSign: false,
-})
-
 const bankDialogOpen = ref(false)
-
-const mode = useColorMode()
-
-const replaceBankImage = (ev: any) => {
-    ev.target.src = mode.value === 'light' ? landmarkB : landmarkW
-}
 
 const query = ref<string>('')
 
@@ -97,7 +64,7 @@ const onSelected = (ev: any) => {
 const form = useForm<{
     bank: Bank | undefined,
     name: string,
-    initial_balance: any,
+    initial_balance: number,
 }>({
     bank: undefined,
     name: '',
@@ -108,7 +75,6 @@ const submit = () => {
     form.transform(data => ({
         ...data,
         bank: data.bank?.id,
-        // initial_balance: numberValue.value,
     })).post(route('accounts.store'), {
         onSuccess: () => {
             onClose()
@@ -151,23 +117,6 @@ const onClose = () => {
                         Saldo inicial
                     </Label>
 
-                    <!-- <NumberField id="balance" :default-value="0" v-model="form.initial_balance" locale="pt-BR" :format-options="{
-                        style: 'currency',
-                        currency: 'BRL',
-                        currencyDisplay: 'symbol',
-                        currencySign: 'accounting',
-                        maximumFractionDigits: 2,
-                        minimumFractionDigits: 2,
-                    }">
-                        <Label for="initial_balance">Saldo inicial</Label>
-                        <NumberFieldContent>
-                            <NumberFieldInput class="text-left pl-3"/>
-                        </NumberFieldContent>
-                    </NumberField> -->
-
-                    <!-- <Input ref="inputRef" v-model="form.initial_balance" id="initial_balance" class="mt-2"
-                        tabindex="2" /> -->
-
                     <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
                         prefix: 'R$',
                         suffix: '',
@@ -202,8 +151,7 @@ const onClose = () => {
                                 class="w-[375px] justify-between mt-2 p-3">
                                 <div class="flex items-center truncate">
                                     <div v-if="form.bank" class="min-w-4">
-                                        <img :src="`https://jagastei.com.br.test/images/banks/${form.bank?.code}.png`"
-                                            @error="replaceBankImage" class="size-4 rounded-xl" />
+                                        <img :src="`https://jagastei.com.br.test/images/banks/${form.bank?.code}.png`" class="size-4 rounded-xl" />
                                     </div>
                                     <span :class="['truncate', {
                                         'ml-3': form.bank,
@@ -227,7 +175,7 @@ const onClose = () => {
                                         <CommandItem v-for="bank in resultList" :key="bank.id" :value="bank"
                                             @select="onSelected" class="flex">
                                             <div class="min-w-4">
-                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`" @error="replaceBankImage" class="size-4 rounded-xl" />
+                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`" class="size-4 rounded-xl" />
                                             </div>
                                             <span class="ml-3 block truncate">
                                                 {{ bank.code }} - {{ bank.long_name }}</span>

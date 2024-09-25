@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import { useFuse } from '@vueuse/integrations/useFuse'
-import landmark from '@/../images/banks/landmark-white.svg'
 import { useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils'
 import {
@@ -13,8 +12,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/Components/ui/dialog'
-import { type DialogContentEmits, type DialogContentProps, useEmitAsProps, } from 'radix-vue'
-
 import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next'
 import {
     Command,
@@ -32,40 +29,22 @@ import {
 import { Button } from '@/Components/ui/button'
 import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
-import { CurrencyDisplay, useCurrencyInput, ValueScaling } from 'vue-currency-input'
+import { Account } from '@/Components/AccountTable/columns';
 
 const props = defineProps<{
-    cards: Card[],
+    accounts: Account[],
     open: boolean,
 }>();
 
 const emit = defineEmits(['close'])
 
-const { inputRef, numberValue, setValue } = useCurrencyInput({
-    locale: 'pt-BR',
-    currency: 'BRL',
-    currencyDisplay: CurrencyDisplay.symbol,
-    precision: 2,
-    hideCurrencySymbolOnFocus: false,
-    hideGroupingSeparatorOnFocus: false,
-    hideNegligibleDecimalDigitsOnFocus: false,
-    autoDecimalDigits: true,
-    valueScaling: ValueScaling.precision,
-    useGrouping: true,
-    accountingSign: false,
-})
-
-const cardDialogOpen = ref(false)
-
-const replaceBankImage = (ev: any) => {
-    ev.target.src = landmark
-}
+const accountDialogOpen = ref(false)
 
 const query = ref<string>('')
 
-const { results } = useFuse(query, props.banks, {
+const { results } = useFuse(query, props.accounts, {
     fuseOptions: {
-        keys: ['code', 'short_name', 'long_name'],
+        keys: ['name'],
         isCaseSensitive: false,
         threshold: 0.5,
     },
@@ -77,25 +56,24 @@ const resultList = computed(() => {
 })
 
 const onSelected = (ev: any) => {
-    form.bank = ev.detail.value as Bank;
-    cardDialogOpen.value = false;
+    form.account = ev.detail.value as Account;
+    accountDialogOpen.value = false;
 }
 
 const form = useForm<{
-    bank: Bank | undefined,
+    account: Account | undefined,
     name: string,
-    initial_balance: any,
+    limit: number,
 }>({
-    bank: undefined,
+    account: undefined,
     name: '',
-    initial_balance: 0,
+    limit: 0,
 });
 
 const submit = () => {
     form.transform(data => ({
         ...data,
-        bank: data.bank?.id,
-        initial_balance: numberValue.value,
+        account: data.account?.id,
     })).post(route('accounts.store'), {
         onFinish: () => {
             onClose()
@@ -104,27 +82,13 @@ const submit = () => {
 };
 
 const onClose = () => {
+    form.reset()
     emit('close')
-    setTimeout(() => {
-            form.reset()
-        }, 250)
-}
-
-const reset = (open: boolean) => {
-    if (!open) {
-        onClose()
-    }
-
-    if (open) {
-        nextTick(() => {
-            setValue(0)
-        })
-    }
 }
 </script>
 
 <template>
-    <Dialog :open="open" @update:open="reset">
+    <Dialog :open="open">
         <DialogTrigger as-child>
             <slot />
         </DialogTrigger>
@@ -132,7 +96,7 @@ const reset = (open: boolean) => {
             <DialogHeader>
                 <DialogTitle>Adicionar cartão</DialogTitle>
                 <DialogDescription>
-                    Adicione seu cartão para melhorar seus controles financeiros.
+                    Identifique seu cartão e clique em adicionar.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
@@ -140,19 +104,17 @@ const reset = (open: boolean) => {
                     <Label for="name" class="text-left">
                         Nome
                     </Label>
-                    <Input id="name" v-model="form.name" placeholder="Conta principal" class="mt-2" autocomplete="off"
+                    <Input id="name" v-model="form.name" placeholder="Cartão principal" class="mt-2" autocomplete="off"
                         tabindex="1" />
                 </div>
 
                 <div class="flex flex-col">
-                    <Label for="initial_balance" class="text-left">
-                        Saldo inicial
+                    <Label for="limit" class="text-left">
+                        Limite
                     </Label>
 
-                    <Input ref="inputRef" id="initial_balance" v-model="form.initial_balance" class="mt-2"
-                        tabindex="2" />
-                    <!-- <Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
-                        prefix: 'R$ ',
+                    <Input id="limit" v-model.lazy="form.limit" class="mt-2" v-money3="{
+                        prefix: 'R$',
                         suffix: '',
                         thousands: '.',
                         decimal: ',',
@@ -168,55 +130,46 @@ const reset = (open: boolean) => {
                         modelModifiers: {
                             number: false,
                         },
-                    }" tabindex="2" /> -->
+                    }" tabindex="2" />
                 </div>
 
                 <div class="flex flex-col">
-                    <div class="flex items-center">
-                        <Label for="bank">Banco</Label>
-                        <button class="ml-auto inline-block text-sm underline">
-                            Não encontrou seu banco?
-                        </button>
-                    </div>
+                    <Label for="account">Conta</Label>
 
-                    <Popover v-model:open="cardDialogOpen">
+                    <Popover v-model:open="accountDialogOpen">
                         <PopoverTrigger as-child>
                             <Button tabindex="3" id="bank" variant="outline" role="combobox"
                                 class="w-[375px] justify-between mt-2 p-3">
                                 <div class="flex items-center truncate">
-                                    <div v-if="form.bank" class="min-w-4">
-                                        <img :src="`https://jagastei.com.br.test/images/banks/${form.bank?.code}.png`"
-                                            @error="replaceBankImage" class="size-4 rounded-xl" />
+                                    <div v-if="form.account" class="min-w-4">
+                                        <img :src="`https://jagastei.com.br.test/images/banks/${form.account.bank.code}.png`" class="size-4 rounded-xl" />
                                     </div>
                                     <span :class="['truncate', {
-                                        'ml-3': form.bank,
-                                    }]">{{ form.bank ? form.bank?.long_name : 'Escolha um banco' }}</span>
+                                        'ml-3': form.account,
+                                    }]">{{ form.account ? form.account?.name : 'Escolha uma conta' }}</span>
                                 </div>
                                 <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent class="w-[375px] p-0">
-                            <Command v-model="form.bank" v-model:searchTerm="query">
+                            <Command v-model="form.account" v-model:searchTerm="query">
                                 <CommandInput class="h-9" placeholder="Buscar" name="query" autocomplete="off" />
 
                                 <CommandEmpty>
-                                    <template v-if="query.length > 0">Nenhum banco
-                                        encontrado.</template>
-                                    <template v-else>Informe o nome ou código do banco.</template>
+                                    <template v-if="query.length > 0">Nenhuma conta encontrada.</template>
+                                    <template v-else>Informe o nome da conta.</template>
                                 </CommandEmpty>
 
                                 <CommandList>
                                     <CommandGroup>
-                                        <CommandItem v-for="bank in resultList" :key="bank.id" :value="bank"
+                                        <CommandItem v-for="account in resultList" :key="account.id" :value="account"
                                             @select="onSelected" class="flex">
                                             <div class="min-w-4">
-                                                <img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
-                                                    @error="replaceBankImage" class="size-4 rounded-xl" />
+                                                <img :src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`" class="size-4 rounded-xl" />
                                             </div>
-                                            <span class="ml-3 block truncate">{{ bank.long_name
-                                                }}</span>
+                                            <span class="ml-3 block truncate">{{ account.name }}</span>
                                             <Check
-                                                :class="cn('ml-auto h-4 w-4', form.bank?.id === bank.id ? 'opacity-100' : 'opacity-0')" />
+                                                :class="cn('ml-auto h-4 w-4', form.account?.id === account.id ? 'opacity-100' : 'opacity-0')" />
                                         </CommandItem>
                                     </CommandGroup>
                                 </CommandList>

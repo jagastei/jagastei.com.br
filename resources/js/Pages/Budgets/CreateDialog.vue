@@ -23,19 +23,16 @@ const emit = defineEmits(['close'])
 
 const form = useForm<{
     name: string,
-    color: string,
+    total: number,
 }>({
     name: '',
-    color: '#22C55E',
+    total: 0,
 });
 
 const submit = () => {
-    form.post(route('categories.store'), {
-        onSuccess: () => {
+    form.post(route('budgets.store'), {
+        onFinish: () => {
             onClose()
-        },
-        onError: (error) => {
-            console.log(error)
         },
     });
 };
@@ -53,9 +50,9 @@ const onClose = () => {
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px]" @interactOutside="onClose" @escapeKeyDown="onClose">
             <DialogHeader>
-                <DialogTitle>Adicionar categoria</DialogTitle>
+                <DialogTitle>Adicionar cartão</DialogTitle>
                 <DialogDescription>
-                    Adicionar uma categoria para identificar e analisar melhor seus gastos.
+                    Adicione um orçamento para acompanhar suas metas e objetivos de vida.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
@@ -63,19 +60,37 @@ const onClose = () => {
                     <Label for="name" class="text-left">
                         Nome
                     </Label>
-                    <Input id="name" v-model="form.name" placeholder="Alimentação" class="mt-2" autocomplete="off"
+                    <Input id="name" v-model="form.name" placeholder="Conta principal" class="mt-2" autocomplete="off"
                         tabindex="1" />
                 </div>
 
                 <div class="flex flex-col">
-                    <Label for="color" class="text-left w-fit">
-                        Cor
+                    <Label for="total" class="text-left">
+                        Valor
                     </Label>
-                    <Input id="color" type="color" v-model="form.color" class="mt-2 cursor-pointer" tabindex="2"/>
+
+                    <Input id="total" v-model.lazy="form.total" class="mt-2" v-money3="{
+                        prefix: 'R$ ',
+                        suffix: '',
+                        thousands: '.',
+                        decimal: ',',
+                        precision: 2,
+                        disableNegative: false,
+                        disabled: false,
+                        min: null,
+                        max: null,
+                        allowBlank: false,
+                        minimumNumberOfCharacters: 0,
+                        shouldRound: false,
+                        focusOnRight: false,
+                        modelModifiers: {
+                            number: false,
+                        },
+                    }" tabindex="2" />
                 </div>
             </div>
             <DialogFooter>
-                <Button :disabled="form.processing" @click="submit" type="button" tabindex="3">
+                <Button :disabled="form.processing" @click="submit" type="button">
                     <Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
                     Adicionar
                 </Button>
