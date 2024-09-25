@@ -17,7 +17,7 @@ import {
 } from '@tanstack/vue-table'
 
 import { ref } from 'vue'
-import type { Budget } from './columns'
+import type { Goal } from './columns'
 import DataTablePagination from './DataTablePagination.vue'
 import DataTableToolbar from './DataTableToolbar.vue'
 import { valueUpdater } from '@/utils'
@@ -32,7 +32,7 @@ import {
 import { columns } from './columns'
 
 interface DataTableProps {
-    data: Budget[]
+    data: Goal[]
 }
 
 const props = defineProps<DataTableProps>()

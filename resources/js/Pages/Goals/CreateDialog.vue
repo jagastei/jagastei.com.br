@@ -30,7 +30,7 @@ const form = useForm<{
 });
 
 const submit = () => {
-    form.post(route('budgets.store'), {
+    form.post(route('goals.store'), {
         onFinish: () => {
             onClose()
         },
@@ -50,9 +50,9 @@ const onClose = () => {
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px]" @interactOutside="onClose" @escapeKeyDown="onClose">
             <DialogHeader>
-                <DialogTitle>Adicionar orçamento</DialogTitle>
+                <DialogTitle>Adicionar meta</DialogTitle>
                 <DialogDescription>
-                    Adicione um orçamento para controlar seus gastos.
+                    Adicione uma meta para acompanhar seus objetivos de vida.
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">

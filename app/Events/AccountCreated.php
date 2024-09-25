@@ -19,24 +19,9 @@ class AccountCreated extends Event
     )
     { }
 
-    public function authorize()
-    {
-
-    }
-
-    public function validate(AccountState $account)
-    {
-
-    }
-
     public function apply(AccountState $account)
     {
         $account->balance = $this->initial_balance;
-    }
-
-    public function fired()
-    {
-
     }
 
     public function handle()

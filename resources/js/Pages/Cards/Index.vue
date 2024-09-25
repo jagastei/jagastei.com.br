@@ -5,9 +5,12 @@ import { Button } from '@/Components/ui/button'
 import { ref } from 'vue'
 import CreateDialog from './CreateDialog.vue'
 import DataTable from '@/Components/CardTable/DataTable.vue'
-import type { Card } from '@/Components/CardTable/columns'
+import type { Brand, Card } from '@/Components/CardTable/columns'
+import { Account } from '@/Components/AccountTable/columns';
 
 defineProps<{
+    brands: Brand[],
+    accounts: Account[],
     cards: Card[],
 }>()
 
@@ -18,7 +21,7 @@ const createCardDialogOpen = ref(false)
 
     <Head title="Cartões" />
 
-    <CreateDialog :cards="cards" :open="createCardDialogOpen" @close="createCardDialogOpen = false" />
+    <CreateDialog :brands="brands" :accounts="accounts" :open="createCardDialogOpen" @close="createCardDialogOpen = false" />
 
     <AuthenticatedLayout>
         <div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 h-full">

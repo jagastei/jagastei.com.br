@@ -2,12 +2,24 @@
 
 namespace App\Events;
 
+use App\Models\Budget;
 use Thunk\Verbs\Event;
 
 class BudgetCreated extends Event
 {
+    public function __construct(
+        public int $user_id,
+        public string $name,
+        public string $total,
+    )
+    { }
+
     public function handle()
     {
-        // The best things in life are free, not cheap. - Lil Wayne
+        Budget::create([
+            'user_id' => $this->user_id,
+            'name' => $this->name,
+            'total' => $this->total,
+        ]);
     }
 }

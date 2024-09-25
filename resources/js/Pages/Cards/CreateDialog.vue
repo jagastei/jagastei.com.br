@@ -30,8 +30,10 @@ import { Button } from '@/Components/ui/button'
 import { Label } from '@/Components/ui/label'
 import { Input } from '@/Components/ui/input'
 import { Account } from '@/Components/AccountTable/columns';
+import { Brand } from '@/Components/CardTable/columns';
 
 const props = defineProps<{
+    brands: Brand[],
     accounts: Account[],
     open: boolean,
 }>();
