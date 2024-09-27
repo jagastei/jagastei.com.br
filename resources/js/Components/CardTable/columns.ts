@@ -75,7 +75,7 @@ export const columns: ColumnDef<Card>[] = [
             h(DataTableColumnHeader, { column, title: "Limite" }),
 
         cell: ({ row }) => {
-            return h('div', {}, row.getValue('formatted_limit'));
+            return h('div', { }, row.getValue('formatted_limit'));
         },
         enableSorting: false,
         enableHiding: false,

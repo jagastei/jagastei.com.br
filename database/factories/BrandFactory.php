@@ -17,7 +17,7 @@ class BrandFactory extends Factory
     public function definition(): array
     {
         return [
-            'identifier' => fake()->unique(),
+            'identifier' => fake()->unique()->numberBetween(1, 50),
             'name' => fake()->name(),
             'enabled' => fake()->boolean(),
         ];

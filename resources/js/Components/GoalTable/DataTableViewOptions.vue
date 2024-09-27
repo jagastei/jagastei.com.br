@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import type { Budget } from './columns'
+import type { Goal } from './columns'
 import { Icon } from '@iconify/vue'
 
 import { Button } from '@/Components/ui/button'
@@ -15,7 +15,7 @@ import {
 } from '@/Components/ui/dropdown-menu'
 
 interface DataTableViewOptionsProps {
-    table: Table<Budget>
+    table: Table<Goal>
 }
 
 const props = defineProps<DataTableViewOptionsProps>()

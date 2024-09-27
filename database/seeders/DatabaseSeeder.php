@@ -46,6 +46,12 @@ class DatabaseSeeder extends Seeder
             'balance' => 1_000_00,
         ]);
 
+        Account::factory()
+            ->count(5)
+            ->for($user)
+            ->for($bank)
+            ->create();
+
         $card = Card::factory()->create([
             'account_id' => $account->id,
             'name' => 'Cartão principal',
@@ -57,11 +63,22 @@ class DatabaseSeeder extends Seeder
             'international' => false,
         ]);
 
+        Card::factory()
+            ->count(5)
+            ->for($account)
+            ->for($brand)
+            ->create();
+
         $category = Category::factory()->create([
             'user_id' => $user->id,
             'name' => 'Alimentação',
             'color' => '#22C55E',
         ]);
+
+        Category::factory()
+            ->count(5)
+            ->for($user)
+            ->create();
 
         $goal = Goal::factory()->create([
             'user_id' => $user->id,
@@ -70,12 +87,22 @@ class DatabaseSeeder extends Seeder
             'current' => 0,
         ]);
 
+        Goal::factory()
+            ->count(5)
+            ->for($user)
+            ->create();
+
         $budget = Budget::factory()->create([
             'user_id' => $user->id,
             'name' => 'iFood',
             'total' => 300_00,
             'current' => 0,
         ]);
+
+        Budget::factory()
+            ->count(5)
+            ->for($user)
+            ->create();
 
         $transaction = Transaction::factory()->create([
             // 'card_id' => $card->id,

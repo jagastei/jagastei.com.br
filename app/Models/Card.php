@@ -6,6 +6,7 @@ use Akaunting\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Card extends Model
@@ -34,7 +35,7 @@ class Card extends Model
         'formatted_limit',
     ];
 
-    public function getFormattedLimitAttribute()
+    public function getFormattedLimitAttribute(): string
     {
         return Money::BRL($this->limit ?? 0)->format();
     }
@@ -46,12 +47,12 @@ class Card extends Model
         });
     }
 
-    public function account()
+    public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
     }
 
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }

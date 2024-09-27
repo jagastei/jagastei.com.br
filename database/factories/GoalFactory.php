@@ -18,6 +18,8 @@ class GoalFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'total' => fake()->numberBetween(1000_00, 2_000_00),
+            'current' => fake()->numberBetween(100_00, 1_000_00),
         ];
     }
 }

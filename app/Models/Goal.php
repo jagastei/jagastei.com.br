@@ -6,6 +6,7 @@ use Akaunting\Money\Money;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Goal extends Model
@@ -23,16 +24,22 @@ class Goal extends Model
     protected $appends = [
         'formatted_total',
         'formatted_current',
+        'percentage',
     ];
 
-    public function getFormattedTotalAttribute()
+    public function getFormattedTotalAttribute(): string
     {
         return Money::BRL($this->total ?? 0)->format();
     }
 
-    public function getFormattedCurrentAttribute()
+    public function getFormattedCurrentAttribute(): string
     {
         return Money::BRL($this->current ?? 0)->format();
+    }
+
+    public function getPercentageAttribute(): float
+    {
+        return ($this->current / $this->total) * 100;
     }
 
     public function scopeOfUser(Builder $query, User $user): Builder
@@ -40,7 +47,7 @@ class Goal extends Model
         return $query->where('user_id', $user->id);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

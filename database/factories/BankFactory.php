@@ -17,7 +17,7 @@ class BankFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => fake()->unique(),
+            'code' => fake()->unique()->numberBetween(1, 50),
             'short_name' => fake()->name(),
             'long_name' => fake()->name(),
             'enabled' => fake()->boolean(),

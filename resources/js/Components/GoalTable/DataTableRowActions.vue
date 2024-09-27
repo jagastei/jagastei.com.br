@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { budgetSchema } from './columns'
-import type { Budget } from './columns'
+import { goalSchema } from './columns'
+import type { Goal } from './columns'
 import { Icon } from '@iconify/vue'
 import { router } from '@inertiajs/vue3'
 import { Button } from '@/Components/ui/button'
@@ -37,10 +37,10 @@ interface DataTableRowActionsProps {
 }
 const props = defineProps<DataTableRowActionsProps>()
 
-const budget = computed(() => budgetSchema.parse(props.row.original))
+const goal = computed(() => goalSchema.parse(props.row.original))
 
 const destroy = () => {
-  router.delete(route('budgets.destroy', budget.value.id))
+  router.delete(route('goals.destroy', goal.value.id))
 }
 </script>
 
@@ -70,7 +70,7 @@ const destroy = () => {
       <AlertDialogHeader>
         <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
         <AlertDialogDescription>
-          Você está prestes a remover o orçamento <b>{{ budget.name }}</b>. Não será possível desfazer essa ação.
+          Você está prestes a remover a meta <b>{{ goal.name }}</b>. Não será possível desfazer essa ação.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>

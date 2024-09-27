@@ -18,6 +18,7 @@ export const goalSchema = z.object({
     current: z.number(),
     formatted_current: z.string(),
     formatted_limit: z.string(),
+    percentage: z.number(),
     created_at: z.string(),
     updated_at: z.string(),
 });
@@ -58,12 +59,34 @@ export const columns: ColumnDef<Goal>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: "formatted_limit",
+        accessorKey: "formatted_total",
         header: ({ column }) =>
             h(DataTableColumnHeader, { column, title: "Limite" }),
 
         cell: ({ row }) => {
-            return h('div', {}, row.getValue('formatted_limit'));
+            return h('div', { class: 'flex flex-col' }, [
+                h('span', { }, row.getValue('formatted_total')),
+                h('div', {
+                    class: 'relative mt-1 w-20 h-2 rounded-full overflow-hidden',
+                }, [
+                    h('div', {
+                        class: [
+                            'absolute h-full w-full',
+                            row.original.percentage === 100 ? 'bg-green-100' : 'bg-blue-100'
+                        ],
+                    }, []),
+                    h('div', {
+                        'data-nitro': row.original.percentage,
+                        class: [
+                            'absolute h-full transition-all duration-1000 ease-out',
+                            row.original.percentage === 100 ? 'bg-green-500' : 'bg-blue-500'
+                        ],
+                        style: {
+                            width: '0%',
+                        },
+                    }, []),
+                ]),
+            ]);
         },
         enableSorting: false,
         enableHiding: false,
