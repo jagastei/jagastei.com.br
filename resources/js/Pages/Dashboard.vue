@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import Overview from '@/Components/Overview.vue'
+import Overview2 from '@/Components/Overview2.vue'
 import DateRangePicker from '@/Components/DateRangePicker.vue'
 import RecentSales from '@/Components/RecentSales.vue'
 import { Button } from '@/Components/ui/button'
@@ -18,6 +19,11 @@ import {
     TabsTrigger,
 } from '@/Components/ui/tabs'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+defineProps<{
+    overview: Array<any>,
+    overview2: Array<any>,
+}>()
 </script>
 
 <template>
@@ -140,7 +146,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                                 <CardTitle>Overview</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <Overview />
+                                <!-- <Overview :overview="overview"/> -->
+                                <Overview2 :overview="overview2"/>
                             </CardContent>
                         </Card>
                         <Card class="col-span-3">
