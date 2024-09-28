@@ -24,6 +24,7 @@ class Budget extends Model
     protected $appends = [
         'formatted_total',
         'formatted_current',
+        'formatted_diff',
         'percentage',
     ];
 
@@ -35,6 +36,11 @@ class Budget extends Model
     public function getFormattedCurrentAttribute(): string
     {
         return Money::BRL($this->current ?? 0)->format();
+    }
+
+    public function getFormattedDiffAttribute(): string
+    {
+        return Money::BRL($this->total - $this->current)->format();
     }
 
     public function getPercentageAttribute(): float

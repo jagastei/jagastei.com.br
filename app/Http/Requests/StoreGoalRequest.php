@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreGoalRequest extends FormRequest
@@ -23,6 +24,21 @@ class StoreGoalRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:30'],
+            'total' => ['required', 'integer', 'numeric'],
         ];
+    }
+
+    /**
+     * Get data to be validated from the request.
+     *
+     * @return array
+     */
+    public function validationData()
+    {
+        $data = $this->all();
+
+        $data['total'] = Helper::extractNumbersFromString($data['total'], forceInteger: true);
+
+        return $data;
     }
 }

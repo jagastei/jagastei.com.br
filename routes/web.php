@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
     Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
-    Route::delete('/orcamentos/{account}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
+    Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
 
     Route::get('/metas', [GoalController::class, 'index'])->name('goals.index');
     Route::post('/metas', [GoalController::class, 'store'])->name('goals.store');
-    Route::delete('/metas/{account}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::delete('/metas/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');

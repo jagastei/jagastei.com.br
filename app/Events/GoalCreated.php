@@ -10,7 +10,7 @@ class GoalCreated extends Event
     public function __construct(
         public int $user_id,
         public string $name,
-        public string $total,
+        public int $total,
     )
     { }
 

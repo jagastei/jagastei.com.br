@@ -104,9 +104,11 @@ class DatabaseSeeder extends Seeder
             ->for($user)
             ->create();
 
-        $transaction = Transaction::factory()->create([
-            // 'card_id' => $card->id,
-            // 'category_id' => $category->id,
-        ]);
+        Transaction::factory()
+            ->count(300)
+            ->for($category)
+            ->for($account)
+            ->for($card)
+            ->create();
     }
 }

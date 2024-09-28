@@ -30,6 +30,7 @@ class BudgetController extends Controller
         BudgetCreated::fire(
             user_id: $userId,
             name: $input['name'],
+            total: $input['total'],
         );
 
         return back();

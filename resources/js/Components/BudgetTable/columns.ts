@@ -17,7 +17,7 @@ export const budgetSchema = z.object({
     formatted_total: z.string(),
     current: z.number(),
     formatted_current: z.string(),
-    formatted_limit: z.string(),
+    formatted_diff: z.string(), 
     percentage: z.number(),
     created_at: z.string(),
     updated_at: z.string(),
@@ -61,18 +61,22 @@ export const columns: ColumnDef<Budget>[] = [
     {
         accessorKey: "formatted_total",
         header: ({ column }) =>
-            h(DataTableColumnHeader, { column, title: "Valor" }),
+            h(DataTableColumnHeader, { column, title: "Progresso" }),
 
         cell: ({ row }) => {
+            const text = `${row.original.formatted_total}`;
+
             return h('div', { class: 'flex flex-col' }, [
-                h('span', { }, row.getValue('formatted_total')),
+                h('span', {
+                    class: 'text-sm',
+                }, text),
                 h('div', {
-                    class: 'relative mt-1 w-20 h-2 rounded-full overflow-hidden',
+                    class: 'relative mt-2 w-20 h-2 rounded-full overflow-hidden',
                 }, [
                     h('div', {
                         class: [
                             'absolute h-full w-full',
-                            row.original.percentage === 100 ? 'bg-green-100' : 'bg-blue-100'
+                            row.original.percentage === 100 ? 'bg-green-100' : 'bg-secondary dark:bg-secondary'
                         ],
                     }, []),
                     h('div', {

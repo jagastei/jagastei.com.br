@@ -33,7 +33,7 @@ import {
 } from '@/Components/ui/alert-dialog'
 
 interface DataTableRowActionsProps {
-  row: Row<Budget>
+  row: Row<Goal>
 }
 const props = defineProps<DataTableRowActionsProps>()
 

@@ -30,6 +30,7 @@ class GoalController extends Controller
         GoalCreated::fire(
             user_id: $userId,
             name: $input['name'],
+            total: $input['total'],
         );
 
         return back();
