@@ -4,8 +4,11 @@ import DataTable from '@/Components/TransactionTable/DataTable.vue';
 import { columns, Transaction } from '@/Components/TransactionTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
+import { Category } from '@/Components/CategoryTable/columns';
 
 defineProps<{
+	filter: any,
+	categories: Category[];
 	transactions: Pagination<Transaction>;
 }>();
 </script>
@@ -22,7 +25,7 @@ defineProps<{
 					</p>
 				</div>
 			</div>
-			<DataTable :data="transactions" :columns="columns" />
+			<DataTable :data="transactions" :columns="columns" :filter="filter" :categories="categories"/>
 		</div>
 	</AuthenticatedLayout>
 </template>

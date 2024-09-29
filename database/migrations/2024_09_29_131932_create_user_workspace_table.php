@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_workspace', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('workspace_id');
+            $table->foreignUuid('user_id');
+            $table->foreignUuid('workspace_id');
             $table->string('email');
             // $table->string('phone');
             $table->boolean('can_edit')->default(false);

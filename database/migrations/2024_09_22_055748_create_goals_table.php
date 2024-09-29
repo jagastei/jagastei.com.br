@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('goals', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id');
             $table->string('name');
             $table->bigInteger('total')->default(0);
             $table->bigInteger('current')->default(0);

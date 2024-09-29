@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invitations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id');
             $table->string('email');
             // $table->string('phone');
             $table->enum('status', ['PENDING', 'ACCEPTED', 'DECLINED', 'EXPIRED']);

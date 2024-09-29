@@ -57,21 +57,11 @@ export const columns: ColumnDef<Transaction>[] = [
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
 
 		cell: ({ row }) => {
-			// const label = labels.find(
-			//     (label) => label.value === row.original.label
-			// );
-
-			return h('div', { class: 'flex space-x-2' }, [
-				// label
-				//     ? h(Badge, { variant: "outline" }, () => label.label)
-				//     : null,
-				h(
-					'span',
-					{ class: 'max-w-[500px] truncate font-medium' },
-					row.getValue('title')
-				),
-			]);
-			return null;
+			return h(
+				'span',
+				{ class: 'max-w-[500px] truncate font-medium' },
+				row.getValue('title')
+			);
 		},
 	},
 	{
@@ -80,12 +70,6 @@ export const columns: ColumnDef<Transaction>[] = [
 			h(DataTableColumnHeader, { column, title: 'Categoria' }),
 
 		cell: ({ row }) => {
-			// const status = statuses.find(
-			//     (status) => status.value === row.getValue("status")
-			// );
-
-			// if (!status) return null;
-
 			return h('div', { class: 'flex w-[100px] items-center' }, [
 				// status.icon &&
 				//     h(status.icon, {
@@ -95,6 +79,9 @@ export const columns: ColumnDef<Transaction>[] = [
 			]);
 		},
 		filterFn: (row, id, value) => {
+			console.log('row', row)
+			console.log('id', id)
+			console.log('value', value)
 			return value.includes(row.getValue(id));
 		},
 	},

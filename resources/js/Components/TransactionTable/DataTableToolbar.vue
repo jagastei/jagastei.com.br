@@ -9,9 +9,11 @@ import DataTableViewOptions from './DataTableViewOptions.vue';
 import { Icon } from '@iconify/vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
+import { Category, categorySchema } from '../CategoryTable/columns';
 
 interface DataTableToolbarProps {
 	table: Table<Transaction>;
+	categories: Category[];
 }
 
 const props = defineProps<DataTableToolbarProps>();
@@ -30,18 +32,23 @@ const isFiltered = computed(
 				class="h-8 w-[150px] lg:w-[250px]"
 				@input="table.getColumn('title')?.setFilterValue($event.target.value)"
 			/>
+
+			<DataTableFacetedFilter
+				v-if="table.getColumn('category')"
+				:column="table.getColumn('category')"
+				title="Categoria"
+				:options="categories.map((category) => ({
+					value: `${category.id}`,
+					label: category.name,
+				}))"
+			/>
+
 			<!-- <DataTableFacetedFilter
-        v-if="table.getColumn('status')"
-        :column="table.getColumn('status')"
-        title="Status"
-        :options="statuses"
-      />
-      <DataTableFacetedFilter
-        v-if="table.getColumn('priority')"
-        :column="table.getColumn('priority')"
-        title="Priority"
-        :options="priorities"
-      /> -->
+				v-if="table.getColumn('priority')"
+				:column="table.getColumn('priority')"
+				title="Priority"
+				:options="priorities"
+			/> -->
 
 			<Button
 				v-if="isFiltered"

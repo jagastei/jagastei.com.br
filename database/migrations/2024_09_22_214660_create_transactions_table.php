@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->enum('type', ['IN', 'OUT']);
             $table->bigInteger('value');
-            $table->foreignId('category_id');
-            $table->foreignId('account_id');
+            $table->foreignUuid('category_id');
+            $table->foreignUuid('account_id');
             $table->enum('method', ['CARD', 'TED', 'PIX', 'UNKNOWN']);
-            $table->foreignId('card_id')->nullable();
+            $table->foreignUuid('card_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

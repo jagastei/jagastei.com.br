@@ -2,6 +2,7 @@
 import type {
 	ColumnDef,
 	ColumnFiltersState,
+	GlobalFilterTableState,
 	PaginationState,
 	SortingState,
 	VisibilityState,
@@ -32,15 +33,23 @@ import {
 } from '@/Components/ui/table';
 import { Pagination } from '@/types/pagination';
 import { router } from '@inertiajs/vue3';
+import { Category } from '../CategoryTable/columns';
 
 interface DataTableProps {
-	columns: ColumnDef<Transaction, any>[];
 	data: Pagination<Transaction>;
+	columns: ColumnDef<Transaction, any>[];
+	filter: any,
+	categories: Category[];
 }
 const props = defineProps<DataTableProps>();
 
 const sorting = ref<SortingState>([]);
-const columnFilters = ref<ColumnFiltersState>([]);
+
+const columnFilters = ref<ColumnFiltersState>(props.filter ? Object.entries(props.filter).map(([id, value]) => ({
+  id,
+  value: (value as string).split(','),
+})): []);
+
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
@@ -49,7 +58,21 @@ const pagination = ref<PaginationState>({
 	pageSize: props.data.per_page,
 });
 
-watch(pagination, (newValue) => {
+watch(columnFilters, (newValue) => {
+	const filters = Object.assign({}, ...newValue.map((filter) => ({
+		[filter.id]: (filter.value as Array<any>).join(',')
+	})))
+
+	router.get(
+		route('transactions.index', {
+			_query: {
+				filter: filters,
+			},
+		})
+	)
+});
+
+watch(pagination, (newValue) => 
 	router.get(
 		route('transactions.index', {
 			_query: {
@@ -57,8 +80,12 @@ watch(pagination, (newValue) => {
 				per_page: newValue.pageSize,
 			},
 		})
-	);
-});
+	)
+)
+
+const fetchData = () => {
+
+}
 
 const table = useVueTable({
 	get data() {
@@ -102,15 +129,18 @@ const table = useVueTable({
 	get rowCount() {
 		return props.data.total;
 	},
-	autoResetPageIndex: true,
+	autoResetPageIndex: false,
 	onPaginationChange: (updaterOrValue) =>
 		valueUpdater(updaterOrValue, pagination),
+	manualFiltering: true,
+	// onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, filters),
+	// manualSorting: true,
 });
 </script>
 
 <template>
 	<div class="space-y-4">
-		<DataTableToolbar :table="table" />
+		<DataTableToolbar :table="table" :categories="categories"/>
 
 		<div class="rounded-md border">
 			<Table>

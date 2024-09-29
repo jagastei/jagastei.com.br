@@ -56,7 +56,7 @@ const links: LinkProp[] = [
 		active: route().current('dashboard'),
 	},
 	{
-		title: 'Transações',
+		title: 'Movimentações',
 		label: '',
 		icon: 'lucide:arrow-left-right',
 		route: route('transactions.index'),

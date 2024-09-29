@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('account_id');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('account_id');
             $table->string('name');
             $table->bigInteger('limit')->default(0);
 
             $table->string('digits')->nullable();
-            $table->foreignId('brand_id')->nullable();
+            $table->foreignUuid('brand_id')->nullable();
 
             $table->boolean('digital')->default(false);
             $table->boolean('credit')->default(false);

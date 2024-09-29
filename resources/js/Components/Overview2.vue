@@ -11,11 +11,11 @@ const props = defineProps<{
 
 console.log(props.overview);
 
-const xFormatter = (value, i) => {
+const xFormatter = (value: any, i: number) => {
 	return props.overview[i].name;
 };
 
-const yFormatter = (value, i) => {
+const yFormatter = (value: any, i: number) => {
 	return formatMoney(value);
 };
 </script>

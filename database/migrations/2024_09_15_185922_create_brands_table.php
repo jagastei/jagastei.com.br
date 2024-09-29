@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('bank_id')->nullable();
+        Schema::create('brands', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('identifier');
             $table->string('name');
-            $table->bigInteger('balance')->default(0);
+            $table->boolean('enabled')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('brands');
     }
 };
