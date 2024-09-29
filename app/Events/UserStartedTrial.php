@@ -11,10 +11,7 @@ class UserStartedTrial extends Event
     #[StateId(UserState::class)]
     public ?int $user_id = null;
 
-    public function authorize()
-    {
-
-    }
+    public function authorize() {}
 
     public function validate(UserState $user)
     {
@@ -26,13 +23,7 @@ class UserStartedTrial extends Event
         $user->trial_started_at = now();
     }
 
-    public function fired()
-    {
+    public function fired() {}
 
-    }
-
-    public function handle()
-    {
-        
-    }
+    public function handle() {}
 }

@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Bank;
-use GuzzleHttp\Client;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Http;
 use JsonException;
 
 class BankSeeder extends Seeder
@@ -16,7 +13,7 @@ class BankSeeder extends Seeder
      */
     public function run(): void
     {
-        try  {
+        try {
             $banks = json_decode(file_get_contents(database_path('seeders/fixtures/banks.json')), true);
 
             $enabled = [
@@ -97,7 +94,7 @@ class BankSeeder extends Seeder
                 ],
             ];
 
-            foreach($banks as $bank) {
+            foreach ($banks as $bank) {
                 Bank::create([
                     'code' => $bank['COMPE'],
                     'short_name' => $bank['ShortName'],
@@ -105,7 +102,7 @@ class BankSeeder extends Seeder
                 ]);
             }
 
-            foreach($enabled as $bank) {
+            foreach ($enabled as $bank) {
                 Bank::query()
                     ->where('code', $bank['COMPE'])
                     ->update([
@@ -115,6 +112,6 @@ class BankSeeder extends Seeder
         } catch (JsonException $e) {
             dd($e->getMessage());
         }
-        
+
     }
 }

@@ -6,7 +6,6 @@ use App\Events\CardCreated;
 use App\Http\Requests\StoreCardRequest;
 use App\Models\Account;
 use App\Models\Brand;
-use Illuminate\Http\Request;
 use App\Models\Card;
 use Inertia\Inertia;
 
@@ -31,7 +30,7 @@ class CardController extends Controller
             ->with([
                 'account' => function ($query) {
                     $query->with([
-                        'bank'
+                        'bank',
                     ]);
                 },
                 'brand',

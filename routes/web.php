@@ -92,4 +92,4 @@ Route::middleware('auth')->group(function () {
     })->name('subscription-checkout-cancel');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

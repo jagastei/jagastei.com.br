@@ -6,7 +6,6 @@ use App\Events\AccountCreated;
 use App\Http\Requests\StoreAccountRequest;
 use App\Models\Account;
 use App\Models\Bank;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class AccountController extends Controller

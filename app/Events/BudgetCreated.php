@@ -11,8 +11,7 @@ class BudgetCreated extends Event
         public int $user_id,
         public string $name,
         public int $total,
-    )
-    { }
+    ) {}
 
     public function handle()
     {

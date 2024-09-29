@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BrandSeeder extends Seeder
@@ -86,8 +85,7 @@ class BrandSeeder extends Seeder
             ],
         ];
 
-        foreach($brands as $brand)
-        {
+        foreach ($brands as $brand) {
             Brand::create([
                 'identifier' => $brand['identifier'],
                 'name' => $brand['name'],

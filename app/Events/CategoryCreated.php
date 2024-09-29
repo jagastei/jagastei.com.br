@@ -11,8 +11,7 @@ class CategoryCreated extends Event
         public int $user_id,
         public string $name,
         public string $color,
-    )
-    { }
+    ) {}
 
     public function handle()
     {

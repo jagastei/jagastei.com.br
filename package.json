@@ -37,6 +37,7 @@
         "embla-carousel-vue": "^8.3.0",
         "fuse.js": "^7.0.0",
         "lucide-vue-next": "^0.441.0",
+        "mixpanel-browser": "^2.55.1",
         "radix-vue": "^1.9.5",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7",

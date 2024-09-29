@@ -13,9 +13,9 @@ use function Illuminate\Events\queueable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use Billable;
     use HasFactory;
     use Notifiable;
-    use Billable;
 
     protected $fillable = [
         'name',
@@ -36,7 +36,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'trial_ends_at' => 'datetime',
         ];
     }
-    
+
     protected static function booted(): void
     {
         static::updated(queueable(function (User $customer) {

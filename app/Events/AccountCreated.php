@@ -11,13 +11,12 @@ class AccountCreated extends Event
 {
     public function __construct(
         #[StateId(AccountState::class)]
-        public ?int $account_id = null,
+        public ?int $account_id,
         public int $user_id,
         public ?int $bank_id,
         public string $name,
         public int $initial_balance = 0,
-    )
-    { }
+    ) {}
 
     public function apply(AccountState $account)
     {

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use DateInterval;
-use DatePeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -32,7 +29,7 @@ class DashboardController extends Controller
                 DB::raw('SUM(value) AS total_value')
             )
             ->groupBy('month')
-            ->orderByRaw("MIN(created_at)")
+            ->orderByRaw('MIN(created_at)')
             ->get();
 
         $overview = $overview->map(function ($item) {
@@ -53,15 +50,15 @@ class DashboardController extends Controller
                 'value',
             )
             ->whereBetween(
-                DB::raw("created_at"),
+                DB::raw('created_at'),
                 [$startDate, $endDate]
             );
-            // ->groupBy('name')
-            // ->orderByRaw("MIN(created_at)")
-            // ->get();
-        
+        // ->groupBy('name')
+        // ->orderByRaw("MIN(created_at)")
+        // ->get();
+
         $overview2 = DB::table($datesSubquery)
-            ->leftJoinSub($transactionsSubquery, 't', function($join) {
+            ->leftJoinSub($transactionsSubquery, 't', function ($join) {
                 $join->on('date_series.date', '=', 't.transaction_date');
             })
             ->select(

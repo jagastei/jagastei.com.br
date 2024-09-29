@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('account_id');
             $table->string('name');
             $table->bigInteger('limit')->default(0);
-            
+
             $table->string('digits')->nullable();
             $table->foreignId('brand_id')->nullable();
 
