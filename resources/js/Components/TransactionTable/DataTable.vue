@@ -1,124 +1,158 @@
 <script setup lang="ts">
 import type {
-    ColumnDef,
-    ColumnFiltersState,
-    PaginationState,
-    SortingState,
-    VisibilityState,
-} from '@tanstack/vue-table'
+	ColumnDef,
+	ColumnFiltersState,
+	PaginationState,
+	SortingState,
+	VisibilityState,
+} from '@tanstack/vue-table';
 import {
-    FlexRender,
-    getCoreRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useVueTable,
-} from '@tanstack/vue-table'
+	FlexRender,
+	getCoreRowModel,
+	getFacetedRowModel,
+	getFacetedUniqueValues,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	useVueTable,
+} from '@tanstack/vue-table';
 
-import { ref, watch } from 'vue'
-import type { Transaction } from './columns'
-import DataTablePagination from './DataTablePagination.vue'
-import DataTableToolbar from './DataTableToolbar.vue'
-import { valueUpdater } from '@/utils'
+import { ref, watch } from 'vue';
+import type { Transaction } from './columns';
+import DataTablePagination from './DataTablePagination.vue';
+import DataTableToolbar from './DataTableToolbar.vue';
+import { valueUpdater } from '@/utils';
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/Components/ui/table'
-import { Pagination } from '@/types/pagination'
-import { router } from '@inertiajs/vue3'
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from '@/Components/ui/table';
+import { Pagination } from '@/types/pagination';
+import { router } from '@inertiajs/vue3';
 
 interface DataTableProps {
-    columns: ColumnDef<Transaction, any>[]
-    data: Pagination<Transaction>
+	columns: ColumnDef<Transaction, any>[];
+	data: Pagination<Transaction>;
 }
-const props = defineProps<DataTableProps>()
+const props = defineProps<DataTableProps>();
 
-const sorting = ref<SortingState>([])
-const columnFilters = ref<ColumnFiltersState>([])
-const columnVisibility = ref<VisibilityState>({})
-const rowSelection = ref({})
+const sorting = ref<SortingState>([]);
+const columnFilters = ref<ColumnFiltersState>([]);
+const columnVisibility = ref<VisibilityState>({});
+const rowSelection = ref({});
 
 const pagination = ref<PaginationState>({
-    pageIndex: props.data.current_page - 1,
-    pageSize: props.data.per_page,
-})
+	pageIndex: props.data.current_page - 1,
+	pageSize: props.data.per_page,
+});
 
 watch(pagination, (newValue) => {
-    router.get(route('transactions.index', {
-        _query: {
-            page: newValue.pageIndex + 1,
-            per_page: newValue.pageSize,
-        }
-    }))
-})
+	router.get(
+		route('transactions.index', {
+			_query: {
+				page: newValue.pageIndex + 1,
+				per_page: newValue.pageSize,
+			},
+		})
+	);
+});
 
 const table = useVueTable({
-    get data() { return props.data.data },
-    get columns() { return props.columns },
-    state: {
-        get sorting() { return sorting.value },
-        get columnFilters() { return columnFilters.value },
-        get columnVisibility() { return columnVisibility.value },
-        get rowSelection() { return rowSelection.value },
-        get pagination() { return pagination.value },
-    },
-    enableRowSelection: true,
-    onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
-    onColumnFiltersChange: updaterOrValue => valueUpdater(updaterOrValue, columnFilters),
-    onColumnVisibilityChange: updaterOrValue => valueUpdater(updaterOrValue, columnVisibility),
-    onRowSelectionChange: updaterOrValue => valueUpdater(updaterOrValue, rowSelection),
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    manualPagination: true,
-    get rowCount() { return props.data.total},
-    autoResetPageIndex: true,
-    onPaginationChange: updaterOrValue => valueUpdater(updaterOrValue, pagination),
-})
+	get data() {
+		return props.data.data;
+	},
+	get columns() {
+		return props.columns;
+	},
+	state: {
+		get sorting() {
+			return sorting.value;
+		},
+		get columnFilters() {
+			return columnFilters.value;
+		},
+		get columnVisibility() {
+			return columnVisibility.value;
+		},
+		get rowSelection() {
+			return rowSelection.value;
+		},
+		get pagination() {
+			return pagination.value;
+		},
+	},
+	enableRowSelection: true,
+	onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+	onColumnFiltersChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, columnFilters),
+	onColumnVisibilityChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, columnVisibility),
+	onRowSelectionChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, rowSelection),
+	getCoreRowModel: getCoreRowModel(),
+	getFilteredRowModel: getFilteredRowModel(),
+	getPaginationRowModel: getPaginationRowModel(),
+	getSortedRowModel: getSortedRowModel(),
+	getFacetedRowModel: getFacetedRowModel(),
+	getFacetedUniqueValues: getFacetedUniqueValues(),
+	manualPagination: true,
+	get rowCount() {
+		return props.data.total;
+	},
+	autoResetPageIndex: true,
+	onPaginationChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, pagination),
+});
 </script>
 
 <template>
-    <div class="space-y-4">
-        <DataTableToolbar :table="table" />
-        
-        <div class="rounded-md border">
-            <Table>
-                <TableHeader>
-                    <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-                        <TableHead v-for="header in headerGroup.headers" :key="header.id">
-                            <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header"
-                                :props="header.getContext()" />
-                        </TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    <template v-if="table.getRowModel().rows?.length">
-                        <TableRow v-for="row in table.getRowModel().rows" :key="row.id"
-                            :data-state="row.getIsSelected() && 'selected'">
-                            <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-                                <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                            </TableCell>
-                        </TableRow>
-                    </template>
+	<div class="space-y-4">
+		<DataTableToolbar :table="table" />
 
-                    <TableRow v-else>
-                        <TableCell :colspan="columns.length" class="h-24 text-center">
-                            No results.
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </div>
+		<div class="rounded-md border">
+			<Table>
+				<TableHeader>
+					<TableRow
+						v-for="headerGroup in table.getHeaderGroups()"
+						:key="headerGroup.id"
+					>
+						<TableHead v-for="header in headerGroup.headers" :key="header.id">
+							<FlexRender
+								v-if="!header.isPlaceholder"
+								:render="header.column.columnDef.header"
+								:props="header.getContext()"
+							/>
+						</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					<template v-if="table.getRowModel().rows?.length">
+						<TableRow
+							v-for="row in table.getRowModel().rows"
+							:key="row.id"
+							:data-state="row.getIsSelected() && 'selected'"
+						>
+							<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+								<FlexRender
+									:render="cell.column.columnDef.cell"
+									:props="cell.getContext()"
+								/>
+							</TableCell>
+						</TableRow>
+					</template>
 
-        <DataTablePagination :table="table" />
-    </div>
+					<TableRow v-else>
+						<TableCell :colspan="columns.length" class="h-24 text-center">
+							No results.
+						</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
+		</div>
+
+		<DataTablePagination :table="table" />
+	</div>
 </template>

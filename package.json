@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc && vite build"
+        "build": "vue-tsc && vite build",
+        "lint": "prettier --write 'resources/**/*.{js,ts,vue,css}'"
     },
     "devDependencies": {
         "@iconify-json/radix-icons": "^1.2.0",
@@ -26,6 +27,7 @@
     "dependencies": {
         "@formkit/auto-animate": "^0.8.2",
         "@tanstack/vue-table": "^8.20.5",
+        "@types/mixpanel-browser": "^2.50.0",
         "@unovis/ts": "^1.4.3-beta.0",
         "@unovis/vue": "^1.4.3-beta.0",
         "@vee-validate/zod": "^4.13.2",
@@ -38,6 +40,7 @@
         "fuse.js": "^7.0.0",
         "lucide-vue-next": "^0.441.0",
         "mixpanel-browser": "^2.55.1",
+        "prettier": "^3.3.3",
         "radix-vue": "^1.9.5",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7",
