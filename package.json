@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc && vite build",
-        "lint": "prettier --write 'resources/**/*.{js,ts,vue,css}'"
+        "prettier": "prettier --write 'resources/**/*.{js,ts,vue,css}'"
     },
     "devDependencies": {
         "@iconify-json/radix-icons": "^1.2.0",
