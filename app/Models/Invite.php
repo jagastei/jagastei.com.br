@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invite extends Model
 {
-    use HasUuids;
     use HasFactory;
+    use HasUuids;
 }

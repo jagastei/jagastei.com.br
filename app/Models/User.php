@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
 use Illuminate\Support\Str;
+use Laravel\Cashier\Billable;
 
 use function Illuminate\Events\queueable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasUuids;
     use Billable;
     use HasFactory;
+    use HasUuids;
     use Notifiable;
 
     protected $fillable = [
