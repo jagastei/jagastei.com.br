@@ -2,8 +2,15 @@
 
 namespace App;
 
+use Akaunting\Money\Money;
+
 class Helper
 {
+    public static function formatMoney(int $value, $currency = 'BRL'): string
+    {
+        return Money::{$currency}($value)->format();
+    }
+
     public static function extractNumbersFromString(mixed $value, bool $forceInteger = false, bool $forceFloat = false): null|int|float|string
     {
         if (is_bool($value)) {

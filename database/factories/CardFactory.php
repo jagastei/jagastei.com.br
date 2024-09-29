@@ -20,6 +20,11 @@ class CardFactory extends Factory
         return [
             'account_id' => Account::factory(),
             'name' => fake()->name(),
+            'limit' => fake()->numberBetween(100_00, 10_000_00),
+            'digits' => substr(fake()->creditCardNumber(), -4),
+            'digital' => fake()->boolean(),
+            'credit' => fake()->boolean(),
+            'international' => fake()->boolean(),
         ];
     }
 }

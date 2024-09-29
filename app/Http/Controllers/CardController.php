@@ -34,6 +34,7 @@ class CardController extends Controller
                         'bank'
                     ]);
                 },
+                'brand',
             ])
             ->get();
 

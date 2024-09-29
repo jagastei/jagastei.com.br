@@ -16,7 +16,7 @@ class TransactionController extends Controller
                 'category',
             ])
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate($request->query('per_page', 10));
 
         return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,

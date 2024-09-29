@@ -2,6 +2,7 @@
 import type {
     ColumnDef,
     ColumnFiltersState,
+    PaginationState,
     SortingState,
     VisibilityState,
 } from '@tanstack/vue-table'
@@ -16,7 +17,7 @@ import {
     useVueTable,
 } from '@tanstack/vue-table'
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Transaction } from './columns'
 import DataTablePagination from './DataTablePagination.vue'
 import DataTableToolbar from './DataTableToolbar.vue'
@@ -29,10 +30,12 @@ import {
     TableHeader,
     TableRow,
 } from '@/Components/ui/table'
+import { Pagination } from '@/types/pagination'
+import { router } from '@inertiajs/vue3'
 
 interface DataTableProps {
     columns: ColumnDef<Transaction, any>[]
-    data: Transaction[]
+    data: Pagination<Transaction>
 }
 const props = defineProps<DataTableProps>()
 
@@ -41,14 +44,29 @@ const columnFilters = ref<ColumnFiltersState>([])
 const columnVisibility = ref<VisibilityState>({})
 const rowSelection = ref({})
 
+const pagination = ref<PaginationState>({
+    pageIndex: props.data.current_page - 1,
+    pageSize: props.data.per_page,
+})
+
+watch(pagination, (newValue) => {
+    router.get(route('transactions.index', {
+        _query: {
+            page: newValue.pageIndex + 1,
+            per_page: newValue.pageSize,
+        }
+    }))
+})
+
 const table = useVueTable({
-    get data() { return props.data },
+    get data() { return props.data.data },
     get columns() { return props.columns },
     state: {
         get sorting() { return sorting.value },
         get columnFilters() { return columnFilters.value },
         get columnVisibility() { return columnVisibility.value },
         get rowSelection() { return rowSelection.value },
+        get pagination() { return pagination.value },
     },
     enableRowSelection: true,
     onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
@@ -61,6 +79,10 @@ const table = useVueTable({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    manualPagination: true,
+    get rowCount() { return props.data.total},
+    autoResetPageIndex: true,
+    onPaginationChange: updaterOrValue => valueUpdater(updaterOrValue, pagination),
 })
 </script>
 

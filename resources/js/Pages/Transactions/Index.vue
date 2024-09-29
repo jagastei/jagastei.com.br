@@ -3,9 +3,10 @@ import { Head } from '@inertiajs/vue3';
 import DataTable from '@/Components/TransactionTable/DataTable.vue'
 import { columns, Transaction } from '@/Components/TransactionTable/columns'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Pagination } from '@/types/pagination';
 
 defineProps<{
-    transactions: Transaction[],
+    transactions: Pagination<Transaction>,
 }>()
 </script>
 

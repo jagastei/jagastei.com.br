@@ -5,10 +5,10 @@ import DataTableRowActions from "./DataTableRowActions.vue";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { Badge } from "@/Components/ui/badge";
 import { z } from "zod";
-import { Icon } from '@iconify/vue';
 import { categorySchema } from "../CategoryTable/columns";
 import { accountSchema } from "../AccountTable/columns";
 import { cardSchema } from "../CardTable/columns";
+
 import { Icon } from '@iconify/vue';
 
 export const transactionSchema = z.object({
@@ -140,82 +140,5 @@ export const columns: ColumnDef<Transaction>[] = [
     {
         id: "actions",
         cell: ({ row }) => h(DataTableRowActions, { row }),
-    },
-];
-
-export const labels = [
-    {
-        value: "bug",
-        label: "Bug",
-    },
-    {
-        value: "feature",
-        label: "Feature",
-    },
-    {
-        value: "documentation",
-        label: "Documentation",
-    },
-];
-
-export const statuses = [
-    {
-        value: "backlog",
-        label: "Backlog",
-        icon: h(Icon, {
-            icon: 'radix-icons:question-mark-circled'
-        }),
-    },
-    {
-        value: "todo",
-        label: "Todo",
-        icon: h(Icon, {
-            icon: 'radix-icons:circle'
-        }),
-    },
-    {
-        value: "in progress",
-        label: "In Progress",
-        icon: h(Icon, {
-            icon: 'radix-icons:stopwatch'
-        }),
-    },
-    {
-        value: "done",
-        label: "Done",
-        icon: h(Icon, {
-            icon: 'radix-icons:check-circled'
-        }),
-    },
-    {
-        value: "canceled",
-        label: "Canceled",
-        icon: h(Icon, {
-            icon: 'radix-icons:cross-circled'
-        }),
-    },
-];
-
-export const priorities = [
-    {
-        value: "low",
-        label: "Low",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-down'
-        }),
-    },
-    {
-        value: "medium",
-        label: "Medium",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-right'
-        }),
-    },
-    {
-        value: "high",
-        label: "High",
-        icon: h(Icon, {
-            icon: 'radix-icons:arrow-up'
-        }),
     },
 ];

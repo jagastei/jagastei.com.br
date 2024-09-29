@@ -63,6 +63,7 @@ export const columns: ColumnDef<Account>[] = [
         cell: ({ row }) => {
             return h("div", { class: 'flex items-center' }, [
                 h('img', {
+                    alt: row.original.bank.long_name,
                     src: `https://jagastei.com.br.test/images/banks/${row.original.bank.code}.png`,
                     class: 'size-6 rounded-xl',
                 }),

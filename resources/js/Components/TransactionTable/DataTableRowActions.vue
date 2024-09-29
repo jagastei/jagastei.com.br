@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table'
 import { computed } from 'vue'
-import { labels } from './columns'
 import { transactionSchema } from './columns'
 import type { Transaction } from './columns'
 import { Icon } from '@iconify/vue'
@@ -46,7 +45,7 @@ const task = computed(() => transactionSchema.parse(props.row.original))
       <DropdownMenuItem>Make a copy</DropdownMenuItem>
       <DropdownMenuItem>Favorite</DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuSub>
+      <!-- <DropdownMenuSub>
         <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
           <DropdownMenuRadioGroup :value="task.label">
@@ -56,7 +55,7 @@ const task = computed(() => transactionSchema.parse(props.row.original))
           </DropdownMenuRadioGroup>
         </DropdownMenuSubContent>
       </DropdownMenuSub>
-      <DropdownMenuSeparator />
+      <DropdownMenuSeparator /> -->
       <DropdownMenuItem>
         Delete
         <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
