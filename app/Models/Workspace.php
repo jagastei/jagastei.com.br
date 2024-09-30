@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Workspace extends Model
 {
-    use HasUuids;
     use HasFactory;
+    use HasUuids;
 }
