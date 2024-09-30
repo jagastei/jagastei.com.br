@@ -49,42 +49,42 @@ class DashboardController extends Controller
             ->get();
 
         $overview3 = Category::query()
-                ->withCount([
-                    'transactions as transactions_count' => function ($query) {
-                        $query
-                            ->ofUser(auth('web')->user())
-                            ->where('type', 'OUT');
-                    },
-                ])
-                ->withSum([
-                    'transactions as transactions_sum_value' => function ($query) {
-                        $query
-                            ->ofUser(auth('web')->user())
-                            ->where('type', 'OUT');
-                    },
-                ], 'value')
-                ->withAvg([
-                    'transactions as transactions_avg_value' => function ($query) {
-                        $query
-                            ->ofUser(auth('web')->user())
-                            ->where('type', 'OUT');
-                    },
-                ], 'value')
-                ->withMin([
-                    'transactions as transactions_min_value' => function ($query) {
-                        $query
-                            ->ofUser(auth('web')->user())
-                            ->where('type', 'OUT');
-                    },
-                ], 'value')
-                ->withMax([
-                    'transactions as transactions_max_value' => function ($query) {
-                        $query
-                            ->ofUser(auth('web')->user())
-                            ->where('type', 'OUT');
-                    },
-                ], 'value')
-                ->get();
+            ->withCount([
+                'transactions as transactions_count' => function ($query) {
+                    $query
+                        ->ofUser(auth('web')->user())
+                        ->where('type', 'OUT');
+                },
+            ])
+            ->withSum([
+                'transactions as transactions_sum_value' => function ($query) {
+                    $query
+                        ->ofUser(auth('web')->user())
+                        ->where('type', 'OUT');
+                },
+            ], 'value')
+            ->withAvg([
+                'transactions as transactions_avg_value' => function ($query) {
+                    $query
+                        ->ofUser(auth('web')->user())
+                        ->where('type', 'OUT');
+                },
+            ], 'value')
+            ->withMin([
+                'transactions as transactions_min_value' => function ($query) {
+                    $query
+                        ->ofUser(auth('web')->user())
+                        ->where('type', 'OUT');
+                },
+            ], 'value')
+            ->withMax([
+                'transactions as transactions_max_value' => function ($query) {
+                    $query
+                        ->ofUser(auth('web')->user())
+                        ->where('type', 'OUT');
+                },
+            ], 'value')
+            ->get();
 
         return Inertia::render('Dashboard', [
             'overview2' => $overview2,
