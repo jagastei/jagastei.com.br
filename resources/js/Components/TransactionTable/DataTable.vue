@@ -18,7 +18,7 @@ import {
 	useVueTable,
 } from '@tanstack/vue-table';
 
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { Transaction } from './columns';
 import DataTablePagination from './DataTablePagination.vue';
 import DataTableToolbar from './DataTableToolbar.vue';
@@ -47,7 +47,7 @@ const sorting = ref<SortingState>([]);
 
 const columnFilters = ref<ColumnFiltersState>(props.filter ? Object.entries(props.filter).map(([id, value]) => ({
   id,
-  value: (value as string).split(','),
+  value,
 })): []);
 
 const columnVisibility = ref<VisibilityState>({});
@@ -58,17 +58,28 @@ const pagination = ref<PaginationState>({
 	pageSize: props.data.per_page,
 });
 
-watch(columnFilters, (newValue) => {
-	const filters = Object.assign({}, ...newValue.map((filter) => ({
-		[filter.id]: (filter.value as Array<any>).join(',')
+const filters = computed(() => {
+	return Object.assign({}, ...columnFilters.value.map((filter) => ({
+		[filter.id]: Array.isArray(filter) ? (filter.value as Array<any>).join(',') : filter.value
 	})))
+})
 
+watch(columnFilters, (newValue) => {
 	router.get(
 		route('transactions.index', {
 			_query: {
-				filter: filters,
+				filter: filters.value,
+				page: 1,
+				per_page: pagination.value.pageSize,
 			},
-		})
+		}),
+		{},
+		{
+			preserveState: true,
+			onSuccess() {
+				pagination.value.pageIndex = 0
+			}
+		}
 	)
 });
 
@@ -76,16 +87,17 @@ watch(pagination, (newValue) =>
 	router.get(
 		route('transactions.index', {
 			_query: {
+				filter: filters.value,
 				page: newValue.pageIndex + 1,
 				per_page: newValue.pageSize,
 			},
-		})
+		}),
+		{},
+		{
+			preserveState: true,
+		}
 	)
 )
-
-const fetchData = () => {
-
-}
 
 const table = useVueTable({
 	get data() {
@@ -129,12 +141,11 @@ const table = useVueTable({
 	get rowCount() {
 		return props.data.total;
 	},
-	autoResetPageIndex: false,
-	onPaginationChange: (updaterOrValue) =>
-		valueUpdater(updaterOrValue, pagination),
+	onPaginationChange: (updaterOrValue) => valueUpdater(updaterOrValue, pagination),
 	manualFiltering: true,
-	// onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, filters),
+	onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, filters),
 	// manualSorting: true,
+	autoResetPageIndex: false,
 });
 </script>
 

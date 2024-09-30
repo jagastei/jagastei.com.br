@@ -71,7 +71,7 @@ const filterFn = (
 							variant="secondary"
 							class="rounded-sm px-1 font-normal"
 						>
-							{{ selectedValues.size }} selected
+							{{ selectedValues.size }} selecionados
 						</Badge>
 
 						<template v-else>
@@ -94,7 +94,7 @@ const filterFn = (
 			<Command :filter-function="filterFn">
 				<CommandInput :placeholder="title" />
 				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
+					<CommandEmpty>Nenhum resultado.</CommandEmpty>
 					<CommandGroup>
 						<CommandItem
 							v-for="option in options"
@@ -144,11 +144,11 @@ const filterFn = (
 						<CommandSeparator />
 						<CommandGroup>
 							<CommandItem
-								:value="{ label: 'Clear filters' }"
+								:value="{ label: 'Limpar filtros' }"
 								class="justify-center text-center"
 								@select="column?.setFilterValue(undefined)"
 							>
-								Clear filters
+								Limpar filtros
 							</CommandItem>
 						</CommandGroup>
 					</template>

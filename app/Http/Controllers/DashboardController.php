@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,29 +23,9 @@ class DashboardController extends Controller
 
         $datesSubquery = DB::raw("(SELECT generate_series('$startDateString'::date, '$endDateString'::date, interval '1 day') AS date) AS date_series");
 
-        $overview = Transaction::query()
-            ->ofUser(auth('web')->user())
-            ->select(
-                DB::raw("TO_CHAR(created_at, 'TMMonth YYYY') AS month"),
-                DB::raw('SUM(value) AS total_value')
-            )
-            ->groupBy('month')
-            ->orderByRaw('MIN(created_at)')
-            ->get();
-
-        $overview = $overview->map(function ($item) {
-            $item['total_value'] = (int) $item['total_value'];
-
-            return $item;
-        });
-
         $transactionsSubquery = Transaction::query()
             ->ofUser(auth('web')->user())
             ->select(
-                // DB::raw("TO_CHAR(created_at, 'TMMonth YYYY') AS name"),
-                // DB::raw("TO_CHAR(created_at, 'DD TMMonth YYYY') AS name"),
-                // DB::raw("CAST(SUM(CASE WHEN type = 'IN' THEN value ELSE 0 END) AS INTEGER) AS total_in"),
-                // DB::raw("CAST(SUM(CASE WHEN type = 'OUT' THEN value ELSE 0 END) AS INTEGER) AS total_out")
                 DB::raw('date(created_at) AS transaction_date'),
                 'type',
                 'value',
@@ -53,16 +34,12 @@ class DashboardController extends Controller
                 DB::raw('created_at'),
                 [$startDate, $endDate]
             );
-        // ->groupBy('name')
-        // ->orderByRaw("MIN(created_at)")
-        // ->get();
 
         $overview2 = DB::table($datesSubquery)
             ->leftJoinSub($transactionsSubquery, 't', function ($join) {
                 $join->on('date_series.date', '=', 't.transaction_date');
             })
             ->select(
-                // DB::raw("TO_CHAR(date_series.date, 'DD TMMonth YYYY') AS name"),
                 DB::raw("TO_CHAR(date_series.date, 'TMDay, DD TMMonth YYYY') AS name"),
                 DB::raw("CAST(COALESCE(SUM(CASE WHEN t.type = 'IN' THEN t.value ELSE 0 END), 0) AS INTEGER) AS \"Entrada\""),
                 DB::raw("CAST(COALESCE(SUM(CASE WHEN t.type = 'OUT' THEN t.value ELSE 0 END), 0) AS INTEGER) AS \"Saída\"")
@@ -71,9 +48,47 @@ class DashboardController extends Controller
             ->orderBy('date_series.date')
             ->get();
 
+        $overview3 = Category::query()
+                ->withCount([
+                    'transactions as transactions_count' => function ($query) {
+                        $query
+                            ->ofUser(auth('web')->user())
+                            ->where('type', 'OUT');
+                    },
+                ])
+                ->withSum([
+                    'transactions as transactions_sum_value' => function ($query) {
+                        $query
+                            ->ofUser(auth('web')->user())
+                            ->where('type', 'OUT');
+                    },
+                ], 'value')
+                ->withAvg([
+                    'transactions as transactions_avg_value' => function ($query) {
+                        $query
+                            ->ofUser(auth('web')->user())
+                            ->where('type', 'OUT');
+                    },
+                ], 'value')
+                ->withMin([
+                    'transactions as transactions_min_value' => function ($query) {
+                        $query
+                            ->ofUser(auth('web')->user())
+                            ->where('type', 'OUT');
+                    },
+                ], 'value')
+                ->withMax([
+                    'transactions as transactions_max_value' => function ($query) {
+                        $query
+                            ->ofUser(auth('web')->user())
+                            ->where('type', 'OUT');
+                    },
+                ], 'value')
+                ->get();
+
         return Inertia::render('Dashboard', [
-            'overview' => $overview,
             'overview2' => $overview2,
+            'overview3' => $overview3,
         ]);
     }
 }

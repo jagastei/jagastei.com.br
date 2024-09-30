@@ -40,7 +40,7 @@ onMounted(() => {
 	/>
 
 	<AuthenticatedLayout>
-		<div class="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 h-full">
+		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
 			<div class="flex items-center justify-between">
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Orçamentos</h2>

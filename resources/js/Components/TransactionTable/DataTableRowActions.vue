@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import { transactionSchema } from './columns';
 import type { Transaction } from './columns';
 import { Icon } from '@iconify/vue';
-
+import { router } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {
 	DropdownMenu,
@@ -20,15 +20,32 @@ import {
 	DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/Components/ui/alert-dialog';
+
 interface DataTableRowActionsProps {
 	row: Row<Transaction>;
 }
 const props = defineProps<DataTableRowActionsProps>();
 
-const task = computed(() => transactionSchema.parse(props.row.original));
+const transaction = computed(() => transactionSchema.parse(props.row.original));
+
+const destroy = () => {
+	router.delete(route('transactions.destroy', transaction.value.id));
+};
 </script>
 
 <template>
+	<AlertDialog>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
 			<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
@@ -37,25 +54,40 @@ const task = computed(() => transactionSchema.parse(props.row.original));
 			</Button>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent align="end" class="w-[160px]">
-			<DropdownMenuItem>Edit</DropdownMenuItem>
-			<DropdownMenuItem>Make a copy</DropdownMenuItem>
-			<DropdownMenuItem>Favorite</DropdownMenuItem>
+			<DropdownMenuItem>Editar</DropdownMenuItem>
 			<DropdownMenuSeparator />
-			<!-- <DropdownMenuSub>
-        <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-        <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="task.label">
-            <DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
-              {{ label.label }}
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuSubContent>
-      </DropdownMenuSub>
-      <DropdownMenuSeparator /> -->
-			<DropdownMenuItem>
-				Delete
-				<DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+			<!--
+			<DropdownMenuSub>
+				<DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
+					<DropdownMenuSubContent>
+					<DropdownMenuRadioGroup :value="task.label">
+						<DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
+						{{ label.label }}
+						</DropdownMenuRadioItem>
+					</DropdownMenuRadioGroup>
+					</DropdownMenuSubContent>
+				</DropdownMenuSub>
+			<DropdownMenuSeparator />
+			-->
+			<DropdownMenuItem class="p-0">
+				<AlertDialogTrigger class="px-2 py-1.5 w-full text-left"
+					>Excluir</AlertDialogTrigger
+				>
 			</DropdownMenuItem>
 		</DropdownMenuContent>
 	</DropdownMenu>
+
+	<AlertDialogContent>
+			<AlertDialogHeader>
+				<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+				<AlertDialogDescription>
+					Você está prestes a remover a movimentação <b>{{ transaction.title }}</b> com o valor de <b>{{ transaction.formatted_value }}</b>. Não será possível desfazer essa ação.
+				</AlertDialogDescription>
+			</AlertDialogHeader>
+			<AlertDialogFooter>
+				<AlertDialogCancel>Voltar</AlertDialogCancel>
+				<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
+			</AlertDialogFooter>
+		</AlertDialogContent>
+	</AlertDialog>
 </template>

@@ -10,8 +10,8 @@ import { z } from 'zod';
 import { Icon } from '@iconify/vue';
 
 export const categorySchema = z.object({
-	id: z.number(),
-	user_id: z.number(),
+	id: z.string(),
+	user_id: z.string(),
 	name: z.string(),
 	color: z.string().nullable(),
 	created_at: z.string(),

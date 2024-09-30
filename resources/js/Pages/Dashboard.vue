@@ -14,10 +14,11 @@ import {
 } from '@/Components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Overview3 from '@/Components/Overview3.vue';
 
-defineProps<{
-	overview: Array<any>;
+const props = defineProps<{
 	overview2: Array<any>;
+	overview3: Array<any>;
 }>();
 </script>
 
@@ -138,15 +139,28 @@ defineProps<{
 						</Card>
 					</div>
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-						<Card class="col-span-4">
+						<Card class="col-span-5">
 							<CardHeader>
-								<CardTitle>Overview</CardTitle>
+								<CardTitle>Geral da semana</CardTitle>
+								<CardDescription>Você realizou 265 movimentações essa semana.</CardDescription>
 							</CardHeader>
 							<CardContent>
-								<!-- <Overview :overview="overview"/> -->
 								<Overview2 :overview="overview2" />
 							</CardContent>
 						</Card>
+
+						<Card class="col-span-2">
+							<CardHeader>
+								<CardTitle>Por categoria</CardTitle>
+								<CardDescription>Você gastou R$23.235,25 essa semana.</CardDescription>
+							</CardHeader>
+							<CardContent class="flex items-center h-[calc(100%-98px)]">
+								<Overview3 :overview="overview3" />
+							</CardContent>
+						</Card>
+
+
+						<!--
 						<Card class="col-span-3">
 							<CardHeader>
 								<CardTitle>Recent Sales</CardTitle>
@@ -156,6 +170,7 @@ defineProps<{
 								<RecentSales />
 							</CardContent>
 						</Card>
+						-->
 					</div>
 				</TabsContent>
 			</Tabs>

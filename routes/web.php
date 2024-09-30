@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/transacoes', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::post('/transacoes', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::delete('/transacoes/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
     Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');

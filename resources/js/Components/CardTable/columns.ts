@@ -11,19 +11,19 @@ import { Icon } from '@iconify/vue';
 import { accountSchema } from '../AccountTable/columns';
 
 export const brandSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	identifier: z.string(),
 	name: z.string(),
 });
 
 export const cardSchema = z.object({
-	id: z.number(),
-	account_id: z.number(),
+	id: z.string(),
+	account_id: z.string(),
 	name: z.string(),
 	limit: z.number(),
 	formatted_limit: z.string(),
-	digits: z.number(),
-	brand_id: z.number(),
+	digits: z.string(),
+	brand_id: z.string(),
 	digital: z.boolean(),
 	credit: z.boolean(),
 	international: z.boolean(),

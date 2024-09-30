@@ -10,7 +10,7 @@ import { z } from 'zod';
 import { Icon } from '@iconify/vue';
 
 export const bankSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	code: z.string(),
 	short_name: z.string(),
 	long_name: z.string(),
@@ -19,9 +19,9 @@ export const bankSchema = z.object({
 // We're keeping a simple non-relational schema here.
 // IRL, you will have a schema for your data models.
 export const accountSchema = z.object({
-	id: z.number(),
-	user_id: z.number(),
-	bank_id: z.number().nullable(),
+	id: z.string(),
+	user_id: z.string(),
+	bank_id: z.string().nullable(),
 	name: z.string(),
 	balance: z.number(),
 	formatted_balance: z.string(),

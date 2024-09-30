@@ -55,7 +55,6 @@ const destroy = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" class="w-[160px]">
 				<DropdownMenuItem>Editar</DropdownMenuItem>
-				<!-- <DropdownMenuItem>Make a copy</DropdownMenuItem> -->
 				<DropdownMenuItem>Favoritar</DropdownMenuItem>
 				<DropdownMenuSeparator />
 

@@ -35,11 +35,11 @@ const columns = computed(() =>
 		<DropdownMenuTrigger as-child>
 			<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
 				<Icon icon="radix-icons:mixer-horizontal" class="mr-2 h-4 w-4" />
-				View
+				Visualização
 			</Button>
 		</DropdownMenuTrigger>
-		<DropdownMenuContent align="end" class="w-[150px]">
-			<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+		<DropdownMenuContent align="end">
+			<DropdownMenuLabel>Exibir colunas</DropdownMenuLabel>
 			<DropdownMenuSeparator />
 
 			<DropdownMenuCheckboxItem
@@ -48,8 +48,9 @@ const columns = computed(() =>
 				class="capitalize"
 				:checked="column.getIsVisible()"
 				@update:checked="(value) => column.toggleVisibility(!!value)"
+				@select="(ev) => ev.preventDefault()"
 			>
-				{{ column.id }}
+				{{ column.columnDef.meta?.title }}
 			</DropdownMenuCheckboxItem>
 		</DropdownMenuContent>
 	</DropdownMenu>

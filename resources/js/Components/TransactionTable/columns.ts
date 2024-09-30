@@ -17,45 +17,48 @@ export const transactionSchema = z.object({
 	type: z.enum(['IN', 'OUT']),
 	value: z.number(),
 	formatted_value: z.string(),
-	category_id: z.number(),
-	account_id: z.number(),
+	category_id: z.string(),
+	account_id: z.string(),
 	method: z.enum(['CARD', 'TED', 'PIX', 'UNKNOWN']),
-	card_id: z.number(),
+	card_id: z.string().nullable(),
 	created_at: z.string(),
 	updated_at: z.string(),
 	category: categorySchema,
 	account: accountSchema,
-	card: cardSchema,
+	card: cardSchema.nullable(),
 });
 
 export type Transaction = z.infer<typeof transactionSchema>;
 
 export const columns: ColumnDef<Transaction>[] = [
+	// {
+	// 	id: 'select',
+	// 	header: ({ table }) =>
+	// 		h(Checkbox, {
+	// 			checked:
+	// 				table.getIsAllPageRowsSelected() ||
+	// 				(table.getIsSomePageRowsSelected() && 'indeterminate'),
+	// 			'onUpdate:checked': (value) => table.toggleAllPageRowsSelected(!!value),
+	// 			ariaLabel: 'Select all',
+	// 			class: 'translate-y-0.5',
+	// 		}),
+	// 	cell: ({ row }) =>
+	// 		h(Checkbox, {
+	// 			checked: row.getIsSelected(),
+	// 			'onUpdate:checked': (value) => row.toggleSelected(!!value),
+	// 			ariaLabel: 'Select row',
+	// 			class: 'translate-y-0.5',
+	// 		}),
+	// 	enableSorting: false,
+	// 	enableHiding: false,
+	// },
 	{
-		id: 'select',
-		header: ({ table }) =>
-			h(Checkbox, {
-				checked:
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && 'indeterminate'),
-				'onUpdate:checked': (value) => table.toggleAllPageRowsSelected(!!value),
-				ariaLabel: 'Select all',
-				class: 'translate-y-0.5',
-			}),
-		cell: ({ row }) =>
-			h(Checkbox, {
-				checked: row.getIsSelected(),
-				'onUpdate:checked': (value) => row.toggleSelected(!!value),
-				ariaLabel: 'Select row',
-				class: 'translate-y-0.5',
-			}),
-		enableSorting: false,
-		enableHiding: false,
-	},
-	{
+		id: 'title',
 		accessorKey: 'title',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Title' }),
-
+		meta: {
+			title: 'Nome',
+		},
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Nome' }),
 		cell: ({ row }) => {
 			return h(
 				'span',
@@ -65,28 +68,35 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 	},
 	{
+		id: 'category',
 		accessorKey: 'category',
+		meta: {
+			title: 'Categoria',
+		},
 		header: ({ column }) =>
 			h(DataTableColumnHeader, { column, title: 'Categoria' }),
 
 		cell: ({ row }) => {
-			return h('div', { class: 'flex w-[100px] items-center' }, [
-				// status.icon &&
-				//     h(status.icon, {
-				//         class: "mr-2 h-4 w-4 text-muted-foreground",
-				//     }),
-				h('span', row.original.category.name),
+			return h('div', { class: 'flex items-center' }, [
+				h('span', {
+					class: 'block size-6 rounded-xl',
+					style: {
+						'background-color': row.original.category.color,
+					},
+				}),
+				h('span', { class: 'ml-3' }, row.original.category.name),
 			]);
 		},
 		filterFn: (row, id, value) => {
-			console.log('row', row)
-			console.log('id', id)
-			console.log('value', value)
 			return value.includes(row.getValue(id));
 		},
 	},
 	{
+		id: 'formatted_value',
 		accessorKey: 'formatted_value',
+		meta: {
+			title: 'Valor',
+		},
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Valor' }),
 		cell: ({ row }) => {
 			const icon = h(Icon, {
@@ -115,7 +125,11 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 	},
 	{
+		id: 'created_at',
 		accessorKey: 'created_at',
+		meta: {
+			title: 'Quando',
+		},
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Quando' }),
 		cell: ({ row }) => {
 			return h(

@@ -9,8 +9,6 @@ const props = defineProps<{
 	overview: Array<any>;
 }>();
 
-console.log(props.overview);
-
 const xFormatter = (value: any, i: number) => {
 	return props.overview[i].name;
 };

@@ -69,13 +69,13 @@ class DatabaseSeeder extends Seeder
             ->for($brand)
             ->create();
 
-        $category = Category::factory()->create([
-            'user_id' => $user->id,
-            'name' => 'Alimentação',
-            'color' => '#22C55E',
-        ]);
+        // $category = Category::factory()->create([
+        //     'user_id' => $user->id,
+        //     'name' => 'Alimentação',
+        //     'color' => '#22C55E',
+        // ]);
 
-        Category::factory()
+        $categories = Category::factory()
             ->count(5)
             ->for($user)
             ->create();
@@ -105,8 +105,8 @@ class DatabaseSeeder extends Seeder
             ->create();
 
         Transaction::factory()
-            ->count(3000)
-            ->for($category)
+            ->count(300)
+            ->recycle($categories)
             ->for($account)
             ->for($card)
             ->create();

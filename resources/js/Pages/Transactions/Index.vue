@@ -5,6 +5,7 @@ import { columns, Transaction } from '@/Components/TransactionTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
+import { Button } from '@/Components/ui/button';
 
 defineProps<{
 	filter: any,
@@ -16,16 +17,40 @@ defineProps<{
 <template>
 	<Head title="Dashboard" />
 	<AuthenticatedLayout>
-		<div class="flex-1 flex-col space-y-8 md:flex p-4">
-			<div class="flex items-center justify-between space-y-2">
+		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
+			<div class="flex items-center justify-between">
 				<div>
-					<h2 class="text-2xl font-bold tracking-tight">Welcome back!</h2>
-					<p class="text-muted-foreground">
+					<h2 class="text-3xl font-bold tracking-tight">Movimentações</h2>
+					<!-- <p class="text-muted-foreground">
 						Here&apos;s a list of your tasks for this month!
-					</p>
+					</p> -->
+				</div>
+
+				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+					<Button>Adicionar movimentação</Button>
 				</div>
 			</div>
-			<DataTable :data="transactions" :columns="columns" :filter="filter" :categories="categories"/>
+
+			<div
+				v-if="transactions.data.length === 0"
+				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+			>
+				<div class="flex flex-col items-center gap-1 text-center">
+					<h3 class="text-2xl font-bold tracking-tight">
+						Você ainda realizou uma movimentação.
+					</h3>
+					<p class="text-sm text-muted-foreground">
+						Você pode começar a acompanhar sua saúde financeira registrando suas movimentações.
+						<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
+					</p>
+
+					<Button class="mt-4">
+						Adicionar movimentação
+					</Button>
+				</div>
+			</div>
+
+			<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories"/>
 		</div>
 	</AuthenticatedLayout>
 </template>
