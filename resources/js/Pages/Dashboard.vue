@@ -142,7 +142,9 @@ const props = defineProps<{
 						<Card class="col-span-5">
 							<CardHeader>
 								<CardTitle>Geral da semana</CardTitle>
-								<CardDescription>Você realizou 265 movimentações essa semana.</CardDescription>
+								<CardDescription
+									>Você realizou 265 movimentações essa semana.</CardDescription
+								>
 							</CardHeader>
 							<CardContent>
 								<Overview2 :overview="overview2" />
@@ -158,7 +160,6 @@ const props = defineProps<{
 								<Overview3 :overview="overview3" />
 							</CardContent>
 						</Card>
-
 
 						<!--
 						<Card class="col-span-3">

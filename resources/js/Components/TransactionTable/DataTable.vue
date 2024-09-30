@@ -38,17 +38,21 @@ import { Category } from '../CategoryTable/columns';
 interface DataTableProps {
 	data: Pagination<Transaction>;
 	columns: ColumnDef<Transaction, any>[];
-	filter: any,
+	filter: any;
 	categories: Category[];
 }
 const props = defineProps<DataTableProps>();
 
 const sorting = ref<SortingState>([]);
 
-const columnFilters = ref<ColumnFiltersState>(props.filter ? Object.entries(props.filter).map(([id, value]) => ({
-  id,
-  value,
-})): []);
+const columnFilters = ref<ColumnFiltersState>(
+	props.filter
+		? Object.entries(props.filter).map(([id, value]) => ({
+				id,
+				value,
+			}))
+		: []
+);
 
 const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
@@ -59,10 +63,15 @@ const pagination = ref<PaginationState>({
 });
 
 const filters = computed(() => {
-	return Object.assign({}, ...columnFilters.value.map((filter) => ({
-		[filter.id]: Array.isArray(filter) ? (filter.value as Array<any>).join(',') : filter.value
-	})))
-})
+	return Object.assign(
+		{},
+		...columnFilters.value.map((filter) => ({
+			[filter.id]: Array.isArray(filter)
+				? (filter.value as Array<any>).join(',')
+				: filter.value,
+		}))
+	);
+});
 
 watch(columnFilters, (newValue) => {
 	router.get(
@@ -77,13 +86,13 @@ watch(columnFilters, (newValue) => {
 		{
 			preserveState: true,
 			onSuccess() {
-				pagination.value.pageIndex = 0
-			}
+				pagination.value.pageIndex = 0;
+			},
 		}
-	)
+	);
 });
 
-watch(pagination, (newValue) => 
+watch(pagination, (newValue) =>
 	router.get(
 		route('transactions.index', {
 			_query: {
@@ -97,7 +106,7 @@ watch(pagination, (newValue) =>
 			preserveState: true,
 		}
 	)
-)
+);
 
 const table = useVueTable({
 	get data() {
@@ -141,9 +150,11 @@ const table = useVueTable({
 	get rowCount() {
 		return props.data.total;
 	},
-	onPaginationChange: (updaterOrValue) => valueUpdater(updaterOrValue, pagination),
+	onPaginationChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, pagination),
 	manualFiltering: true,
-	onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, filters),
+	onGlobalFilterChange: (updaterOrValue) =>
+		valueUpdater(updaterOrValue, filters),
 	// manualSorting: true,
 	autoResetPageIndex: false,
 });
@@ -151,7 +162,7 @@ const table = useVueTable({
 
 <template>
 	<div class="space-y-4">
-		<DataTableToolbar :table="table" :categories="categories"/>
+		<DataTableToolbar :table="table" :categories="categories" />
 
 		<div class="rounded-md border">
 			<Table>

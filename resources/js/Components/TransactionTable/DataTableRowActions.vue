@@ -46,17 +46,17 @@ const destroy = () => {
 
 <template>
 	<AlertDialog>
-	<DropdownMenu>
-		<DropdownMenuTrigger as-child>
-			<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-				<Icon icon="radix-icons:dots-horizontal" class="h-4 w-4" />
-				<span class="sr-only">Open menu</span>
-			</Button>
-		</DropdownMenuTrigger>
-		<DropdownMenuContent align="end" class="w-[160px]">
-			<DropdownMenuItem>Editar</DropdownMenuItem>
-			<DropdownMenuSeparator />
-			<!--
+		<DropdownMenu>
+			<DropdownMenuTrigger as-child>
+				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
+					<Icon icon="radix-icons:dots-horizontal" class="h-4 w-4" />
+					<span class="sr-only">Open menu</span>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end" class="w-[160px]">
+				<DropdownMenuItem>Editar</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<!--
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
@@ -69,19 +69,22 @@ const destroy = () => {
 				</DropdownMenuSub>
 			<DropdownMenuSeparator />
 			-->
-			<DropdownMenuItem class="p-0">
-				<AlertDialogTrigger class="px-2 py-1.5 w-full text-left"
-					>Excluir</AlertDialogTrigger
-				>
-			</DropdownMenuItem>
-		</DropdownMenuContent>
-	</DropdownMenu>
+				<DropdownMenuItem class="p-0">
+					<AlertDialogTrigger class="px-2 py-1.5 w-full text-left"
+						>Excluir</AlertDialogTrigger
+					>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 
-	<AlertDialogContent>
+		<AlertDialogContent>
 			<AlertDialogHeader>
 				<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
 				<AlertDialogDescription>
-					Você está prestes a remover a movimentação <b>{{ transaction.title }}</b> com o valor de <b>{{ transaction.formatted_value }}</b>. Não será possível desfazer essa ação.
+					Você está prestes a remover a movimentação
+					<b>{{ transaction.title }}</b> com o valor de
+					<b>{{ transaction.formatted_value }}</b
+					>. Não será possível desfazer essa ação.
 				</AlertDialogDescription>
 			</AlertDialogHeader>
 			<AlertDialogFooter>

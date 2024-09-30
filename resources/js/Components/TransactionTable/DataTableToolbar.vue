@@ -37,10 +37,12 @@ const isFiltered = computed(
 				v-if="table.getColumn('category')"
 				:column="table.getColumn('category')"
 				title="Categoria"
-				:options="categories.map((category) => ({
-					value: `${category.id}`,
-					label: category.name,
-				}))"
+				:options="
+					categories.map((category) => ({
+						value: `${category.id}`,
+						label: category.name,
+					}))
+				"
 			/>
 
 			<!-- <DataTableFacetedFilter

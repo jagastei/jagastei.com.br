@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DonutChart } from '@/Components/ui/chart-donut'
+import { DonutChart } from '@/Components/ui/chart-donut';
 import { formatMoney } from '@/utils';
 
 const props = defineProps<{
@@ -7,7 +7,7 @@ const props = defineProps<{
 }>();
 
 const formatter = (value: number, i: number | undefined): string => {
-	return formatMoney(value)
+	return formatMoney(value);
 };
 </script>
 
@@ -16,7 +16,7 @@ const formatter = (value: number, i: number | undefined): string => {
 		class="h-64"
 		index="name"
 		category="transactions_sum_value"
-		:colors="overview.map(category => category.color)"
+		:colors="overview.map((category) => category.color)"
 		type="donut"
 		:showLegend="false"
 		:data="overview"

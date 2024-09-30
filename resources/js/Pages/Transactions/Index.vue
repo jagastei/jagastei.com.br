@@ -8,7 +8,7 @@ import { Category } from '@/Components/CategoryTable/columns';
 import { Button } from '@/Components/ui/button';
 
 defineProps<{
-	filter: any,
+	filter: any;
 	categories: Category[];
 	transactions: Pagination<Transaction>;
 }>();
@@ -26,7 +26,10 @@ defineProps<{
 					</p> -->
 				</div>
 
-				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+				<div
+					v-if="transactions.data.length > 0"
+					class="flex items-center space-x-2"
+				>
 					<Button>Adicionar movimentação</Button>
 				</div>
 			</div>
@@ -40,17 +43,22 @@ defineProps<{
 						Você ainda realizou uma movimentação.
 					</h3>
 					<p class="text-sm text-muted-foreground">
-						Você pode começar a acompanhar sua saúde financeira registrando suas movimentações.
+						Você pode começar a acompanhar sua saúde financeira registrando suas
+						movimentações.
 						<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
 					</p>
 
-					<Button class="mt-4">
-						Adicionar movimentação
-					</Button>
+					<Button class="mt-4"> Adicionar movimentação </Button>
 				</div>
 			</div>
 
-			<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories"/>
+			<DataTable
+				v-else
+				:data="transactions"
+				:columns="columns"
+				:filter="filter"
+				:categories="categories"
+			/>
 		</div>
 	</AuthenticatedLayout>
 </template>
