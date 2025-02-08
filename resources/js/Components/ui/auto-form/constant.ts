@@ -19,7 +19,7 @@ export const INPUT_COMPONENTS = {
 	file: AutoFormFieldFile,
 	array: AutoFormFieldArray,
 	object: AutoFormFieldObject,
-};
+} as const;
 
 /**
  * Define handlers for specific Zod types.

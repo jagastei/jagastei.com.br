@@ -28,8 +28,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/transacoes', [TransactionController::class, 'index'])->name('transactions.index');
     Route::post('/transacoes', [TransactionController::class, 'store'])->name('transactions.store');
+    Route::post('/transacoes/importar', [TransactionController::class, 'import'])->name('transactions.import');
     Route::delete('/transacoes/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
-
+    
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
     Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
     Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
@@ -50,9 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store');
     Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/minha-conta', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/minha-conta', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/minha-conta', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/billing', function (Request $request) {
         return $request->user()->redirectToBillingPortal(route('dashboard'));

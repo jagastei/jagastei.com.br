@@ -20,7 +20,7 @@ const forwarded = useForwardProps(delegatedProps);
 
 <template>
 	<StepperItem
-		v-slot="slotProps"
+		v-slot="slotProps: { state: string }"
 		v-bind="forwarded"
 		:class="
 			cn(

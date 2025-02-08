@@ -9,6 +9,7 @@ import {
 	BellIcon,
 	CircleHelpIcon,
 	GripVerticalIcon,
+	LightbulbIcon,
 	MenuIcon,
 	SearchIcon,
 	SparklesIcon,
@@ -36,6 +37,7 @@ import {
 } from '@/Components/ui/collapsible';
 import { useStorage } from '@vueuse/core';
 import { ScrollArea } from '@/Components/ui/scroll-area';
+import TeamSwitcher from '@/Components/TeamSwitcher.vue';
 
 const isCollapsed = useStorage('is-collapsed', false);
 
@@ -49,7 +51,7 @@ const onExpand = () => {
 
 const links: LinkProp[] = [
 	{
-		title: 'Dashboard',
+		title: 'Painel',
 		label: '',
 		icon: 'lucide:chart-pie',
 		route: route('dashboard'),
@@ -106,7 +108,7 @@ const links2: LinkProp[] = [
 <template>
 	<div>
 		<div class="flex-col md:flex">
-			<div class="z-50 flex h-16 items-center pr-4 md:pr-8 border-b sticky top-0">
+			<div class="z-50 flex h-16 items-center pr-4 md:pr-4 border-b sticky top-0">
 				<div :class="['hidden md:block', isCollapsed ? 'pl-2.5' : 'pl-5']">
 					<img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12" />
 					<img
@@ -116,8 +118,8 @@ const links2: LinkProp[] = [
 				</div>
 
 				<Sheet>
-					<SheetTrigger as-child class="ml-4 md:hidden">
-						<Button variant="outline" size="sm" class="h-8 space-x-2">
+					<SheetTrigger as-child class="ml-4 md:hidden mr-2">
+						<Button variant="outline" size="sm" class="h-10">
 							<MenuIcon class="h-4 w-4" />
 						</Button>
 					</SheetTrigger>
@@ -147,26 +149,29 @@ const links2: LinkProp[] = [
 				</Sheet>
 
 				<div class="ml-auto flex items-center space-x-2">
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
                         <SearchIcon class="h-4 w-4" />
                     </Button> -->
 
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
                         <BellIcon class="h-4 w-4" />
                     </Button> -->
 
-					<div class="hidden md:flex">
-						<ThemeToggle />
-					</div>
-
-					<Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
 						<SparklesIcon class="h-4 w-4" />
-					</Button>
+					</Button> -->
 
-					<Button variant="outline" size="sm" class="hidden md:flex h-8 space-x-2">
+					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
+						<LightbulbIcon class="h-4 w-4" />
+						<span>Sugestões</span>
+					</Button> -->
+
+					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
 						<CircleHelpIcon class="h-4 w-4" />
 						<span>Suporte</span>
-					</Button>
+					</Button> -->
+
+					<TeamSwitcher />
 
 					<UserNav />
 				</div>

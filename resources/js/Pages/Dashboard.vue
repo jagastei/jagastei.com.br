@@ -23,14 +23,14 @@ const props = defineProps<{
 </script>
 
 <template>
-	<Head title="Dashboard" />
+	<Head title="Painel" />
 	<AuthenticatedLayout>
 		<div class="p-4">
 			<div class="flex items-center justify-between">
-				<h2 class="text-3xl font-bold tracking-tight">Dashboard</h2>
+				<h2 class="text-3xl font-bold tracking-tight">Painel</h2>
 				<div class="flex items-center space-x-2">
 					<DateRangePicker />
-					<Button>Download</Button>
+					<!-- <Button>Download</Button> -->
 				</div>
 			</div>
 			<Tabs default-value="overview" class="space-y-4 mt-4">

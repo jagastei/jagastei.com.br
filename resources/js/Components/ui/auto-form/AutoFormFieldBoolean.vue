@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import { beautifyObjectName } from './utils';
 import type { FieldProps } from './interface';
 import AutoFormLabel from './AutoFormLabel.vue';
@@ -17,7 +17,7 @@ const props = defineProps<FieldProps>();
 
 const booleanComponent = computed(() =>
 	props.config?.component === 'switch' ? Switch : Checkbox
-);
+) as ComputedRef<typeof Switch | typeof Checkbox>;
 </script>
 
 <template>

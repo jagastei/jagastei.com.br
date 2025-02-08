@@ -52,17 +52,12 @@ type Group = {
 
 const groups: Group[] = [
 	{
-		label: 'Personal Account',
+		label: 'Workspaces',
 		teams: [
 			{
 				label: 'Alicia Koch',
 				value: 'personal',
 			},
-		],
-	},
-	{
-		label: 'Teams',
-		teams: [
 			{
 				label: 'Acme Inc.',
 				value: 'acme-inc',
@@ -74,8 +69,6 @@ const groups: Group[] = [
 		],
 	},
 ];
-
-// type Team = (typeof groups)[number]['teams'][number]
 
 const open = ref(false);
 const showNewTeamDialog = ref(false);
@@ -102,7 +95,7 @@ const filter = (
 					role="combobox"
 					aria-expanded="open"
 					aria-label="Select a team"
-					:class="cn('w-[200px] justify-between', $attrs.class ?? '')"
+					:class="cn('w-[200px] justify-between py-0 px-2 h-10', $attrs.class ?? '')"
 				>
 					<Avatar class="mr-2 h-5 w-5">
 						<AvatarImage
@@ -118,8 +111,6 @@ const filter = (
 			<PopoverContent class="w-[200px] p-0">
 				<Command :filter-function="filter">
 					<CommandList>
-						<CommandInput placeholder="Search team..." />
-						<CommandEmpty>No team found.</CommandEmpty>
 						<CommandGroup
 							v-for="group in groups"
 							:key="group.label"
@@ -171,7 +162,7 @@ const filter = (
 									"
 								>
 									<CirclePlusIcon class="mr-2 h-5 w-5" />
-									Create Team
+									Adicionar workspace
 								</CommandItem>
 							</DialogTrigger>
 						</CommandGroup>
@@ -181,9 +172,9 @@ const filter = (
 		</Popover>
 		<DialogContent>
 			<DialogHeader>
-				<DialogTitle>Create team</DialogTitle>
+				<DialogTitle>Adicionar workspace</DialogTitle>
 				<DialogDescription>
-					Add a new team to manage products and customers.
+					Adicione um novo workspace para gerenciar suas finanças.
 				</DialogDescription>
 			</DialogHeader>
 			<div>

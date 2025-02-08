@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ComputedRef } from 'vue';
 import AutoFormLabel from './AutoFormLabel.vue';
 import { beautifyObjectName } from './utils';
 import type { FieldProps } from './interface';
@@ -16,7 +16,7 @@ import { Textarea } from '@/Components/ui/textarea';
 const props = defineProps<FieldProps>();
 const inputComponent = computed(() =>
 	props.config?.component === 'textarea' ? Textarea : Input
-);
+) as ComputedRef<typeof Textarea | typeof Input>;
 </script>
 
 <template>

@@ -1,20 +1,53 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
 import DataTable from '@/Components/TransactionTable/DataTable.vue';
 import { columns, Transaction } from '@/Components/TransactionTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
-import { Button } from '@/Components/ui/button';
+import { Button } from '@/Components/ui/button'; import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/Components/ui/dialog'
+import { Loader2, SparklesIcon } from 'lucide-vue-next';
+import UploadFile from '@/Components/UploadFile.vue';
+import { ref } from 'vue';
+import AI from '@/Components/AI.vue';
 
-defineProps<{
+const props = defineProps<{
 	filter: any;
 	categories: Category[];
 	transactions: Pagination<Transaction>;
 }>();
+
+const form = useForm({
+	files: [],
+});
+
+// const ai = ref({ "empresa": "A. ANGELONI CIA LTA", "data": "07/02/2025", "localizacao": "Jaraguá do Sul, SC", "metodo_pagamento": "Cartão de crédito", "itens": [{ "descricao": "Papel Higiene Supreme F", "quantidade": "1 UN", "valor": "11,99", "total": "11,99" }, { "descricao": "Pão Seven Boys Leite PCT", "quantidade": "1 UN", "valor": "10,99", "total": "10,99" }, { "descricao": "Granola Jasmine INT Melf", "quantidade": "1 UN", "valor": "10,59", "total": "10,59" }, { "descricao": "Cereal Nestlé Nescau CX", "quantidade": "1 UN", "valor": "11,39", "total": "11,39" }, { "descricao": "Mastés Flexíveis Cotonet", "quantidade": "1 UN", "valor": "17,59", "total": "17,59" }, { "descricao": "Desodorante Old Spice Masculino", "quantidade": "1 UN", "valor": "9,99", "total": "9,99" }, { "descricao": "Bebida Energética Monster Mango", "quantidade": "1 UN", "valor": "8,59", "total": "8,59" }, { "descricao": "Bebida Energética Red Bull Maracuja", "quantidade": "1 UN", "valor": "8,49", "total": "8,49" }, { "descricao": "Creme Dental Boni Natura", "quantidade": "1 UN", "valor": "18,59", "total": "18,59" }], "total": "121,19" });
+const ai = ref<any>(null);
+
+const handleSubmit = () => {
+	form.post(route('transactions.import'), {
+		preserveScroll: true,
+		preserveState: true,
+		forceFormData: true,
+		onSuccess: (response) => {
+			console.log(response.props.ai);
+			form.files = [];
+			ai.value = response.props.ai;
+		},
+	});
+};
 </script>
 
 <template>
+
 	<Head title="Dashboard" />
 	<AuthenticatedLayout>
 		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
@@ -26,18 +59,39 @@ defineProps<{
 					</p> -->
 				</div>
 
-				<div
-					v-if="transactions.data.length > 0"
-					class="flex items-center space-x-2"
-				>
+				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+					<Dialog>
+						<DialogTrigger as-child>
+							<Button variant="ghost">
+								<SparklesIcon class="size-4" />
+							</Button>
+						</DialogTrigger>
+						<DialogContent class="sm:max-w-[425px]">
+							<DialogHeader>
+								<DialogTitle>Importar movimentações</DialogTitle>
+								<DialogDescription>
+									Faça o upload de uma imagem com suas movimentações.
+								</DialogDescription>
+							</DialogHeader>
+							<div class="py-4">
+								<AI v-if="ai" :data="ai" />
+								<UploadFile v-else v-model="form.files" />
+							</div>
+							<DialogFooter>
+								<Button type="submit" @click="handleSubmit" :disabled="form.processing">
+									<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
+									Confirmar
+								</Button>
+							</DialogFooter>
+						</DialogContent>
+					</Dialog>
+
 					<Button>Adicionar movimentação</Button>
 				</div>
 			</div>
 
-			<div
-				v-if="transactions.data.length === 0"
-				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-			>
+			<div v-if="transactions.data.length === 0"
+				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
 				<div class="flex flex-col items-center gap-1 text-center">
 					<h3 class="text-2xl font-bold tracking-tight">
 						Você ainda realizou uma movimentação.
@@ -52,13 +106,7 @@ defineProps<{
 				</div>
 			</div>
 
-			<DataTable
-				v-else
-				:data="transactions"
-				:columns="columns"
-				:filter="filter"
-				:categories="categories"
-			/>
+			<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories" />
 		</div>
 	</AuthenticatedLayout>
 </template>

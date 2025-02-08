@@ -3,7 +3,7 @@ import { useVModel } from '@vueuse/core';
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import type { Calendar } from 'v-calendar';
 import { DatePicker } from 'v-calendar';
-import { computed, nextTick, onMounted, ref, useSlots } from 'vue';
+import { computed, nextTick, onMounted, ref, useSlots, type Slots } from 'vue';
 import { isVCalendarSlot } from '.';
 import { cn } from '@/utils';
 import { buttonVariants } from '@/Components/ui/button';
@@ -68,11 +68,11 @@ onMounted(async () => {
 		calendarRef.value.focusDate(modelValue.value);
 });
 
-const $slots = useSlots();
-const vCalendarSlots = computed(() => {
+const $slots = useSlots() as Slots;
+const vCalendarSlots = computed<Record<string, unknown>>(() => {
 	return Object.keys($slots)
 		.filter((name) => isVCalendarSlot(name))
-		.reduce((obj: Record<string, any>, key: string) => {
+		.reduce((obj: Record<string, unknown>, key: string) => {
 			obj[key] = $slots[key];
 			return obj;
 		}, {});

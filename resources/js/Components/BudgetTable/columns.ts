@@ -84,9 +84,7 @@ export const columns: ColumnDef<Budget>[] = [
 							{
 								class: [
 									'absolute h-full w-full',
-									row.original.percentage === 100
-										? 'bg-green-100'
-										: 'bg-secondary dark:bg-secondary',
+									row.original.percentage === 100 ? 'bg-green-100' : 'bg-secondary',
 								],
 							},
 							[]
