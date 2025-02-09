@@ -153,13 +153,11 @@ const isImage = (file: File) => file.type.startsWith('image/')
         <div class="overflow-y-auto" :style="{ maxHeight: `${previewMaxHeight}px` }">
           <!-- Image Preview -->
           <div v-if="isImage(file) && previewUrl" class="relative">
-            <img 
-              :src="previewUrl" 
-              :alt="file.name" 
-              class="w-full rounded-lg object-contain" 
-              @load="handleImageLoad"
-              :class="{ 'opacity-0': !imageLoaded }"
-            />
+            <div v-if="loading" class="absolute inset-0 bg-gray-100/50" />
+            <div v-if="loading" class="absolute inset-0 shimmer" />
+
+            <img :src="previewUrl" :alt="file.name" class="w-full rounded-lg object-contain" @load="handleImageLoad"
+              :class="{ 'opacity-0': !imageLoaded }" />
           </div>
         </div>
       </div>
@@ -185,5 +183,25 @@ const isImage = (file: File) => file.type.startsWith('image/')
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background-color: theme('colors.gray.300');
   border-radius: 3px;
+}
+
+.shimmer {
+  background: linear-gradient(-45deg, #EEEEEE10 30%, #FFFFFF4D 50%, #EEEEEE10 70%);
+  /* @apply bg-gradient-to-r from-primary/10 via-primary/50 to-primary/10 from-30% via-50% to-70%; */
+  background-size: 400%;
+  background-position-x: 100%;
+  animation: shimmer 4s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100%;
+  }
+  50% {
+    background-position: -100%;
+  }
+  100% {
+    background-position: 100%;
+  }
 }
 </style>
