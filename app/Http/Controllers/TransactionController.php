@@ -11,8 +11,8 @@ use EchoLabs\Prism\Prism;
 use EchoLabs\Prism\Schema\ArraySchema;
 use EchoLabs\Prism\Schema\ObjectSchema;
 use EchoLabs\Prism\Schema\StringSchema;
-use EchoLabs\Prism\ValueObjects\Messages\UserMessage;
 use EchoLabs\Prism\ValueObjects\Messages\Support\Image;
+use EchoLabs\Prism\ValueObjects\Messages\UserMessage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -121,7 +121,7 @@ class TransactionController extends Controller
             $message = new UserMessage('Voce é um especialista em fazer a leitura de notas fiscais e retornar as informações em um formato estruturado. Retorne os valores formatados em reais.', [
                 Image::fromBase64($fileBase64, $fileMimeType),
             ]);
-            
+
             $response = Prism::structured()
                 ->using(Provider::OpenAI, 'gpt-4o-mini')
                 ->withSchema($schema)
@@ -132,6 +132,7 @@ class TransactionController extends Controller
         } catch (Exception $e) {
             dd($e);
             Log::error($e);
+
             return back();
         }
     }

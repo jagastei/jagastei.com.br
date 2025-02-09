@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/transacoes', [TransactionController::class, 'store'])->name('transactions.store');
     Route::post('/transacoes/importar', [TransactionController::class, 'import'])->name('transactions.import');
     Route::delete('/transacoes/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
-    
+
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
     Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
     Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
