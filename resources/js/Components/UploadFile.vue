@@ -175,14 +175,17 @@ const isImage = (file: File) => file.type.startsWith('image/');
           </Button>
         </div> -->
 
-        <div class="overflow-y-auto" :style="{ maxHeight: `${previewMaxHeight}px` }">
-          <!-- Image Preview -->
-          <div v-if="isImage(file) && previewUrl" class="relative">
-            <Transition name="fade">
-              <div v-if="loading" class="absolute inset-0 bg-gray-100/20">
-                <div class="w-full h-full shimmer" />
-              </div>
-            </Transition>
+				<div
+					class="overflow-y-auto"
+					:style="{ maxHeight: `${previewMaxHeight}px` }"
+				>
+					<!-- Image Preview -->
+					<div v-if="isImage(file) && previewUrl" class="relative">
+						<Transition name="fade">
+							<div v-if="loading" class="absolute inset-0 bg-gray-100/20">
+								<div class="w-full h-full shimmer" />
+							</div>
+						</Transition>
 
 						<img
 							:src="previewUrl"

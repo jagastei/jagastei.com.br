@@ -46,7 +46,7 @@ const handleSubmit = () => {
 };
 
 const onUploadDialogOpen = (open: boolean) => {
-	if(open) {
+	if (open) {
 		// form.files = [];
 		// ai.value = null;
 	}
@@ -84,15 +84,28 @@ const onUploadDialogOpen = (open: boolean) => {
 							</DialogHeader>
 							<div class="py-2">
 								<AI v-if="ai" :data="ai" />
-								<UploadFile v-else v-model="form.files" :preview-max-height="319" :loading="form.processing"/>
+								<UploadFile
+									v-else
+									v-model="form.files"
+									:preview-max-height="319"
+									:loading="form.processing"
+								/>
 							</div>
 							<DialogFooter>
-
-								<Button v-if="!ai && form.processing && form.files.length > 0" variant="outline" @click="form.files = []">
+								<Button
+									v-if="!ai && form.processing && form.files.length > 0"
+									variant="outline"
+									@click="form.files = []"
+								>
 									Usar outra imagem
 								</Button>
 
-								<Button v-if="!ai" type="submit" @click="handleSubmit" :disabled="form.files.length === 0 || form.processing">
+								<Button
+									v-if="!ai"
+									type="submit"
+									@click="handleSubmit"
+									:disabled="form.files.length === 0 || form.processing"
+								>
 									<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
 									Enviar
 								</Button>
