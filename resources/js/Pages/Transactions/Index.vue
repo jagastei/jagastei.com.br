@@ -14,12 +14,12 @@ import { Button } from '@/Components/ui/button'; import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog'
-import { Loader2, SparklesIcon } from 'lucide-vue-next';
+import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
 import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
 import AI from '@/Components/AI.vue';
 
-const props = defineProps<{
+defineProps<{
 	filter: any;
 	categories: Category[];
 	transactions: Pagination<Transaction>;
@@ -38,12 +38,18 @@ const handleSubmit = () => {
 		preserveState: true,
 		forceFormData: true,
 		onSuccess: (response) => {
-			console.log(response.props.ai);
 			form.files = [];
 			ai.value = response.props.ai;
 		},
 	});
 };
+
+const onUploadDialogOpen = (open: boolean) => {
+	if(open) {
+		form.files = [];
+		ai.value = null;
+	}
+}
 </script>
 
 <template>
@@ -60,10 +66,10 @@ const handleSubmit = () => {
 				</div>
 
 				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
-					<Dialog>
+					<Dialog @update:open="onUploadDialogOpen">
 						<DialogTrigger as-child>
 							<Button variant="ghost">
-								<SparklesIcon class="size-4" />
+								<CloudUploadIcon class="size-4" />
 							</Button>
 						</DialogTrigger>
 						<DialogContent class="sm:max-w-[425px]">
@@ -73,14 +79,19 @@ const handleSubmit = () => {
 									Faça o upload de uma imagem com suas movimentações.
 								</DialogDescription>
 							</DialogHeader>
-							<div class="py-4">
+							<div class="py-2">
 								<AI v-if="ai" :data="ai" />
-								<UploadFile v-else v-model="form.files" />
+								<UploadFile v-else v-model="form.files" :preview-max-height="319" :loading="true"/>
 							</div>
 							<DialogFooter>
-								<Button type="submit" @click="handleSubmit" :disabled="form.processing">
+
+								<Button v-if="form.files.length > 0" variant="outline" @click="form.files = []">
+									Usar outra imagem
+								</Button>
+
+								<Button type="submit" @click="handleSubmit" :disabled="form.files.length === 0 || form.processing">
 									<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
-									Confirmar
+									Enviar
 								</Button>
 							</DialogFooter>
 						</DialogContent>

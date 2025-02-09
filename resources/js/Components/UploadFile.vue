@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, onBeforeUnmount } from 'vue'
+import { ref, watch } from 'vue'
 import { Button } from '@/Components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/Components/ui/dialog'
-import { Icon } from '@iconify/vue'
 import { TransitionRoot } from '@headlessui/vue'
+import { CloudUploadIcon, XIcon } from 'lucide-vue-next'
 
 interface Props {
   modelValue?: File[]
@@ -11,11 +10,15 @@ interface Props {
   accept?: string
   maxSize?: number // in MB
   previewMaxHeight?: number // in pixels
+  loading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  multiple: false,
+  accept: 'image/*',
   maxSize: 10,
   previewMaxHeight: 400,
+  loading: false,
 })
 
 const emit = defineEmits<{
@@ -27,30 +30,50 @@ const file = ref<File | null>(null)
 const dragOver = ref(false)
 const fileInput = ref<HTMLInputElement>()
 const previewUrl = ref<string | null>(null)
+const imageLoaded = ref(false)
+
+watch(() => props.modelValue, (newValue) => {
+  if (!newValue?.length) {
+    if (previewUrl.value) {
+      URL.revokeObjectURL(previewUrl.value)
+    }
+    file.value = null
+    previewUrl.value = null
+    if (fileInput.value) {
+      fileInput.value.value = ''
+    }
+  }
+}, { deep: true })
+
 
 const handleFileSelect = (event: Event) => {
   const input = event.target as HTMLInputElement
   if (!input.files?.length) return
-  
+
   validateAndAddFile(input.files[0])
 }
 
 const handleDrop = (event: DragEvent) => {
   event.preventDefault()
   dragOver.value = false
-  
+
   if (!event.dataTransfer?.files.length) return
-  
+
   validateAndAddFile(event.dataTransfer.files[0])
 }
 
+const handleImageLoad = () => {
+  imageLoaded.value = true
+}
+
 const validateAndAddFile = (newFile: File) => {
+  imageLoaded.value = false
   // Check file size
   if (newFile.size > props.maxSize * 1024 * 1024) {
     emit('error', `File ${newFile.name} is too large. Max size is ${props.maxSize}MB`)
     return
   }
-  
+
   // Check file type if accept prop is set
   if (props.accept && !newFile.type.match(props.accept)) {
     emit('error', `File ${newFile.name} is not an accepted file type`)
@@ -63,11 +86,15 @@ const validateAndAddFile = (newFile: File) => {
 }
 
 const removeFile = () => {
+  imageLoaded.value = false
   if (previewUrl.value) {
     URL.revokeObjectURL(previewUrl.value)
   }
   file.value = null
   previewUrl.value = null
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
   emit('update:modelValue', [])
 }
 
@@ -87,98 +114,53 @@ const openFileDialog = () => {
 }
 
 const isImage = (file: File) => file.type.startsWith('image/')
-
-onBeforeUnmount(() => {
-  if (previewUrl.value) {
-    URL.revokeObjectURL(previewUrl.value)
-  }
-})
 </script>
 
 <template>
-  <div
-    class="relative rounded-lg border-2 border-dashed border-gray-300 p-6"
-    :class="{ 'border-primary': dragOver }"
-    @dragover.prevent="dragOver = true"
-    @dragleave.prevent="dragOver = false"
-    @drop="handleDrop"
-  >
-    <input
-      ref="fileInput"
-      type="file"
-      :accept="accept"
-      class="hidden"
-      @change="handleFileSelect"
-    >
-    
+  <div :class="['relative rounded-lg',
+    previewUrl ? 'p-0 ring-2 ring-primary' : 'p-10 border-2 border-dashed border-gray-300',
+    { 'border-primary': dragOver }
+  ]" @dragover.prevent="dragOver = true" @dragleave.prevent="dragOver = false" @drop="handleDrop">
+    <input ref="fileInput" type="file" :accept="accept" class="hidden" @change="handleFileSelect">
+
     <div v-if="!file" class="text-center">
-      <Icon
-        icon="heroicons:cloud-arrow-up"
-        class="mx-auto h-12 w-12 text-gray-400"
-      />
-      <div class="mt-2">
+      <CloudUploadIcon class="mx-auto size-8 text-gray-400" :stroke-width="1.5" />
+      <div class="mt-2 flex flex-col">
         <Button variant="link" @click="openFileDialog">
-          Upload a file
+          Clique aqui para enviar uma imagem
         </Button>
-        <span class="text-gray-500">
-          or drag and drop
+        <span class="text-gray-500 text-sm">
+          ou arraste e solte até aqui
         </span>
       </div>
-      <p class="mt-1 text-sm text-gray-500">
-        File up to {{ maxSize }}MB
-      </p>
     </div>
 
-    <TransitionRoot
-      :show="!!file"
-      enter="transition-all duration-300 ease-out"
-      enter-from="opacity-0 scale-95"
-      enter-to="opacity-100 scale-100"
-      leave="transition-all duration-200 ease-in"
-      leave-from="opacity-100 scale-100"
-      leave-to="opacity-0 scale-95"
-      class="overflow-hidden"
-    >
-      <div 
-        v-if="file"
-        class="overflow-y-auto"
-        :style="{ maxHeight: `${previewMaxHeight}px` }"
-      >
-        <!-- Image Preview -->
-        <div 
-          v-if="isImage(file) && previewUrl"
-          class="relative mb-4 overflow-hidden rounded-lg"
-        >
-          <img
-            :src="previewUrl"
-            :alt="file.name"
-            class="w-full rounded-lg object-contain"
-          />
-        </div>
-        
-        <!-- File Info -->
-        <div class="flex items-center justify-between rounded bg-gray-50 p-3">
-          <div class="flex items-center space-x-3 overflow-hidden">
-            <Icon 
-              v-if="!isImage(file)"
-              icon="heroicons:document" 
-              class="h-6 w-6 flex-shrink-0 text-gray-400"
-            />
-            <div class="overflow-hidden">
-              <p class="truncate text-sm font-medium">{{ file.name }}</p>
-              <p class="text-xs text-gray-500">
-                {{ (file.size / 1024 / 1024).toFixed(2) }}MB
-              </p>
-            </div>
+    <TransitionRoot :show="!!file" enter="transition-all duration-300 ease-out" enter-from="opacity-0 scale-95"
+      enter-to="opacity-100 scale-100" leave="transition-all duration-200 ease-in" leave-from="opacity-100 scale-100"
+      leave-to="opacity-0 scale-95" class="overflow-hidden">
+      <div v-if="file" class="relative">
+        <!-- File Info & Remove Button -->
+        <!-- <div class="absolute inset-x-0 top-0 z-10 flex items-center justify-between bg-black/50 backdrop-blur p-2">
+          <div class="flex flex-col">
+            <span class="text-sm text-white">{{ file.name }}</span>
+            <span class="text-[10px] text-white/50">{{ (file.size / 1024 / 1024).toFixed(2) }}MB</span>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            @click="removeFile"
-            class="flex-shrink-0"
-          >
-            <Icon icon="heroicons:x-mark" class="h-5 w-5" />
+          <Button variant="link" size="icon" @click="removeFile" class="text-white/50 hover:text-white">
+            <XIcon class="size-4"/>
           </Button>
+        </div> -->
+
+        <div class="overflow-y-auto" :style="{ maxHeight: `${previewMaxHeight}px` }">
+          <!-- Image Preview -->
+          <div v-if="isImage(file) && previewUrl" class="relative">
+            <img 
+              :src="previewUrl" 
+              :alt="file.name" 
+              class="w-full rounded-lg object-contain" 
+              @load="handleImageLoad"
+              :class="{ 'opacity-0': !imageLoaded }"
+            />
+          </div>
         </div>
       </div>
     </TransitionRoot>
