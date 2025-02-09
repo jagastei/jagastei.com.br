@@ -107,6 +107,7 @@ class TransactionController extends Controller
                                 new StringSchema('quantidade', 'A quantidade do item'),
                                 new StringSchema('valor', 'O valor do item'),
                                 new StringSchema('total', 'O total do item'),
+                                new StringSchema('categoria', 'A categoria do item'),
                             ],
                         ),
                     ),
@@ -114,11 +115,12 @@ class TransactionController extends Controller
                     new StringSchema('data', 'A data da nota fiscal'),
                     new StringSchema('localizacao', 'A localização da nota fiscal'),
                     new StringSchema('metodo_pagamento', 'O método de pagamento da nota fiscal'),
+                    new StringSchema('categoria', 'Tipo de gasto'),
                 ],
                 requiredFields: [],
             );
 
-            $message = new UserMessage('Voce é um especialista em fazer a leitura de notas fiscais e retornar as informações em um formato estruturado. Retorne os valores formatados em reais.', [
+            $message = new UserMessage('Voce é um especialista em fazer a leitura de notas fiscais e retornar as informações em um formato estruturado. Retorne os valores formatados em reais. Você também deve categorizar os itens da nota fiscal.', [
                 Image::fromBase64($fileBase64, $fileMimeType),
             ]);
 

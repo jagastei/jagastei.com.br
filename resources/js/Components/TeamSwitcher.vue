@@ -97,13 +97,13 @@ const filter = (
 					aria-label="Select a team"
 					:class="cn('w-[200px] justify-between py-0 px-2 h-10', $attrs.class ?? '')"
 				>
-					<Avatar class="mr-2 h-5 w-5">
+					<!-- <Avatar class="mr-2 h-5 w-5">
 						<AvatarImage
 							:src="`https://avatar.vercel.sh/${selectedTeam.value}.png`"
 							:alt="selectedTeam.label"
 						/>
 						<AvatarFallback>SC</AvatarFallback>
-					</Avatar>
+					</Avatar> -->
 					{{ selectedTeam.label }}
 					<ChevronsUpDown class="ml-auto h-4 w-4 shrink-0 opacity-50" />
 				</Button>
@@ -128,14 +128,14 @@ const filter = (
 									}
 								"
 							>
-								<Avatar class="mr-2 h-5 w-5">
+								<!-- <Avatar class="mr-2 h-5 w-5">
 									<AvatarImage
 										:src="`https://avatar.vercel.sh/${team.value}.png`"
 										:alt="team.label"
 										class="grayscale"
 									/>
 									<AvatarFallback>SC</AvatarFallback>
-								</Avatar>
+								</Avatar> -->
 								{{ team.label }}
 								<CheckIcon
 									:class="

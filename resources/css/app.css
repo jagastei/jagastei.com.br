@@ -107,3 +107,17 @@ input[type='color']::-webkit-color-swatch-wrapper {
 input[type='color']::-webkit-color-swatch {
 	border: none;
 }
+
+[v-cloak] {
+	display: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}

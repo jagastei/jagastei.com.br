@@ -153,8 +153,11 @@ const isImage = (file: File) => file.type.startsWith('image/')
         <div class="overflow-y-auto" :style="{ maxHeight: `${previewMaxHeight}px` }">
           <!-- Image Preview -->
           <div v-if="isImage(file) && previewUrl" class="relative">
-            <div v-if="loading" class="absolute inset-0 bg-gray-100/50" />
-            <div v-if="loading" class="absolute inset-0 shimmer" />
+            <Transition name="fade">
+              <div v-if="loading" class="absolute inset-0 bg-gray-100/20">
+                <div class="w-full h-full shimmer" />
+              </div>
+            </Transition>
 
             <img :src="previewUrl" :alt="file.name" class="w-full rounded-lg object-contain" @load="handleImageLoad"
               :class="{ 'opacity-0': !imageLoaded }" />

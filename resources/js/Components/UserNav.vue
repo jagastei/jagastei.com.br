@@ -22,6 +22,7 @@ import {
 	LogOutIcon,
 	UserIcon,
 	UserPlusIcon,
+	DollarSignIcon,
 } from 'lucide-vue-next';
 import { usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
@@ -48,9 +49,10 @@ const user = usePage().props.auth.user;
 						<span>Minha conta</span>
 					</DropdownMenuItem>
 				</Link>
-				<!-- <DropdownMenuItem class="cursor-pointer">
-					Meu plano
-				</DropdownMenuItem> -->
+				<DropdownMenuItem class="cursor-pointer">
+					<DollarSignIcon class="mr-2 size-4" />
+					<span>Meu plano</span>
+				</DropdownMenuItem>
 			</DropdownMenuGroup>
 
 			<DropdownMenuSeparator />

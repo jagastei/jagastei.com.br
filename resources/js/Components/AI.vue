@@ -20,6 +20,7 @@ defineProps({
           <span>Data: {{ data.data }}</span>
           <span>Pagamento: {{ data.metodo_pagamento }}</span>
         </div>
+        <p class="text-sm text-muted-foreground">{{ data.categoria }}</p>
       </div>
 
       <!-- Items -->
@@ -28,6 +29,7 @@ defineProps({
              class="flex justify-between py-2 border-b last:border-b-0">
           <div class="space-y-1">
             <p class="font-medium">{{ item.descricao }}</p>
+            <p class="text-sm text-muted-foreground">{{ item.categoria }}</p>
             <p class="text-sm text-muted-foreground">{{ item.quantidade }}</p>
           </div>
           <div class="text-right">
