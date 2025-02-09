@@ -5,7 +5,8 @@ import { columns, Transaction } from '@/Components/TransactionTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
-import { Button } from '@/Components/ui/button'; import {
+import { Button } from '@/Components/ui/button';
+import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
@@ -13,7 +14,7 @@ import { Button } from '@/Components/ui/button'; import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/Components/ui/dialog'
+} from '@/Components/ui/dialog';
 import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
 import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
@@ -45,15 +46,14 @@ const handleSubmit = () => {
 };
 
 const onUploadDialogOpen = (open: boolean) => {
-	if(open) {
+	if (open) {
 		form.files = [];
 		ai.value = null;
 	}
-}
+};
 </script>
 
 <template>
-
 	<Head title="Dashboard" />
 	<AuthenticatedLayout>
 		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
@@ -65,7 +65,10 @@ const onUploadDialogOpen = (open: boolean) => {
 					</p> -->
 				</div>
 
-				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+				<div
+					v-if="transactions.data.length > 0"
+					class="flex items-center space-x-2"
+				>
 					<Dialog @update:open="onUploadDialogOpen">
 						<DialogTrigger as-child>
 							<Button variant="ghost">
@@ -81,15 +84,27 @@ const onUploadDialogOpen = (open: boolean) => {
 							</DialogHeader>
 							<div class="py-2">
 								<AI v-if="ai" :data="ai" />
-								<UploadFile v-else v-model="form.files" :preview-max-height="319" :loading="true"/>
+								<UploadFile
+									v-else
+									v-model="form.files"
+									:preview-max-height="319"
+									:loading="true"
+								/>
 							</div>
 							<DialogFooter>
-
-								<Button v-if="form.files.length > 0" variant="outline" @click="form.files = []">
+								<Button
+									v-if="form.files.length > 0"
+									variant="outline"
+									@click="form.files = []"
+								>
 									Usar outra imagem
 								</Button>
 
-								<Button type="submit" @click="handleSubmit" :disabled="form.files.length === 0 || form.processing">
+								<Button
+									type="submit"
+									@click="handleSubmit"
+									:disabled="form.files.length === 0 || form.processing"
+								>
 									<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
 									Enviar
 								</Button>
@@ -101,8 +116,10 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 			</div>
 
-			<div v-if="transactions.data.length === 0"
-				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+			<div
+				v-if="transactions.data.length === 0"
+				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+			>
 				<div class="flex flex-col items-center gap-1 text-center">
 					<h3 class="text-2xl font-bold tracking-tight">
 						Você ainda realizou uma movimentação.
@@ -117,7 +134,13 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 			</div>
 
-			<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories" />
+			<DataTable
+				v-else
+				:data="transactions"
+				:columns="columns"
+				:filter="filter"
+				:categories="categories"
+			/>
 		</div>
 	</AuthenticatedLayout>
 </template>
