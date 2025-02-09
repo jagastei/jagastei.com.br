@@ -1,12 +1,12 @@
 <script setup>
-import { ScrollArea } from '@/Components/ui/scroll-area'
+import { ScrollArea } from '@/Components/ui/scroll-area';
 
 defineProps({
-  data: {
-    type: Object,
-    required: true
-  }
-})
+	data: {
+		type: Object,
+		required: true,
+	},
+});
 </script>
 
 <template>
@@ -39,13 +39,13 @@ defineProps({
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="mt-6 pt-4 border-t">
-        <div class="flex justify-between items-center">
-          <span class="font-bold text-lg">Total</span>
-          <span class="font-bold text-lg">{{ data.total }}</span>
-        </div>
-      </div>
-    </ScrollArea>
-  </div>
+			<!-- Footer -->
+			<div class="mt-6 pt-4 border-t">
+				<div class="flex justify-between items-center">
+					<span class="font-bold text-lg">Total</span>
+					<span class="font-bold text-lg">{{ data.total }}</span>
+				</div>
+			</div>
+		</ScrollArea>
+	</div>
 </template>

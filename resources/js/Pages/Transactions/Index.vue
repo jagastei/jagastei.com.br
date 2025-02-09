@@ -5,7 +5,8 @@ import { columns, Transaction } from '@/Components/TransactionTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
-import { Button } from '@/Components/ui/button'; import {
+import { Button } from '@/Components/ui/button';
+import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
@@ -13,7 +14,7 @@ import { Button } from '@/Components/ui/button'; import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from '@/Components/ui/dialog'
+} from '@/Components/ui/dialog';
 import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
 import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
@@ -49,11 +50,10 @@ const onUploadDialogOpen = (open: boolean) => {
 		// form.files = [];
 		// ai.value = null;
 	}
-}
+};
 </script>
 
 <template>
-
 	<Head title="Dashboard" />
 	<AuthenticatedLayout>
 		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
@@ -65,7 +65,10 @@ const onUploadDialogOpen = (open: boolean) => {
 					</p> -->
 				</div>
 
-				<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+				<div
+					v-if="transactions.data.length > 0"
+					class="flex items-center space-x-2"
+				>
 					<Dialog @update:open="onUploadDialogOpen">
 						<DialogTrigger as-child>
 							<Button variant="ghost">
@@ -106,8 +109,10 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 			</div>
 
-			<div v-if="transactions.data.length === 0"
-				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+			<div
+				v-if="transactions.data.length === 0"
+				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+			>
 				<div class="flex flex-col items-center gap-1 text-center">
 					<h3 class="text-2xl font-bold tracking-tight">
 						Você ainda realizou uma movimentação.
@@ -122,7 +127,13 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 			</div>
 
-			<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories" />
+			<DataTable
+				v-else
+				:data="transactions"
+				:columns="columns"
+				:filter="filter"
+				:categories="categories"
+			/>
 		</div>
 	</AuthenticatedLayout>
 </template>
