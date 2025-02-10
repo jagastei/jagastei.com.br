@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { useForm, usePage } from '@inertiajs/vue3';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/Components/ui/card';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
@@ -29,7 +35,10 @@ const form = useForm({
 		</CardHeader>
 
 		<CardContent>
-			<form @submit.prevent="form.patch(route('profile.update'))" class="space-y-6">
+			<form
+				@submit.prevent="form.patch(route('profile.update'))"
+				class="space-y-6"
+			>
 				<div class="space-y-2">
 					<Label for="name">Nome</Label>
 					<Input
@@ -73,9 +82,7 @@ const form = useForm({
 					</AlertDescription>
 				</Alert>
 
-				<Alert
-					v-if="status === 'verification-link-sent'"
-				>
+				<Alert v-if="status === 'verification-link-sent'">
 					<AlertDescription>
 						Um novo link de verificação foi enviado para seu endereço de e-mail.
 					</AlertDescription>

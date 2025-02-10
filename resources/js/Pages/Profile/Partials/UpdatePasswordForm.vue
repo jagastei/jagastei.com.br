@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/Components/ui/card';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
@@ -24,7 +30,8 @@ const updatePassword = () => {
 		<CardHeader>
 			<CardTitle>Atualizar senha</CardTitle>
 			<CardDescription>
-				Certifique-se de que sua conta está usando uma senha longa e aleatória para manter-se seguro.
+				Certifique-se de que sua conta está usando uma senha longa e aleatória para
+				manter-se seguro.
 			</CardDescription>
 		</CardHeader>
 
@@ -64,7 +71,10 @@ const updatePassword = () => {
 						type="password"
 						autocomplete="new-password"
 					/>
-					<p v-if="form.errors.password_confirmation" class="text-sm text-destructive">
+					<p
+						v-if="form.errors.password_confirmation"
+						class="text-sm text-destructive"
+					>
 						{{ form.errors.password_confirmation }}
 					</p>
 				</div>

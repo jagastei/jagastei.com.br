@@ -81,9 +81,7 @@ const form = useForm<{
 	card: undefined,
 });
 
-const submit = () => {
-	
-};
+const submit = () => {};
 
 const onClose = () => {
 	form.reset();
@@ -163,7 +161,11 @@ const onClose = () => {
 								class="w-[375px] justify-between mt-2 p-3"
 							>
 								<div class="flex items-center truncate">
-									<div v-if="form.category" class="block size-6 rounded-xl" :style="{ backgroundColor: form.category.color ?? '#000000' }"></div>	
+									<div
+										v-if="form.category"
+										class="block size-6 rounded-xl"
+										:style="{ backgroundColor: form.category.color ?? '#000000' }"
+									></div>
 									<span
 										:class="[
 											'truncate',
@@ -171,7 +173,9 @@ const onClose = () => {
 												'ml-3': form.category,
 											},
 										]"
-										>{{ form.category ? form.category?.name : 'Escolha uma categoria' }}</span
+										>{{
+											form.category ? form.category?.name : 'Escolha uma categoria'
+										}}</span
 									>
 								</div>
 								<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -187,7 +191,9 @@ const onClose = () => {
 								/>
 
 								<CommandEmpty>
-									<template v-if="query.length > 0">Nenhuma categoria encontrada.</template>
+									<template v-if="query.length > 0"
+										>Nenhuma categoria encontrada.</template
+									>
 									<template v-else>Informe o nome da categoria.</template>
 								</CommandEmpty>
 
@@ -200,7 +206,10 @@ const onClose = () => {
 											@select="onSelected"
 											class="flex"
 										>
-											<div class="block size-6 rounded-xl" :style="{ backgroundColor: category.color ?? '#000000' }"></div>
+											<div
+												class="block size-6 rounded-xl"
+												:style="{ backgroundColor: category.color ?? '#000000' }"
+											></div>
 											<span class="ml-3 block truncate">{{ category.name }}</span>
 											<Check
 												:class="

@@ -128,7 +128,9 @@ const onUploadDialogOpen = (open: boolean) => {
 						</DialogContent>
 					</Dialog>
 
-					<Button @click="createTransactionDialogOpen = true">Adicionar movimentação</Button>
+					<Button @click="createTransactionDialogOpen = true"
+						>Adicionar movimentação</Button
+					>
 				</div>
 			</div>
 

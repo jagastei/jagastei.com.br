@@ -1,9 +1,23 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/Components/ui/dialog';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/Components/ui/dialog';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 
@@ -38,15 +52,13 @@ const closeModal = () => {
 		<CardHeader>
 			<CardTitle>Deletar conta</CardTitle>
 			<CardDescription>
-				Uma vez que sua conta seja deletada, todos os seus recursos e dados serão deletados permanentemente.
+				Uma vez que sua conta seja deletada, todos os seus recursos e dados serão
+				deletados permanentemente.
 			</CardDescription>
 		</CardHeader>
 
 		<CardContent>
-			<Button 
-				variant="destructive" 
-				@click="confirmUserDeletion"
-			>
+			<Button variant="destructive" @click="confirmUserDeletion">
 				Deletar conta
 			</Button>
 
@@ -55,8 +67,9 @@ const closeModal = () => {
 					<DialogHeader>
 						<DialogTitle>Tem certeza que deseja deletar sua conta?</DialogTitle>
 						<DialogDescription>
-							Uma vez que sua conta seja deletada, todos os seus recursos e dados serão deletados permanentemente. Por favor,
-							digite sua senha para confirmar que deseja deletar permanentemente sua conta.
+							Uma vez que sua conta seja deletada, todos os seus recursos e dados serão
+							deletados permanentemente. Por favor, digite sua senha para confirmar que
+							deseja deletar permanentemente sua conta.
 						</DialogDescription>
 					</DialogHeader>
 
@@ -77,17 +90,10 @@ const closeModal = () => {
 						</div>
 
 						<DialogFooter class="mt-6">
-							<Button 
-								variant="outline" 
-								type="button"
-								@click="closeModal"
-							>
+							<Button variant="outline" type="button" @click="closeModal">
 								Cancelar
 							</Button>
-							<Button 
-								variant="destructive" 
-								:disabled="form.processing"
-							>
+							<Button variant="destructive" :disabled="form.processing">
 								Deletar conta
 							</Button>
 						</DialogFooter>
