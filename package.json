@@ -38,6 +38,7 @@
         "embla-carousel-vue": "^8.5.2",
         "fuse.js": "^7.1.0",
         "lucide-vue-next": "^0.475.0",
+        "mitt": "^3.0.1",
         "mixpanel-browser": "^2.60.0",
         "prettier": "^3.4.2",
         "radix-vue": "^1.9.13",

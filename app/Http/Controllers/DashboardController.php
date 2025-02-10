@@ -13,8 +13,11 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $startDate = now()->subWeek()->startOfWeek(Carbon::MONDAY);
+        $startDate = now()->subYear()->subWeek()->startOfWeek(Carbon::MONDAY);
         $endDate = now()->subWeek()->endOfWeek(Carbon::SUNDAY);
+
+        $startDate = now()->subMonths(6)->startOfMonth();
+        $endDate = now()->subMonths(6)->endOfMonth();
 
         $startDateString = $startDate->format('Y-m-d');
         $endDateString = $endDate->format('Y-m-d');

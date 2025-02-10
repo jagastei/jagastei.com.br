@@ -19,12 +19,15 @@ import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
 import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
 import AI from '@/Components/AI.vue';
+import CreateDialog from './CreateDialog.vue';
 
 defineProps<{
 	filter: any;
 	categories: Category[];
 	transactions: Pagination<Transaction>;
 }>();
+
+const createTransactionDialogOpen = ref(false);
 
 const form = useForm({
 	files: [],
@@ -55,6 +58,13 @@ const onUploadDialogOpen = (open: boolean) => {
 
 <template>
 	<Head title="Dashboard" />
+
+	<CreateDialog
+		:categories="categories"
+		:open="createTransactionDialogOpen"
+		@close="createTransactionDialogOpen = false"
+	/>
+
 	<AuthenticatedLayout>
 		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
 			<div class="flex items-center justify-between">
@@ -93,7 +103,7 @@ const onUploadDialogOpen = (open: boolean) => {
 							</div>
 							<DialogFooter>
 								<Button
-									v-if="!ai && form.processing && form.files.length > 0"
+									v-if="!ai && !form.processing && form.files.length > 0"
 									variant="outline"
 									@click="form.files = []"
 								>
@@ -118,7 +128,7 @@ const onUploadDialogOpen = (open: boolean) => {
 						</DialogContent>
 					</Dialog>
 
-					<Button>Adicionar movimentação</Button>
+					<Button @click="createTransactionDialogOpen = true">Adicionar movimentação</Button>
 				</div>
 			</div>
 

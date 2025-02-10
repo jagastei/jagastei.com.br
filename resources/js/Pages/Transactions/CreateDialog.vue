@@ -30,21 +30,21 @@ import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
-import { Brand } from '@/Components/CardTable/columns';
+import { Brand, Card } from '@/Components/CardTable/columns';
+import { Category } from '@/Components/CategoryTable/columns';
 
 const props = defineProps<{
-	brands: Brand[];
-	accounts: Account[];
+	categories: Category[];
 	open: boolean;
 }>();
 
 const emit = defineEmits(['close']);
 
-const accountDialogOpen = ref(false);
+const categoryDialogOpen = ref(false);
 
 const query = ref<string>('');
 
-const { results } = useFuse(query, props.accounts, {
+const { results } = useFuse(query, props.categories, {
 	fuseOptions: {
 		keys: ['name'],
 		isCaseSensitive: false,
@@ -59,31 +59,30 @@ const resultList = computed(() => {
 });
 
 const onSelected = (ev: any) => {
-	form.account = ev.detail.value as Account;
-	accountDialogOpen.value = false;
+	form.category = ev.detail.value as Category;
+	categoryDialogOpen.value = false;
 };
 
 const form = useForm<{
+	title: string;
+	type: 'IN' | 'OUT';
+	value: number;
+	category: Category | undefined;
 	account: Account | undefined;
-	name: string;
-	limit: number;
+	method: 'CARD' | 'TED' | 'PIX' | 'UNKNOWN';
+	card: Card | undefined;
 }>({
+	title: '',
+	type: 'IN',
+	value: 0,
+	category: undefined,
 	account: undefined,
-	name: '',
-	limit: 0,
+	method: 'CARD',
+	card: undefined,
 });
 
 const submit = () => {
-	form
-		.transform((data) => ({
-			...data,
-			account: data.account?.id,
-		}))
-		.post(route('accounts.store'), {
-			onFinish: () => {
-				onClose();
-			},
-		});
+	
 };
 
 const onClose = () => {
@@ -97,6 +96,7 @@ const onClose = () => {
 		<DialogTrigger as-child>
 			<slot />
 		</DialogTrigger>
+
 		<DialogContent
 			class="sm:max-w-[425px]"
 			@interactOutside="onClose"
@@ -109,7 +109,7 @@ const onClose = () => {
 				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
-				<div class="flex flex-col">
+				<!-- <div class="flex flex-col">
 					<Label for="name" class="text-left"> Nome </Label>
 					<Input
 						id="name"
@@ -119,14 +119,14 @@ const onClose = () => {
 						autocomplete="off"
 						tabindex="1"
 					/>
-				</div>
+				</div> -->
 
 				<div class="flex flex-col">
-					<Label for="limit" class="text-left"> Limite </Label>
+					<Label for="value" class="text-left"> Valor </Label>
 
 					<Input
-						id="limit"
-						v-model.lazy="form.limit"
+						id="value"
+						v-model.lazy="form.value"
 						class="mt-2"
 						v-money3="{
 							prefix: 'R$',
@@ -151,39 +151,34 @@ const onClose = () => {
 				</div>
 
 				<div class="flex flex-col">
-					<Label for="account">Conta</Label>
+					<Label for="category">Categoria</Label>
 
-					<Popover v-model:open="accountDialogOpen">
+					<Popover v-model:open="categoryDialogOpen">
 						<PopoverTrigger as-child>
 							<Button
 								tabindex="3"
-								id="bank"
+								id="category"
 								variant="outline"
 								role="combobox"
 								class="w-[375px] justify-between mt-2 p-3"
 							>
 								<div class="flex items-center truncate">
-									<div v-if="form.account" class="min-w-4">
-										<img
-											:src="`https://jagastei.com.br.test/images/banks/${form.account.bank.code}.png`"
-											class="size-4 rounded-xl"
-										/>
-									</div>
+									<div v-if="form.category" class="block size-6 rounded-xl" :style="{ backgroundColor: form.category.color ?? '#000000' }"></div>	
 									<span
 										:class="[
 											'truncate',
 											{
-												'ml-3': form.account,
+												'ml-3': form.category,
 											},
 										]"
-										>{{ form.account ? form.account?.name : 'Escolha uma conta' }}</span
+										>{{ form.category ? form.category?.name : 'Escolha uma categoria' }}</span
 									>
 								</div>
 								<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent class="w-[375px] p-0">
-							<Command v-model="form.account" v-model:searchTerm="query">
+							<Command v-model="form.category" v-model:searchTerm="query">
 								<CommandInput
 									class="h-9"
 									placeholder="Buscar"
@@ -192,31 +187,26 @@ const onClose = () => {
 								/>
 
 								<CommandEmpty>
-									<template v-if="query.length > 0">Nenhuma conta encontrada.</template>
-									<template v-else>Informe o nome da conta.</template>
+									<template v-if="query.length > 0">Nenhuma categoria encontrada.</template>
+									<template v-else>Informe o nome da categoria.</template>
 								</CommandEmpty>
 
 								<CommandList>
 									<CommandGroup>
 										<CommandItem
-											v-for="account in resultList"
-											:key="account.id"
-											:value="account"
+											v-for="category in resultList"
+											:key="category.id"
+											:value="category"
 											@select="onSelected"
 											class="flex"
 										>
-											<div class="min-w-4">
-												<img
-													:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
-													class="size-4 rounded-xl"
-												/>
-											</div>
-											<span class="ml-3 block truncate">{{ account.name }}</span>
+											<div class="block size-6 rounded-xl" :style="{ backgroundColor: category.color ?? '#000000' }"></div>
+											<span class="ml-3 block truncate">{{ category.name }}</span>
 											<Check
 												:class="
 													cn(
 														'ml-auto h-4 w-4',
-														form.account?.id === account.id ? 'opacity-100' : 'opacity-0'
+														form.category?.id === category.id ? 'opacity-100' : 'opacity-0'
 													)
 												"
 											/>

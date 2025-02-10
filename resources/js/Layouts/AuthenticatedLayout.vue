@@ -38,6 +38,9 @@ import {
 import { useStorage } from '@vueuse/core';
 import { ScrollArea } from '@/Components/ui/scroll-area';
 import TeamSwitcher from '@/Components/TeamSwitcher.vue';
+import FeedbackDialog from '@/Components/FeedbackDialog.vue';
+import SupportDialog from '@/Components/SupportDialog.vue';
+import InviteDialog from '@/Components/InviteDialog.vue';
 
 const isCollapsed = useStorage('is-collapsed', false);
 
@@ -64,6 +67,20 @@ const links: LinkProp[] = [
 		route: route('transactions.index'),
 		active: route().current('transactions.index'),
 	},
+	// {
+	// 	title: 'Entradas',
+	// 	label: '',
+	// 	icon: 'lucide:arrow-up',
+	// 	route: route('transactions.index'),
+	// 	active: route().current('transactions.index'),
+	// },
+	// {
+	// 	title: 'Saídas',
+	// 	label: '',
+	// 	icon: 'lucide:arrow-down',
+	// 	route: route('transactions.index'),
+	// 	active: route().current('transactions.index'),
+	// },
 	{
 		title: 'Orçamentos',
 		label: '',
@@ -170,6 +187,12 @@ const links2: LinkProp[] = [
 						<CircleHelpIcon class="h-4 w-4" />
 						<span>Suporte</span>
 					</Button> -->
+
+					<InviteDialog />
+
+					<SupportDialog />
+
+					<FeedbackDialog />
 
 					<TeamSwitcher />
 
