@@ -36,12 +36,8 @@ createInertiaApp({
 		const app = createApp({ render: () => h(App, props) });
 
 		app.config.globalProperties.$emitter = emitter;
-		
-		app.use(plugin)
-			.use(ZiggyVue)
-			.use(autoAnimatePlugin)
-			.use(money)
-			.mount(el);
+
+		app.use(plugin).use(ZiggyVue).use(autoAnimatePlugin).use(money).mount(el);
 	},
 	progress: {
 		color: '#4B5563',
