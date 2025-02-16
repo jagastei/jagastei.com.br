@@ -33,8 +33,11 @@ createInertiaApp({
 			import.meta.glob<DefineComponent>('./Pages/**/*.vue')
 		),
 	setup({ el, App, props, plugin }) {
-		createApp({ render: () => h(App, props) })
-			.use(plugin)
+		const app = createApp({ render: () => h(App, props) });
+
+		app.config.globalProperties.$emitter = emitter;
+		
+		app.use(plugin)
 			.use(ZiggyVue)
 			.use(autoAnimatePlugin)
 			.use(money)

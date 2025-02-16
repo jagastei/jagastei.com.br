@@ -23,7 +23,14 @@ import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
 import { useForm } from 'vee-validate';
 import { toast } from '@/Components/ui/toast';
 
-const open = ref(false);
+const props = defineProps({
+	open: {
+		type: Boolean,
+		default: false,
+	},
+});
+
+const emit = defineEmits(['update:open']);
 
 const form = useForm({
 	initialValues: {
@@ -51,23 +58,17 @@ const onSubmit = async () => {
 };
 
 const ratings = [
-	{ value: '1', label: 'Muito Insatisfeito' },
-	{ value: '2', label: 'Insatisfeito' },
-	{ value: '3', label: 'Neutro' },
-	{ value: '4', label: 'Satisfeito' },
-	{ value: '5', label: 'Muito Satisfeito' },
+	{ value: '1', label: 'Muito insatisfeito' },
+	{ value: '2', label: 'Neutro' },
+	{ value: '3', label: 'Muito satisfeito' },
 ];
 </script>
 
 <template>
-	<Dialog v-model:open="open">
-		<DialogTrigger as-child>
-			<Button variant="outline"> Dar Feedback </Button>
-		</DialogTrigger>
-
+	<Dialog :open="open" @update:open="emit('update:open')">
 		<DialogContent class="sm:max-w-[525px]">
 			<DialogHeader>
-				<DialogTitle>Compartilhe seu Feedback</DialogTitle>
+				<DialogTitle>Compartilhe seu feedback</DialogTitle>
 				<DialogDescription>
 					Ajude-nos a melhorar compartilhando sua experiência.
 				</DialogDescription>
@@ -103,7 +104,7 @@ const ratings = [
 
 				<FormField name="comment" v-slot="{ field, errorMessage }">
 					<FormItem>
-						<FormLabel>Comentários Adicionais</FormLabel>
+						<FormLabel>Comentários adicionais</FormLabel>
 						<FormControl>
 							<Textarea
 								placeholder="Conte-nos mais sobre sua experiência..."
@@ -120,7 +121,7 @@ const ratings = [
 						Cancelar
 					</Button>
 					<Button type="submit" :disabled="form.isSubmitting">
-						Enviar Feedback
+						Enviar feedback
 					</Button>
 				</DialogFooter>
 			</Form>

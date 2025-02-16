@@ -41,6 +41,7 @@ import TeamSwitcher from '@/Components/TeamSwitcher.vue';
 import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
+import { onMounted, ref } from 'vue';
 
 const isCollapsed = useStorage('is-collapsed', false);
 
@@ -120,10 +121,32 @@ const links2: LinkProp[] = [
 		active: route().current('accounts.index'),
 	},
 ];
+
+const inviteDialog = ref(false);
+const feedbackDialog = ref(false);
+const supportDialog = ref(false);
+
+onMounted(() => {
+	window.emitter.on('open-invite-dialog', () => {
+		inviteDialog.value = true;
+	});
+
+	window.emitter.on('open-feedback-dialog', () => {
+		feedbackDialog.value = true;
+	});
+
+	window.emitter.on('open-support-dialog', () => {
+		supportDialog.value = true;
+	});
+});
 </script>
 
 <template>
 	<div>
+		<InviteDialog :open="inviteDialog" @update:open="inviteDialog = $event" />
+		<FeedbackDialog :open="feedbackDialog" @update:open="feedbackDialog = $event" />
+		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
+
 		<div class="flex-col md:flex">
 			<div class="z-50 flex h-16 items-center pr-4 md:pr-4 border-b sticky top-0">
 				<div :class="['hidden md:block', isCollapsed ? 'pl-2.5' : 'pl-5']">
@@ -177,22 +200,6 @@ const links2: LinkProp[] = [
 					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
 						<SparklesIcon class="h-4 w-4" />
 					</Button> -->
-
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
-						<LightbulbIcon class="h-4 w-4" />
-						<span>Sugestões</span>
-					</Button> -->
-
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
-						<CircleHelpIcon class="h-4 w-4" />
-						<span>Suporte</span>
-					</Button> -->
-
-					<InviteDialog />
-
-					<SupportDialog />
-
-					<FeedbackDialog />
 
 					<TeamSwitcher />
 

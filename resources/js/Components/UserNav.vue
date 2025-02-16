@@ -92,32 +92,20 @@ const user = usePage().props.auth.user;
 
 			<DropdownMenuSeparator />
 
-			<DropdownMenuItem class="cursor-pointer">
+			<DropdownMenuItem @click="$emitter.emit('open-invite-dialog')" class="cursor-pointer">
 				<UserPlusIcon class="mr-2 size-4" />
 				<span>Convidar</span>
 			</DropdownMenuItem>
 
-			<DropdownMenuItem class="cursor-pointer">
+			<DropdownMenuItem @click="$emitter.emit('open-feedback-dialog')" class="cursor-pointer">
 				<LightbulbIcon class="mr-2 size-4" />
 				<span>Sugestão</span>
 			</DropdownMenuItem>
 
-			<DropdownMenuItem class="cursor-pointer">
+			<DropdownMenuItem @click="$emitter.emit('open-support-dialog')" class="cursor-pointer">
 				<LifeBuoyIcon class="mr-2 size-4" />
 				<span>Suporte</span>
 			</DropdownMenuItem>
-
-			<!-- <DropdownMenuItem class="cursor-pointer">
-				<FeedbackDialog />
-			</DropdownMenuItem> -->
-
-			<!-- <DropdownMenuItem class="cursor-pointer">
-				<InviteDialog />
-			</DropdownMenuItem>
-
-			<DropdownMenuItem class="cursor-pointer">
-				<SupportDialog />
-			</DropdownMenuItem> -->
 
 			<DropdownMenuSeparator />
 

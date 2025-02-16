@@ -23,8 +23,14 @@ import {
 import { useForm } from 'vee-validate';
 import { toast } from '@/Components/ui/toast';
 
-const open = ref(false);
+const props = defineProps({
+	open: {
+		type: Boolean,
+		default: false,
+	},
+});
 
+const emit = defineEmits(['update:open']);
 const form = useForm({
 	initialValues: {
 		message: '',
@@ -51,11 +57,7 @@ const onSubmit = async (values) => {
 </script>
 
 <template>
-	<Dialog v-model:open="open">
-		<DialogTrigger as-child>
-			<Button variant="outline"> Suporte </Button>
-		</DialogTrigger>
-
+	<Dialog :open="open" @update:open="emit('update:open')">
 		<DialogContent class="sm:max-w-[525px]">
 			<DialogHeader>
 				<DialogTitle>Contato</DialogTitle>
@@ -85,7 +87,7 @@ const onSubmit = async (values) => {
 							Cancelar
 						</Button>
 						<Button type="submit" :disabled="form.isSubmitting">
-							Enviar Mensagem
+							Enviar mensagem
 						</Button>
 					</div>
 				</form>

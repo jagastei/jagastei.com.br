@@ -13,17 +13,25 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { toast } from '@/Components/ui/toast';
 
-const open = ref(false);
-const shareLink = ref('https://app.financas.com.br');
+const props = defineProps({
+	open: {
+		type: Boolean,
+		default: false,
+	},
+});
+
+const emit = defineEmits(['update:open']);
+
+const inviteLink = ref('https://app.financas.com.br/convite');
 const isCopied = ref(false);
 
 const copyToClipboard = async () => {
 	try {
-		await navigator.clipboard.writeText(shareLink.value);
+		await navigator.clipboard.writeText(inviteLink.value);
 		isCopied.value = true;
 		toast({
 			title: 'Sucesso',
-			description: 'Link copiado para área de transferência',
+			description: 'Link de convite copiado',
 		});
 		setTimeout(() => {
 			isCopied.value = false;
@@ -31,7 +39,7 @@ const copyToClipboard = async () => {
 	} catch (error) {
 		toast({
 			title: 'Erro',
-			description: 'Falha ao copiar o link',
+			description: 'Falha ao copiar o link de convite',
 			variant: 'destructive',
 		});
 	}
@@ -39,21 +47,17 @@ const copyToClipboard = async () => {
 </script>
 
 <template>
-	<Dialog v-model:open="open">
-		<DialogTrigger as-child>
-			<Button variant="outline"> Compartilhar Link </Button>
-		</DialogTrigger>
-
+	<Dialog :open="open" @update:open="emit('update:open')">
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>
-				<DialogTitle>Compartilhar Acesso</DialogTitle>
+				<DialogTitle>Convidar usuário</DialogTitle>
 				<DialogDescription>
-					Compartilhe este link para dar acesso ao seu espaço de trabalho.
+					Compartilhe este link de convite para que outros usuários possam se juntar ao sistema.
 				</DialogDescription>
 			</DialogHeader>
 
 			<div class="flex items-center space-x-2">
-				<Input :default-value="shareLink" readonly class="flex-1" />
+				<Input :default-value="inviteLink" readonly class="flex-1" />
 				<Button
 					type="button"
 					@click="copyToClipboard"
