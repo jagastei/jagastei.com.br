@@ -72,8 +72,11 @@ const submitForm = async () => {
 			<form @submit.prevent="submitForm" class="space-y-4">
 				<div>
 					<Label>Mensagem</Label>
-					<Textarea placeholder="Descreva seu problema em detalhes" class="mt-2 min-h-[120px]"
-						v-model="form.message" />
+					<Textarea
+						placeholder="Descreva seu problema em detalhes"
+						class="mt-2 min-h-[120px]"
+						v-model="form.message"
+					/>
 				</div>
 
 				<div class="flex justify-end space-x-2">
