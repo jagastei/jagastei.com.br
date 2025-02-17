@@ -20,8 +20,9 @@ import {
 	FormMessage,
 } from '@/Components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
-import { useForm } from 'vee-validate';
+import { useForm } from '@inertiajs/vue3';
 import { toast } from '@/Components/ui/toast';
+import Label from './ui/label/Label.vue';
 
 const props = defineProps({
 	open: {
@@ -33,34 +34,35 @@ const props = defineProps({
 const emit = defineEmits(['update:open']);
 
 const form = useForm({
-	initialValues: {
-		rating: '',
-		comment: '',
-	},
+	rating: null,
+	comment: '',
 });
 
-const onSubmit = async () => {
-	try {
-		await axios.post(route('feedback.send'), form.values);
-		toast({
-			title: 'Feedback enviado',
-			description: 'Obrigado pelo seu feedback!',
-		});
-		open.value = false;
-		form.resetForm();
-	} catch (error) {
-		toast({
-			title: 'Erro',
-			description: 'Falha ao enviar feedback',
-			variant: 'destructive',
-		});
-	}
+const submitForm = async () => {
+	form.post(route('feedback.send'), {
+		onSuccess: () => {
+			toast({
+				title: 'Feedback enviado',
+				description: 'Obrigado pelo seu feedback!',
+			});
+
+			emit('update:open', false);
+			form.reset();
+		},
+		onError: () => {
+			toast({
+				title: 'Erro',
+				description: 'Falha ao enviar feedback',
+				variant: 'destructive',
+			});
+		},
+	});
 };
 
 const ratings = [
-	{ value: '1', label: 'Muito insatisfeito' },
-	{ value: '2', label: 'Neutro' },
-	{ value: '3', label: 'Muito satisfeito' },
+	{ value: 1, label: 'Muito insatisfeito' },
+	{ value: 2, label: 'Neutro' },
+	{ value: 3, label: 'Muito satisfeito' },
 ];
 </script>
 
@@ -74,57 +76,36 @@ const ratings = [
 				</DialogDescription>
 			</DialogHeader>
 
-			<Form @submit="form.handleSubmit(onSubmit)" :form="form" class="space-y-6">
-				<FormField name="rating" v-slot="{ field, errorMessage }">
-					<FormItem class="space-y-3">
-						<FormLabel>Qual é o seu nível de satisfação?</FormLabel>
-						<FormControl>
-							<RadioGroup
-								v-model="field.value"
-								@update:model-value="field.handleChange"
-								class="flex flex-col space-y-1"
-							>
-								<FormItem
-									v-for="rating in ratings"
-									:key="rating.value"
-									class="flex items-center space-x-3 space-y-0"
-								>
-									<FormControl>
-										<RadioGroupItem :value="rating.value" />
-									</FormControl>
-									<FormLabel class="font-normal">
-										{{ rating.label }}
-									</FormLabel>
-								</FormItem>
-							</RadioGroup>
-						</FormControl>
-						<FormMessage>{{ errorMessage }}</FormMessage>
-					</FormItem>
-				</FormField>
+			<form @submit.prevent="submitForm" class="space-y-6">
+				<div>
+					<Label>Qual é o seu nível de satisfação?</Label>
+					<div class="mt-2">
+						<RadioGroup v-model="form.rating" class="flex flex-col space-y-1">
+							<div v-for="rating in ratings" :key="rating.value" class="flex items-center space-x-3 space-y-0">
+								<Label class="font-normal flex items-center space-x-2">
+									<RadioGroupItem :value="rating.value" />
+									<span>{{ rating.label }}</span>
+								</Label>
+							</div>
+						</RadioGroup>
+					</div>
+				</div>
 
-				<FormField name="comment" v-slot="{ field, errorMessage }">
-					<FormItem>
-						<FormLabel>Comentários adicionais</FormLabel>
-						<FormControl>
-							<Textarea
-								placeholder="Conte-nos mais sobre sua experiência..."
-								class="min-h-[120px]"
-								v-bind="field"
-							/>
-						</FormControl>
-						<FormMessage>{{ errorMessage }}</FormMessage>
-					</FormItem>
-				</FormField>
+				<div>
+					<Label>Comentários adicionais</Label>
+					<Textarea placeholder="Conte-nos mais sobre sua experiência..." class="min-h-[120px] mt-2"
+						v-model="form.comment" />
+				</div>
 
 				<DialogFooter>
 					<Button type="button" variant="outline" @click="open = false">
 						Cancelar
 					</Button>
-					<Button type="submit" :disabled="form.isSubmitting">
+					<Button type="submit" :disabled="form.processing">
 						Enviar feedback
 					</Button>
 				</DialogFooter>
-			</Form>
+			</form>
 		</DialogContent>
 	</Dialog>
 </template>

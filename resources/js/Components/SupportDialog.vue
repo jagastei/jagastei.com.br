@@ -11,6 +11,7 @@ import {
 } from '@/Components/ui/dialog';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import { Textarea } from '@/Components/ui/textarea';
 import {
 	Form,
@@ -20,7 +21,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/Components/ui/form';
-import { useForm } from 'vee-validate';
+import { useForm } from '@inertiajs/vue3';
 import { toast } from '@/Components/ui/toast';
 
 const props = defineProps({
@@ -31,28 +32,30 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:open']);
+
 const form = useForm({
-	initialValues: {
-		message: '',
-	},
+	message: '',
 });
 
-const onSubmit = async (values) => {
-	try {
-		await axios.post(route('support.send'), values);
-		toast({
-			title: 'Solicitação de suporte enviada',
-			description: 'Vamos te responder o mais rápido possível',
-		});
-		open.value = false;
-		form.resetForm();
-	} catch (error) {
-		toast({
-			title: 'Erro',
-			description: 'Falha ao enviar solicitação de suporte',
-			variant: 'destructive',
-		});
-	}
+const submitForm = async () => {
+	form.post(route('support.send'), {
+		onSuccess: () => {
+			toast({
+				title: 'Solicitação de suporte enviada',
+				description: 'Vamos te responder o mais rápido possível',
+			});
+
+			emit('update:open', false);
+			form.reset();
+		},
+		onError: () => {
+			toast({
+				title: 'Erro',
+				description: 'Falha ao enviar solicitação de suporte',
+				variant: 'destructive',
+			});
+		},
+	});
 };
 </script>
 
@@ -66,32 +69,22 @@ const onSubmit = async (values) => {
 				</DialogDescription>
 			</DialogHeader>
 
-			<Form @submit="onSubmit" :form="form">
-				<form @submit="form.handleSubmit($event, onSubmit)" class="space-y-4">
-					<FormField name="message" v-slot="{ field, errorMessage }">
-						<FormItem>
-							<FormLabel>Mensagem</FormLabel>
-							<FormControl>
-								<Textarea
-									placeholder="Descreva seu problema em detalhes"
-									class="min-h-[120px]"
-									v-bind="field"
-								/>
-							</FormControl>
-							<FormMessage>{{ errorMessage }}</FormMessage>
-						</FormItem>
-					</FormField>
+			<form @submit.prevent="submitForm" class="space-y-4">
+				<div>
+					<Label>Mensagem</Label>
+					<Textarea placeholder="Descreva seu problema em detalhes" class="mt-2 min-h-[120px]"
+						v-model="form.message" />
+				</div>
 
-					<div class="flex justify-end space-x-2">
-						<Button type="button" variant="outline" @click="open = false">
-							Cancelar
-						</Button>
-						<Button type="submit" :disabled="form.isSubmitting">
-							Enviar mensagem
-						</Button>
-					</div>
-				</form>
-			</Form>
+				<div class="flex justify-end space-x-2">
+					<Button type="button" variant="outline" @click="emit('update:open')">
+						Cancelar
+					</Button>
+					<Button type="submit" :disabled="form.processing">
+						Enviar mensagem
+					</Button>
+				</div>
+			</form>
 		</DialogContent>
 	</Dialog>
 </template>
