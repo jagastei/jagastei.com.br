@@ -52,7 +52,8 @@ const copyToClipboard = async () => {
 			<DialogHeader>
 				<DialogTitle>Convidar usuário</DialogTitle>
 				<DialogDescription>
-					Compartilhe este link de convite para que outros usuários possam se juntar ao sistema.
+					Compartilhe este link de convite para que outros usuários possam se juntar
+					ao sistema.
 				</DialogDescription>
 			</DialogHeader>
 

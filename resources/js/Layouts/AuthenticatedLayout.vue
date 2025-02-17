@@ -144,7 +144,10 @@ onMounted(() => {
 <template>
 	<div>
 		<InviteDialog :open="inviteDialog" @update:open="inviteDialog = $event" />
-		<FeedbackDialog :open="feedbackDialog" @update:open="feedbackDialog = $event" />
+		<FeedbackDialog
+			:open="feedbackDialog"
+			@update:open="feedbackDialog = $event"
+		/>
 		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
 
 		<div class="flex-col md:flex">
