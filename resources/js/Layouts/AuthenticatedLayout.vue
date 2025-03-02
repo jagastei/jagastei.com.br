@@ -4,23 +4,10 @@ import { Button } from '@/Components/ui/button';
 import Nav, { type LinkProp } from '@/Components/Nav.vue';
 import { TooltipProvider } from '@/Components/ui/tooltip';
 import { Separator } from '@/Components/ui/separator';
-import ThemeToggle from '@/Components/ThemeToggle.vue';
 import {
-	BellIcon,
-	CircleHelpIcon,
 	GripVerticalIcon,
-	LightbulbIcon,
 	MenuIcon,
-	SearchIcon,
-	SparklesIcon,
 } from 'lucide-vue-next';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/Components/ui/card';
 import {
 	Sheet,
 	SheetContent,
@@ -30,14 +17,9 @@ import {
 	SheetTrigger,
 } from '@/Components/ui/sheet';
 import NavMobile from '@/Components/NavMobile.vue';
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from '@/Components/ui/collapsible';
 import { useStorage } from '@vueuse/core';
 import { ScrollArea } from '@/Components/ui/scroll-area';
-import TeamSwitcher from '@/Components/TeamSwitcher.vue';
+import WalletSwitcher from '@/Components/WalletSwitcher.vue';
 import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
@@ -61,27 +43,27 @@ const links: LinkProp[] = [
 		route: route('dashboard'),
 		active: route().current('dashboard'),
 	},
+	// {
+	// 	title: 'Movimentações',
+	// 	label: '',
+	// 	icon: 'lucide:arrow-left-right',
+	// 	route: route('transactions.index'),
+	// 	active: route().current('transactions.index'),
+	// },
 	{
-		title: 'Movimentações',
+		title: 'Entradas',
 		label: '',
-		icon: 'lucide:arrow-left-right',
-		route: route('transactions.index'),
-		active: route().current('transactions.index'),
+		icon: 'lucide:arrow-up',
+		route: route('transactions.in.index'),
+		active: route().current('transactions.in.index'),
 	},
-	// {
-	// 	title: 'Entradas',
-	// 	label: '',
-	// 	icon: 'lucide:arrow-up',
-	// 	route: route('transactions.index'),
-	// 	active: route().current('transactions.index'),
-	// },
-	// {
-	// 	title: 'Saídas',
-	// 	label: '',
-	// 	icon: 'lucide:arrow-down',
-	// 	route: route('transactions.index'),
-	// 	active: route().current('transactions.index'),
-	// },
+	{
+		title: 'Saídas',
+		label: '',
+		icon: 'lucide:arrow-down',
+		route: route('transactions.out.index'),
+		active: route().current('transactions.out.index'),
+	},
 	{
 		title: 'Orçamentos',
 		label: '',
@@ -204,7 +186,7 @@ onMounted(() => {
 						<SparklesIcon class="h-4 w-4" />
 					</Button> -->
 
-					<TeamSwitcher />
+					<WalletSwitcher />
 
 					<UserNav />
 				</div>

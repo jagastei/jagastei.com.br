@@ -42,6 +42,16 @@ class Transaction extends Model
         });
     }
 
+    public function scopeIn(Builder $query): Builder
+    {
+        return $query->where('type', 'IN');
+    }
+
+    public function scopeOut(Builder $query): Builder
+    {
+        return $query->where('type', 'OUT');
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

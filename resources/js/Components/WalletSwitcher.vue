@@ -40,20 +40,20 @@ import {
 	SelectValue,
 } from '@/Components/ui/select';
 
-type Team = {
+type Wallet = {
 	label: string;
 	value: string;
 };
 
 type Group = {
 	label: string;
-	teams: Team[];
+	wallets: Wallet[];
 };
 
 const groups: Group[] = [
 	{
-		label: 'Workspaces',
-		teams: [
+		label: 'Carteiras',
+		wallets: [
 			{
 				label: 'Alicia Koch',
 				value: 'personal',
@@ -71,40 +71,40 @@ const groups: Group[] = [
 ];
 
 const open = ref(false);
-const showNewTeamDialog = ref(false);
-const selectedTeam = ref<Team>(groups[0].teams[0]);
+const showNewWalletDialog = ref(false);
+const selectedWallet = ref<Wallet>(groups[0].wallets[0]);
 
 const filter = (
 	val: string[] | number[] | false[] | true[] | Record<string, any>[],
 	term: string
 ): string[] | number[] | false[] | true[] | Record<string, any>[] => {
-	const teams = val as Team[];
+	const wallets = val as Wallet[];
 
-	return teams.filter((team) =>
-		team.label?.toLowerCase().includes(term.toLowerCase())
+	return wallets.filter((wallet) =>
+		wallet.label?.toLowerCase().includes(term.toLowerCase())
 	);
 };
 </script>
 
 <template>
-	<Dialog v-model:open="showNewTeamDialog">
+	<Dialog v-model:open="showNewWalletDialog">
 		<Popover v-model:open="open">
 			<PopoverTrigger as-child>
 				<Button
 					variant="outline"
 					role="combobox"
 					aria-expanded="open"
-					aria-label="Select a team"
+					aria-label="Select a wallet"
 					:class="cn('w-[200px] justify-between py-0 px-2 h-10', $attrs.class ?? '')"
 				>
 					<!-- <Avatar class="mr-2 h-5 w-5">
 						<AvatarImage
-							:src="`https://avatar.vercel.sh/${selectedTeam.value}.png`"
-							:alt="selectedTeam.label"
+							:src="`https://avatar.vercel.sh/${selectedWallet.value}.png`"
+							:alt="selectedWallet.label"
 						/>
 						<AvatarFallback>SC</AvatarFallback>
 					</Avatar> -->
-					{{ selectedTeam.label }}
+					{{ selectedWallet.label }}
 					<ChevronsUpDown class="ml-auto h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</PopoverTrigger>
@@ -117,31 +117,33 @@ const filter = (
 							:heading="group.label"
 						>
 							<CommandItem
-								v-for="team in group.teams"
-								:key="team.value"
-								:value="team"
+								v-for="wallet in group.wallets"
+								:key="wallet.value"
+								:value="wallet"
 								class="text-sm"
 								@select="
 									() => {
-										selectedTeam = team;
+										selectedWallet = wallet;
 										open = false;
 									}
 								"
 							>
 								<!-- <Avatar class="mr-2 h-5 w-5">
 									<AvatarImage
-										:src="`https://avatar.vercel.sh/${team.value}.png`"
-										:alt="team.label"
+										:src="`https://avatar.vercel.sh/${wallet.value}.png`"
+										:alt="wallet.label"
 										class="grayscale"
 									/>
 									<AvatarFallback>SC</AvatarFallback>
 								</Avatar> -->
-								{{ team.label }}
+								{{ wallet.label }}
 								<CheckIcon
 									:class="
 										cn(
 											'ml-auto h-4 w-4',
-											selectedTeam.value === team.value ? 'opacity-100' : 'opacity-0'
+											selectedWallet.value === wallet.value
+												? 'opacity-100'
+												: 'opacity-0'
 										)
 									"
 								/>
@@ -153,16 +155,16 @@ const filter = (
 						<CommandGroup>
 							<DialogTrigger as-child>
 								<CommandItem
-									value="create-team"
+									value="create-wallet"
 									@select="
 										() => {
 											open = false;
-											showNewTeamDialog = true;
+											showNewWalletDialog = true;
 										}
 									"
 								>
 									<CirclePlusIcon class="mr-2 h-5 w-5" />
-									Adicionar workspace
+									Adicionar carteira
 								</CommandItem>
 							</DialogTrigger>
 						</CommandGroup>
@@ -172,18 +174,18 @@ const filter = (
 		</Popover>
 		<DialogContent>
 			<DialogHeader>
-				<DialogTitle>Adicionar workspace</DialogTitle>
+				<DialogTitle>Adicionar carteira</DialogTitle>
 				<DialogDescription>
-					Adicione um novo workspace para gerenciar suas finanças.
+					Adicione uma nova carteira para gerenciar suas finanças.
 				</DialogDescription>
 			</DialogHeader>
 			<div>
 				<div class="space-y-4 py-2 pb-4">
 					<div class="space-y-2">
-						<Label for="name">Team name</Label>
-						<Input id="name" placeholder="Acme Inc." />
+						<Label for="name">Nome da carteira</Label>
+						<Input id="name" placeholder="Carteira pessoal" />
 					</div>
-					<div class="space-y-2">
+					<!-- <div class="space-y-2">
 						<Label for="plan">Subscription plan</Label>
 						<Select>
 							<SelectTrigger>
@@ -200,14 +202,14 @@ const filter = (
 								</SelectItem>
 							</SelectContent>
 						</Select>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<DialogFooter>
-				<Button variant="outline" @click="showNewTeamDialog = false">
-					Cancel
+				<Button variant="outline" @click="showNewWalletDialog = false">
+					Cancelar
 				</Button>
-				<Button type="submit"> Continue </Button>
+				<Button type="submit"> Criar </Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>

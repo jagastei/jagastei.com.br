@@ -20,7 +20,7 @@ use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class TransactionController extends Controller
+class TransactionInController extends Controller
 {
     public function index(Request $request)
     {
@@ -36,6 +36,7 @@ class TransactionController extends Controller
                 AllowedFilter::exact('category', 'category_id'),
             ])
             ->ofUser(auth('web')->user())
+            ->in()
             ->with([
                 'category',
                 'account' => function ($query) {
@@ -58,7 +59,7 @@ class TransactionController extends Controller
             ->paginate($request->query('per_page', 10))
             ->appends(request()->query());
 
-        return Inertia::render('Transactions/Index', [
+        return Inertia::render('TransactionsIn/Index', [
             'filter' => $filter,
             'categories' => $categories,
             'transactions' => $transactions,

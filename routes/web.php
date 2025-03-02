@@ -7,7 +7,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionInController;
+use App\Http\Controllers\TransactionOutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +27,17 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/transacoes', [TransactionController::class, 'index'])->name('transactions.index');
-    Route::post('/transacoes', [TransactionController::class, 'store'])->name('transactions.store');
-    Route::post('/transacoes/importar', [TransactionController::class, 'import'])->name('transactions.import');
-    Route::delete('/transacoes/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+    // transaction in
+    Route::get('/entradas', [TransactionInController::class, 'index'])->name('transactions.in.index');
+    Route::post('/entradas', [TransactionInController::class, 'store'])->name('transactions.in.store');
+    Route::post('/entradas/importar', [TransactionInController::class, 'import'])->name('transactions.in.import');
+    Route::delete('/entradas/{transaction}', [TransactionInController::class, 'destroy'])->name('transactions.in.destroy');
+
+    // transaction out
+    Route::get('/saidas', [TransactionOutController::class, 'index'])->name('transactions.out.index');
+    Route::post('/saidas', [TransactionOutController::class, 'store'])->name('transactions.out.store');
+    Route::post('/saidas/importar', [TransactionOutController::class, 'import'])->name('transactions.out.import');
+    Route::delete('/saidas/{transaction}', [TransactionOutController::class, 'destroy'])->name('transactions.out.destroy');
 
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
     Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');

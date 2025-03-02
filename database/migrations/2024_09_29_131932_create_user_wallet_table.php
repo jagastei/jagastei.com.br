@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_workspace', function (Blueprint $table) {
+        Schema::create('user_wallet', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id');
-            $table->foreignUuid('workspace_id');
-            $table->string('email');
-            // $table->string('phone');
+            $table->foreignUuid('wallet_id');
             $table->boolean('can_edit')->default(false);
             $table->enum('status', ['PENDING', 'ACCEPTED', 'DECLINED', 'EXPIRED']);
             $table->timestamps();
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_workspace');
+        Schema::dropIfExists('user_wallet');
     }
 };

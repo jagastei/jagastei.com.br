@@ -8,7 +8,7 @@ use Thunk\Verbs\Event;
 class CategoryCreated extends Event
 {
     public function __construct(
-        public int $user_id,
+        public string $user_id,
         public string $name,
         public string $color,
     ) {}

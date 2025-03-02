@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import DataTable from '@/Components/TransactionTable/DataTable.vue';
-import { columns, Transaction } from '@/Components/TransactionTable/columns';
+import DataTable from '@/Components/TransactionInTable/DataTable.vue';
+import { columns, Transaction } from '@/Components/TransactionInTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
@@ -69,7 +69,7 @@ const onUploadDialogOpen = (open: boolean) => {
 		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
 			<div class="flex items-center justify-between">
 				<div>
-					<h2 class="text-3xl font-bold tracking-tight">Movimentações</h2>
+					<h2 class="text-3xl font-bold tracking-tight">Saídas</h2>
 					<!-- <p class="text-muted-foreground">
 						Here&apos;s a list of your tasks for this month!
 					</p> -->

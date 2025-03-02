@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workspaces', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id');
             $table->string('name');
             $table->boolean('personal')->default(true);
+            // $table->enum('type', ['PERSONAL', 'BUSINESS'])->default('PERSONAL');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workspaces');
+        Schema::dropIfExists('wallets');
     }
 };
