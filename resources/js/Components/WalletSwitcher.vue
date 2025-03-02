@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { CirclePlusIcon, CheckIcon, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
+import {
+	CirclePlusIcon,
+	CheckIcon,
+	ChevronsUpDown,
+	Loader2,
+} from 'lucide-vue-next';
 import { cn } from '@/utils';
 import { Button } from '@/Components/ui/button';
 import {
@@ -127,9 +132,7 @@ const switchWallet = (wallet: Wallet) => {
 									:class="
 										cn(
 											'ml-auto h-4 w-4',
-											selectedWallet.id === wallet.id
-												? 'opacity-100'
-												: 'opacity-0'
+											selectedWallet.id === wallet.id ? 'opacity-100' : 'opacity-0'
 										)
 									"
 								/>
