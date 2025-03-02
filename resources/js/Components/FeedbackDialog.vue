@@ -81,7 +81,11 @@ const ratings = [
 					<Label>Qual é o seu nível de satisfação?</Label>
 					<div class="mt-2">
 						<RadioGroup v-model="form.rating" class="flex flex-col space-y-1">
-							<div v-for="rating in ratings" :key="rating.value" class="flex items-center space-x-3 space-y-0">
+							<div
+								v-for="rating in ratings"
+								:key="rating.value"
+								class="flex items-center space-x-3 space-y-0"
+							>
 								<Label class="font-normal flex items-center space-x-2">
 									<RadioGroupItem :value="rating.value" />
 									<span>{{ rating.label }}</span>
@@ -93,8 +97,11 @@ const ratings = [
 
 				<div>
 					<Label>Comentários adicionais</Label>
-					<Textarea placeholder="Conte-nos mais sobre sua experiência..." class="min-h-[120px] mt-2"
-						v-model="form.comment" />
+					<Textarea
+						placeholder="Conte-nos mais sobre sua experiência..."
+						class="min-h-[120px] mt-2"
+						v-model="form.comment"
+					/>
 				</div>
 
 				<DialogFooter>
