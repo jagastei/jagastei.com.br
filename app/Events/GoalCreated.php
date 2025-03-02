@@ -8,7 +8,7 @@ use Thunk\Verbs\Event;
 class GoalCreated extends Event
 {
     public function __construct(
-        public int $user_id,
+        public int $wallet_id,
         public string $name,
         public int $total,
     ) {}
@@ -16,7 +16,7 @@ class GoalCreated extends Event
     public function handle()
     {
         Goal::create([
-            'user_id' => $this->user_id,
+            'wallet_id' => $this->wallet_id,
             'name' => $this->name,
             'total' => $this->total,
         ]);

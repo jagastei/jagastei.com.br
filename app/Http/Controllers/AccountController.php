@@ -18,7 +18,7 @@ class AccountController extends Controller
             ->get();
 
         $accounts = Account::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->with([
                 'bank',
             ])
@@ -34,10 +34,10 @@ class AccountController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         AccountCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
             bank_id: $input['bank'],
             name: $input['name'],
             initial_balance: $input['initial_balance'],

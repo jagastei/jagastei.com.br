@@ -8,7 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import money from 'v-money3';
 import mitt from 'mitt';
-import { Env } from './types/global';
+import { Env } from './types/index';
 
 window.env = import.meta.env.MODE as Env;
 

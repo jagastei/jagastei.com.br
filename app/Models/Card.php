@@ -42,10 +42,10 @@ class Card extends Model
         return Money::BRL($this->limit ?? 0)->format();
     }
 
-    public function scopeOfUser(Builder $query, User $user): Builder
+    public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {
-        return $query->whereHas('account', function ($query) use ($user) {
-            $query->ofUser($user);
+        return $query->whereHas('account', function ($query) use ($wallet) {
+            $query->ofWallet($wallet);
         });
     }
 

@@ -13,7 +13,7 @@ class BudgetController extends Controller
     public function index(Request $request)
     {
         $budgets = Budget::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->get();
 
         return Inertia::render('Budgets/Index', [
@@ -25,10 +25,10 @@ class BudgetController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         BudgetCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
             name: $input['name'],
             total: $input['total'],
         );

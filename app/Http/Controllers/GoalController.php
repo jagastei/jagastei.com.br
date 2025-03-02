@@ -13,7 +13,7 @@ class GoalController extends Controller
     public function index(Request $request)
     {
         $goals = Goal::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->get();
 
         return Inertia::render('Goals/Index', [
@@ -25,10 +25,10 @@ class GoalController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         GoalCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
             name: $input['name'],
             total: $input['total'],
         );

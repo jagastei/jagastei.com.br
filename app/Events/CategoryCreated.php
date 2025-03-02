@@ -8,17 +8,19 @@ use Thunk\Verbs\Event;
 class CategoryCreated extends Event
 {
     public function __construct(
-        public string $user_id,
+        public int $wallet_id,
         public string $name,
         public string $color,
+        public string $type,
     ) {}
 
     public function handle()
     {
         Category::create([
-            'user_id' => $this->user_id,
+            'wallet_id' => $this->wallet_id,
             'name' => $this->name,
             'color' => $this->color,
+            'type' => $this->type,
         ]);
     }
 }

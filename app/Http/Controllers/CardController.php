@@ -19,14 +19,14 @@ class CardController extends Controller
             ->get();
 
         $accounts = Account::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->with([
                 'bank',
             ])
             ->get();
 
         $cards = Card::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->with([
                 'account' => function ($query) {
                     $query->with([
@@ -48,10 +48,10 @@ class CardController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         CardCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
             name: $input['name'],
         );
 

@@ -27,7 +27,7 @@ class TransactionOutController extends Controller
         $filter = $request->query('filter');
 
         $categories = Category::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
             ->get();
 
@@ -36,7 +36,7 @@ class TransactionOutController extends Controller
                 'title',
                 AllowedFilter::exact('category', 'category_id'),
             ])
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
             ->with([
                 'category',
@@ -72,10 +72,10 @@ class TransactionOutController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         TransactionCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
         );
 
         return back();

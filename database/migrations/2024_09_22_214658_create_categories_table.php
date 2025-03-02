@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id');
+            $table->foreignUuid('wallet_id');
             $table->string('name');
             $table->string('color')->nullable();
             $table->string('icon')->nullable();

@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store');
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
 
-    Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
+    // Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store');
     Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 

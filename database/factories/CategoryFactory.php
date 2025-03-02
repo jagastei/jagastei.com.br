@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,10 +24,10 @@ class CategoryFactory extends Factory
         ];
     }
 
-    public function forUser(User $user): static
+    public function forWallet(Wallet $wallet): static
     {
         return $this->state(fn (array $attributes) => [
-            'user_id' => $user->id,
+            'wallet_id' => $wallet->id,
         ]);
     }
 }

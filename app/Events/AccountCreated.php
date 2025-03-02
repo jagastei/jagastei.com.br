@@ -12,7 +12,7 @@ class AccountCreated extends Event
     public function __construct(
         #[StateId(AccountState::class)]
         public ?int $account_id,
-        public int $user_id,
+        public int $wallet_id,
         public ?int $bank_id,
         public string $name,
         public int $initial_balance = 0,
@@ -26,7 +26,7 @@ class AccountCreated extends Event
     public function handle()
     {
         Account::create([
-            'user_id' => $this->user_id,
+            'wallet_id' => $this->wallet_id,
             'bank_id' => $this->bank_id,
             'name' => $this->name,
             'balance' => $this->initial_balance,

@@ -17,7 +17,7 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id',
+        'wallet_id',
         'name',
         'color',
         'icon',
@@ -37,9 +37,9 @@ class Category extends Model
         return (int) $value / 100;
     }
 
-    public function scopeOfUser(Builder $query, User $user): Builder
+    public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {
-        return $query->where('user_id', $user->id);
+        return $query->where('wallet_id', $wallet->id);
     }
 
     public function scopeIn(Builder $query): Builder
@@ -52,9 +52,9 @@ class Category extends Model
         return $query->where('type', 'OUT');
     }
 
-    public function user(): BelongsTo
+    public function wallet(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Wallet::class);
     }
 
     public function transactions(): HasMany

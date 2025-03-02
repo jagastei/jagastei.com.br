@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             ->first();
 
         $account = Account::factory()->create([
-            'user_id' => $user->id,
+            'wallet_id' => $personalWallet->id,
             'bank_id' => $bank->id,
             'name' => 'Conta principal',
             'balance' => 1_000_00,
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
 
         Account::factory()
             ->count(5)
-            ->for($user)
+            ->for($personalWallet)
             ->for($bank)
             ->create();
 
@@ -88,11 +88,11 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory()
             ->count(5)
-            ->for($user)
+            ->for($personalWallet)
             ->create();
 
         $goal = Goal::factory()->create([
-            'user_id' => $user->id,
+            'wallet_id' => $personalWallet->id,
             'name' => 'Honda Civic',
             'total' => 90_000_00,
             'current' => 0,
@@ -100,11 +100,11 @@ class DatabaseSeeder extends Seeder
 
         Goal::factory()
             ->count(5)
-            ->for($user)
+            ->for($personalWallet)
             ->create();
 
         $budget = Budget::factory()->create([
-            'user_id' => $user->id,
+            'wallet_id' => $personalWallet->id,
             'name' => 'iFood',
             'total' => 300_00,
             'current' => 0,
@@ -112,7 +112,7 @@ class DatabaseSeeder extends Seeder
 
         Budget::factory()
             ->count(5)
-            ->for($user)
+            ->for($personalWallet)
             ->create();
 
         Transaction::factory()

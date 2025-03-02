@@ -9,27 +9,28 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = Category::query()
-            ->ofUser(auth('web')->user())
-            ->get();
+    // public function index()
+    // {
+    //     $categories = Category::query()
+    //         ->ofWallet(auth('web')->user()->currentWallet)
+    //         ->get();
 
-        return Inertia::render('Categories/Index', [
-            'categories' => $categories,
-        ]);
-    }
+    //     return Inertia::render('Categories/Index', [
+    //         'categories' => $categories,
+    //     ]);
+    // }
 
     public function store(StoreCategoryRequest $request)
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $walletId = auth('web')->user()->currentWallet->id;
 
         CategoryCreated::fire(
-            user_id: $userId,
+            wallet_id: $walletId,
             name: $input['name'],
             color: $input['color'],
+            type: $input['type'],
         );
 
         return back();
