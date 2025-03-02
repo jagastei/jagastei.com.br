@@ -78,13 +78,13 @@ const links: LinkProp[] = [
 ];
 
 const links2: LinkProp[] = [
-	{
-		title: 'Categorias',
-		// label: '342',
-		icon: 'lucide:tags',
-		route: route('categories.index'),
-		active: route().current('categories.index'),
-	},
+	// {
+	// 	title: 'Categorias',
+	// 	// label: '342',
+	// 	icon: 'lucide:tags',
+	// 	route: route('categories.index'),
+	// 	active: route().current('categories.index'),
+	// },
 	{
 		title: 'Cartões',
 		// label: '342',

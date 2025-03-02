@@ -28,6 +28,7 @@ class TransactionInController extends Controller
 
         $categories = Category::query()
             ->ofUser(auth('web')->user())
+            ->in()
             ->get();
 
         $transactions = QueryBuilder::for(Transaction::class)

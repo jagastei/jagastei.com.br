@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name' => fake()->randomElement(['Alimentação', 'Saúde', 'Transporte', 'Entretenimento']),
             'color' => fake()->hexColor(),
+            'type' => fake()->randomElement(['IN', 'OUT']),
         ];
     }
 

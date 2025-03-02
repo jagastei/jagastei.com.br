@@ -22,6 +22,7 @@ class Category extends Model
         'color',
         'icon',
         'emoji',
+        'type',
     ];
 
     protected $casts = [
@@ -39,6 +40,16 @@ class Category extends Model
     public function scopeOfUser(Builder $query, User $user): Builder
     {
         return $query->where('user_id', $user->id);
+    }
+
+    public function scopeIn(Builder $query): Builder
+    {
+        return $query->where('type', 'IN');
+    }
+
+    public function scopeOut(Builder $query): Builder
+    {
+        return $query->where('type', 'OUT');
     }
 
     public function user(): BelongsTo

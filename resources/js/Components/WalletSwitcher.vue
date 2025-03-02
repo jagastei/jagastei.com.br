@@ -75,6 +75,11 @@ const switchWallet = (wallet: Wallet) => {
 		wallet_id: wallet.id,
 	});
 };
+
+const onClose = () => {
+	form.reset();
+	showNewWalletDialog.value = false;
+};
 </script>
 
 <template>
@@ -158,7 +163,9 @@ const switchWallet = (wallet: Wallet) => {
 				</Command>
 			</PopoverContent>
 		</Popover>
-		<DialogContent>
+		<DialogContent class="sm:max-w-[425px]"
+			@interactOutside="onClose"
+			@escapeKeyDown="onClose">
 			<DialogHeader>
 				<DialogTitle>Adicionar carteira</DialogTitle>
 				<DialogDescription>

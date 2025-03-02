@@ -57,7 +57,7 @@ const onUploadDialogOpen = (open: boolean) => {
 </script>
 
 <template>
-	<Head title="Dashboard" />
+	<Head title="Entradas" />
 
 	<CreateDialog
 		:categories="categories"

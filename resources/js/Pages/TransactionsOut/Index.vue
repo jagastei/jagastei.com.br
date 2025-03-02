@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, router, useForm } from '@inertiajs/vue3';
-import DataTable from '@/Components/TransactionInTable/DataTable.vue';
-import { columns, Transaction } from '@/Components/TransactionInTable/columns';
+import DataTable from '@/Components/TransactionOutTable/DataTable.vue';
+import { columns, Transaction } from '@/Components/TransactionOutTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
@@ -57,7 +57,7 @@ const onUploadDialogOpen = (open: boolean) => {
 </script>
 
 <template>
-	<Head title="Dashboard" />
+	<Head title="Saídas" />
 
 	<CreateDialog
 		:categories="categories"

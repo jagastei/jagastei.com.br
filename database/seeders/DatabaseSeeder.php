@@ -118,6 +118,10 @@ class DatabaseSeeder extends Seeder
         Transaction::factory()
             ->count(300)
             ->recycle($categories)
+            ->afterMaking(function (Transaction $transaction) {
+                $category = $transaction->category;
+                $transaction->type = $category->type;
+            })
             ->for($account)
             ->for($card)
             ->create();

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('icon')->nullable();
             $table->string('emoji')->nullable();
+            $table->enum('type', ['IN', 'OUT']);
             $table->timestamps();
             $table->softDeletes();
         });

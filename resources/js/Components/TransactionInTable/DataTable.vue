@@ -75,7 +75,7 @@ const filters = computed(() => {
 
 watch(columnFilters, (newValue) => {
 	router.get(
-		route('transactions.index', {
+		route('transactions.in.index', {
 			_query: {
 				filter: filters.value,
 				page: 1,
@@ -94,7 +94,7 @@ watch(columnFilters, (newValue) => {
 
 watch(pagination, (newValue) =>
 	router.get(
-		route('transactions.index', {
+		route('transactions.in.index', {
 			_query: {
 				filter: filters.value,
 				page: newValue.pageIndex + 1,
