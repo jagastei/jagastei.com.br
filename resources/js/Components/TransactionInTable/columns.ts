@@ -19,7 +19,7 @@ export const transactionSchema = z.object({
 	formatted_value: z.string(),
 	category_id: z.string(),
 	account_id: z.string(),
-	method: z.enum(['CARD', 'TED', 'PIX', 'UNKNOWN']),
+	method: z.enum(['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN']),
 	card_id: z.string().nullable(),
 	created_at: z.string(),
 	updated_at: z.string(),

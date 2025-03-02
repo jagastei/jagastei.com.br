@@ -11,7 +11,7 @@ import { Icon } from '@iconify/vue';
 
 export const goalSchema = z.object({
 	id: z.string(),
-	user_id: z.string(),
+	wallet_id: z.string(),
 	name: z.string(),
 	total: z.number(),
 	formatted_total: z.string(),

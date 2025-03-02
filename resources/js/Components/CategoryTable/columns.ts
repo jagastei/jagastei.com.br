@@ -11,9 +11,10 @@ import { Icon } from '@iconify/vue';
 
 export const categorySchema = z.object({
 	id: z.string(),
-	user_id: z.string(),
+	wallet_id: z.string(),
 	name: z.string(),
 	color: z.string().nullable(),
+	type: z.enum(['IN', 'OUT']),
 	created_at: z.string(),
 	updated_at: z.string(),
 });

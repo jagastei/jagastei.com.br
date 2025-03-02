@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $datesSubquery = DB::raw("(SELECT generate_series('$startDateString'::date, '$endDateString'::date, interval '1 day') AS date) AS date_series");
 
         $transactionsSubquery = Transaction::query()
-            ->ofUser(auth('web')->user())
+            ->ofWallet(auth('web')->user()->currentWallet)
             ->select(
                 DB::raw('date(created_at) AS transaction_date'),
                 'type',
@@ -52,35 +52,35 @@ class DashboardController extends Controller
             ->withCount([
                 'transactions as transactions_count' => function ($query) {
                     $query
-                        ->ofUser(auth('web')->user())
+                        ->ofWallet(auth('web')->user()->currentWallet)
                         ->where('type', 'OUT');
                 },
             ])
             ->withSum([
                 'transactions as transactions_sum_value' => function ($query) {
                     $query
-                        ->ofUser(auth('web')->user())
+                        ->ofWallet(auth('web')->user()->currentWallet)
                         ->where('type', 'OUT');
                 },
             ], 'value')
             ->withAvg([
                 'transactions as transactions_avg_value' => function ($query) {
                     $query
-                        ->ofUser(auth('web')->user())
+                        ->ofWallet(auth('web')->user()->currentWallet)
                         ->where('type', 'OUT');
                 },
             ], 'value')
             ->withMin([
                 'transactions as transactions_min_value' => function ($query) {
                     $query
-                        ->ofUser(auth('web')->user())
+                        ->ofWallet(auth('web')->user()->currentWallet)
                         ->where('type', 'OUT');
                 },
             ], 'value')
             ->withMax([
                 'transactions as transactions_max_value' => function ($query) {
                     $query
-                        ->ofUser(auth('web')->user())
+                        ->ofWallet(auth('web')->user()->currentWallet)
                         ->where('type', 'OUT');
                 },
             ], 'value')
