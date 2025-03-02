@@ -166,9 +166,11 @@ const onClose = () => {
 				</Command>
 			</PopoverContent>
 		</Popover>
-		<DialogContent class="sm:max-w-[425px]"
+		<DialogContent
+			class="sm:max-w-[425px]"
 			@interactOutside="onClose"
-			@escapeKeyDown="onClose">
+			@escapeKeyDown="onClose"
+		>
 			<DialogHeader>
 				<DialogTitle>Adicionar carteira</DialogTitle>
 				<DialogDescription>

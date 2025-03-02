@@ -107,15 +107,23 @@ const onClose = () => {
 							{{ selectedValues.size }}
 						</Badge>
 						<div class="hidden space-x-1 lg:flex">
-							<Badge v-if="selectedValues.size > 2" variant="secondary"
-								class="rounded-sm px-1 font-normal">
+							<Badge
+								v-if="selectedValues.size > 2"
+								variant="secondary"
+								class="rounded-sm px-1 font-normal"
+							>
 								{{ selectedValues.size }} selecionados
 							</Badge>
 
 							<template v-else>
-								<Badge v-for="option in options.filter((option) =>
-									selectedValues.has(option.value)
-								)" :key="option.value" variant="secondary" class="rounded-sm px-1 font-normal">
+								<Badge
+									v-for="option in options.filter((option) =>
+										selectedValues.has(option.value)
+									)"
+									:key="option.value"
+									variant="secondary"
+									class="rounded-sm px-1 font-normal"
+								>
 									{{ option.label }}
 								</Badge>
 							</template>
@@ -129,32 +137,47 @@ const onClose = () => {
 					<CommandList>
 						<CommandEmpty>Nenhum resultado.</CommandEmpty>
 						<CommandGroup>
-							<CommandItem v-for="option in options" :key="option.value" :value="option" @select="
-								(e) => {
-									const isSelected = selectedValues.has(option.value);
-									if (isSelected) {
-										selectedValues.delete(option.value);
-									} else {
-										selectedValues.add(option.value);
+							<CommandItem
+								v-for="option in options"
+								:key="option.value"
+								:value="option"
+								@select="
+									(e) => {
+										const isSelected = selectedValues.has(option.value);
+										if (isSelected) {
+											selectedValues.delete(option.value);
+										} else {
+											selectedValues.add(option.value);
+										}
+										const filterValues = Array.from(selectedValues);
+										column?.setFilterValue(
+											filterValues.length ? filterValues : undefined
+										);
 									}
-									const filterValues = Array.from(selectedValues);
-									column?.setFilterValue(filterValues.length ? filterValues : undefined);
-								}
-							">
-								<div :class="cn(
-									'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-									selectedValues.has(option.value)
-										? 'bg-primary text-primary-foreground'
-										: 'opacity-50 [&_svg]:invisible'
-								)
-									">
+								"
+							>
+								<div
+									:class="
+										cn(
+											'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+											selectedValues.has(option.value)
+												? 'bg-primary text-primary-foreground'
+												: 'opacity-50 [&_svg]:invisible'
+										)
+									"
+								>
 									<Icon icon="radix-icons:check" :class="cn('h-4 w-4')" />
 								</div>
-								<component :is="option.icon" v-if="option.icon"
-									class="mr-2 h-4 w-4 text-muted-foreground" />
+								<component
+									:is="option.icon"
+									v-if="option.icon"
+									class="mr-2 h-4 w-4 text-muted-foreground"
+								/>
 								<span>{{ option.label }}</span>
-								<span v-if="facets?.get(option.value)"
-									class="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+								<span
+									v-if="facets?.get(option.value)"
+									class="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs"
+								>
 									{{ facets.get(option.value) }}
 								</span>
 							</CommandItem>
@@ -163,8 +186,11 @@ const onClose = () => {
 						<template v-if="selectedValues.size > 0">
 							<CommandSeparator />
 							<CommandGroup>
-								<CommandItem :value="{ label: 'Limpar filtros' }" class="justify-center text-center"
-									@select="column?.setFilterValue(undefined)">
+								<CommandItem
+									:value="{ label: 'Limpar filtros' }"
+									class="justify-center text-center"
+									@select="column?.setFilterValue(undefined)"
+								>
 									Limpar filtros
 								</CommandItem>
 							</CommandGroup>
@@ -174,11 +200,14 @@ const onClose = () => {
 					<CommandList>
 						<CommandGroup>
 							<DialogTrigger as-child>
-								<CommandItem value="create-category" @select="
-									() => {
-										open = true;
-									}
-								">
+								<CommandItem
+									value="create-category"
+									@select="
+										() => {
+											open = true;
+										}
+									"
+								>
 									<CirclePlusIcon class="mr-2 h-5 w-5" />
 									Adicionar categoria
 								</CommandItem>
@@ -189,8 +218,11 @@ const onClose = () => {
 			</PopoverContent>
 		</Popover>
 
-		<DialogContent class="sm:max-w-[425px]" @interactOutside="onClose"
-		@escapeKeyDown="onClose">
+		<DialogContent
+			class="sm:max-w-[425px]"
+			@interactOutside="onClose"
+			@escapeKeyDown="onClose"
+		>
 			<DialogHeader>
 				<DialogTitle>Adicionar categoria</DialogTitle>
 				<DialogDescription>
@@ -200,17 +232,34 @@ const onClose = () => {
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
 					<Label for="name" class="text-left"> Nome </Label>
-					<Input id="name" v-model="form.name" placeholder="Alimentação" class="mt-2" autocomplete="off"
-						tabindex="1" />
+					<Input
+						id="name"
+						v-model="form.name"
+						placeholder="Alimentação"
+						class="mt-2"
+						autocomplete="off"
+						tabindex="1"
+					/>
 				</div>
 
 				<div class="flex flex-col">
 					<Label for="color" class="text-left w-fit"> Cor </Label>
-					<Input id="color" type="color" v-model="form.color" class="mt-2 cursor-pointer" tabindex="2" />
+					<Input
+						id="color"
+						type="color"
+						v-model="form.color"
+						class="mt-2 cursor-pointer"
+						tabindex="2"
+					/>
 				</div>
 			</div>
 			<DialogFooter>
-				<Button :disabled="form.processing" @click="submit" type="button" tabindex="3">
+				<Button
+					:disabled="form.processing"
+					@click="submit"
+					type="button"
+					tabindex="3"
+				>
 					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
 					Adicionar
 				</Button>
