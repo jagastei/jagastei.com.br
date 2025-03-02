@@ -4,10 +4,7 @@ import { Button } from '@/Components/ui/button';
 import Nav, { type LinkProp } from '@/Components/Nav.vue';
 import { TooltipProvider } from '@/Components/ui/tooltip';
 import { Separator } from '@/Components/ui/separator';
-import {
-	GripVerticalIcon,
-	MenuIcon,
-} from 'lucide-vue-next';
+import { GripVerticalIcon, MenuIcon } from 'lucide-vue-next';
 import {
 	Sheet,
 	SheetContent,
