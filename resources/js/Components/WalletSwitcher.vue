@@ -141,9 +141,7 @@ const filter = (
 									:class="
 										cn(
 											'ml-auto h-4 w-4',
-											selectedWallet.value === wallet.value
-												? 'opacity-100'
-												: 'opacity-0'
+											selectedWallet.value === wallet.value ? 'opacity-100' : 'opacity-0'
 										)
 									"
 								/>
