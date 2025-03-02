@@ -8,6 +8,7 @@ declare global {
 	interface Window {
 		axios: AxiosInstance;
 		emitter: Emitter<any>;
+		env: Env;
 	}
 
 	var route: typeof ziggyRoute;

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->foreignUuid('current_wallet_id')->nullable();
             $table->enum('locale', ['pt-BR', 'en-US']);
             $table->enum('currency', ['BRL', 'USD', 'EUR', 'GBP']);
             $table->timestamps();

@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Wallet;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,13 +22,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create([
-            'name' => 'João',
-            'email' => 'joao@jagastei.com.br',
-        ]);
-
         $this->call(BankSeeder::class);
         $this->call(BrandSeeder::class);
+
+        $user = User::factory()->create([
+            'name' => 'Teste',
+            'email' => 'teste@jagastei.com.br',
+        ]);
+
+        $personalWallet = Wallet::factory()->forUser($user)->create([
+            'name' => 'Carteira pessoal',
+        ]);
+
+        Wallet::factory()->forUser($user)->create([
+            'name' => 'Carteira da empresa',
+        ]);
+
+        $user->update([
+            'current_wallet_id' => $personalWallet->id,
+        ]);
 
         $bank = Bank::query()
             ->enabled()

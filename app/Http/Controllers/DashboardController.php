@@ -13,11 +13,8 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $startDate = now()->subYear()->subWeek()->startOfWeek(Carbon::MONDAY);
-        $endDate = now()->subWeek()->endOfWeek(Carbon::SUNDAY);
-
-        $startDate = now()->subMonths(6)->startOfMonth();
-        $endDate = now()->subMonths(6)->endOfMonth();
+        $startDate = now()->startOfWeek(Carbon::MONDAY);
+        $endDate = now()->endOfWeek(Carbon::SUNDAY);
 
         $startDateString = $startDate->format('Y-m-d');
         $endDateString = $endDate->format('Y-m-d');
@@ -90,6 +87,8 @@ class DashboardController extends Controller
             ->get();
 
         return Inertia::render('Dashboard', [
+            'startDate' => $startDateString,
+            'endDate' => $endDateString,
             'overview2' => $overview2,
             'overview3' => $overview3,
         ]);

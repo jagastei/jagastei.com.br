@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
+            $table->text('description')->nullable();
             $table->enum('type', ['IN', 'OUT']);
             $table->bigInteger('value');
-            $table->foreignUuid('category_id');
+            $table->foreignUuid('category_id')->nullable();
             $table->foreignUuid('account_id');
-            $table->enum('method', ['CARD', 'TED', 'PIX', 'UNKNOWN']);
+            $table->enum('method', ['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN'])->nullable();
             $table->foreignUuid('card_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

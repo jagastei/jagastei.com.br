@@ -17,6 +17,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Overview3 from '@/Components/Overview3.vue';
 
 const props = defineProps<{
+	startDate: string;
+	endDate: string;
 	overview2: Array<any>;
 	overview3: Array<any>;
 }>();
@@ -29,7 +31,7 @@ const props = defineProps<{
 			<div class="flex items-center justify-between">
 				<h2 class="text-3xl font-bold tracking-tight">Painel</h2>
 				<div class="flex items-center space-x-2">
-					<DateRangePicker />
+					<DateRangePicker :start-date="startDate" :end-date="endDate" />
 					<!-- <Button>Download</Button> -->
 				</div>
 			</div>

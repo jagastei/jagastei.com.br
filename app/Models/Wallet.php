@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,11 @@ class Wallet extends Model
     protected $casts = [
         'personal' => 'boolean',
     ];
+
+    public function scopeOfUser(Builder $query, User $user): Builder
+    {
+        return $query->where('user_id', $user->id);
+    }
 
     public function user(): BelongsTo
     {

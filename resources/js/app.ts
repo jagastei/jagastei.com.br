@@ -7,18 +7,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import money from 'v-money3';
-import mixpanel from 'mixpanel-browser';
 import mitt from 'mitt';
+import { Env } from './types/global';
 
-// const MIXPANEL_CUSTOM_LIB_URL = "https://<YOUR_PROXY_DOMAIN>/lib.min.js";
-// prod: 9c5e2c57b3fdebed16cf40a590cd3b9a
-// dev: f4c0e1821c516e58a42beb1c85ea29b3
-// mixpanel.init('f4c0e1821c516e58a42beb1c85ea29b3', {
-// 	debug: true,
-// 	track_pageview: true,
-// 	persistence: 'localStorage',
-// 	// api_host: "https://<YOUR_PROXY_DOMAIN>",
-// });
+window.env = import.meta.env.MODE as Env;
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

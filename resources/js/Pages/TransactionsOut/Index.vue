@@ -87,9 +87,9 @@ const onUploadDialogOpen = (open: boolean) => {
 						</DialogTrigger>
 						<DialogContent class="sm:max-w-[425px]">
 							<DialogHeader>
-								<DialogTitle>Importar movimentações</DialogTitle>
+								<DialogTitle>Importar saídas</DialogTitle>
 								<DialogDescription>
-									Faça o upload de uma imagem com suas movimentações.
+									Faça o upload de uma imagem com suas saídas.
 								</DialogDescription>
 							</DialogHeader>
 							<div class="py-2">
@@ -129,7 +129,7 @@ const onUploadDialogOpen = (open: boolean) => {
 					</Dialog>
 
 					<Button @click="createTransactionDialogOpen = true"
-						>Adicionar movimentação</Button
+						>Adicionar saída</Button
 					>
 				</div>
 			</div>
@@ -140,15 +140,15 @@ const onUploadDialogOpen = (open: boolean) => {
 			>
 				<div class="flex flex-col items-center gap-1 text-center">
 					<h3 class="text-2xl font-bold tracking-tight">
-						Você ainda realizou uma movimentação.
+						Você ainda realizou uma saída.
 					</h3>
 					<p class="text-sm text-muted-foreground">
 						Você pode começar a acompanhar sua saúde financeira registrando suas
-						movimentações.
+						saídas.
 						<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
 					</p>
 
-					<Button class="mt-4"> Adicionar movimentação </Button>
+					<Button class="mt-4"> Adicionar saída </Button>
 				</div>
 			</div>
 

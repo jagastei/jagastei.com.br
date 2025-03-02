@@ -9,6 +9,7 @@ use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionInController;
 use App\Http\Controllers\TransactionOutController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,13 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
+
+    // wallets
+    // Route::get('/carteiras', [WalletController::class, 'index'])->name('wallets.index');
+    Route::post('/carteiras', [WalletController::class, 'store'])->name('wallets.store');
+    Route::delete('/carteiras/{wallet}', [WalletController::class, 'destroy'])->name('wallets.destroy');
+
+    Route::put('/trocar-carteira', [WalletController::class, 'switch'])->name('wallets.switch');
 
     // transaction in
     Route::get('/entradas', [TransactionInController::class, 'index'])->name('transactions.in.index');

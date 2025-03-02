@@ -1,8 +1,16 @@
+
+export interface Wallet {
+	id: string;
+	name: string;
+}
+
 export interface User {
 	id: number;
 	name: string;
 	email: string;
 	email_verified_at?: string;
+	wallets: Wallet[];
+	current_wallet: Wallet;
 }
 
 export type PageProps<
@@ -12,3 +20,10 @@ export type PageProps<
 		user: User;
 	};
 };
+
+export const Env = {
+	development: 'development',
+	production: 'production',
+} as const;
+
+export type Env = (typeof Env)[keyof typeof Env];

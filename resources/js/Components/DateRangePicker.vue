@@ -5,6 +5,7 @@ import {
 	CalendarDate,
 	DateFormatter,
 	getLocalTimeZone,
+	parseDate,
 } from '@internationalized/date';
 
 import { type Ref, ref } from 'vue';
@@ -17,15 +18,21 @@ import {
 	PopoverTrigger,
 } from '@/Components/ui/popover';
 
-const df = new DateFormatter('en-US', {
-	dateStyle: 'medium',
+const props = defineProps<{
+	startDate: string;
+	endDate: string;
+}>();
+
+const df = new DateFormatter('pt-BR', {
+	dateStyle: 'medium', // short
 });
 
-const calendarDate = new CalendarDate(2023, 0, 20);
+const startDate = parseDate(props.startDate);
+const endDate = parseDate(props.endDate);
 
 const value = ref({
-	start: calendarDate,
-	end: calendarDate.add({ days: 20 }),
+	start: startDate,
+	end: endDate,
 }) as Ref<DateRange>;
 </script>
 

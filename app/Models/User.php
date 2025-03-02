@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -25,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'current_wallet_id',
     ];
 
     protected $hidden = [
@@ -65,5 +67,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function accounts(): HasMany
     {
         return $this->hasMany(Account::class);
+    }
+
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(Wallet::class);
+    }
+
+    public function currentWallet(): BelongsTo
+    {
+        return $this->belongsTo(Wallet::class, 'current_wallet_id');
     }
 }

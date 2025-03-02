@@ -13,15 +13,19 @@ import { Label } from '@/Components/ui/label';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import InputError from '@/Components/InputError.vue';
+import { Env } from '@/types/index.d';
 
 defineProps<{
 	canResetPassword?: boolean;
 	status?: string;
 }>();
 
-const form = useForm({
-	email: 'test@example.com',
-	password: 'password',
+const form = useForm<{
+	email: string | number;
+	password: string | number;
+}>({
+	email: window.env === Env.development ? 'teste@jagastei.com.br' : '',
+	password: window.env === Env.development ? 'password' : '',
 });
 
 const submit = () => {

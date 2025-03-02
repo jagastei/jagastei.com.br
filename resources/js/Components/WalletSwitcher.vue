@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
-import { CirclePlusIcon, CheckIcon, ChevronsUpDown } from 'lucide-vue-next';
-
+import { CirclePlusIcon, CheckIcon, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
 import { cn } from '@/utils';
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
-
 import {
 	Dialog,
 	DialogContent,
@@ -32,57 +28,52 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/Components/ui/popover';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/Components/ui/select';
-
-type Wallet = {
-	label: string;
-	value: string;
-};
+import { router, useForm, usePage } from '@inertiajs/vue3';
+import { Wallet } from '@/types';
+import InputError from './InputError.vue';
 
 type Group = {
 	label: string;
 	wallets: Wallet[];
 };
 
+const user = usePage().props.auth.user;
+
 const groups: Group[] = [
 	{
 		label: 'Carteiras',
-		wallets: [
-			{
-				label: 'Alicia Koch',
-				value: 'personal',
-			},
-			{
-				label: 'Acme Inc.',
-				value: 'acme-inc',
-			},
-			{
-				label: 'Monsters Inc.',
-				value: 'monsters',
-			},
-		],
+		wallets: user.wallets,
 	},
 ];
 
 const open = ref(false);
 const showNewWalletDialog = ref(false);
-const selectedWallet = ref<Wallet>(groups[0].wallets[0]);
+const selectedWallet = ref<Wallet>(user.current_wallet);
 
-const filter = (
-	val: string[] | number[] | false[] | true[] | Record<string, any>[],
-	term: string
-): string[] | number[] | false[] | true[] | Record<string, any>[] => {
-	const wallets = val as Wallet[];
+const form = useForm<{
+	name: string | number;
+}>({
+	name: '',
+});
 
-	return wallets.filter((wallet) =>
-		wallet.label?.toLowerCase().includes(term.toLowerCase())
-	);
+const submit = () => {
+	form.post(route('wallets.store'), {
+		onSuccess: () => {
+			showNewWalletDialog.value = false;
+		},
+		onError: (error) => {
+			console.log('error: ', error);
+		},
+	});
+};
+
+const switchWallet = (wallet: Wallet) => {
+	selectedWallet.value = wallet;
+	open.value = false;
+
+	router.put(route('wallets.switch'), {
+		wallet_id: wallet.id,
+	});
 };
 </script>
 
@@ -104,12 +95,12 @@ const filter = (
 						/>
 						<AvatarFallback>SC</AvatarFallback>
 					</Avatar> -->
-					{{ selectedWallet.label }}
+					{{ selectedWallet.name }}
 					<ChevronsUpDown class="ml-auto h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent class="w-[200px] p-0">
-				<Command :filter-function="filter">
+				<Command>
 					<CommandList>
 						<CommandGroup
 							v-for="group in groups"
@@ -118,30 +109,25 @@ const filter = (
 						>
 							<CommandItem
 								v-for="wallet in group.wallets"
-								:key="wallet.value"
+								:key="wallet.id"
 								:value="wallet"
 								class="text-sm"
-								@select="
-									() => {
-										selectedWallet = wallet;
-										open = false;
-									}
-								"
+								@select="switchWallet(wallet)"
 							>
 								<!-- <Avatar class="mr-2 h-5 w-5">
 									<AvatarImage
-										:src="`https://avatar.vercel.sh/${wallet.value}.png`"
-										:alt="wallet.label"
+										:src="`https://avatar.vercel.sh/${wallet.id}.png`"
+										:alt="wallet.name"
 										class="grayscale"
 									/>
 									<AvatarFallback>SC</AvatarFallback>
 								</Avatar> -->
-								{{ wallet.label }}
+								{{ wallet.name }}
 								<CheckIcon
 									:class="
 										cn(
 											'ml-auto h-4 w-4',
-											selectedWallet.value === wallet.value
+											selectedWallet.id === wallet.id
 												? 'opacity-100'
 												: 'opacity-0'
 										)
@@ -183,7 +169,8 @@ const filter = (
 				<div class="space-y-4 py-2 pb-4">
 					<div class="space-y-2">
 						<Label for="name">Nome da carteira</Label>
-						<Input id="name" placeholder="Carteira pessoal" />
+						<Input id="name" v-model="form.name" placeholder="Carteira pessoal" />
+						<InputError class="mt-2" :message="form.errors.name" />
 					</div>
 					<!-- <div class="space-y-2">
 						<Label for="plan">Subscription plan</Label>
@@ -209,7 +196,10 @@ const filter = (
 				<Button variant="outline" @click="showNewWalletDialog = false">
 					Cancelar
 				</Button>
-				<Button type="submit"> Criar </Button>
+				<Button :disabled="form.processing" @click="submit" type="button">
+					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
+					Criar
+				</Button>
 			</DialogFooter>
 		</DialogContent>
 	</Dialog>
