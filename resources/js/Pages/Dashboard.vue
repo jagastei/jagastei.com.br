@@ -3,8 +3,6 @@ import { Head } from '@inertiajs/vue3';
 import Overview from '@/Components/Overview.vue';
 import Overview2 from '@/Components/Overview2.vue';
 import DateRangePicker from '@/Components/DateRangePicker.vue';
-import RecentSales from '@/Components/RecentSales.vue';
-import { Button } from '@/Components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -16,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Overview3 from '@/Components/Overview3.vue';
 
-const props = defineProps<{
+defineProps<{
 	startDate: string;
 	endDate: string;
 	overview: Array<any>;
@@ -150,7 +148,7 @@ const props = defineProps<{
 								>
 							</CardHeader>
 							<CardContent>
-								<Overview :overview="overview" />
+								<Overview key="overview" :overview="overview" />
 							</CardContent>
 						</Card>
 
@@ -162,7 +160,7 @@ const props = defineProps<{
 								>
 							</CardHeader>
 							<CardContent>
-								<Overview2 :overview="overview2" />
+								<Overview2 key="overview2" :overview="overview2" />
 							</CardContent>
 						</Card>
 
@@ -172,7 +170,7 @@ const props = defineProps<{
 								<CardDescription>Você gastou R$23.235,25 essa semana.</CardDescription>
 							</CardHeader>
 							<CardContent class="flex items-center h-[calc(100%-98px)]">
-								<Overview3 :overview="overview3" />
+								<Overview3 key="overview3" :overview="overview3" />
 							</CardContent>
 						</Card>
 

@@ -45,12 +45,12 @@ const value = ref({
 					:variant="'outline'"
 					:class="
 						cn(
-							'w-[300px] justify-start text-left font-normal',
+							'justify-start text-left font-normal',
 							!value && 'text-muted-foreground'
 						)
 					"
 				>
-					<CalendarIcon class="mr-2 h-4 w-4" />
+					<CalendarIcon class="mr-2 h-4 w-4 min-w-4" />
 
 					<template v-if="value.start">
 						<template v-if="value.end">
@@ -69,6 +69,8 @@ const value = ref({
 			<PopoverContent class="w-auto p-0" align="end">
 				<RangeCalendar
 					v-model="value"
+					locale="pt-BR"
+					:week-starts-on="1"
 					weekday-format="short"
 					:number-of-months="2"
 					initial-focus

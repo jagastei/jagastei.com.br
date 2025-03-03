@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goals', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->snowflake('wallet_id')->index();
-            $table->string('name');
-            $table->bigInteger('total')->default(0);
-            $table->bigInteger('current')->default(0);
+        Schema::create('feedback', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bag');
+        Schema::dropIfExists('feedback');
     }
 };

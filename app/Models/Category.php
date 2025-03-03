@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,8 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
+    use HasSnowflakes;
 
     protected $fillable = [
         'wallet_id',
@@ -26,6 +28,7 @@ class Category extends Model
     ];
 
     protected $casts = [
+        'id' => Snowflake::class,
         // 'transactions_sum_value' => 'integer',
         'transactions_avg_value' => 'integer',
         'transactions_min_value' => 'integer',

@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->snowflakeId();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->enum('type', ['IN', 'OUT']);
             $table->bigInteger('value');
-            $table->foreignUuid('category_id')->nullable();
-            $table->foreignUuid('account_id');
+            $table->snowflake('category_id')->index()->nullable();
+            $table->snowflake('account_id')->index();
             $table->enum('method', ['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN'])->nullable();
             $table->foreignUuid('card_id')->nullable();
             $table->timestamps();

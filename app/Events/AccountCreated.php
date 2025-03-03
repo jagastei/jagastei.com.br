@@ -31,7 +31,5 @@ class AccountCreated extends Event
             'name' => $this->name,
             'balance' => $this->initial_balance,
         ]);
-
-        // Verbs::unlessReplaying(fn () => Mail::send(new WelcomeEmail($this->user_id)));
     }
 }

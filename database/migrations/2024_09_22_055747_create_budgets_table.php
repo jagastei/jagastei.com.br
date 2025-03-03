@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('budgets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('wallet_id');
+            $table->snowflake('wallet_id')->index();
             $table->string('name');
             $table->bigInteger('total')->default(0);
             $table->bigInteger('current')->default(0);

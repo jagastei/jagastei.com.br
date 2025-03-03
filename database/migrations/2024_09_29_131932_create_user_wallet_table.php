@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('user_wallet', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id');
-            $table->foreignUuid('wallet_id');
+            $table->snowflake('wallet_id');
             $table->boolean('can_edit')->default(false);
             $table->enum('status', ['PENDING', 'ACCEPTED', 'DECLINED', 'EXPIRED']);
             $table->timestamps();
             $table->timestamp('expires_at')->nullable();
+
+            $table->unique(['user_id', 'wallet_id']);
         });
     }
 

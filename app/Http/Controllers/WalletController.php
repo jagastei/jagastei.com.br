@@ -33,7 +33,7 @@ class WalletController extends Controller
     public function switch(Request $request)
     {
         $input = $request->validate([
-            'wallet_id' => ['required', 'uuid'],
+            'wallet_id' => ['required', 'exists:wallets,id'],
         ]);
 
         $wallet = Wallet::query()

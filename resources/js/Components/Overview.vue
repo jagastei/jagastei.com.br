@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { AreaChart } from '@/Components/ui/chart-area';
-import { BarChart } from '@/Components/ui/chart-bar';
-import { LineChart } from '@/Components/ui/chart-line';
 import OverviewTooltip from '@/Components/OverviewTooltip.vue';
 import { formatMoney } from '@/utils';
+import { CurveType } from '@unovis/ts';
 
 const props = defineProps<{
 	overview: Array<any>;
@@ -12,7 +11,9 @@ const props = defineProps<{
 console.log(props.overview);
 
 const xFormatter = (value: any, i: number) => {
-	return props.overview[i].name;
+	console.log([i, value]);
+	return value;
+	// return props.overview[i].created_at;
 };
 
 const yFormatter = (value: any, i: number) => {
@@ -21,18 +22,19 @@ const yFormatter = (value: any, i: number) => {
 </script>
 
 <template>
-	<BarChart
+	<AreaChart
 		:data="overview"
-		index="name"
+		index="created_at"
 		:xFormatter="xFormatter"
 		:yFormatter="yFormatter"
-		:categories="['Entrada', 'Saída']"
-		:colors="['#22C55E', '#EF4444']"
-		:showXAxis="true"
+		:categories="['Saldo']"
+		:colors="['#22C55E']"
+		:showXAxis="false"
 		:showYAxis="true"
 		:showGridLine="true"
 		:showGradiant="true"
 		:showLegend="true"
 		:customTooltip="OverviewTooltip"
+		:curveType="CurveType.Linear"
 	/>
 </template>

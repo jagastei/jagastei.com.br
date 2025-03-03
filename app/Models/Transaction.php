@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,8 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Transaction extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
+    use HasSnowflakes;
 
     protected $fillable = [
         'title',
@@ -24,6 +26,10 @@ class Transaction extends Model
         'account_id',
         'method',
         'card_id',
+    ];
+
+    protected $casts = [
+        'id' => Snowflake::class,
     ];
 
     protected $appends = [

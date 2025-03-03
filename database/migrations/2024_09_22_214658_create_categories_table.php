@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('wallet_id');
+            $table->snowflakeId();
+            $table->snowflake('wallet_id')->index();
             $table->string('name');
             $table->string('color')->nullable();
             $table->string('icon')->nullable();

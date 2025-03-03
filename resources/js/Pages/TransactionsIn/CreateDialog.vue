@@ -77,9 +77,6 @@ const form = useForm<{
 });
 
 const submit = () => {
-
-	console.log(form.data());
-
 	form
 		.transform((data) => ({
 			...data,
@@ -115,9 +112,9 @@ const onClose = () => {
 			@escapeKeyDown="onClose"
 		>
 			<DialogHeader>
-				<DialogTitle>Adicionar cartão</DialogTitle>
+				<DialogTitle>Adicionar entrada</DialogTitle>
 				<DialogDescription>
-					Identifique seu cartão e clique em adicionar.
+					Informe o valor e a categoria.
 				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">

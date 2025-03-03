@@ -27,10 +27,10 @@ class StoreTransactionRequest extends FormRequest
             'description' => ['nullable', 'string', 'min:2', 'max:255'],
             'type' => ['required', 'in:IN,OUT'],
             'value' => ['required', 'integer', 'min:0'],
-            'category' => ['nullable', 'uuid', 'exists:categories,id'],
-            'account' => ['required', 'uuid', 'exists:accounts,id'],
+            'category' => ['nullable', 'exists:categories,id,wallet_id,'.auth('web')->user()->currentWallet->id],
+            'account' => ['required', 'exists:accounts,id,wallet_id,'.auth('web')->user()->currentWallet->id],
             'method' => ['nullable', 'in:CASH,CARD,TED,PIX,OTHER,UNKNOWN'],
-            'card' => ['nullable', 'uuid', 'exists:cards,id'],
+            'card' => ['nullable', 'exists:cards,id,wallet_id,'.auth('web')->user()->currentWallet->id],
         ];
     }
 

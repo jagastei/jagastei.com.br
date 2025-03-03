@@ -20,10 +20,12 @@ import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
 import AI from '@/Components/AI.vue';
 import CreateDialog from './CreateDialog.vue';
+import { Account } from '@/Components/AccountTable/columns';
 
 defineProps<{
 	filter: any;
 	categories: Category[];
+	accounts: Account[];
 	transactions: Pagination<Transaction>;
 }>();
 
@@ -61,6 +63,7 @@ const onUploadDialogOpen = (open: boolean) => {
 
 	<CreateDialog
 		:categories="categories"
+		:accounts="accounts"
 		:open="createTransactionDialogOpen"
 		@close="createTransactionDialogOpen = false"
 	/>

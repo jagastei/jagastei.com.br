@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('account_id');
+            $table->snowflake('account_id')->index();
             $table->string('name');
             $table->bigInteger('limit')->default(0);
 

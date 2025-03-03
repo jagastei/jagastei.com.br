@@ -2,7 +2,7 @@
 import { DonutChart } from '@/Components/ui/chart-donut';
 import { formatMoney } from '@/utils';
 
-const props = defineProps<{
+defineProps<{
 	overview: Array<any>;
 }>();
 

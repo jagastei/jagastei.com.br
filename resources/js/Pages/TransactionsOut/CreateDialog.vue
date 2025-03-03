@@ -32,9 +32,11 @@ import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
 import { Brand, Card } from '@/Components/CardTable/columns';
 import { Category } from '@/Components/CategoryTable/columns';
+import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
 
 const props = defineProps<{
 	categories: Category[];
+	accounts: Account[];
 	open: boolean;
 }>();
 
@@ -64,24 +66,34 @@ const onSelected = (ev: any) => {
 };
 
 const form = useForm<{
-	title: string;
-	type: 'IN' | 'OUT';
+	type: 'OUT';
 	value: number;
 	category: Category | undefined;
 	account: Account | undefined;
-	method: 'CARD' | 'TED' | 'PIX' | 'UNKNOWN';
-	card: Card | undefined;
 }>({
-	title: '',
-	type: 'IN',
+	type: 'OUT',
 	value: 0,
 	category: undefined,
 	account: undefined,
-	method: 'CARD',
-	card: undefined,
 });
 
-const submit = () => {};
+const submit = () => {
+	form
+		.transform((data) => ({
+			...data,
+			category: data.category?.id,
+			account: data.account?.id,
+		}))
+		.post(route('transactions.out.store'), {
+			onSuccess: () => {
+				form.reset();
+				emit('close');
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+		});
+};
 
 const onClose = () => {
 	form.reset();
@@ -101,9 +113,9 @@ const onClose = () => {
 			@escapeKeyDown="onClose"
 		>
 			<DialogHeader>
-				<DialogTitle>Adicionar cartão</DialogTitle>
+				<DialogTitle>Adicionar saída</DialogTitle>
 				<DialogDescription>
-					Identifique seu cartão e clique em adicionar.
+					Informe o valor e a categoria.
 				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
@@ -225,6 +237,12 @@ const onClose = () => {
 							</Command>
 						</PopoverContent>
 					</Popover>
+				</div>
+
+				<div class="flex flex-col">
+					<Label for="account">Conta</Label>
+
+					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
 				</div>
 			</div>
 			<DialogFooter>

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Wallet extends Model
 {
     use HasFactory;
-    use HasUuids;
+    use HasSnowflakes;
 
     protected $fillable = [
         'user_id',
@@ -20,6 +21,7 @@ class Wallet extends Model
     ];
 
     protected $casts = [
+        'id' => Snowflake::class,
         'personal' => 'boolean',
     ];
 

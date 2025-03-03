@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wallets', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->snowflakeId();
             $table->foreignUuid('user_id');
             $table->string('name');
             $table->boolean('personal')->default(true);

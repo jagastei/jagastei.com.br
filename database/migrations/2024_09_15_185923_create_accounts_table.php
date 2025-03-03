@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('accounts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('wallet_id');
+            $table->snowflakeId();
+            $table->snowflake('wallet_id')->index();
             $table->foreignUuid('bank_id')->nullable();
             $table->string('name');
             $table->bigInteger('balance')->default(0);

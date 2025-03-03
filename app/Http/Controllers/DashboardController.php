@@ -15,10 +15,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        dd(
-            AccountState::load(Account::first()->id)
-        );
-
         $startDate = now()->startOfWeek(Carbon::MONDAY);
         $endDate = now()->endOfWeek(Carbon::SUNDAY);
 
@@ -92,10 +88,19 @@ class DashboardController extends Controller
             ], 'value')
             ->get();
 
+        $accountOverview = AccountState::load(Account::first()->id)->storedEvents();
+
+        $accountOverview = $accountOverview->map(function ($event, $index) {
+            return [
+                'created_at' => $event->created_at->format('d/m/Y'),
+                'Saldo' => $event->current_balance / 100,
+            ];
+        })->values()->all();
+        
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,
             'endDate' => $endDateString,
-            'overview' => $overview2,
+            'overview' => $accountOverview,
             'overview2' => $overview2,
             'overview3' => $overview3,
         ]);

@@ -84,8 +84,8 @@ class TransactionOutController extends Controller
         TransactionCreated::fire(
             type: 'OUT',
             value: $input['value'],
-            account_id: $input['account'],
-            category_id: $input['category'],
+            account_id: (int) $input['account'],
+            category_id: (int) $input['category'],
         );
 
         return back();
