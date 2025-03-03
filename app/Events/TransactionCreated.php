@@ -11,7 +11,9 @@ use Thunk\Verbs\Event;
 class TransactionCreated extends Event
 {
     public ?int $previous_balance = null;
+
     public ?int $current_balance = null;
+
     public CarbonImmutable $created_at;
 
     public function __construct(
@@ -28,7 +30,7 @@ class TransactionCreated extends Event
     {
         $this->previous_balance = $account->balance;
 
-        if($this->type === 'IN') {
+        if ($this->type === 'IN') {
             $account->balance += $this->value;
         } else {
             $account->balance -= $this->value;

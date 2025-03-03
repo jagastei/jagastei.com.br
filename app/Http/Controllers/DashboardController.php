@@ -96,7 +96,7 @@ class DashboardController extends Controller
                 'Saldo' => $event->current_balance / 100,
             ];
         })->values()->all();
-        
+
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,
             'endDate' => $endDateString,
