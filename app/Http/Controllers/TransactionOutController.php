@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\TransactionCreated;
 use App\Http\Requests\StoreTransactionRequest;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
 use EchoLabs\Prism\Enums\Provider;
@@ -29,6 +30,13 @@ class TransactionOutController extends Controller
         $categories = Category::query()
             ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
+            ->get();
+
+        $accounts = Account::query()
+            ->ofWallet(auth('web')->user()->currentWallet)
+            ->with([
+                'bank',
+            ])
             ->get();
 
         $transactions = QueryBuilder::for(Transaction::class)
@@ -63,6 +71,7 @@ class TransactionOutController extends Controller
         return Inertia::render('TransactionsOut/Index', [
             'filter' => $filter,
             'categories' => $categories,
+            'accounts' => $accounts,
             'transactions' => $transactions,
             'ai' => session()->get('ai'),
         ]);
@@ -72,10 +81,11 @@ class TransactionOutController extends Controller
     {
         $input = $request->validated();
 
-        $walletId = auth('web')->user()->currentWallet->id;
-
         TransactionCreated::fire(
-            wallet_id: $walletId,
+            type: 'OUT',
+            value: $input['value'],
+            account_id: $input['account'],
+            category_id: $input['category'],
         );
 
         return back();

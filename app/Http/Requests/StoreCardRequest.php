@@ -22,6 +22,7 @@ class StoreCardRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'account_id' => ['required', 'uuid', 'exists:accounts,id'],
             'name' => ['required', 'string', 'min:2', 'max:30'],
             'limit' => ['required', 'integer', 'min:0'],
         ];

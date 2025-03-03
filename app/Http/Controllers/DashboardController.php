@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\States\AccountState;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +15,10 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        dd(
+            AccountState::load(Account::first()->id)
+        );
+
         $startDate = now()->startOfWeek(Carbon::MONDAY);
         $endDate = now()->endOfWeek(Carbon::SUNDAY);
 
@@ -89,6 +95,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,
             'endDate' => $endDateString,
+            'overview' => $overview2,
             'overview2' => $overview2,
             'overview3' => $overview3,
         ]);

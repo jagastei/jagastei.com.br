@@ -30,11 +30,12 @@ import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
-import { Brand, Card } from '@/Components/CardTable/columns';
 import { Category } from '@/Components/CategoryTable/columns';
+import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
 
 const props = defineProps<{
 	categories: Category[];
+	accounts: Account[];
 	open: boolean;
 }>();
 
@@ -64,24 +65,37 @@ const onSelected = (ev: any) => {
 };
 
 const form = useForm<{
-	title: string;
-	type: 'IN' | 'OUT';
+	type: 'IN';
 	value: number;
 	category: Category | undefined;
 	account: Account | undefined;
-	method: 'CARD' | 'TED' | 'PIX' | 'UNKNOWN';
-	card: Card | undefined;
 }>({
-	title: '',
 	type: 'IN',
 	value: 0,
 	category: undefined,
 	account: undefined,
-	method: 'CARD',
-	card: undefined,
 });
 
-const submit = () => {};
+const submit = () => {
+
+	console.log(form.data());
+
+	form
+		.transform((data) => ({
+			...data,
+			category: data.category?.id,
+			account: data.account?.id,
+		}))
+		.post(route('transactions.in.store'), {
+			onSuccess: () => {
+				form.reset();
+				emit('close');
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+		});
+};
 
 const onClose = () => {
 	form.reset();
@@ -225,6 +239,12 @@ const onClose = () => {
 							</Command>
 						</PopoverContent>
 					</Popover>
+				</div>
+
+				<div class="flex flex-col">
+					<Label for="account">Conta</Label>
+
+					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
 				</div>
 			</div>
 			<DialogFooter>

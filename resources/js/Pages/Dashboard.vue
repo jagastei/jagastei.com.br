@@ -19,6 +19,7 @@ import Overview3 from '@/Components/Overview3.vue';
 const props = defineProps<{
 	startDate: string;
 	endDate: string;
+	overview: Array<any>;
 	overview2: Array<any>;
 	overview3: Array<any>;
 }>();
@@ -141,6 +142,18 @@ const props = defineProps<{
 						</Card>
 					</div>
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+						<Card class="col-span-7">
+							<CardHeader>
+								<CardTitle>Geral da semana</CardTitle>
+								<CardDescription
+									>Você realizou 265 movimentações essa semana.</CardDescription
+								>
+							</CardHeader>
+							<CardContent>
+								<Overview :overview="overview" />
+							</CardContent>
+						</Card>
+
 						<Card class="col-span-5">
 							<CardHeader>
 								<CardTitle>Geral da semana</CardTitle>

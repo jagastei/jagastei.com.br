@@ -20,10 +20,12 @@ import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
 import AI from '@/Components/AI.vue';
 import CreateDialog from './CreateDialog.vue';
+import { Account } from '@/Components/AccountTable/columns';
 
 defineProps<{
 	filter: any;
 	categories: Category[];
+	accounts: Account[];
 	transactions: Pagination<Transaction>;
 }>();
 
@@ -61,6 +63,7 @@ const onUploadDialogOpen = (open: boolean) => {
 
 	<CreateDialog
 		:categories="categories"
+		:accounts="accounts"
 		:open="createTransactionDialogOpen"
 		@close="createTransactionDialogOpen = false"
 	/>
@@ -79,7 +82,7 @@ const onUploadDialogOpen = (open: boolean) => {
 					v-if="transactions.data.length > 0"
 					class="flex items-center space-x-2"
 				>
-					<Dialog @update:open="onUploadDialogOpen">
+					<!-- <Dialog @update:open="onUploadDialogOpen">
 						<DialogTrigger as-child>
 							<Button variant="ghost">
 								<CloudUploadIcon class="size-4" />
@@ -126,7 +129,7 @@ const onUploadDialogOpen = (open: boolean) => {
 								</Button>
 							</DialogFooter>
 						</DialogContent>
-					</Dialog>
+					</Dialog> -->
 
 					<Button @click="createTransactionDialogOpen = true"
 						>Adicionar entrada</Button

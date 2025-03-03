@@ -48,10 +48,8 @@ class CardController extends Controller
     {
         $input = $request->validated();
 
-        $walletId = auth('web')->user()->currentWallet->id;
-
         CardCreated::fire(
-            wallet_id: $walletId,
+            account_id: $walletId,
             name: $input['name'],
         );
 
