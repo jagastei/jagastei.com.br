@@ -4,7 +4,4 @@ namespace App\States;
 
 use Thunk\Verbs\State;
 
-class CardState extends State
-{
-    
-}
+class CardState extends State {}
