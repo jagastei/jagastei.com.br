@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCardRequest extends FormRequest
+class UpdateAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,23 +22,7 @@ class StoreCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'account_id' => ['required', 'exists:accounts,id'],
             'name' => ['required', 'string', 'min:2', 'max:30'],
-            'limit' => ['required', 'integer', 'min:0'],
         ];
-    }
-
-    /**
-     * Get data to be validated from the request.
-     *
-     * @return array
-     */
-    public function validationData()
-    {
-        $data = $this->all();
-
-        $data['limit'] = Helper::extractNumbersFromString($data['limit'], forceInteger: true);
-
-        return $data;
     }
 }

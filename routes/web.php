@@ -5,8 +5,10 @@ use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TransactionInController;
 use App\Http\Controllers\TransactionOutController;
 use App\Http\Controllers\WalletController;
@@ -57,10 +59,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
+    Route::put('/contas/{account}', [AccountController::class, 'update'])->name('accounts.update');
     Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
 
     Route::get('/cartoes', [CardController::class, 'index'])->name('cards.index');
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store');
+    Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update');
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
 
     // Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
@@ -109,6 +113,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/subscription-checkout-cancel', function (Request $request) {
         return 'Cancel';
     })->name('subscription-checkout-cancel');
+
+    Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+    Route::post('/suporte', [SupportController::class, 'store'])->name('support.store');
 });
 
 require __DIR__.'/auth.php';

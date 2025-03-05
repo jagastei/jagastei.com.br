@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\AccountCreated;
 use App\Http\Requests\StoreAccountRequest;
+use App\Http\Requests\UpdateAccountRequest;
 use App\Models\Account;
 use App\Models\Bank;
 use Inertia\Inertia;
@@ -42,6 +43,15 @@ class AccountController extends Controller
             name: $input['name'],
             initial_balance: $input['initial_balance'],
         );
+
+        return back();
+    }
+
+    public function update(UpdateAccountRequest $request, Account $account)
+    {
+        $input = $request->validated();
+
+        $account->update($input);
 
         return back();
     }

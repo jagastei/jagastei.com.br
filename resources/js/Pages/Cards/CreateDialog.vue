@@ -79,7 +79,7 @@ const submit = () => {
 			...data,
 			account: data.account?.id,
 		}))
-		.post(route('accounts.store'), {
+		.post(route('cards.store'), {
 			onFinish: () => {
 				onClose();
 			},
@@ -93,7 +93,7 @@ const onClose = () => {
 </script>
 
 <template>
-	<Dialog :open="open">
+	<Dialog :open="open" @update:open="onClose">
 		<DialogTrigger as-child>
 			<slot />
 		</DialogTrigger>

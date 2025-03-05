@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->snowflakeId();
             $table->snowflake('account_id')->index();
             $table->string('name');
             $table->bigInteger('limit')->default(0);

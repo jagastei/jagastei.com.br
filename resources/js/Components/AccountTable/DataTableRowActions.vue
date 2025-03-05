@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { accountSchema } from './columns';
 import type { Account } from './columns';
 import { Icon } from '@iconify/vue';
@@ -10,13 +10,7 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 
@@ -31,6 +25,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
+import EditDialog from './EditDialog.vue';
 
 interface DataTableRowActionsProps {
 	row: Row<Account>;
@@ -39,13 +34,16 @@ const props = defineProps<DataTableRowActionsProps>();
 
 const account = computed(() => accountSchema.parse(props.row.original));
 
+const editDialogOpen = ref(false);
+const destroyDialogOpen = ref(false);
+
 const destroy = () => {
 	router.delete(route('accounts.destroy', account.value.id));
 };
 </script>
 
 <template>
-	<AlertDialog>
+	<div>
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>
 				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
@@ -54,31 +52,33 @@ const destroy = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" class="w-[160px]">
-				<DropdownMenuItem>Editar</DropdownMenuItem>
+				<DropdownMenuItem @click="editDialogOpen = true">Editar</DropdownMenuItem>
 				<!-- <DropdownMenuItem>Favoritar</DropdownMenuItem> -->
 				<DropdownMenuSeparator />
 
-				<DropdownMenuItem class="p-0">
-					<AlertDialogTrigger class="px-2 py-1.5 w-full text-left"
-						>Excluir</AlertDialogTrigger
-					>
+				<DropdownMenuItem @click="destroyDialogOpen = true">
+						Excluir
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 
-		<AlertDialogContent>
-			<AlertDialogHeader>
-				<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-				<AlertDialogDescription>
-					Você está prestes a remover a conta
-					<b>{{ account.name }}</b> com <b>{{ account.formatted_balance }}</b> de
-					saldo. Não será possível desfazer essa ação.
-				</AlertDialogDescription>
-			</AlertDialogHeader>
-			<AlertDialogFooter>
-				<AlertDialogCancel>Voltar</AlertDialogCancel>
-				<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
-			</AlertDialogFooter>
-		</AlertDialogContent>
-	</AlertDialog>
+		<EditDialog :open="editDialogOpen" :account="account" @close="editDialogOpen = false" />
+
+		<AlertDialog v-model:open="destroyDialogOpen">
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+					<AlertDialogDescription>
+						Você está prestes a remover a conta
+						<b>{{ account.name }}</b> com <b>{{ account.formatted_balance }}</b> de
+						saldo. Não será possível desfazer essa ação.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Voltar</AlertDialogCancel>
+					<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	</div>
 </template>

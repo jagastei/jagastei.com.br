@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCardRequest extends FormRequest
+class UpdateCardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,6 @@ class StoreCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'account_id' => ['required', 'exists:accounts,id'],
             'name' => ['required', 'string', 'min:2', 'max:30'],
             'limit' => ['required', 'integer', 'min:0'],
         ];

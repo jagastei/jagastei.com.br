@@ -26,6 +26,7 @@ class Account extends Model
 
     protected $casts = [
         'id' => Snowflake::class,
+        'wallet_id' => Snowflake::class,
     ];
 
     protected $appends = [

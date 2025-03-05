@@ -20,7 +20,7 @@ return new class extends Migration
             $table->snowflake('category_id')->index()->nullable();
             $table->snowflake('account_id')->index();
             $table->enum('method', ['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN'])->nullable();
-            $table->foreignUuid('card_id')->nullable();
+            $table->snowflake('card_id')->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

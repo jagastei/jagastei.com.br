@@ -1,24 +1,12 @@
 <script setup lang="ts">
-import { Head, router, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import DataTable from '@/Components/TransactionInTable/DataTable.vue';
 import { columns, Transaction } from '@/Components/TransactionInTable/columns';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Pagination } from '@/types/pagination';
 import { Category } from '@/Components/CategoryTable/columns';
 import { Button } from '@/Components/ui/button';
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/Components/ui/dialog';
-import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
-import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
-import AI from '@/Components/AI.vue';
 import CreateDialog from './CreateDialog.vue';
 import { Account } from '@/Components/AccountTable/columns';
 

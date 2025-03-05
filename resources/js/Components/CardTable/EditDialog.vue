@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { ref, computed } from 'vue';
+import { useFuse } from '@vueuse/integrations/useFuse';
 import { useForm } from '@inertiajs/vue3';
+import { cn } from '@/utils';
 import {
 	Dialog,
 	DialogContent,
@@ -9,28 +12,44 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-
-import { Loader2 } from 'lucide-vue-next';
+import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from '@/Components/ui/command';
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/Components/ui/popover';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
+import { Card } from '@/Components/CardTable/columns';
 
-defineProps<{
+const props = defineProps<{
+	card: Card;
 	open: boolean;
 }>();
 
 const emit = defineEmits(['close']);
 
+const accountDialogOpen = ref(false);
+
 const form = useForm<{
 	name: string;
-	total: number;
+	limit: number;
 }>({
-	name: '',
-	total: 0,
+	name: props.card.name,
+	limit: props.card.limit,
 });
 
 const submit = () => {
-	form.post(route('budgets.store'), {
+	form.put(route('cards.update', props.card.id), {
 		onFinish: () => {
 			onClose();
 		},
@@ -54,9 +73,9 @@ const onClose = () => {
 			@escapeKeyDown="onClose"
 		>
 			<DialogHeader>
-				<DialogTitle>Adicionar orçamento</DialogTitle>
+				<DialogTitle>Editar cartão</DialogTitle>
 				<DialogDescription>
-					Adicione um orçamento para controlar seus gastos.
+					Edite as informações do cartão.
 				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
@@ -65,7 +84,7 @@ const onClose = () => {
 					<Input
 						id="name"
 						v-model="form.name"
-						placeholder="Conta principal"
+						placeholder="Cartão principal"
 						class="mt-2"
 						autocomplete="off"
 						tabindex="1"
@@ -73,14 +92,14 @@ const onClose = () => {
 				</div>
 
 				<div class="flex flex-col">
-					<Label for="total" class="text-left"> Valor </Label>
+					<Label for="limit" class="text-left"> Limite </Label>
 
 					<Input
-						id="total"
-						v-model.lazy="form.total"
+						id="limit"
+						v-model.lazy="form.limit"
 						class="mt-2"
 						v-money3="{
-							prefix: 'R$ ',
+							prefix: 'R$',
 							suffix: '',
 							thousands: '.',
 							decimal: ',',
@@ -102,9 +121,13 @@ const onClose = () => {
 				</div>
 			</div>
 			<DialogFooter>
+				<Button variant="outline" @click="onClose" type="button">
+					Cancelar
+				</Button>
+
 				<Button :disabled="form.processing" @click="submit" type="button">
 					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
-					Adicionar
+					Salvar
 				</Button>
 			</DialogFooter>
 		</DialogContent>

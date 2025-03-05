@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Card extends Model
 {
     use HasFactory;
-    use HasUuids;
     use SoftDeletes;
+    use HasSnowflakes;
 
     protected $fillable = [
         'account_id',
@@ -28,6 +29,9 @@ class Card extends Model
     ];
 
     protected $casts = [
+        'id' => Snowflake::class,
+        // 'account_id' => Snowflake::class,
+        'account_id' => 'string',
         'digital' => 'boolean',
         'credit' => 'boolean',
         'international' => 'boolean',

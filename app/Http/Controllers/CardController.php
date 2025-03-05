@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
 use App\Http\Requests\StoreCardRequest;
+use App\Http\Requests\UpdateCardRequest;
 use App\Models\Account;
 use App\Models\Brand;
 use App\Models\Card;
@@ -49,9 +50,19 @@ class CardController extends Controller
         $input = $request->validated();
 
         CardCreated::fire(
-            account_id: $walletId,
+            account_id: $input['account_id'],
             name: $input['name'],
+            limit: $input['limit'],
         );
+
+        return back();
+    }
+
+    public function update(UpdateCardRequest $request, Card $card)
+    {
+        $input = $request->validated();
+
+        $card->update($input);
 
         return back();
     }
