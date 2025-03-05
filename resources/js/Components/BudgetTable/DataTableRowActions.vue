@@ -73,7 +73,8 @@ const destroy = () => {
 					<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
 					<AlertDialogDescription>
 						Você está prestes a remover o orçamento
-						<b>{{ budget.name }}</b>. Não será possível desfazer essa ação.
+						<b>{{ budget.name }}</b
+						>. Não será possível desfazer essa ação.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

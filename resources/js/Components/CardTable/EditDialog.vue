@@ -74,9 +74,7 @@ const onClose = () => {
 		>
 			<DialogHeader>
 				<DialogTitle>Editar cartão</DialogTitle>
-				<DialogDescription>
-					Edite as informações do cartão.
-				</DialogDescription>
+				<DialogDescription> Edite as informações do cartão. </DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
@@ -121,9 +119,7 @@ const onClose = () => {
 				</div>
 			</div>
 			<DialogFooter>
-				<Button variant="outline" @click="onClose" type="button">
-					Cancelar
-				</Button>
+				<Button variant="outline" @click="onClose" type="button"> Cancelar </Button>
 
 				<Button :disabled="form.processing" @click="submit" type="button">
 					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />

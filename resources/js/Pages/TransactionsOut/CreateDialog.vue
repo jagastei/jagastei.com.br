@@ -114,9 +114,7 @@ const onClose = () => {
 		>
 			<DialogHeader>
 				<DialogTitle>Adicionar saída</DialogTitle>
-				<DialogDescription>
-					Informe o valor e a categoria.
-				</DialogDescription>
+				<DialogDescription> Informe o valor e a categoria. </DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
 				<!-- <div class="flex flex-col">
