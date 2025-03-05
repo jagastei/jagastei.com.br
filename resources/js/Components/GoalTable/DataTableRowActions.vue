@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Row } from '@tanstack/vue-table';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { goalSchema } from './columns';
 import type { Goal } from './columns';
 import { Icon } from '@iconify/vue';
@@ -39,13 +39,16 @@ const props = defineProps<DataTableRowActionsProps>();
 
 const goal = computed(() => goalSchema.parse(props.row.original));
 
+const editDialogOpen = ref(false);
+const destroyDialogOpen = ref(false);
+
 const destroy = () => {
 	router.delete(route('goals.destroy', goal.value.id));
 };
 </script>
 
 <template>
-	<AlertDialog>
+	<div>
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>
 				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
@@ -55,29 +58,28 @@ const destroy = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" class="w-[160px]">
 				<DropdownMenuItem>Editar</DropdownMenuItem>
-				<DropdownMenuItem>Favoritar</DropdownMenuItem>
+				<!-- <DropdownMenuItem>Favoritar</DropdownMenuItem> -->
 				<DropdownMenuSeparator />
 
-				<DropdownMenuItem class="p-0">
-					<AlertDialogTrigger class="px-2 py-1.5 w-full text-left"
-						>Excluir</AlertDialogTrigger
-					>
+				<DropdownMenuItem @click="destroyDialogOpen = true">
+					Excluir
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 
-		<AlertDialogContent>
-			<AlertDialogHeader>
-				<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-				<AlertDialogDescription>
-					Você está prestes a remover a meta <b>{{ goal.name }}</b
-					>. Não será possível desfazer essa ação.
-				</AlertDialogDescription>
-			</AlertDialogHeader>
-			<AlertDialogFooter>
-				<AlertDialogCancel>Voltar</AlertDialogCancel>
-				<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
-			</AlertDialogFooter>
-		</AlertDialogContent>
-	</AlertDialog>
+		<AlertDialog v-model:open="destroyDialogOpen">
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+					<AlertDialogDescription>
+						Você está prestes a remover a meta <b>{{ goal.name }}</b>. Não será possível desfazer essa ação.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Voltar</AlertDialogCancel>
+					<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	</div>
 </template>

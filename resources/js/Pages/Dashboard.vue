@@ -35,14 +35,14 @@ defineProps<{
 				</div>
 			</div>
 			<Tabs default-value="overview" class="space-y-4 mt-4">
-				<TabsList>
+				<!-- <TabsList>
 					<TabsTrigger value="overview"> Overview </TabsTrigger>
 					<TabsTrigger value="analytics" disabled> Analytics </TabsTrigger>
 					<TabsTrigger value="reports" disabled> Reports </TabsTrigger>
 					<TabsTrigger value="notifications" disabled> Notifications </TabsTrigger>
-				</TabsList>
+				</TabsList> -->
 				<TabsContent value="overview" class="space-y-4">
-					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+					<div v-if="false" class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 						<Card>
 							<CardHeader
 								class="flex flex-row items-center justify-between space-y-0 pb-2"
@@ -142,9 +142,9 @@ defineProps<{
 					<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
 						<Card class="col-span-7">
 							<CardHeader>
-								<CardTitle>Geral da semana</CardTitle>
+								<CardTitle>Saldo</CardTitle>
 								<CardDescription
-									>Você realizou 265 movimentações essa semana.</CardDescription
+									>Acompanhe seu saldo no período selecionado.</CardDescription
 								>
 							</CardHeader>
 							<CardContent>
@@ -154,9 +154,9 @@ defineProps<{
 
 						<Card class="col-span-5">
 							<CardHeader>
-								<CardTitle>Geral da semana</CardTitle>
+								<CardTitle>Gastos</CardTitle>
 								<CardDescription
-									>Você realizou 265 movimentações essa semana.</CardDescription
+									>Você realizou 265 movimentações no período selecionado.</CardDescription
 								>
 							</CardHeader>
 							<CardContent>
@@ -167,7 +167,9 @@ defineProps<{
 						<Card class="col-span-2">
 							<CardHeader>
 								<CardTitle>Por categoria</CardTitle>
-								<CardDescription>Você gastou R$23.235,25 essa semana.</CardDescription>
+								<CardDescription
+									>Você gastou R$23.235,25 no período selecionado.</CardDescription
+								>
 							</CardHeader>
 							<CardContent class="flex items-center h-[calc(100%-98px)]">
 								<Overview3 key="overview3" :overview="overview3" />
