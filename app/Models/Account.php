@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Account extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use HasSnowflakes;
+    use SoftDeletes;
 
     protected $fillable = [
         'wallet_id',
