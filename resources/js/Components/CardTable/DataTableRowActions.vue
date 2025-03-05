@@ -62,15 +62,19 @@ const destroy = () => {
 			</DropdownMenuContent>
 		</DropdownMenu>
 
-		<EditDialog :open="editDialogOpen" :card="card" @close="editDialogOpen = false" />
+		<EditDialog
+			:open="editDialogOpen"
+			:card="card"
+			@close="editDialogOpen = false"
+		/>
 
 		<AlertDialog v-model:open="destroyDialogOpen">
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Você está prestes a remover o cartão <b>{{ card.name }}</b>. Não será possível desfazer essa
-						ação.
+						Você está prestes a remover o cartão <b>{{ card.name }}</b
+						>. Não será possível desfazer essa ação.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

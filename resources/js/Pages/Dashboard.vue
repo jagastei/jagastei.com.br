@@ -156,7 +156,8 @@ defineProps<{
 							<CardHeader>
 								<CardTitle>Gastos</CardTitle>
 								<CardDescription
-									>Você realizou 265 movimentações no período selecionado.</CardDescription
+									>Você realizou 265 movimentações no período
+									selecionado.</CardDescription
 								>
 							</CardHeader>
 							<CardContent>

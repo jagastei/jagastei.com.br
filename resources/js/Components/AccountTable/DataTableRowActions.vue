@@ -57,12 +57,16 @@ const destroy = () => {
 				<DropdownMenuSeparator />
 
 				<DropdownMenuItem @click="destroyDialogOpen = true">
-						Excluir
+					Excluir
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 
-		<EditDialog :open="editDialogOpen" :account="account" @close="editDialogOpen = false" />
+		<EditDialog
+			:open="editDialogOpen"
+			:account="account"
+			@close="editDialogOpen = false"
+		/>
 
 		<AlertDialog v-model:open="destroyDialogOpen">
 			<AlertDialogContent>
