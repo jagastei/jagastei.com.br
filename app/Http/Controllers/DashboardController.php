@@ -43,7 +43,7 @@ class DashboardController extends Controller
             })
             ->select(
                 DB::raw("TO_CHAR(date_series.date, 'TMDay, DD TMMonth YYYY') AS name"),
-                DB::raw("CAST(COALESCE(SUM(CASE WHEN t.type = 'IN' THEN t.value ELSE 0 END), 0) AS INTEGER) AS \"Entrada\""),
+                // DB::raw("CAST(COALESCE(SUM(CASE WHEN t.type = 'IN' THEN t.value ELSE 0 END), 0) AS INTEGER) AS \"Entrada\""),
                 DB::raw("CAST(COALESCE(SUM(CASE WHEN t.type = 'OUT' THEN t.value ELSE 0 END), 0) AS INTEGER) AS \"Saída\"")
             )
             ->groupBy('date_series.date')
@@ -90,12 +90,17 @@ class DashboardController extends Controller
 
         $accountOverview = AccountState::load(Account::first()->id)->storedEvents();
 
-        $accountOverview = $accountOverview->map(function ($event, $index) {
-            return [
-                'created_at' => $event->created_at->format('d/m/Y'),
-                'Saldo' => $event->current_balance / 100,
-            ];
-        })->values()->all();
+        $accountOverview = $accountOverview
+            ->groupBy(function ($event) {
+                return Carbon::parse($event->created_at)->format('Y-m-d');
+            })->map(function ($events) {
+                return $events->last()->current_balance / 100;
+            })->map(function ($balance, $date) {
+                return [
+                    'name' => Carbon::parse($date)->format('l, d F Y'),
+                    'Saldo' => $balance,
+                ];
+            })->values()->all();
 
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,

@@ -11,9 +11,7 @@ const props = defineProps<{
 console.log(props.overview);
 
 const xFormatter = (value: any, i: number) => {
-	console.log([i, value]);
-	return value;
-	// return props.overview[i].created_at;
+	return props.overview[i].name;
 };
 
 const yFormatter = (value: any, i: number) => {
@@ -24,12 +22,12 @@ const yFormatter = (value: any, i: number) => {
 <template>
 	<AreaChart
 		:data="overview"
-		index="created_at"
+		index="name"
 		:xFormatter="xFormatter"
 		:yFormatter="yFormatter"
 		:categories="['Saldo']"
 		:colors="['#22C55E']"
-		:showXAxis="false"
+		:showXAxis="true"
 		:showYAxis="true"
 		:showGridLine="true"
 		:showGradiant="true"
