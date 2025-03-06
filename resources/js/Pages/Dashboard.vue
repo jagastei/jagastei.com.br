@@ -16,7 +16,7 @@ import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import type { DateRange } from 'radix-vue';
 import { formatMoney } from '@/utils';
 
-const props =defineProps<{
+const props = defineProps<{
 	startDate: string;
 	endDate: string;
 	balanceByDay: Array<any>;
@@ -27,10 +27,12 @@ const props =defineProps<{
 }>();
 
 const updateDateRange = (value: DateRange) => {
-	router.get(route('dashboard', {
-		startDate: value.start?.toString(),
-		endDate: value.end?.toString(),
-	}));
+	router.get(
+		route('dashboard', {
+			startDate: value.start?.toString(),
+			endDate: value.end?.toString(),
+		})
+	);
 };
 </script>
 
@@ -186,7 +188,8 @@ const updateDateRange = (value: DateRange) => {
 								<CardHeader>
 									<CardTitle>Por categoria</CardTitle>
 									<CardDescription
-										>Você gastou {{ formatMoney(wastedByCategoryTotal) }} no período selecionado.</CardDescription
+										>Você gastou {{ formatMoney(wastedByCategoryTotal) }} no período
+										selecionado.</CardDescription
 									>
 								</CardHeader>
 								<CardContent class="flex items-center h-[calc(100%-98px)]">

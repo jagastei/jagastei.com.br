@@ -130,7 +130,9 @@ onMounted(() => {
 		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
 
 		<div class="flex-col md:flex">
-			<div class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0">
+			<div
+				class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0"
+			>
 				<div :class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']">
 					<img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12" />
 					<img

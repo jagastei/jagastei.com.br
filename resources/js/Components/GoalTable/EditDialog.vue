@@ -57,9 +57,7 @@ const onClose = () => {
 		>
 			<DialogHeader>
 				<DialogTitle>Editar meta</DialogTitle>
-				<DialogDescription>
-					Edite as informações da meta.
-				</DialogDescription>
+				<DialogDescription> Edite as informações da meta. </DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
