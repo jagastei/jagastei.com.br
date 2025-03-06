@@ -34,7 +34,7 @@ const props = withDefaults(
 	{
 		curveType: CurveType.MonotoneX,
 		filterOpacity: 0.2,
-		margin: () => ({ top: 0, bottom: 0, left: 0, right: 0 }),
+		margin: () => ({ top: 0, bottom: 0, left: 20, right: 20 }),
 		showXAxis: true,
 		showYAxis: true,
 		showTooltip: true,
@@ -85,7 +85,7 @@ function handleLegendItemClick(d: BulletLegendItemInterface, i: number) {
 
 		<VisXYContainer
 			:style="{ height: isMounted ? '100%' : 'auto' }"
-			:margin="{ left: 20, right: 20 }"
+			:margin="margin"
 			:data="data"
 		>
 			<svg width="0" height="0">

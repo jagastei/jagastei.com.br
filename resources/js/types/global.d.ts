@@ -9,6 +9,7 @@ declare global {
 		axios: AxiosInstance;
 		emitter: Emitter<any>;
 		env: Env;
+		appUrl: string;
 	}
 
 	var route: typeof ziggyRoute;

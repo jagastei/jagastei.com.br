@@ -12,7 +12,8 @@ import { Env } from './types/index';
 
 window.env = import.meta.env.MODE as Env;
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || '';
+window.appUrl = import.meta.env.VITE_APP_URL || '';
 
 const emitter = mitt();
 window.emitter = emitter;

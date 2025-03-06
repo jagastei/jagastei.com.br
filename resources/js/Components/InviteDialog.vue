@@ -22,7 +22,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:open']);
 
-const inviteLink = ref('https://app.financas.com.br/convite');
+const inviteLink = ref(`${window.appUrl}/convite`);
 const isCopied = ref(false);
 
 const copyToClipboard = async () => {

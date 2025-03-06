@@ -8,7 +8,7 @@ import {
 	parseDate,
 } from '@internationalized/date';
 
-import { type Ref, ref } from 'vue';
+import { type Ref, ref, watch } from 'vue';
 import { cn } from '@/utils';
 import { Button } from '@/Components/ui/button';
 import { RangeCalendar } from '@/Components/ui/range-calendar';
@@ -23,6 +23,10 @@ const props = defineProps<{
 	endDate: string;
 }>();
 
+const emit = defineEmits<{
+	(e: 'update:value', value: DateRange): void;
+}>();
+
 const df = new DateFormatter('pt-BR', {
 	dateStyle: 'medium', // short
 });
@@ -34,6 +38,14 @@ const value = ref({
 	start: startDate,
 	end: endDate,
 }) as Ref<DateRange>;
+
+watch(value, (newVal: DateRange) => {
+	if (newVal.start === undefined || newVal.end === undefined) {
+		return;
+	}
+
+	emit('update:value', newVal);
+});
 </script>
 
 <template>

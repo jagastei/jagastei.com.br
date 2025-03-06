@@ -5,13 +5,19 @@ import { formatMoney } from '@/utils';
 import { CurveType } from '@unovis/ts';
 
 const props = defineProps<{
-	overview: Array<any>;
+	data: Array<any>;
 }>();
 
-console.log(props.overview);
-
 const xFormatter = (value: any, i: number) => {
-	return props.overview[i].name;
+	if (!Number.isInteger(value)) {
+		return '';
+	}
+
+	if (props.data[value] === undefined) {
+		return '';
+	}
+
+	return props.data[value].name;
 };
 
 const yFormatter = (value: any, i: number) => {
@@ -21,7 +27,7 @@ const yFormatter = (value: any, i: number) => {
 
 <template>
 	<AreaChart
-		:data="overview"
+		:data="data"
 		index="name"
 		:xFormatter="xFormatter"
 		:yFormatter="yFormatter"

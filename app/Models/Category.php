@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,16 +29,8 @@ class Category extends Model
 
     protected $casts = [
         'id' => Snowflake::class,
-        // 'transactions_sum_value' => 'integer',
-        'transactions_avg_value' => 'integer',
-        'transactions_min_value' => 'integer',
-        'transactions_max_value' => 'integer',
+        'transactions_sum_value' => 'float',
     ];
-
-    public function getTransactionsSumValueAttribute($value)
-    {
-        return (int) $value / 100;
-    }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {

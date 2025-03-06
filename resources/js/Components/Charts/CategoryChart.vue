@@ -2,8 +2,8 @@
 import { DonutChart } from '@/Components/ui/chart-donut';
 import { formatMoney } from '@/utils';
 
-defineProps<{
-	overview: Array<any>;
+const props = defineProps<{
+	data: Array<any>;
 }>();
 
 const formatter = (value: number, i: number | undefined): string => {
@@ -16,10 +16,11 @@ const formatter = (value: number, i: number | undefined): string => {
 		class="h-64"
 		index="name"
 		category="transactions_sum_value"
-		:colors="overview.map((category) => category.color)"
+		:colors="data.map((category) => category.color)"
 		type="donut"
 		:showLegend="false"
-		:data="overview"
+		:centralLabel="true"
+		:data="data"
 		:valueFormatter="formatter"
 	/>
 </template>

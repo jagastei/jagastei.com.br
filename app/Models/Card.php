@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
@@ -43,7 +44,7 @@ class Card extends Model
 
     public function getFormattedLimitAttribute(): string
     {
-        return Money::BRL($this->limit ?? 0)->format();
+        return Helper::formatMoney($this->limit);
     }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder

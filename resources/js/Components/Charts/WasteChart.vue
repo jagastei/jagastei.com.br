@@ -4,13 +4,11 @@ import OverviewTooltip from '@/Components/OverviewTooltip.vue';
 import { formatMoney } from '@/utils';
 
 const props = defineProps<{
-	overview: Array<any>;
+	data: Array<any>;
 }>();
 
-console.log(props.overview);
-
 const xFormatter = (value: any, i: number) => {
-	return props.overview[i].name;
+	return props.data[i].name;
 };
 
 const yFormatter = (value: any, i: number) => {
@@ -20,7 +18,7 @@ const yFormatter = (value: any, i: number) => {
 
 <template>
 	<BarChart
-		:data="overview"
+		:data="data"
 		index="name"
 		:xFormatter="xFormatter"
 		:yFormatter="yFormatter"

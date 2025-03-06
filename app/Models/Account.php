@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,7 +36,7 @@ class Account extends Model
 
     public function getFormattedBalanceAttribute(): string
     {
-        return Money::BRL($this->balance ?? 0)->format();
+        return Helper::formatMoney($this->balance);
     }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder

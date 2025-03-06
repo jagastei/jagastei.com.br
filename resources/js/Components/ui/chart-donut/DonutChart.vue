@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { VisDonut, VisSingleContainer } from '@unovis/vue';
-import { Donut } from '@unovis/ts';
+import { BulletLegendItemInterface, Donut } from '@unovis/ts';
 import { type Component, computed, ref } from 'vue';
 import { useMounted } from '@vueuse/core';
 import type { BaseChartProps } from '.';
-import { ChartSingleTooltip, defaultColors } from '@/Components/ui/chart';
+import { ChartLegend, ChartSingleTooltip, defaultColors } from '@/Components/ui/chart';
 import { cn } from '@/utils';
 
 const props = withDefaults(
@@ -18,6 +18,7 @@ const props = withDefaults(
 			| 'showLegend'
 			| 'showTooltip'
 			| 'filterOpacity'
+			| 'centralLabel'
 		> & {
 			/**
 			 * Sets the name of the key containing the quantitative chart values.
@@ -50,8 +51,13 @@ const props = withDefaults(
 		filterOpacity: 0.2,
 		showTooltip: true,
 		showLegend: true,
+		centralLabel: true,
 	}
 );
+
+const emits = defineEmits<{
+	legendItemClick: [d: BulletLegendItemInterface, i: number];
+}>();
 
 type KeyOfT = Extract<keyof T, string>;
 type Data = (typeof props.data)[number];
@@ -68,13 +74,18 @@ const colors = computed(() =>
 				props.data.filter((d) => d[props.category]).filter(Boolean).length
 			)
 );
-const legendItems = computed(() =>
+
+const legendItems = ref<BulletLegendItemInterface[]>(
 	props.data.map((item, i) => ({
 		name: item[props.index],
 		color: colors.value[i],
 		inactive: false,
 	}))
 );
+
+function handleLegendItemClick(d: BulletLegendItemInterface, i: number) {
+	emits('legendItemClick', d, i);
+}
 
 const totalValue = computed(() =>
 	props.data.reduce((prev, curr) => {
@@ -85,6 +96,12 @@ const totalValue = computed(() =>
 
 <template>
 	<div :class="cn('w-full h-48 flex flex-col items-end', $attrs.class ?? '')">
+		<ChartLegend
+			v-if="showLegend"
+			v-model:items="legendItems"
+			@legend-item-click="handleLegendItemClick"
+		/>
+
 		<VisSingleContainer
 			:style="{ height: isMounted ? '100%' : 'auto' }"
 			:margin="{ left: 20, right: 20 }"
@@ -104,7 +121,7 @@ const totalValue = computed(() =>
 				:color="colors"
 				:arc-width="type === 'donut' ? 20 : 0"
 				:show-background="false"
-				:central-label="type === 'donut' ? valueFormatter(totalValue) : ''"
+				:central-label="centralLabel ? valueFormatter(totalValue) : ''"
 				:events="{
 					[Donut.selectors.segment]: {
 						click: (

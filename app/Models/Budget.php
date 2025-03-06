@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
+use App\Helper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,17 +33,17 @@ class Budget extends Model
 
     public function getFormattedTotalAttribute(): string
     {
-        return Money::BRL($this->total ?? 0)->format();
+        return Helper::formatMoney($this->total);
     }
 
     public function getFormattedCurrentAttribute(): string
     {
-        return Money::BRL($this->current ?? 0)->format();
+        return Helper::formatMoney($this->current);
     }
 
     public function getFormattedDiffAttribute(): string
     {
-        return Money::BRL($this->total - $this->current)->format();
+        return Helper::formatMoney($this->total - $this->current);
     }
 
     public function getPercentageAttribute(): float

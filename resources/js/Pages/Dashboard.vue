@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import Overview from '@/Components/Overview.vue';
-import Overview2 from '@/Components/Overview2.vue';
+import { Head, router } from '@inertiajs/vue3';
+import BalanceChart from '@/Components/Charts/BalanceChart.vue';
+import WasteChart from '@/Components/Charts/WasteChart.vue';
 import DateRangePicker from '@/Components/DateRangePicker.vue';
 import {
 	Card,
@@ -12,15 +12,28 @@ import {
 } from '@/Components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Overview3 from '@/Components/Overview3.vue';
+import CategoryChart from '@/Components/Charts/CategoryChart.vue';
+import type { DateRange } from 'radix-vue';
+import { formatMoney } from '@/utils';
 
-defineProps<{
+const props =defineProps<{
 	startDate: string;
 	endDate: string;
-	overview: Array<any>;
-	overview2: Array<any>;
-	overview3: Array<any>;
+	balanceByDay: Array<any>;
+	wastedByDay: Array<any>;
+	wasteByDayTransactionCount: number;
+	wastedByCategory: Array<any>;
+	wastedByCategoryTotal: number;
 }>();
+
+console.log(props)
+
+const updateDateRange = (value: DateRange) => {
+	router.get(route('dashboard', {
+		startDate: value.start?.toString(),
+		endDate: value.end?.toString(),
+	}));
+};
 </script>
 
 <template>
@@ -30,7 +43,11 @@ defineProps<{
 			<div class="flex items-center justify-between">
 				<h2 class="text-3xl font-bold tracking-tight">Painel</h2>
 				<div class="flex items-center space-x-2">
-					<DateRangePicker :start-date="startDate" :end-date="endDate" />
+					<DateRangePicker
+						:start-date="startDate"
+						:end-date="endDate"
+						@update:value="updateDateRange"
+					/>
 					<!-- <Button>Download</Button> -->
 				</div>
 			</div>
@@ -148,7 +165,7 @@ defineProps<{
 								>
 							</CardHeader>
 							<CardContent>
-								<Overview key="overview" :overview="overview" />
+								<BalanceChart key="balanceByDay" :data="balanceByDay" />
 							</CardContent>
 						</Card>
 
@@ -156,12 +173,12 @@ defineProps<{
 							<CardHeader>
 								<CardTitle>Gastos</CardTitle>
 								<CardDescription
-									>Você realizou 265 movimentações no período
+									>Você realizou {{ wasteByDayTransactionCount }} saídas no período
 									selecionado.</CardDescription
 								>
 							</CardHeader>
 							<CardContent>
-								<Overview2 key="overview2" :overview="overview2" />
+								<WasteChart key="wastedByDay" :data="wastedByDay" />
 							</CardContent>
 						</Card>
 
@@ -169,11 +186,11 @@ defineProps<{
 							<CardHeader>
 								<CardTitle>Por categoria</CardTitle>
 								<CardDescription
-									>Você gastou R$23.235,25 no período selecionado.</CardDescription
+									>Você gastou {{ formatMoney(wastedByCategoryTotal) }} no período selecionado.</CardDescription
 								>
 							</CardHeader>
 							<CardContent class="flex items-center h-[calc(100%-98px)]">
-								<Overview3 key="overview3" :overview="overview3" />
+								<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
 							</CardContent>
 						</Card>
 
