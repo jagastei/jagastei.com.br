@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\GoalCreated;
 use App\Http\Requests\StoreGoalRequest;
+use App\Http\Requests\UpdateGoalRequest;
 use App\Models\Goal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,6 +33,15 @@ class GoalController extends Controller
             name: $input['name'],
             total: $input['total'],
         );
+
+        return back();
+    }
+
+    public function update(UpdateGoalRequest $request, Goal $goal)
+    {
+        $input = $request->validated();
+
+        $goal->update($input);
 
         return back();
     }

@@ -11,7 +11,7 @@ import { Icon } from '@iconify/vue';
 
 export const budgetSchema = z.object({
 	id: z.string(),
-	wallet_id: z.string(),
+	wallet_id: z.number(),
 	name: z.string(),
 	total: z.number(),
 	formatted_total: z.string(),

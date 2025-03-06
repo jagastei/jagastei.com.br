@@ -31,6 +31,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
+import EditDialog from './EditDialog.vue';
 
 interface DataTableRowActionsProps {
 	row: Row<Goal>;
@@ -57,7 +58,7 @@ const destroy = () => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" class="w-[160px]">
-				<DropdownMenuItem>Editar</DropdownMenuItem>
+				<DropdownMenuItem @click="editDialogOpen = true">Editar</DropdownMenuItem>
 				<!-- <DropdownMenuItem>Favoritar</DropdownMenuItem> -->
 				<DropdownMenuSeparator />
 
@@ -66,6 +67,12 @@ const destroy = () => {
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
+
+		<EditDialog
+			:open="editDialogOpen"
+			:goal="goal"
+			@close="editDialogOpen = false"
+		/>
 
 		<AlertDialog v-model:open="destroyDialogOpen">
 			<AlertDialogContent>

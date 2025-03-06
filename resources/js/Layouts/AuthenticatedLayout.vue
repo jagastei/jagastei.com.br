@@ -130,8 +130,8 @@ onMounted(() => {
 		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
 
 		<div class="flex-col md:flex">
-			<div class="z-50 flex h-16 items-center pr-4 md:pr-4 border-b sticky top-0">
-				<div :class="['hidden md:block', isCollapsed ? 'pl-2.5' : 'pl-5']">
+			<div class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0">
+				<div :class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']">
 					<img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12" />
 					<img
 						src="@/../images/green-diamond-white.svg"
@@ -189,7 +189,7 @@ onMounted(() => {
 				</div>
 			</div>
 
-			<div class="md:flex flex-col h-[calc(100vh-64px)]">
+			<div class="md:flex flex-col h-[calc(100vh-4.5rem)]">
 				<TooltipProvider :delay-duration="0">
 					<div class="flex h-full">
 						<div

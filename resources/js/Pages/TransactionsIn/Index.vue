@@ -57,99 +57,101 @@ const onUploadDialogOpen = (open: boolean) => {
 	/>
 
 	<AuthenticatedLayout>
-		<div class="flex flex-1 flex-col p-4 lg:p-6 h-full gap-4 lg:gap-6">
-			<div class="flex items-center justify-between">
-				<div>
-					<h2 class="text-3xl font-bold tracking-tight">Entradas</h2>
-					<!-- <p class="text-muted-foreground">
-						Here&apos;s a list of your tasks for this month!
-					</p> -->
+		<div class="p-4 lg:p-6">
+			<div class="flex flex-1 flex-col h-full gap-4 lg:gap-6">
+				<div class="flex items-center justify-between">
+					<div>
+						<h2 class="text-3xl font-bold tracking-tight">Entradas</h2>
+						<!-- <p class="text-muted-foreground">
+							Here&apos;s a list of your tasks for this month!
+						</p> -->
+					</div>
+
+					<div
+						v-if="transactions.data.length > 0"
+						class="flex items-center space-x-2"
+					>
+						<!-- <Dialog @update:open="onUploadDialogOpen">
+							<DialogTrigger as-child>
+								<Button variant="ghost">
+									<CloudUploadIcon class="size-4" />
+								</Button>
+							</DialogTrigger>
+							<DialogContent class="sm:max-w-[425px]">
+								<DialogHeader>
+									<DialogTitle>Importar entradas</DialogTitle>
+									<DialogDescription>
+										Faça o upload de uma imagem com suas entradas.
+									</DialogDescription>
+								</DialogHeader>
+								<div class="py-2">
+									<AI v-if="ai" :data="ai" />
+									<UploadFile
+										v-else
+										v-model="form.files"
+										:preview-max-height="319"
+										:loading="form.processing"
+									/>
+								</div>
+								<DialogFooter>
+									<Button
+										v-if="!ai && !form.processing && form.files.length > 0"
+										variant="outline"
+										@click="form.files = []"
+									>
+										Usar outra imagem
+									</Button>
+
+									<Button
+										v-if="!ai"
+										type="submit"
+										@click="handleSubmit"
+										:disabled="form.files.length === 0 || form.processing"
+									>
+										<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
+										Enviar
+									</Button>
+
+									<Button v-else type="submit">
+										<Loader2 class="size-4 mr-2 animate-spin" />
+										Confirmar
+									</Button>
+								</DialogFooter>
+							</DialogContent>
+						</Dialog> -->
+
+						<Button @click="createTransactionDialogOpen = true"
+							>Adicionar entrada</Button
+						>
+					</div>
 				</div>
 
 				<div
-					v-if="transactions.data.length > 0"
-					class="flex items-center space-x-2"
+					v-if="transactions.data.length === 0"
+					class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
 				>
-					<!-- <Dialog @update:open="onUploadDialogOpen">
-						<DialogTrigger as-child>
-							<Button variant="ghost">
-								<CloudUploadIcon class="size-4" />
-							</Button>
-						</DialogTrigger>
-						<DialogContent class="sm:max-w-[425px]">
-							<DialogHeader>
-								<DialogTitle>Importar entradas</DialogTitle>
-								<DialogDescription>
-									Faça o upload de uma imagem com suas entradas.
-								</DialogDescription>
-							</DialogHeader>
-							<div class="py-2">
-								<AI v-if="ai" :data="ai" />
-								<UploadFile
-									v-else
-									v-model="form.files"
-									:preview-max-height="319"
-									:loading="form.processing"
-								/>
-							</div>
-							<DialogFooter>
-								<Button
-									v-if="!ai && !form.processing && form.files.length > 0"
-									variant="outline"
-									@click="form.files = []"
-								>
-									Usar outra imagem
-								</Button>
+					<div class="flex flex-col items-center gap-1 text-center">
+						<h3 class="text-2xl font-bold tracking-tight">
+							Você ainda realizou uma entrada.
+						</h3>
+						<p class="text-sm text-muted-foreground">
+							Você pode começar a acompanhar sua saúde financeira registrando suas
+							entradas.
+							<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
+						</p>
 
-								<Button
-									v-if="!ai"
-									type="submit"
-									@click="handleSubmit"
-									:disabled="form.files.length === 0 || form.processing"
-								>
-									<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
-									Enviar
-								</Button>
-
-								<Button v-else type="submit">
-									<Loader2 class="size-4 mr-2 animate-spin" />
-									Confirmar
-								</Button>
-							</DialogFooter>
-						</DialogContent>
-					</Dialog> -->
-
-					<Button @click="createTransactionDialogOpen = true"
-						>Adicionar entrada</Button
-					>
+						<Button class="mt-4"> Adicionar entrada </Button>
+					</div>
 				</div>
+
+				<DataTable
+					v-else
+					:data="transactions"
+					:columns="columns"
+					:filter="filter"
+					:categories="categories"
+				/>
 			</div>
-
-			<div
-				v-if="transactions.data.length === 0"
-				class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-			>
-				<div class="flex flex-col items-center gap-1 text-center">
-					<h3 class="text-2xl font-bold tracking-tight">
-						Você ainda realizou uma entrada.
-					</h3>
-					<p class="text-sm text-muted-foreground">
-						Você pode começar a acompanhar sua saúde financeira registrando suas
-						entradas.
-						<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
-					</p>
-
-					<Button class="mt-4"> Adicionar entrada </Button>
-				</div>
-			</div>
-
-			<DataTable
-				v-else
-				:data="transactions"
-				:columns="columns"
-				:filter="filter"
-				:categories="categories"
-			/>
 		</div>
 	</AuthenticatedLayout>
 </template>

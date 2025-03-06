@@ -64,7 +64,7 @@ class TransactionOutController extends Controller
                     ]);
                 },
             ])
-            ->orderByDesc('created_at')
+            ->latest()
             ->paginate($request->query('per_page', 10))
             ->appends(request()->query());
 

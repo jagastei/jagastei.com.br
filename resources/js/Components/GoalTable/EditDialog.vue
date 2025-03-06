@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { useFuse } from '@vueuse/integrations/useFuse';
 import { useForm } from '@inertiajs/vue3';
-import { cn } from '@/utils';
 import {
 	Dialog,
 	DialogContent,
@@ -12,27 +9,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
-import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from '@/Components/ui/command';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/Components/ui/popover';
+
+import { Loader2 } from 'lucide-vue-next';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
-import { Card } from '@/Components/CardTable/columns';
+import { Goal } from './columns';
 
 const props = defineProps<{
-	card: Card;
+	goal: Goal;
 	open: boolean;
 }>();
 
@@ -40,14 +25,14 @@ const emit = defineEmits(['close']);
 
 const form = useForm<{
 	name: string;
-	limit: number;
+	total: number;
 }>({
-	name: props.card.name,
-	limit: props.card.limit,
+	name: props.goal.name,
+	total: props.goal.total,
 });
 
 const submit = () => {
-	form.put(route('cards.update', props.card.id), {
+	form.put(route('goals.update', props.goal.id), {
 		onFinish: () => {
 			onClose();
 		},
@@ -71,8 +56,10 @@ const onClose = () => {
 			@escapeKeyDown="onClose"
 		>
 			<DialogHeader>
-				<DialogTitle>Editar cartão</DialogTitle>
-				<DialogDescription> Edite as informações do cartão. </DialogDescription>
+				<DialogTitle>Editar meta</DialogTitle>
+				<DialogDescription>
+					Edite as informações da meta.
+				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
@@ -80,7 +67,7 @@ const onClose = () => {
 					<Input
 						id="name"
 						v-model="form.name"
-						placeholder="Cartão principal"
+						placeholder="Conta principal"
 						class="mt-2"
 						autocomplete="off"
 						tabindex="1"
@@ -88,14 +75,14 @@ const onClose = () => {
 				</div>
 
 				<div class="flex flex-col">
-					<Label for="limit" class="text-left"> Limite </Label>
+					<Label for="total" class="text-left"> Valor </Label>
 
 					<Input
-						id="limit"
-						v-model.lazy="form.limit"
+						id="total"
+						v-model.lazy="form.total"
 						class="mt-2"
 						v-money3="{
-							prefix: 'R$',
+							prefix: 'R$ ',
 							suffix: '',
 							thousands: '.',
 							decimal: ',',

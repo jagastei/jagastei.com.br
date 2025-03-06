@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\BudgetCreated;
 use App\Http\Requests\StoreBudgetRequest;
+use App\Http\Requests\UpdateBudgetRequest;
 use App\Models\Budget;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,6 +33,15 @@ class BudgetController extends Controller
             name: $input['name'],
             total: $input['total'],
         );
+
+        return back();
+    }
+
+    public function update(UpdateBudgetRequest $request, Budget $budget)
+    {
+        $input = $request->validated();
+
+        $budget->update($input);
 
         return back();
     }
