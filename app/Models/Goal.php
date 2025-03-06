@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Akaunting\Money\Money;
 use App\Helper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

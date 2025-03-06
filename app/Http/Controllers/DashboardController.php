@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -66,7 +65,7 @@ class DashboardController extends Controller
             })
             ->select(
                 DB::raw("TO_CHAR(date_series.date, 'TMDay, DD TMMonth YYYY') AS name"),
-                DB::raw("SUM(t.value) AS \"Saída\"")
+                DB::raw('SUM(t.value) AS "Saída"')
             )
             ->groupBy('date_series.date')
             ->orderBy('date_series.date')

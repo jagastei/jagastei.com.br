@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Akaunting\Money\Money;
 use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Glhd\Bits\Snowflake;
