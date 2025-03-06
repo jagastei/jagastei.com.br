@@ -4,7 +4,11 @@ import { BulletLegendItemInterface, Donut } from '@unovis/ts';
 import { type Component, computed, ref } from 'vue';
 import { useMounted } from '@vueuse/core';
 import type { BaseChartProps } from '.';
-import { ChartLegend, ChartSingleTooltip, defaultColors } from '@/Components/ui/chart';
+import {
+	ChartLegend,
+	ChartSingleTooltip,
+	defaultColors,
+} from '@/Components/ui/chart';
 import { cn } from '@/utils';
 
 const props = withDefaults(

@@ -59,11 +59,14 @@ const onUploadDialogOpen = (open: boolean) => {
 </script>
 
 <template>
-
 	<Head title="Saídas" />
 
-	<CreateDialog :categories="categories" :accounts="accounts" :open="createTransactionDialogOpen"
-		@close="createTransactionDialogOpen = false" />
+	<CreateDialog
+		:categories="categories"
+		:accounts="accounts"
+		:open="createTransactionDialogOpen"
+		@close="createTransactionDialogOpen = false"
+	/>
 
 	<AuthenticatedLayout>
 		<div class="p-4 lg:p-6">
@@ -76,7 +79,10 @@ const onUploadDialogOpen = (open: boolean) => {
 					</p> -->
 					</div>
 
-					<div v-if="transactions.data.length > 0" class="flex items-center space-x-2">
+					<div
+						v-if="transactions.data.length > 0"
+						class="flex items-center space-x-2"
+					>
 						<Dialog @update:open="onUploadDialogOpen">
 							<DialogTrigger as-child>
 								<Button variant="ghost">
@@ -92,17 +98,28 @@ const onUploadDialogOpen = (open: boolean) => {
 								</DialogHeader>
 								<div class="py-2">
 									<AI v-if="ai" :data="ai" />
-									<UploadFile v-else v-model="form.files" :preview-max-height="319"
-										:loading="form.processing" />
+									<UploadFile
+										v-else
+										v-model="form.files"
+										:preview-max-height="319"
+										:loading="form.processing"
+									/>
 								</div>
 								<DialogFooter>
-									<Button v-if="!ai && !form.processing && form.files.length > 0" variant="outline"
-										@click="form.files = []">
+									<Button
+										v-if="!ai && !form.processing && form.files.length > 0"
+										variant="outline"
+										@click="form.files = []"
+									>
 										Usar outra imagem
 									</Button>
 
-									<Button v-if="!ai" type="submit" @click="handleSubmit"
-										:disabled="form.files.length === 0 || form.processing">
+									<Button
+										v-if="!ai"
+										type="submit"
+										@click="handleSubmit"
+										:disabled="form.files.length === 0 || form.processing"
+									>
 										<Loader2 v-if="form.processing" class="size-4 mr-2 animate-spin" />
 										Enviar
 									</Button>
@@ -115,12 +132,16 @@ const onUploadDialogOpen = (open: boolean) => {
 							</DialogContent>
 						</Dialog>
 
-						<Button @click="createTransactionDialogOpen = true">Adicionar saída</Button>
+						<Button @click="createTransactionDialogOpen = true"
+							>Adicionar saída</Button
+						>
 					</div>
 				</div>
 
-				<div v-if="transactions.data.length === 0"
-					class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+				<div
+					v-if="transactions.data.length === 0"
+					class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+				>
 					<div class="flex flex-col items-center gap-1 text-center">
 						<h3 class="text-2xl font-bold tracking-tight">
 							Você ainda realizou uma saída.
@@ -135,7 +156,13 @@ const onUploadDialogOpen = (open: boolean) => {
 					</div>
 				</div>
 
-				<DataTable v-else :data="transactions" :columns="columns" :filter="filter" :categories="categories" />
+				<DataTable
+					v-else
+					:data="transactions"
+					:columns="columns"
+					:filter="filter"
+					:categories="categories"
+				/>
 			</div>
 		</div>
 	</AuthenticatedLayout>

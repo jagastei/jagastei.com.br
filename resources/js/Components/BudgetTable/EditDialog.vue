@@ -57,9 +57,7 @@ const onClose = () => {
 		>
 			<DialogHeader>
 				<DialogTitle>Editar orçamento</DialogTitle>
-				<DialogDescription>
-					Edite as informações do orçamento.
-				</DialogDescription>
+				<DialogDescription> Edite as informações do orçamento. </DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
