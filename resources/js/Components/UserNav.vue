@@ -24,16 +24,17 @@ import {
 	UserPlusIcon,
 	DollarSignIcon,
 } from 'lucide-vue-next';
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { useColorMode } from '@vueuse/core';
 import { Icon } from '@iconify/vue';
-import FeedbackDialog from './FeedbackDialog.vue';
-import SupportDialog from './SupportDialog.vue';
-import InviteDialog from './InviteDialog.vue';
 
 const { store } = useColorMode();
 const user = usePage().props.auth.user;
+
+const logout = () => {
+	router.post(route('logout'));
+};
 </script>
 
 <template>
@@ -118,7 +119,7 @@ const user = usePage().props.auth.user;
 
 			<DropdownMenuSeparator />
 
-			<DropdownMenuItem class="cursor-pointer">
+			<DropdownMenuItem class="cursor-pointer" @click="logout">
 				<LogOutIcon class="mr-2 size-4" />
 				<span>Sair</span>
 			</DropdownMenuItem>
