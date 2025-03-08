@@ -45,13 +45,6 @@ const isFiltered = computed(
 				"
 			/>
 
-			<!-- <DataTableFacetedFilter
-				v-if="table.getColumn('priority')"
-				:column="table.getColumn('priority')"
-				title="Priority"
-				:options="priorities"
-			/> -->
-
 			<Button
 				v-if="isFiltered"
 				variant="ghost"

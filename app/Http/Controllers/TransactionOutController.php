@@ -26,6 +26,9 @@ class TransactionOutController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter');
+        $sort = $request->query('sort', '-created_at');
+
+        // dd($sort);
 
         $categories = Category::query()
             ->ofWallet(auth('web')->user()->currentWallet)
@@ -44,6 +47,11 @@ class TransactionOutController extends Controller
                 'title',
                 AllowedFilter::exact('category', 'category_id'),
             ])
+            ->allowedSorts([
+                'value',
+                'created_at',
+            ])
+            ->defaultSort($sort)
             ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
             ->with([
@@ -64,12 +72,12 @@ class TransactionOutController extends Controller
                     ]);
                 },
             ])
-            ->latest()
             ->paginate($request->query('per_page', 10))
             ->appends(request()->query());
 
         return Inertia::render('TransactionsOut/Index', [
             'filter' => $filter,
+            'sort' => $sort,
             'categories' => $categories,
             'accounts' => $accounts,
             'transactions' => $transactions,
@@ -83,6 +91,7 @@ class TransactionOutController extends Controller
 
         TransactionCreated::fire(
             type: 'OUT',
+            title: $input['title'],
             value: $input['value'],
             account_id: (int) $input['account'],
             category_id: (int) $input['category'],

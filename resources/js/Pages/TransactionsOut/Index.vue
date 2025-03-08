@@ -23,7 +23,8 @@ import CreateDialog from './CreateDialog.vue';
 import { Account } from '@/Components/AccountTable/columns';
 
 defineProps<{
-	filter: any;
+	sort?: string;
+	filter?: Object;
 	categories: Category[];
 	accounts: Account[];
 	transactions: Pagination<Transaction>;
@@ -69,7 +70,7 @@ const onUploadDialogOpen = (open: boolean) => {
 	/>
 
 	<AuthenticatedLayout>
-		<div class="p-4 lg:p-6">
+		<div class="h-full p-4 lg:p-6">
 			<div class="flex flex-1 flex-col h-full gap-4 lg:gap-6">
 				<div class="flex items-center justify-between">
 					<div>
@@ -139,12 +140,12 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 
 				<div
-					v-if="transactions.data.length === 0"
+					v-if="transactions.data.length === 0 && !filter"
 					class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
 				>
 					<div class="flex flex-col items-center gap-1 text-center">
 						<h3 class="text-2xl font-bold tracking-tight">
-							Você ainda realizou uma saída.
+							Você ainda não realizou uma saída.
 						</h3>
 						<p class="text-sm text-muted-foreground">
 							Você pode começar a acompanhar sua saúde financeira registrando suas
@@ -152,7 +153,9 @@ const onUploadDialogOpen = (open: boolean) => {
 							<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
 						</p>
 
-						<Button class="mt-4"> Adicionar saída </Button>
+						<Button @click="createTransactionDialogOpen = true" class="mt-4"
+							>Adicionar saída</Button
+						>
 					</div>
 				</div>
 
@@ -160,6 +163,7 @@ const onUploadDialogOpen = (open: boolean) => {
 					v-else
 					:data="transactions"
 					:columns="columns"
+					:sort="sort"
 					:filter="filter"
 					:categories="categories"
 				/>

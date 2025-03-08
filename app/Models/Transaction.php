@@ -33,11 +33,17 @@ class Transaction extends Model
 
     protected $appends = [
         'formatted_value',
+        'formatted_created_at',
     ];
 
     public function getFormattedValueAttribute(): string
     {
         return Helper::formatMoney($this->value);
+    }
+
+    public function getFormattedCreatedAtAttribute(): string
+    {
+        return $this->created_at->format('d/m/Y H:i');
     }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder

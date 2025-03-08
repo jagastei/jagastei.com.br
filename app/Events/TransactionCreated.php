@@ -18,10 +18,11 @@ class TransactionCreated extends Event
 
     public function __construct(
         public string $type,
+        public string $title,
+        public int $value,
         #[StateId(AccountState::class)]
         public int $account_id,
         public int $category_id,
-        public int $value,
     ) {
         $this->created_at = now()->toImmutable();
     }
@@ -43,6 +44,7 @@ class TransactionCreated extends Event
     {
         Transaction::create([
             'type' => $this->type,
+            'title' => $this->title,
             'value' => $this->value,
             'account_id' => $this->account_id,
             'category_id' => $this->category_id,

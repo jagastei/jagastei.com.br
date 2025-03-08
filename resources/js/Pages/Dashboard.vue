@@ -42,7 +42,7 @@ const updateDateRange = (value: DateRange) => {
 	<AuthenticatedLayout>
 		<div class="p-4 lg:p-6">
 			<div class="flex flex-1 flex-col h-full">
-				<div class="flex items-center justify-between">
+				<div class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 md:gap-y-0">
 					<h2 class="text-3xl font-bold tracking-tight">Painel</h2>
 					<div class="flex items-center space-x-2">
 						<DateRangePicker
@@ -158,8 +158,8 @@ const updateDateRange = (value: DateRange) => {
 								</CardContent>
 							</Card>
 						</div>
-						<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-							<Card class="col-span-7">
+						<div class="grid gap-4 grid-cols-1 xl:grid-cols-7">
+							<Card class="col-span-1 xl:col-span-7">
 								<CardHeader>
 									<CardTitle>Saldo</CardTitle>
 									<CardDescription
@@ -171,7 +171,7 @@ const updateDateRange = (value: DateRange) => {
 								</CardContent>
 							</Card>
 
-							<Card class="col-span-5">
+							<Card class="col-span-1 xl:col-span-5">
 								<CardHeader>
 									<CardTitle>Gastos</CardTitle>
 									<CardDescription
@@ -184,7 +184,7 @@ const updateDateRange = (value: DateRange) => {
 								</CardContent>
 							</Card>
 
-							<Card class="col-span-2">
+							<Card class="col-span-1 xl:col-span-2">
 								<CardHeader>
 									<CardTitle>Por categoria</CardTitle>
 									<CardDescription

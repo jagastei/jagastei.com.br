@@ -31,7 +31,7 @@ const exportData = () => {
 				</div>
 
 				<div class="flex items-center space-x-2">
-					<Button @click="exportData">
+					<Button v-if="false" @click="exportData">
 						<CloudDownloadIcon class="size-4 mr-2" />
 						Exportar dados
 					</Button>

@@ -27,6 +27,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::redirect('/convite', '/register');
+
 Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -49,15 +51,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/saidas/importar', [TransactionOutController::class, 'import'])->name('transactions.out.import');
     Route::delete('/saidas/{transaction}', [TransactionOutController::class, 'destroy'])->name('transactions.out.destroy');
 
-    Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
-    Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
-    Route::put('/orcamentos/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
-    Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
-
     Route::get('/metas', [GoalController::class, 'index'])->name('goals.index');
     Route::post('/metas', [GoalController::class, 'store'])->name('goals.store');
     Route::put('/metas/{goal}', [GoalController::class, 'update'])->name('goals.update');
     Route::delete('/metas/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+
+    Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
+    Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
+    Route::put('/orcamentos/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
+    Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');

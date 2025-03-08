@@ -18,7 +18,7 @@ import {
 	useVueTable,
 } from '@tanstack/vue-table';
 
-import { computed, ref, watch } from 'vue';
+import { computed, ref, toRef, watch } from 'vue';
 import type { Transaction } from './columns';
 import DataTablePagination from './DataTablePagination.vue';
 import DataTableToolbar from './DataTableToolbar.vue';
@@ -38,12 +38,21 @@ import { Category } from '../CategoryTable/columns';
 interface DataTableProps {
 	data: Pagination<Transaction>;
 	columns: ColumnDef<Transaction, any>[];
-	filter: any;
+	sort?: string;
+	filter?: Object;
 	categories: Category[];
 }
+
 const props = defineProps<DataTableProps>();
 
-const sorting = ref<SortingState>([]);
+const sorting = ref<SortingState>([
+	{
+		desc: !props.sort?.startsWith('-'),
+		id: props.sort?.replace('-', '') ?? '',
+	},
+]);
+
+console.log(sorting.value);
 
 const columnFilters = ref<ColumnFiltersState>(
 	props.filter
@@ -73,6 +82,22 @@ const filters = computed(() => {
 	);
 });
 
+watch(pagination, (newValue) =>
+	router.get(
+		route('transactions.out.index', {
+			_query: {
+				filter: filters.value,
+				page: newValue.pageIndex + 1,
+				per_page: newValue.pageSize,
+			},
+		}),
+		{},
+		{
+			preserveState: true,
+		}
+	)
+);
+
 watch(columnFilters, (newValue) => {
 	router.get(
 		route('transactions.out.index', {
@@ -92,21 +117,34 @@ watch(columnFilters, (newValue) => {
 	);
 });
 
-watch(pagination, (newValue) =>
+watch(sorting, (newValue) => {
+	if(newValue.length === 0) {
+		console.log('no sort');
+		return;
+	}
+
+	let sort = `${newValue[0].desc ? '' : '-'}${newValue[0].id}`;
+
+	console.log('sort', sort);
+
 	router.get(
 		route('transactions.out.index', {
 			_query: {
+				sort: sort,
 				filter: filters.value,
-				page: newValue.pageIndex + 1,
-				per_page: newValue.pageSize,
+				page: 1,
+				per_page: pagination.value.pageSize,
 			},
 		}),
 		{},
 		{
 			preserveState: true,
+			onSuccess() {
+				pagination.value.pageIndex = 0;
+			},
 		}
-	)
-);
+	);
+});
 
 const table = useVueTable({
 	get data() {
@@ -132,8 +170,7 @@ const table = useVueTable({
 			return pagination.value;
 		},
 	},
-	enableRowSelection: true,
-	onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+	enableRowSelection: false,
 	onColumnFiltersChange: (updaterOrValue) =>
 		valueUpdater(updaterOrValue, columnFilters),
 	onColumnVisibilityChange: (updaterOrValue) =>
@@ -155,7 +192,8 @@ const table = useVueTable({
 	manualFiltering: true,
 	onGlobalFilterChange: (updaterOrValue) =>
 		valueUpdater(updaterOrValue, filters),
-	// manualSorting: true,
+	onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+	manualSorting: true,
 	autoResetPageIndex: false,
 });
 </script>

@@ -67,11 +67,13 @@ const onSelected = (ev: any) => {
 
 const form = useForm<{
 	type: 'OUT';
+	title: string;
 	value: number;
 	category: Category | undefined;
 	account: Account | undefined;
 }>({
 	type: 'OUT',
+	title: '',
 	value: 0,
 	category: undefined,
 	account: undefined,
@@ -117,17 +119,17 @@ const onClose = () => {
 				<DialogDescription> Informe o valor e a categoria. </DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
-				<!-- <div class="flex flex-col">
-					<Label for="name" class="text-left"> Nome </Label>
+				<div class="flex flex-col">
+					<Label for="title" class="text-left"> Nome </Label>
 					<Input
-						id="name"
-						v-model="form.name"
-						placeholder="Cartão principal"
+						id="title"
+						v-model="form.title"
+						placeholder="Pagamento de conta"
 						class="mt-2"
 						autocomplete="off"
 						tabindex="1"
 					/>
-				</div> -->
+				</div>
 
 				<div class="flex flex-col">
 					<Label for="value" class="text-left"> Valor </Label>

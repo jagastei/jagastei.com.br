@@ -62,18 +62,18 @@ const links: LinkProp[] = [
 		active: route().current('transactions.out.index'),
 	},
 	{
-		title: 'Orçamentos',
-		label: '',
-		icon: 'lucide:box',
-		route: route('budgets.index'),
-		active: route().current('budgets.index'),
-	},
-	{
 		title: 'Metas',
 		label: '',
 		icon: 'lucide:goal',
 		route: route('goals.index'),
 		active: route().current('goals.index'),
+	},
+	{
+		title: 'Orçamentos',
+		label: '',
+		icon: 'lucide:box',
+		route: route('budgets.index'),
+		active: route().current('budgets.index'),
 	},
 ];
 

@@ -96,17 +96,10 @@ const onClose = () => {
 					role="combobox"
 					aria-expanded="open"
 					aria-label="Select a wallet"
-					:class="cn('w-[200px] justify-between py-0 px-2 h-10', $attrs.class ?? '')"
+					:class="cn('w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')"
 				>
-					<!-- <Avatar class="mr-2 h-5 w-5">
-						<AvatarImage
-							:src="`https://avatar.vercel.sh/${selectedWallet.value}.png`"
-							:alt="selectedWallet.label"
-						/>
-						<AvatarFallback>SC</AvatarFallback>
-					</Avatar> -->
 					{{ selectedWallet.name }}
-					<ChevronsUpDown class="ml-auto h-4 w-4 shrink-0 opacity-50" />
+					<ChevronsUpDown class="h-4 w-4" />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent class="w-[200px] p-0">

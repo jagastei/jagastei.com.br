@@ -22,6 +22,7 @@ export const transactionSchema = z.object({
 	method: z.enum(['CARD', 'TED', 'PIX', 'UNKNOWN']),
 	card_id: z.string().nullable(),
 	created_at: z.string(),
+	formatted_created_at: z.string(),
 	updated_at: z.string(),
 	category: categorySchema,
 	account: accountSchema,
@@ -55,6 +56,7 @@ export const columns: ColumnDef<Transaction>[] = [
 	{
 		id: 'title',
 		accessorKey: 'title',
+		enableSorting: false,
 		meta: {
 			title: 'Nome',
 		},
@@ -68,8 +70,42 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 	},
 	{
+		id: 'value',
+		accessorKey: 'formatted_value',
+		meta: {
+			title: 'Valor',
+		},
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Valor' }),
+		cell: ({ row }) => {
+			const icon = h(Icon, {
+				icon: row.original.type === 'IN' ? 'lucide:arrow-up' : 'lucide:arrow-down',
+			});
+
+			return h(
+				'div',
+				{
+					class: 'flex items-center',
+				},
+				[
+					// h(icon, {
+					// 	// text-muted-foreground
+					// 	class: [
+					// 		'mr-2 h-4 w-4',
+					// 		row.original.type === 'IN' ? 'text-green-500' : 'text-red-500',
+					// 	],
+					// }),
+					h('span', {}, row.original.formatted_value),
+				]
+			);
+		},
+		filterFn: (row, id, value) => {
+			return value.includes(row.getValue(id));
+		},
+	},
+	{
 		id: 'category',
 		accessorKey: 'category',
+		enableSorting: false,
 		meta: {
 			title: 'Categoria',
 		},
@@ -92,41 +128,8 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 	},
 	{
-		id: 'formatted_value',
-		accessorKey: 'formatted_value',
-		meta: {
-			title: 'Valor',
-		},
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Valor' }),
-		cell: ({ row }) => {
-			const icon = h(Icon, {
-				icon: row.original.type === 'IN' ? 'lucide:arrow-up' : 'lucide:arrow-down',
-			});
-
-			return h(
-				'div',
-				{
-					class: 'flex items-center',
-				},
-				[
-					h(icon, {
-						// text-muted-foreground
-						class: [
-							'mr-2 h-4 w-4',
-							row.original.type === 'IN' ? 'text-green-500' : 'text-red-500',
-						],
-					}),
-					h('span', {}, row.getValue('formatted_value')),
-				]
-			);
-		},
-		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id));
-		},
-	},
-	{
 		id: 'created_at',
-		accessorKey: 'created_at',
+		accessorKey: 'formatted_created_at',
 		meta: {
 			title: 'Quando',
 		},
@@ -137,7 +140,7 @@ export const columns: ColumnDef<Transaction>[] = [
 				{
 					class: 'flex items-center',
 				},
-				new Date(row.getValue('created_at')).toLocaleString()
+				row.original.formatted_created_at,
 			);
 		},
 		filterFn: (row, id, value) => {
