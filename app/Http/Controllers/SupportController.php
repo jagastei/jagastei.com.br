@@ -11,9 +11,9 @@ class SupportController extends Controller
     {
         $input = $request->validated();
 
-        Log::info("*** SUPPORT ***");
+        Log::info('*** SUPPORT ***');
         Log::info($input);
-        Log::info("*** SUPPORT ***");
+        Log::info('*** SUPPORT ***');
 
         return back();
     }
