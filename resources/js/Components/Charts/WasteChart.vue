@@ -8,7 +8,15 @@ const props = defineProps<{
 }>();
 
 const xFormatter = (value: any, i: number) => {
-	return props.data[i].name;
+	if (!Number.isInteger(value)) {
+		return '';
+	}
+
+	if (props.data[value] === undefined) {
+		return '';
+	}
+
+	return props.data[value].name;
 };
 
 const yFormatter = (value: any, i: number) => {

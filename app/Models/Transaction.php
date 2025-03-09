@@ -28,7 +28,6 @@ class Transaction extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
     ];
 
     protected $appends = [

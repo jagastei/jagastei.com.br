@@ -2,8 +2,6 @@ import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
 import DataTableColumnHeader from './DataTableColumnHeader.vue';
 import DataTableRowActions from './DataTableRowActions.vue';
-import { Checkbox } from '@/Components/ui/checkbox';
-import { Badge } from '@/Components/ui/badge';
 import { z } from 'zod';
 import { categorySchema } from '../CategoryTable/columns';
 import { accountSchema } from '../AccountTable/columns';
@@ -17,10 +15,10 @@ export const transactionSchema = z.object({
 	type: z.enum(['IN', 'OUT']),
 	value: z.number(),
 	formatted_value: z.string(),
-	category_id: z.string(),
-	account_id: z.string(),
-	method: z.enum(['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN']),
-	card_id: z.string().nullable(),
+	category_id: z.number(),
+	account_id: z.number(),
+	method: z.enum(['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN']).nullable(),
+	card_id: z.number().nullable(),
 	created_at: z.string(),
 	updated_at: z.string(),
 	category: categorySchema,

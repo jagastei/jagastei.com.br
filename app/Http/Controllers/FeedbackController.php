@@ -11,9 +11,9 @@ class FeedbackController extends Controller
     {
         $input = $request->validated();
 
-        Log::info('*** FEEDBACK ***');
-        Log::info($input);
-        Log::info('*** FEEDBACK ***');
+        Log::channel('feedback')->info('*** FEEDBACK ***');
+        Log::channel('feedback')->info($input);
+        Log::channel('feedback')->info('*** FEEDBACK ***');
 
         return back();
     }

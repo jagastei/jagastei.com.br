@@ -40,7 +40,7 @@ const props = defineProps<DataTableRowActionsProps>();
 const transaction = computed(() => transactionSchema.parse(props.row.original));
 
 const destroy = () => {
-	router.delete(route('transactions.destroy', transaction.value.id));
+	router.delete(route('transactions.in.destroy', transaction.value.id));
 };
 </script>
 

@@ -1,13 +1,8 @@
 import type { ColumnDef } from '@tanstack/vue-table';
 import { h } from 'vue';
-
 import DataTableColumnHeader from './DataTableColumnHeader.vue';
 import DataTableRowActions from './DataTableRowActions.vue';
-import { Checkbox } from '@/Components/ui/checkbox';
-import { Badge } from '@/Components/ui/badge';
 import { z } from 'zod';
-
-import { Icon } from '@iconify/vue';
 
 export const bankSchema = z.object({
 	id: z.string(),
@@ -20,7 +15,7 @@ export const bankSchema = z.object({
 // IRL, you will have a schema for your data models.
 export const accountSchema = z.object({
 	id: z.string(),
-	wallet_id: z.string(),
+	wallet_id: z.number(),
 	bank_id: z.string().nullable(),
 	name: z.string(),
 	balance: z.number(),

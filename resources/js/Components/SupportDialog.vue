@@ -38,7 +38,7 @@ const form = useForm({
 });
 
 const submitForm = async () => {
-	form.post(route('support.send'), {
+	form.post(route('support.store'), {
 		onSuccess: () => {
 			toast({
 				title: 'Solicitação de suporte enviada',

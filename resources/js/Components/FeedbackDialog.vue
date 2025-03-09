@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import {
 	Dialog,
@@ -24,13 +24,16 @@ const props = defineProps({
 
 const emit = defineEmits(['update:open']);
 
-const form = useForm({
+const form = useForm<{
+	rating: string | null;
+	comment: string;
+}>({
 	rating: null,
 	comment: '',
 });
 
 const submitForm = async () => {
-	form.post(route('feedback.send'), {
+	form.post(route('feedback.store'), {
 		onSuccess: () => {
 			toast({
 				title: 'Feedback enviado',
@@ -51,9 +54,9 @@ const submitForm = async () => {
 };
 
 const ratings = [
-	{ value: 1, label: 'Muito insatisfeito' },
-	{ value: 2, label: 'Neutro' },
-	{ value: 3, label: 'Muito satisfeito' },
+	{ value: '1', label: 'Muito insatisfeito' },
+	{ value: '2', label: 'Neutro' },
+	{ value: '3', label: 'Muito satisfeito' },
 ];
 </script>
 

@@ -84,7 +84,7 @@ const onUploadDialogOpen = (open: boolean) => {
 						v-if="transactions.data.length > 0"
 						class="flex items-center space-x-2"
 					>
-						<Dialog @update:open="onUploadDialogOpen">
+						<Dialog v-if="false" @update:open="onUploadDialogOpen">
 							<DialogTrigger as-child>
 								<Button variant="ghost">
 									<CloudUploadIcon class="size-4" />

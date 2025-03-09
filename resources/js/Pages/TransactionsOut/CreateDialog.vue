@@ -30,7 +30,6 @@ import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
-import { Brand, Card } from '@/Components/CardTable/columns';
 import { Category } from '@/Components/CategoryTable/columns';
 import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
 

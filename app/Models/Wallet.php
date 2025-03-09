@@ -21,7 +21,6 @@ class Wallet extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
         'personal' => 'boolean',
     ];
 

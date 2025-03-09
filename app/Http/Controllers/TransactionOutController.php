@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TransactionCreated;
+use App\Events\TransactionOutCreated;
+use App\Events\TransactionOutDeleted;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Account;
 use App\Models\Category;
@@ -89,8 +90,7 @@ class TransactionOutController extends Controller
     {
         $input = $request->validated();
 
-        TransactionCreated::fire(
-            type: 'OUT',
+        TransactionOutCreated::fire(
             title: $input['title'],
             value: $input['value'],
             account_id: (int) $input['account'],
@@ -162,7 +162,11 @@ class TransactionOutController extends Controller
 
     public function destroy(Transaction $transaction)
     {
-        $transaction->delete();
+        TransactionOutDeleted::fire(
+            transaction_id: $transaction->id,
+            value: $transaction->value,
+            account_id: $transaction->account_id,
+        );
 
         return back();
     }

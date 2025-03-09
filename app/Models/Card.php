@@ -29,9 +29,6 @@ class Card extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
-        // 'account_id' => Snowflake::class,
-        'account_id' => 'string',
         'digital' => 'boolean',
         'credit' => 'boolean',
         'international' => 'boolean',

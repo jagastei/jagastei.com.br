@@ -142,22 +142,35 @@ class DashboardController extends Controller
 
         $wastedByCategoryTotal = $wastedByCategory->sum('transactions_sum_value');
 
-        $balanceByDay = AccountState::load(Account::first()->id)
-            ->storedEvents()
-            ->whereBetween(
-                'created_at',
-                [$startDate, $endDate]
-            )
-            ->groupBy(function ($event) {
-                return Carbon::parse($event->created_at)->format('Y-m-d');
-            })->map(function ($events) {
-                return $events->last()->current_balance / 100;
-            })->map(function ($balance, $date) {
-                return [
-                    'name' => Carbon::parse($date)->format('l, d F Y'),
-                    'Saldo' => $balance,
-                ];
-            })->values()->all();
+        $accounts = Account::query()
+            ->ofWallet(auth('web')->user()->currentWallet)
+            ->get();
+
+        
+        $balanceByDay = collect();
+        
+        foreach ($accounts as $account) {
+            $accountBalances = AccountState::load($account->id)
+                ->storedEvents()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy(fn($event) => Carbon::parse($event->created_at)->format('Y-m-d'))
+                ->map(fn($events) => $events->last()->current_balance / 100);
+                
+            foreach ($accountBalances as $date => $balance) {
+                if (!$balanceByDay->has($date)) {
+                    $balanceByDay[$date] = 0;
+                }
+                $balanceByDay[$date] += $balance;
+            }
+        }
+
+        $balanceByDay = $balanceByDay
+            ->map(fn($balance, $date) => [
+                'name' => Carbon::parse($date)->format('l, d F Y'),
+                'Saldo' => $balance,
+            ])
+            ->values()
+            ->all();
 
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,

@@ -52,8 +52,6 @@ const sorting = ref<SortingState>([
 	},
 ]);
 
-console.log(sorting.value);
-
 const columnFilters = ref<ColumnFiltersState>(
 	props.filter
 		? Object.entries(props.filter).map(([id, value]) => ({
@@ -124,8 +122,6 @@ watch(sorting, (newValue) => {
 	}
 
 	let sort = `${newValue[0].desc ? '' : '-'}${newValue[0].id}`;
-
-	console.log('sort', sort);
 
 	router.get(
 		route('transactions.out.index', {
