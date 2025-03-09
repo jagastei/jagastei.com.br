@@ -13,7 +13,6 @@ use App\Models\Budget;
 use App\Models\Card;
 use App\Models\Category;
 use App\Models\Goal;
-use App\Models\Transaction;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -112,10 +111,10 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 0; $i < 300; $i++) {
             $date = fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month');
-            
+
             $category = $categories->random();
 
-            if($category->type === 'IN') {
+            if ($category->type === 'IN') {
                 TransactionInCreated::fire(
                     title: fake()->name(),
                     value: fake()->numberBetween(50_00, 300_00),
