@@ -10,8 +10,6 @@ use Thunk\Verbs\Event;
 class CardCreated extends Event
 {
     public function __construct(
-        #[StateId(CardState::class)]
-        public ?int $card_id,
         public ?int $account_id,
         public string $name,
         public int $limit,

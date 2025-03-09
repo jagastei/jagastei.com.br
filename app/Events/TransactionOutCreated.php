@@ -14,16 +14,15 @@ class TransactionOutCreated extends Event
 
     public ?int $current_balance = null;
 
-    public CarbonImmutable $created_at;
-
     public function __construct(
         public string $title,
         public int $value,
         #[StateId(AccountState::class)]
         public int $account_id,
         public int $category_id,
+        public CarbonImmutable $created_at,
     ) {
-        $this->created_at = now()->toImmutable();
+        $this->created_at = $created_at ?? now()->toImmutable();
     }
 
     public function apply(AccountState $account)
@@ -43,6 +42,7 @@ class TransactionOutCreated extends Event
             'value' => $this->value,
             'account_id' => $this->account_id,
             'category_id' => $this->category_id,
+            'created_at' => $this->created_at,
         ]);
     }
 }

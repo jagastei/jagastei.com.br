@@ -49,6 +49,7 @@ class DashboardController extends Controller
         $transactionsSubquery = Transaction::query()
             ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
+            ->orderBy('created_at')
             ->select(
                 DB::raw('date(created_at) AS transaction_date'),
                 'type',
@@ -151,6 +152,7 @@ class DashboardController extends Controller
         foreach ($accounts as $account) {
             $accountBalances = AccountState::load($account->id)
                 ->storedEvents()
+                ->sortBy('created_at')
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->groupBy(fn ($event) => Carbon::parse($event->created_at)->format('Y-m-d'))
                 ->map(fn ($events) => $events->last()->current_balance / 100);

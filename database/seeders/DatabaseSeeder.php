@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Events\AccountCreated;
+use App\Events\TransactionInCreated;
+use App\Events\TransactionOutCreated;
+use App\Events\WalletCreated;
 use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Brand;
@@ -12,6 +16,8 @@ use App\Models\Goal;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
+use App\States\AccountState;
+use App\States\WalletState;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -30,13 +36,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'teste@jagastei.com.br',
         ]);
 
-        $personalWallet = Wallet::factory()->forUser($user)->create([
-            'name' => 'Carteira pessoal',
-        ]);
+        $personalWallet = WalletCreated::fire(
+            user_id: $user->id,
+            name: 'Carteira pessoal',
+        );
 
-        Wallet::factory()->forUser($user)->create([
-            'name' => 'Carteira da empresa',
-        ]);
+        WalletCreated::fire(
+            user_id: $user->id,
+            name: 'Carteira da empresa',
+        );
 
         $user->update([
             'current_wallet_id' => $personalWallet->id,
@@ -50,18 +58,12 @@ class DatabaseSeeder extends Seeder
             ->enabled()
             ->first();
 
-        $account = Account::factory()->create([
-            'wallet_id' => $personalWallet->id,
-            'bank_id' => $bank->id,
-            'name' => 'Conta principal',
-            'balance' => 1_000_00,
-        ]);
-
-        Account::factory()
-            ->count(5)
-            ->for($personalWallet)
-            ->for($bank)
-            ->create();
+        $account = AccountCreated::fire(
+            wallet_id: $personalWallet->id,
+            bank_id: $bank->id,
+            name: 'Conta principal',
+            balance: 1_000_00,
+        );
 
         $card = Card::factory()->create([
             'account_id' => $account->id,
@@ -76,44 +78,34 @@ class DatabaseSeeder extends Seeder
 
         Card::factory()
             ->count(5)
-            ->for($account)
+            ->state([
+                'account_id' => $account->id,
+            ])
             ->for($brand)
             ->create();
 
-        // $category = Category::factory()->create([
-        //     'user_id' => $user->id,
-        //     'name' => 'Alimentação',
-        //     'color' => '#22C55E',
-        // ]);
-
         $categories = Category::factory()
             ->count(5)
-            ->for($personalWallet)
+            ->state([
+                'wallet_id' => $personalWallet->id,
+            ])
             ->create();
-
-        $goal = Goal::factory()->create([
-            'wallet_id' => $personalWallet->id,
-            'name' => 'Honda Civic',
-            'total' => 90_000_00,
-            'current' => 0,
-        ]);
 
         Goal::factory()
             ->count(5)
-            ->for($personalWallet)
+            ->state([
+                'wallet_id' => $personalWallet->id,
+            ])
             ->create();
-
-        $budget = Budget::factory()->create([
-            'wallet_id' => $personalWallet->id,
-            'name' => 'iFood',
-            'total' => 300_00,
-            'current' => 0,
-        ]);
 
         Budget::factory()
             ->count(5)
-            ->for($personalWallet)
+            ->state([
+                'wallet_id' => $personalWallet->id,
+            ])
             ->create();
+
+        // dump($account->id);
 
         Transaction::factory()
             ->count(300)
@@ -122,8 +114,29 @@ class DatabaseSeeder extends Seeder
                 $category = $transaction->category;
                 $transaction->type = $category->type;
             })
-            ->for($account)
+            ->state([
+                'account_id' => $account->id,
+            ])
             ->for($card)
-            ->create();
+            ->create()
+            ->each(function ($transaction) {
+                if ($transaction->type === 'IN') {
+                    TransactionInCreated::fire(
+                        title: $transaction->title,
+                        value: $transaction->value,
+                        account_id: $transaction->account_id,
+                        category_id: $transaction->category_id,
+                        created_at: $transaction->created_at,
+                    );
+                } else {
+                    TransactionOutCreated::fire(
+                        title: $transaction->title,
+                        value: $transaction->value,
+                        account_id: $transaction->account_id,
+                        category_id: $transaction->category_id,
+                        created_at: $transaction->created_at,
+                    );
+                }
+            });
     }
 }

@@ -17,7 +17,7 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
-        $date = fake()->dateTimeBetween(startDate: '-2 month', endDate: '+1 month');
+        $date = fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month');
 
         return [
             'title' => fake()->name(),

@@ -12,8 +12,8 @@ export const brandSchema = z.object({
 });
 
 export const cardSchema = z.object({
-	id: z.string(),
-	account_id: z.string(),
+	id: z.number(),
+	account_id: z.number(),
 	name: z.string(),
 	limit: z.number(),
 	formatted_limit: z.string(),
