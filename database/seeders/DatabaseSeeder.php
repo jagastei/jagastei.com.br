@@ -137,6 +137,8 @@ class DatabaseSeeder extends Seeder
                         created_at: $transaction->created_at,
                     );
                 }
+
+                $transaction->forceDelete();
             });
     }
 }
