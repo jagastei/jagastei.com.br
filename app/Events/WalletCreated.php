@@ -19,6 +19,7 @@ class WalletCreated extends Event
     public function handle()
     {
         $wallet = Wallet::create([
+            'id' => $this->wallet_id,
             'user_id' => $this->user_id,
             'name' => $this->name,
         ]);

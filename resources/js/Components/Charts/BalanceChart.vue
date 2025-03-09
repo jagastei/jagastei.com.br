@@ -9,10 +9,6 @@ const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const lastBalance = computed(() => {
-	return props.data[props.data.length - 1].Saldo;
-});
-
 const xFormatter = (value: any, i: number) => {
 	if (!Number.isInteger(value)) {
 		return '';
@@ -28,6 +24,21 @@ const xFormatter = (value: any, i: number) => {
 const yFormatter = (value: any, i: number) => {
 	return formatMoney(value);
 };
+
+const getColor = () => {
+	if(props.data.length === 0) {
+		return '#4d8cfd';
+	}
+
+	const firstBalance = props.data[0].Saldo;
+	const lastBalance = props.data[props.data.length - 1].Saldo;
+
+	if(firstBalance === lastBalance) {
+		return '#4d8cfd';
+	}
+
+	return lastBalance > 0 ? '#22C55E' : '#EF4444';
+};
 </script>
 
 <template>
@@ -37,7 +48,7 @@ const yFormatter = (value: any, i: number) => {
 		:xFormatter="xFormatter"
 		:yFormatter="yFormatter"
 		:categories="['Saldo']"
-		:colors="[lastBalance > 0 ? '#22C55E' : '#EF4444']"
+		:colors="[getColor()]"
 		:showXAxis="true"
 		:showYAxis="true"
 		:showGridLine="true"

@@ -15,7 +15,7 @@ export const bankSchema = z.object({
 // IRL, you will have a schema for your data models.
 export const accountSchema = z.object({
 	id: z.number(),
-	wallet_id: z.number(),
+	wallet_id: z.string(),
 	bank_id: z.string().nullable(),
 	name: z.string(),
 	balance: z.number(),

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTransactionRequest extends FormRequest
+class StoreTransactionInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,10 @@ class StoreTransactionRequest extends FormRequest
         return [
             'title' => ['nullable', 'string', 'min:2', 'max:30'],
             'description' => ['nullable', 'string', 'min:2', 'max:255'],
-            'type' => ['required', 'in:IN,OUT'],
             'value' => ['required', 'integer', 'min:0'],
-            'category' => ['nullable', 'exists:categories,id,wallet_id,'.auth('web')->user()->currentWallet->id],
+            'category' => ['nullable', 'exists:categories,id,wallet_id,'.auth('web')->user()->currentWallet->id . ',type,IN'],
             'account' => ['required', 'exists:accounts,id,wallet_id,'.auth('web')->user()->currentWallet->id],
             'method' => ['nullable', 'in:CASH,CARD,TED,PIX,OTHER,UNKNOWN'],
-            'card' => ['nullable', 'exists:cards,id,wallet_id,'.auth('web')->user()->currentWallet->id],
         ];
     }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\TransactionInCreated;
 use App\Events\TransactionInDeleted;
-use App\Http\Requests\StoreTransactionRequest;
+use App\Http\Requests\StoreTransactionInRequest;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -78,7 +78,7 @@ class TransactionInController extends Controller
         ]);
     }
 
-    public function store(StoreTransactionRequest $request)
+    public function store(StoreTransactionInRequest $request)
     {
         $input = $request->validated();
 
@@ -87,6 +87,7 @@ class TransactionInController extends Controller
             value: $input['value'],
             account_id: (int) $input['account'],
             category_id: (int) $input['category'],
+            created_at: now()->toImmutable(),
         );
 
         return back();

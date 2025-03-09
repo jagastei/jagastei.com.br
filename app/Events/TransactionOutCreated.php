@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Account;
 use App\Models\Transaction;
 use App\States\AccountState;
 use Carbon\CarbonImmutable;
@@ -11,7 +12,6 @@ use Thunk\Verbs\Event;
 class TransactionOutCreated extends Event
 {
     public ?int $previous_balance = null;
-
     public ?int $current_balance = null;
 
     public function __construct(
@@ -21,9 +21,7 @@ class TransactionOutCreated extends Event
         public int $account_id,
         public int $category_id,
         public CarbonImmutable $created_at,
-    ) {
-        $this->created_at = $created_at ?? now()->toImmutable();
-    }
+    ) { }
 
     public function apply(AccountState $account)
     {
@@ -36,11 +34,17 @@ class TransactionOutCreated extends Event
 
     public function handle()
     {
+        $account = Account::find($this->account_id);
+
+        $account->update([
+            'balance' => $account->balance - $this->value,
+        ]);
+
         Transaction::create([
             'type' => 'OUT',
             'title' => $this->title,
             'value' => $this->value,
-            'account_id' => $this->account_id,
+            'account_id' => $account->id,
             'category_id' => $this->category_id,
             'created_at' => $this->created_at,
         ]);

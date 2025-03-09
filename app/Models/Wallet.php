@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,12 +15,14 @@ class Wallet extends Model
     use HasSnowflakes;
 
     protected $fillable = [
+        'id',
         'user_id',
         'name',
         'personal',
     ];
 
     protected $casts = [
+        'id' => Snowflake::class,
         'personal' => 'boolean',
     ];
 

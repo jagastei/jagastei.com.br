@@ -6,6 +6,7 @@ use App\Events\AccountCreated;
 use App\Events\TransactionInCreated;
 use App\Events\TransactionOutCreated;
 use App\Events\WalletCreated;
+use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Brand;
 use App\Models\Budget;
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'teste@jagastei.com.br',
         ]);
 
-        $personalWallet = WalletCreated::fire(
+        $personalWalletCreated = WalletCreated::fire(
             user_id: $user->id,
             name: 'Carteira pessoal',
         );
@@ -43,7 +44,7 @@ class DatabaseSeeder extends Seeder
         );
 
         $user->update([
-            'current_wallet_id' => $personalWallet->id,
+            'current_wallet_id' => $personalWalletCreated->wallet_id,
         ]);
 
         $bank = Bank::query()
@@ -54,15 +55,23 @@ class DatabaseSeeder extends Seeder
             ->enabled()
             ->first();
 
-        $account = AccountCreated::fire(
-            wallet_id: $personalWallet->id,
+        $accountCreated = AccountCreated::fire(
+            wallet_id: $personalWalletCreated->wallet_id,
             bank_id: $bank->id,
             name: 'Conta principal',
             balance: 1_000_00,
         );
 
-        $card = Card::factory()->create([
-            'account_id' => $account->id,
+        Account::factory()
+            ->count(5)
+            ->state([
+                'wallet_id' => $personalWalletCreated->wallet_id,
+            ])
+            ->for($bank)
+            ->create();
+
+        Card::factory()->create([
+            'account_id' => $accountCreated->account_id,
             'name' => 'Cartão principal',
             'limit' => 5_000_00,
             'digits' => '7348',
@@ -75,7 +84,7 @@ class DatabaseSeeder extends Seeder
         Card::factory()
             ->count(5)
             ->state([
-                'account_id' => $account->id,
+                'account_id' => $accountCreated->account_id,
             ])
             ->for($brand)
             ->create();
@@ -83,58 +92,46 @@ class DatabaseSeeder extends Seeder
         $categories = Category::factory()
             ->count(5)
             ->state([
-                'wallet_id' => $personalWallet->id,
+                'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->create();
 
         Goal::factory()
             ->count(5)
             ->state([
-                'wallet_id' => $personalWallet->id,
+                'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->create();
 
         Budget::factory()
             ->count(5)
             ->state([
-                'wallet_id' => $personalWallet->id,
+                'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->create();
 
-        // dump($account->id);
+        for ($i = 0; $i < 300; $i++) {
+            $date = fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month');
+            
+            $category = $categories->random();
 
-        Transaction::factory()
-            ->count(300)
-            ->recycle($categories)
-            ->afterMaking(function (Transaction $transaction) {
-                $category = $transaction->category;
-                $transaction->type = $category->type;
-            })
-            ->state([
-                'account_id' => $account->id,
-            ])
-            ->for($card)
-            ->create()
-            ->each(function ($transaction) {
-                if ($transaction->type === 'IN') {
-                    TransactionInCreated::fire(
-                        title: $transaction->title,
-                        value: $transaction->value,
-                        account_id: $transaction->account_id,
-                        category_id: $transaction->category_id,
-                        created_at: $transaction->created_at,
-                    );
-                } else {
-                    TransactionOutCreated::fire(
-                        title: $transaction->title,
-                        value: $transaction->value,
-                        account_id: $transaction->account_id,
-                        category_id: $transaction->category_id,
-                        created_at: $transaction->created_at,
-                    );
-                }
-
-                $transaction->forceDelete();
-            });
+            if($category->type === 'IN') {
+                TransactionInCreated::fire(
+                    title: fake()->name(),
+                    value: fake()->numberBetween(50_00, 300_00),
+                    account_id: $accountCreated->account_id,
+                    category_id: $category->id,
+                    created_at: $date,
+                );
+            } else {
+                TransactionOutCreated::fire(
+                    title: fake()->name(),
+                    value: fake()->numberBetween(50_00, 300_00),
+                    account_id: $accountCreated->account_id,
+                    category_id: $category->id,
+                    created_at: $date,
+                );
+            }
+        }
     }
 }
