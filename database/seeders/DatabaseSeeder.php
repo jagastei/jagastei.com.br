@@ -6,7 +6,6 @@ use App\Events\AccountCreated;
 use App\Events\TransactionInCreated;
 use App\Events\TransactionOutCreated;
 use App\Events\WalletCreated;
-use App\Models\Account;
 use App\Models\Bank;
 use App\Models\Brand;
 use App\Models\Budget;
@@ -15,9 +14,6 @@ use App\Models\Category;
 use App\Models\Goal;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Wallet;
-use App\States\AccountState;
-use App\States\WalletState;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

@@ -11,6 +11,7 @@ use Thunk\Verbs\Event;
 class TransactionInCreated extends Event
 {
     public ?int $previous_balance = null;
+
     public ?int $current_balance = null;
 
     public function __construct(

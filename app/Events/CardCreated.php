@@ -3,8 +3,6 @@
 namespace App\Events;
 
 use App\Models\Card;
-use App\States\CardState;
-use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
 class CardCreated extends Event
