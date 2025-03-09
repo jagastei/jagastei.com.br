@@ -146,18 +146,17 @@ class DashboardController extends Controller
             ->ofWallet(auth('web')->user()->currentWallet)
             ->get();
 
-        
         $balanceByDay = collect();
-        
+
         foreach ($accounts as $account) {
             $accountBalances = AccountState::load($account->id)
                 ->storedEvents()
                 ->whereBetween('created_at', [$startDate, $endDate])
-                ->groupBy(fn($event) => Carbon::parse($event->created_at)->format('Y-m-d'))
-                ->map(fn($events) => $events->last()->current_balance / 100);
-                
+                ->groupBy(fn ($event) => Carbon::parse($event->created_at)->format('Y-m-d'))
+                ->map(fn ($events) => $events->last()->current_balance / 100);
+
             foreach ($accountBalances as $date => $balance) {
-                if (!$balanceByDay->has($date)) {
+                if (! $balanceByDay->has($date)) {
                     $balanceByDay[$date] = 0;
                 }
                 $balanceByDay[$date] += $balance;
@@ -165,7 +164,7 @@ class DashboardController extends Controller
         }
 
         $balanceByDay = $balanceByDay
-            ->map(fn($balance, $date) => [
+            ->map(fn ($balance, $date) => [
                 'name' => Carbon::parse($date)->format('l, d F Y'),
                 'Saldo' => $balance,
             ])

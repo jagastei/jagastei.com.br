@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
-use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
