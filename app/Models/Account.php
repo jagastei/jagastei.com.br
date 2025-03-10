@@ -17,7 +17,7 @@ class Account extends Model
     use HasSnowflakes;
     use SoftDeletes;
 
-    // protected $keyType = 'string';
+    protected $keyType = 'string';
 
     protected $fillable = [
         'id',
