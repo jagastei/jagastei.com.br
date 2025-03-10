@@ -199,11 +199,16 @@ const balanceData = computed<{
 									<CardTitle class="flex items-center gap-x-2">
 										<span>
 											<span>Saldo&nbsp;</span>
-											<span :class="[{
-												'text-green-500': currentBalance > 0,
-												'text-red-500': currentBalance < 0,
-												'text-blue-500': currentBalance === 0,
-											}]">{{ formatMoney(currentBalance) }}</span>
+											<span
+												:class="[
+													{
+														'text-green-500': currentBalance > 0,
+														'text-red-500': currentBalance < 0,
+														'text-blue-500': currentBalance === 0,
+													},
+												]"
+												>{{ formatMoney(currentBalance) }}</span
+											>
 										</span>
 
 										<!-- <span v-if="balanceData.startBalance !== balanceData.endBalance" :class="['flex items-center', balanceData.startBalance > balanceData.endBalance ? 'text-red-500' : 'text-green-500']">
