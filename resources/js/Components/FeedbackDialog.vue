@@ -15,7 +15,7 @@ import { useForm } from '@inertiajs/vue3';
 import { toast } from '@/Components/ui/toast';
 import Label from './ui/label/Label.vue';
 
-const props = defineProps({
+defineProps({
 	open: {
 		type: Boolean,
 		default: false,
@@ -25,10 +25,10 @@ const props = defineProps({
 const emit = defineEmits(['update:open']);
 
 const form = useForm<{
-	rating: string | null;
+	rating: string | undefined;
 	comment: string;
 }>({
-	rating: null,
+	rating: undefined,
 	comment: '',
 });
 
@@ -99,7 +99,7 @@ const ratings = [
 				</div>
 
 				<DialogFooter>
-					<Button type="button" variant="outline" @click="open = false">
+					<Button type="button" variant="outline" @click="emit('update:open', false)">
 						Cancelar
 					</Button>
 					<Button type="submit" :disabled="form.processing">

@@ -17,6 +17,8 @@ class Account extends Model
     use HasSnowflakes;
     use SoftDeletes;
 
+    // protected $keyType = 'string';
+
     protected $fillable = [
         'id',
         'wallet_id',
@@ -27,6 +29,7 @@ class Account extends Model
 
     protected $casts = [
         'id' => Snowflake::class,
+        'wallet_id' => Snowflake::class,
     ];
 
     protected $appends = [

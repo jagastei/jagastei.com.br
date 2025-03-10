@@ -24,7 +24,7 @@ import {
 import { useForm } from '@inertiajs/vue3';
 import { toast } from '@/Components/ui/toast';
 
-const props = defineProps({
+defineProps({
 	open: {
 		type: Boolean,
 		default: false,

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,8 @@ class Category extends Model
     ];
 
     protected $casts = [
+        // 'id' => Snowflake::class,
+        'wallet_id' => Snowflake::class,
         'transactions_sum_value' => 'float',
     ];
 

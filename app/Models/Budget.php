@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helper;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,11 @@ class Budget extends Model
         'name',
         'total',
         'current',
+    ];
+
+    protected $casts = [
+        // 'id' => Snowflake::class,
+        'wallet_id' => Snowflake::class,
     ];
 
     protected $appends = [

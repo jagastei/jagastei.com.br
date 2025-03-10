@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
+use Glhd\Bits\Snowflake;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Card extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'id',
         'account_id',
         'brand_id',
         'name',
@@ -28,6 +30,8 @@ class Card extends Model
     ];
 
     protected $casts = [
+        'id' => Snowflake::class,
+        'account_id' => Snowflake::class,
         'digital' => 'boolean',
         'credit' => 'boolean',
         'international' => 'boolean',

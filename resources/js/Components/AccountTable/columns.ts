@@ -11,10 +11,8 @@ export const bankSchema = z.object({
 	long_name: z.string(),
 });
 
-// We're keeping a simple non-relational schema here.
-// IRL, you will have a schema for your data models.
 export const accountSchema = z.object({
-	id: z.number(),
+	id: z.string(),
 	wallet_id: z.string(),
 	bank_id: z.string().nullable(),
 	name: z.string(),
