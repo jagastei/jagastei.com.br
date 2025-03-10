@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $startDateString = $startDate->format('Y-m-d');
         $endDateString = $endDate->format('Y-m-d');
 
-        if(is_null($request->query('startDate')) && $startDateString === $endDateString) {
+        if (is_null($request->query('startDate')) && $startDateString === $endDateString) {
             $startDateString = $startDate->subWeek()->format('Y-m-d');
         }
 
