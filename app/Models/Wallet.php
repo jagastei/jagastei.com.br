@@ -14,6 +14,8 @@ class Wallet extends Model
     use HasFactory;
     use HasSnowflakes;
 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'id',
         'user_id',

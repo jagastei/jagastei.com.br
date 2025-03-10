@@ -14,7 +14,7 @@ class AccountCreated extends Event
         #[StateId(AccountState::class)]
         public ?int $account_id,
         #[StateId(WalletState::class)]
-        public int $wallet_id,
+        public ?int $wallet_id,
         public ?string $bank_id,
         public string $name,
         public int $initial_balance = 0,
@@ -22,6 +22,7 @@ class AccountCreated extends Event
 
     public function apply(AccountState $account)
     {
+        $account->wallet_id = $this->wallet_id;
         $account->balance = $this->initial_balance;
     }
 

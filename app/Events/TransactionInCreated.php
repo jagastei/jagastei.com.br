@@ -5,6 +5,8 @@ namespace App\Events;
 use App\Models\Account;
 use App\Models\Transaction;
 use App\States\AccountState;
+use App\States\CategoryState;
+use App\States\WalletState;
 use Carbon\CarbonImmutable;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
@@ -20,6 +22,7 @@ class TransactionInCreated extends Event
         public int $value,
         #[StateId(AccountState::class)]
         public int $account_id,
+        // #[StateId(CategoryState::class)]
         public int $category_id,
         public CarbonImmutable $created_at,
     ) {}
@@ -29,6 +32,8 @@ class TransactionInCreated extends Event
         $this->previous_balance = $accountState->balance;
 
         $accountState->balance += $this->value;
+
+        WalletState::load($accountState->wallet_id)->balance += $this->value;
 
         $this->current_balance = $accountState->balance;
     }

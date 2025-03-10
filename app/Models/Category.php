@@ -27,7 +27,7 @@ class Category extends Model
     ];
 
     protected $casts = [
-        // 'id' => Snowflake::class,
+        'id' => Snowflake::class,
         'wallet_id' => Snowflake::class,
         'transactions_sum_value' => 'float',
     ];

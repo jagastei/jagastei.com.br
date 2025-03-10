@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\States\AccountState;
+use App\States\WalletState;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Http\Request;
@@ -42,7 +43,9 @@ class DashboardController extends Controller
         $startDateString = $startDate->format('Y-m-d');
         $endDateString = $endDate->format('Y-m-d');
 
-        DB::statement("SET lc_time = 'pt_BR.UTF-8'");
+        if(is_null($request->query('startDate')) && $startDateString === $endDateString) {
+            $startDateString = $startDate->subWeek()->format('Y-m-d');
+        }
 
         $datesSubquery = DB::raw("(SELECT generate_series('$startDateString'::date, '$endDateString'::date, interval '1 day') AS date) AS date_series");
 
@@ -173,9 +176,12 @@ class DashboardController extends Controller
             ->values()
             ->all();
 
+        $currentBalance = WalletState::load(auth('web')->user()->currentWallet->id)->balance / 100;
+
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,
             'endDate' => $endDateString,
+            'currentBalance' => $currentBalance,
             'balanceByDay' => $balanceByDay,
             'wastedByDay' => $wastedByDay,
             'wasteByDayTransactionCount' => $wasteByDayTransactionCount,

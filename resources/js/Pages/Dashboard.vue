@@ -156,7 +156,9 @@ const balanceData = computed<{
 							<Card class="col-span-1 xl:col-span-7">
 								<CardHeader>
 									<CardTitle class="flex items-center gap-x-2">
-										<span>Saldo</span>
+										<span>Saldo 
+											<!-- <span :class="[balanceData.endBalance > 0 ? 'text-green-500' : 'text-red-500']">{{ formatMoney(balanceData.endBalance) }}</span> -->
+										</span>
 
 										<!-- <span v-if="balanceData.startBalance !== balanceData.endBalance" :class="['flex items-center', balanceData.startBalance > balanceData.endBalance ? 'text-red-500' : 'text-green-500']">
 											<component :is="balanceData.startBalance > balanceData.endBalance ? ArrowDown : ArrowUp" class="size-4" />
@@ -177,9 +179,9 @@ const balanceData = computed<{
 											Seu saldo diminuiu {{ balanceData.formattedDiffBalance }} no período
 											selecionado.
 										</span>
-										<span>
+										<!-- <span>
 											Seu saldo atual é de {{ formatMoney(balanceData.endBalance) }}.
-										</span>
+										</span> -->
 									</CardDescription>
 								</CardHeader>
 								<CardContent>

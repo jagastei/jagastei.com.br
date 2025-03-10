@@ -16,6 +16,8 @@ class Transaction extends Model
     use HasSnowflakes;
     use SoftDeletes;
 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'title',
         'type',

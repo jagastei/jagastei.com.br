@@ -119,7 +119,7 @@ class DatabaseSeeder extends Seeder
                     title: fake()->name(),
                     value: fake()->numberBetween(50_00, 300_00),
                     account_id: $accountCreated->account_id,
-                    category_id: $category->id,
+                    category_id: $category->id->id(),
                     created_at: $date,
                 );
             } else {
@@ -127,7 +127,7 @@ class DatabaseSeeder extends Seeder
                     title: fake()->name(),
                     value: fake()->numberBetween(50_00, 300_00),
                     account_id: $accountCreated->account_id,
-                    category_id: $category->id,
+                    category_id: $category->id->id(),
                     created_at: $date,
                 );
             }
