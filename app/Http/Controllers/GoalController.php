@@ -15,6 +15,7 @@ class GoalController extends Controller
     {
         $goals = Goal::query()
             ->ofWallet(auth('web')->user()->currentWallet)
+            ->orderBy('name')
             ->get();
 
         return Inertia::render('Goals/Index', [

@@ -2,18 +2,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/BudgetTable/DataTable.vue';
 import type { Budget } from '@/Components/BudgetTable/columns';
 
-defineProps<{
+const props = defineProps<{
 	budgets: Budget[];
 }>();
 
 const createBudgetDialogOpen = ref(false);
 
-onMounted(() => {
+const updateNitro = () => {
 	setTimeout(() => {
 		const nitros: HTMLElement[] = Array.from(
 			document.querySelectorAll('[data-nitro]')
@@ -28,6 +28,17 @@ onMounted(() => {
 			);
 		}
 	}, 0);
+}
+
+watch(
+	() => props.budgets,
+	() => {
+		updateNitro();
+	}
+);
+
+onMounted(() => {
+	updateNitro();
 });
 </script>
 

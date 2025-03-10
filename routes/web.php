@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TransactionInController;
 use App\Http\Controllers\TransactionOutController;
@@ -16,7 +17,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Cashier\Exceptions\IncompletePayment;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -79,44 +79,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/minha-conta', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/minha-conta', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/billing', function (Request $request) {
-        return $request->user()->redirectToBillingPortal(route('dashboard'));
-    })->name('billing');
-
-    Route::get('/subscription-checkout', function (Request $request) {
-
-        try {
-            // $request->user()
-            //     ->forceFill([
-            //         'trial_ends_at' => now()->addDays(5),
-            //     ])->save();
-
-            $subscription = $request->user()
-                ->newSubscription('prod_Qqo7VkRXdZR60n', 'price_1Pz6VRChkwYDN5df8JO1WARg')
-                // ->create($paymentMethod)
-                ->trialDays(5)
-                ->allowPromotionCodes()
-                ->checkout([
-                    'success_url' => route('subscription-checkout-success'),
-                    'cancel_url' => route('subscription-checkout-cancel'),
-                ]);
-
-            return $subscription;
-        } catch (IncompletePayment $exception) {
-            return redirect()->route(
-                'cashier.payment',
-                [$exception->payment->id, 'redirect' => route('home')]
-            );
-        }
-    })->name('subscription-checkout');
-
-    Route::get('/subscription-checkout-success', function (Request $request) {
-        return 'Success';
-    })->name('subscription-checkout-success');
-
-    Route::get('/subscription-checkout-cancel', function (Request $request) {
-        return 'Cancel';
-    })->name('subscription-checkout-cancel');
+    Route::get('/plano', [StripeController::class, 'billing'])->name('subscription.billing');
+    Route::get('/plano/checkout', [StripeController::class, 'checkout'])->name('subscription.checkout');
+    Route::get('/plano/checkout-success', [StripeController::class, 'checkoutSuccess'])->name('subscription.checkout-success');
+    Route::get('/plano/checkout-cancel', [StripeController::class, 'checkoutCancel'])->name('subscription.checkout-cancel');
 
     Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
     Route::post('/suporte', [SupportController::class, 'store'])->name('support.store');

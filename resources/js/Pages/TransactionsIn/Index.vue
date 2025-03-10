@@ -9,6 +9,7 @@ import { Button } from '@/Components/ui/button';
 import { ref } from 'vue';
 import CreateDialog from './CreateDialog.vue';
 import { Account } from '@/Components/AccountTable/columns';
+import { usePostHog } from '@/composables/usePosthog';
 
 defineProps<{
 	sort?: string;
@@ -18,7 +19,17 @@ defineProps<{
 	transactions: Pagination<Transaction>;
 }>();
 
+const { posthog } = usePostHog();
+
 const createTransactionDialogOpen = ref(false);
+
+const openTransactionDialog = () => {
+	posthog.capture('open-transaction-dialog', {
+		type: 'IN',
+	});
+
+	createTransactionDialogOpen.value = true;
+};
 
 const form = useForm({
 	files: [],
@@ -121,7 +132,7 @@ const onUploadDialogOpen = (open: boolean) => {
 							</DialogContent>
 						</Dialog> -->
 
-						<Button @click="createTransactionDialogOpen = true"
+						<Button @click="openTransactionDialog"
 							>Adicionar entrada</Button
 						>
 					</div>
@@ -141,7 +152,7 @@ const onUploadDialogOpen = (open: boolean) => {
 							<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
 						</p>
 
-						<Button @click="createTransactionDialogOpen = true" class="mt-4"
+						<Button @click="openTransactionDialog" class="mt-4"
 							>Adicionar entrada</Button
 						>
 					</div>

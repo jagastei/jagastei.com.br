@@ -15,6 +15,7 @@ class BudgetController extends Controller
     {
         $budgets = Budget::query()
             ->ofWallet(auth('web')->user()->currentWallet)
+            ->orderBy('name')
             ->get();
 
         return Inertia::render('Budgets/Index', [

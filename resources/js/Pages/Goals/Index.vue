@@ -2,18 +2,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/GoalTable/DataTable.vue';
 import type { Goal } from '@/Components/GoalTable/columns';
 
-defineProps<{
+const props = defineProps<{
 	goals: Goal[];
 }>();
 
 const createGoalDialogOpen = ref(false);
 
-onMounted(() => {
+const updateNitro = () => {
 	setTimeout(() => {
 		const nitros: HTMLElement[] = Array.from(
 			document.querySelectorAll('[data-nitro]')
@@ -28,6 +28,17 @@ onMounted(() => {
 			);
 		}
 	}, 0);
+};
+
+watch(
+	() => props.goals,
+	() => {
+		updateNitro();
+	}
+);
+
+onMounted(() => {
+	updateNitro();
 });
 </script>
 

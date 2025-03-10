@@ -28,6 +28,7 @@ import { router, usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { useColorMode } from '@vueuse/core';
 import { Icon } from '@iconify/vue';
+import { computed } from 'vue';
 
 const { store } = useColorMode();
 const user = usePage().props.auth.user;
@@ -35,6 +36,14 @@ const user = usePage().props.auth.user;
 const logout = () => {
 	router.post(route('logout'));
 };
+
+const getSubscriptionRoute = computed(() => {
+	if (!user.stripe_id) {
+		return route('subscription.checkout');
+	}
+
+	return route('subscription.billing');
+});
 </script>
 
 <template>
@@ -53,10 +62,12 @@ const logout = () => {
 						<span>Minha conta</span>
 					</DropdownMenuItem>
 				</Link>
-				<DropdownMenuItem class="cursor-pointer">
-					<DollarSignIcon class="mr-2 size-4" />
-					<span>Meu plano</span>
-				</DropdownMenuItem>
+				<a :href="getSubscriptionRoute">
+					<DropdownMenuItem class="cursor-pointer">
+						<DollarSignIcon class="mr-2 size-4" />
+						<span>Meu plano</span>
+					</DropdownMenuItem>
+				</a>
 			</DropdownMenuGroup>
 
 			<DropdownMenuSeparator />

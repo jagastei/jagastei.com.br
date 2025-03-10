@@ -4,12 +4,13 @@ export interface Wallet {
 }
 
 export interface User {
-	id: number;
+	id: string;
 	name: string;
 	email: string;
 	email_verified_at?: string;
 	wallets: Wallet[];
 	current_wallet: Wallet;
+	stripe_id: string;
 }
 
 export type PageProps<

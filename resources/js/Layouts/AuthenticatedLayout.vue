@@ -21,6 +21,11 @@ import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
 import { onMounted, ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import { usePostHog } from '@/composables/usePosthog';
+
+const user = usePage().props.auth.user;
+const { posthog } = usePostHog();
 
 const isCollapsed = useStorage('is-collapsed', false);
 
@@ -116,6 +121,11 @@ onMounted(() => {
 
 	window.emitter.on('open-support-dialog', () => {
 		supportDialog.value = true;
+	});
+
+	posthog.identify(user.id, {
+		email: user.email,
+		name: user.name,
 	});
 });
 </script>

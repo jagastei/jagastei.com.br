@@ -9,14 +9,16 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import money from 'v-money3';
 import mitt from 'mitt';
 import { Env } from './types/index';
-
 window.env = import.meta.env.MODE as Env;
+import { usePostHog } from './composables/usePosthog';
 
 const appName = import.meta.env.VITE_APP_NAME || '';
 window.appUrl = import.meta.env.VITE_APP_URL || '';
 
 const emitter = mitt();
 window.emitter = emitter;
+
+const { posthog } = usePostHog();
 
 createInertiaApp({
 	title: (title) => `${title} - ${appName}`,
@@ -30,7 +32,22 @@ createInertiaApp({
 
 		app.config.globalProperties.$emitter = emitter;
 
-		app.use(plugin).use(ZiggyVue).use(autoAnimatePlugin).use(money).mount(el);
+		document.addEventListener('inertia:start', (event) => {
+			posthog.capture('$pageleave');
+		});
+
+		document.addEventListener('inertia:navigate', (event) => {
+			posthog.capture('$pageview', {
+				path: event.detail.page.url,
+				component: event.detail.page.component,
+			})
+		});
+
+		app.use(plugin);
+		app.use(ZiggyVue);
+		app.use(autoAnimatePlugin);
+		app.use(money);
+		app.mount(el);
 	},
 	progress: {
 		color: '#4B5563',
