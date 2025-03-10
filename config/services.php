@@ -39,5 +39,5 @@ return [
         'key' => env('POSTHOG_KEY'),
         'host' => env('POSTHOG_HOST'),
     ],
-    
+
 ];

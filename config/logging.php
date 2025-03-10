@@ -1,10 +1,10 @@
 <?php
 
+use Logtail\Monolog\LogtailHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
-use Logtail\Monolog\LogtailHandler;
 
 return [
 

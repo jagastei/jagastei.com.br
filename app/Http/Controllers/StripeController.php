@@ -9,7 +9,7 @@ class StripeController extends Controller
 {
     public function billing(Request $request)
     {
-        if (!$request->user()->hasStripeId()) {
+        if (! $request->user()->hasStripeId()) {
             abort(403, 'User does not have a Stripe customer ID.');
         }
 
