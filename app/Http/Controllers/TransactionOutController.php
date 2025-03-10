@@ -29,11 +29,10 @@ class TransactionOutController extends Controller
         $filter = $request->query('filter');
         $sort = $request->query('sort', '-created_at');
 
-        // dd($sort);
-
         $categories = Category::query()
             ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
+            ->orderBy('name')
             ->get();
 
         $accounts = Account::query()
@@ -41,6 +40,7 @@ class TransactionOutController extends Controller
             ->with([
                 'bank',
             ])
+            ->orderBy('name')
             ->get();
 
         $transactions = QueryBuilder::for(Transaction::class)

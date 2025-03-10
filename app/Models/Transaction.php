@@ -26,6 +26,7 @@ class Transaction extends Model
         'account_id',
         'method',
         'card_id',
+        'created_at',
     ];
 
     protected $casts = [

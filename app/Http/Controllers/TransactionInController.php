@@ -27,10 +27,12 @@ class TransactionInController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter');
+        $sort = $request->query('sort', '-created_at');
 
         $categories = Category::query()
             ->ofWallet(auth('web')->user()->currentWallet)
             ->in()
+            ->orderBy('name')
             ->get();
 
         $accounts = Account::query()
@@ -38,6 +40,7 @@ class TransactionInController extends Controller
             ->with([
                 'bank',
             ])
+            ->orderBy('name')
             ->get();
 
         $transactions = QueryBuilder::for(Transaction::class)
@@ -45,6 +48,11 @@ class TransactionInController extends Controller
                 'title',
                 AllowedFilter::exact('category', 'category_id'),
             ])
+            ->allowedSorts([
+                'value',
+                'created_at',
+            ])
+            ->defaultSort($sort)
             ->ofWallet(auth('web')->user()->currentWallet)
             ->in()
             ->with([
@@ -65,7 +73,6 @@ class TransactionInController extends Controller
                     ]);
                 },
             ])
-            ->latest()
             ->paginate($request->query('per_page', 10))
             ->appends(request()->query());
 

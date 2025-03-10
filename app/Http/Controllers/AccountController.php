@@ -23,6 +23,7 @@ class AccountController extends Controller
             ->with([
                 'bank',
             ])
+            ->orderBy('name')
             ->get();
 
         return Inertia::render('Accounts/Index', [

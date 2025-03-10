@@ -26,6 +26,7 @@ const props = defineProps<{
 	wasteByDayTransactionCount: number;
 	wastedByCategory: Array<any>;
 	wastedByCategoryTotal: number;
+	currentBalance: number;
 }>();
 
 const updateDateRange = (value: DateRange) => {
@@ -196,8 +197,13 @@ const balanceData = computed<{
 							<Card class="col-span-1 xl:col-span-7">
 								<CardHeader>
 									<CardTitle class="flex items-center gap-x-2">
-										<span>Saldo 
-											<!-- <span :class="[balanceData.endBalance > 0 ? 'text-green-500' : 'text-red-500']">{{ formatMoney(balanceData.endBalance) }}</span> -->
+										<span>
+											<span>Saldo&nbsp;</span>
+											<span :class="[{
+												'text-green-500': currentBalance > 0,
+												'text-red-500': currentBalance < 0,
+												'text-blue-500': currentBalance === 0,
+											}]">{{ formatMoney(currentBalance) }}</span>
 										</span>
 
 										<!-- <span v-if="balanceData.startBalance !== balanceData.endBalance" :class="['flex items-center', balanceData.startBalance > balanceData.endBalance ? 'text-red-500' : 'text-green-500']">

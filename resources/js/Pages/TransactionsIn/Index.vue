@@ -11,6 +11,7 @@ import CreateDialog from './CreateDialog.vue';
 import { Account } from '@/Components/AccountTable/columns';
 
 defineProps<{
+	sort?: string;
 	filter: any;
 	categories: Category[];
 	accounts: Account[];
@@ -150,6 +151,7 @@ const onUploadDialogOpen = (open: boolean) => {
 					v-else
 					:data="transactions"
 					:columns="columns"
+					:sort="sort"
 					:filter="filter"
 					:categories="categories"
 				/>

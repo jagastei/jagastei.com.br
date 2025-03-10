@@ -38,12 +38,18 @@ import { Category } from '../CategoryTable/columns';
 interface DataTableProps {
 	data: Pagination<Transaction>;
 	columns: ColumnDef<Transaction, any>[];
+	sort?: string;
 	filter: any;
 	categories: Category[];
 }
 const props = defineProps<DataTableProps>();
 
-const sorting = ref<SortingState>([]);
+const sorting = ref<SortingState>([
+	{
+		desc: !props.sort?.startsWith('-'),
+		id: props.sort?.replace('-', '') ?? '',
+	},
+]);
 
 const columnFilters = ref<ColumnFiltersState>(
 	props.filter
@@ -73,6 +79,22 @@ const filters = computed(() => {
 	);
 });
 
+watch(pagination, (newValue) =>
+	router.get(
+		route('transactions.in.index', {
+			_query: {
+				filter: filters.value,
+				page: newValue.pageIndex + 1,
+				per_page: newValue.pageSize,
+			},
+		}),
+		{},
+		{
+			preserveState: true,
+		}
+	)
+);
+
 watch(columnFilters, (newValue) => {
 	router.get(
 		route('transactions.in.index', {
@@ -92,21 +114,32 @@ watch(columnFilters, (newValue) => {
 	);
 });
 
-watch(pagination, (newValue) =>
+watch(sorting, (newValue) => {
+	if (newValue.length === 0) {
+		console.log('no sort');
+		return;
+	}
+
+	let sort = `${newValue[0].desc ? '' : '-'}${newValue[0].id}`;
+
 	router.get(
 		route('transactions.in.index', {
 			_query: {
+				sort: sort,
 				filter: filters.value,
-				page: newValue.pageIndex + 1,
-				per_page: newValue.pageSize,
+				page: 1,
+				per_page: pagination.value.pageSize,
 			},
 		}),
 		{},
 		{
 			preserveState: true,
+			onSuccess() {
+				pagination.value.pageIndex = 0;
+			},
 		}
-	)
-);
+	);
+});
 
 const table = useVueTable({
 	get data() {
@@ -133,7 +166,6 @@ const table = useVueTable({
 		},
 	},
 	enableRowSelection: true,
-	onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
 	onColumnFiltersChange: (updaterOrValue) =>
 		valueUpdater(updaterOrValue, columnFilters),
 	onColumnVisibilityChange: (updaterOrValue) =>
@@ -155,7 +187,8 @@ const table = useVueTable({
 	manualFiltering: true,
 	onGlobalFilterChange: (updaterOrValue) =>
 		valueUpdater(updaterOrValue, filters),
-	// manualSorting: true,
+	onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
+	manualSorting: true,
 	autoResetPageIndex: false,
 });
 </script>

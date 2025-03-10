@@ -24,6 +24,7 @@ class CardController extends Controller
             ->with([
                 'bank',
             ])
+            ->orderBy('name')
             ->get();
 
         $cards = Card::query()
@@ -36,6 +37,7 @@ class CardController extends Controller
                 },
                 'brand',
             ])
+            ->orderBy('name')
             ->get();
 
         return Inertia::render('Cards/Index', [

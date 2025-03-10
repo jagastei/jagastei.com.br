@@ -6,7 +6,6 @@ import { z } from 'zod';
 import { categorySchema } from '../CategoryTable/columns';
 import { accountSchema } from '../AccountTable/columns';
 import { cardSchema } from '../CardTable/columns';
-
 import { Icon } from '@iconify/vue';
 
 export const transactionSchema = z.object({

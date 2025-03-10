@@ -42,12 +42,12 @@ export default {
 					<span>{{ title }}</span>
 					<Icon
 						icon="radix-icons:arrow-up"
-						v-if="column.getIsSorted() === 'desc'"
+						v-if="column.getIsSorted() === 'asc'"
 						class="ml-2 h-4 w-4"
 					/>
 					<Icon
 						icon="radix-icons:arrow-down"
-						v-else-if="column.getIsSorted() === 'asc'"
+						v-else-if="column.getIsSorted() === 'desc'"
 						class="ml-2 h-4 w-4"
 					/>
 					<Icon icon="radix-icons:caret-sort" v-else class="ml-2 h-4 w-4" />
