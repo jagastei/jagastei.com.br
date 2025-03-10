@@ -26,14 +26,14 @@ const yFormatter = (value: any, i: number) => {
 };
 
 const getColor = () => {
-	if(props.data.length === 0) {
+	if (props.data.length === 0) {
 		return '#4d8cfd';
 	}
 
 	const firstBalance = props.data[0].Saldo;
 	const lastBalance = props.data[props.data.length - 1].Saldo;
 
-	if(firstBalance === lastBalance) {
+	if (firstBalance === lastBalance) {
 		return '#4d8cfd';
 	}
 
