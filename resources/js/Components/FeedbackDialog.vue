@@ -99,7 +99,11 @@ const ratings = [
 				</div>
 
 				<DialogFooter>
-					<Button type="button" variant="outline" @click="emit('update:open', false)">
+					<Button
+						type="button"
+						variant="outline"
+						@click="emit('update:open', false)"
+					>
 						Cancelar
 					</Button>
 					<Button type="submit" :disabled="form.processing">

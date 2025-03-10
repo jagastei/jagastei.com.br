@@ -138,7 +138,7 @@ export const columns: ColumnDef<Transaction>[] = [
 				{
 					class: 'flex items-center',
 				},
-				row.original.formatted_created_at,
+				row.original.formatted_created_at
 			);
 		},
 		filterFn: (row, id, value) => {

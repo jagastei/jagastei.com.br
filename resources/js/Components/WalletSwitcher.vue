@@ -96,7 +96,9 @@ const onClose = () => {
 					role="combobox"
 					aria-expanded="open"
 					aria-label="Select a wallet"
-					:class="cn('w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')"
+					:class="
+						cn('w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')
+					"
 				>
 					{{ selectedWallet.name }}
 					<ChevronsUpDown class="h-4 w-4" />
