@@ -12,6 +12,7 @@ use Thunk\Verbs\Event;
 class TransactionOutCreated extends Event
 {
     public ?int $previous_balance = null;
+
     public ?int $current_balance = null;
 
     public function __construct(
@@ -21,7 +22,7 @@ class TransactionOutCreated extends Event
         public int $account_id,
         public int $category_id,
         public CarbonImmutable $created_at,
-    ) { }
+    ) {}
 
     public function apply(AccountState $account)
     {
