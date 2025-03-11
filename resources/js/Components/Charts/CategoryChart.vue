@@ -7,7 +7,9 @@ const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const isEmpty = computed(() => props.data.every((item) => item.transactions_sum_value === 0));
+const isEmpty = computed(() =>
+	props.data.every((item) => item.transactions_sum_value === 0)
+);
 
 const fakeData = computed(() => {
 	return props.data.map((item) => ({

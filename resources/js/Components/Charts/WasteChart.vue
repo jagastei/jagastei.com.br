@@ -13,38 +13,38 @@ const isEmpty = computed(() => props.data.every((item) => item.Saída === 0));
 const fakeData = computed(() => {
 	return [
 		{
-			"name": "Monday, 10 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 15000,
+			name: 'Monday, 10 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 15000,
 		},
 		{
-			"name": "Tuesday, 11 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 4000,
+			name: 'Tuesday, 11 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 4000,
 		},
 		{
-			"name": "Wednesday, 12 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 500,
+			name: 'Wednesday, 12 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 500,
 		},
 		{
-			"name": "Thursday, 13 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 2000,
+			name: 'Thursday, 13 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 2000,
 		},
 		{
-			"name": "Friday, 14 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 4000,
+			name: 'Friday, 14 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 4000,
 		},
 		{
-			"name": "Saturday, 15 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 2000,
+			name: 'Saturday, 15 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 2000,
 		},
 		{
-			"name": "Sunday, 16 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 7000,
+			name: 'Sunday, 16 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 7000,
 		},
 		{
-			"name": "Monday, 17 March 2025",
-			"Saída": Math.floor(Math.random() * 2000) + 10000,
-		}
-	]
+			name: 'Monday, 17 March 2025',
+			Saída: Math.floor(Math.random() * 2000) + 10000,
+		},
+	];
 });
 
 const xFormatter = (value: any, i: number) => {
@@ -74,7 +74,8 @@ const yFormatter = (value: any, i: number) => {
 			</div>
 		</div>
 
-		<BarChart v-if="isEmpty"
+		<BarChart
+			v-if="isEmpty"
 			:data="fakeData"
 			index="name"
 			:xFormatter="xFormatter"
@@ -88,7 +89,8 @@ const yFormatter = (value: any, i: number) => {
 			:showTooltip="false"
 		/>
 
-		<BarChart v-else
+		<BarChart
+			v-else
 			:data="data"
 			index="name"
 			:xFormatter="xFormatter"

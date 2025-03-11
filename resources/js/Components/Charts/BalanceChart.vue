@@ -39,7 +39,9 @@ const getColor = (transparency: number = 1) => {
 		return `rgba(77, 140, 253, ${transparency})`;
 	}
 
-	return lastBalance > 0 ? `rgba(34, 197, 94, ${transparency})` : `rgba(239, 68, 68, ${transparency})`;
+	return lastBalance > 0
+		? `rgba(34, 197, 94, ${transparency})`
+		: `rgba(239, 68, 68, ${transparency})`;
 };
 </script>
 
@@ -53,7 +55,8 @@ const getColor = (transparency: number = 1) => {
 			</div>
 		</div>
 
-		<AreaChart v-if="isEmpty"
+		<AreaChart
+			v-if="isEmpty"
 			:data="[
 				{ name: 'Jan', Saldo: Math.floor(Math.random() * 2000) + 1000 },
 				{ name: 'Feb', Saldo: Math.floor(Math.random() * 2000) + 1500 },
@@ -82,7 +85,8 @@ const getColor = (transparency: number = 1) => {
 			:curveType="CurveType.Linear"
 		/>
 
-		<AreaChart v-else
+		<AreaChart
+			v-else
 			:data="data"
 			index="name"
 			:xFormatter="xFormatter"

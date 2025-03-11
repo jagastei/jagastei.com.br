@@ -28,7 +28,7 @@ const updateNitro = () => {
 			);
 		}
 	}, 0);
-}
+};
 
 watch(
 	() => props.budgets,
