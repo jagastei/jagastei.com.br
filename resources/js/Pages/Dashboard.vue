@@ -15,8 +15,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import type { DateRange } from 'radix-vue';
 import { formatMoney } from '@/utils';
-import { computed, h } from 'vue';
-import { ArrowUp, ArrowDown } from 'lucide-vue-next';
+import { computed } from 'vue';
 
 const props = defineProps<{
 	startDate: string;
@@ -261,7 +260,7 @@ const balanceData = computed<{
 										selecionado.</CardDescription
 									>
 								</CardHeader>
-								<CardContent class="flex items-center h-[calc(100%-98px)]">
+								<CardContent class="flex justify-center items-center h-[calc(100%-98px)]">
 									<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
 								</CardContent>
 							</Card>
