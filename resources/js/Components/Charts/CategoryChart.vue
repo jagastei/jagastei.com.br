@@ -18,8 +18,6 @@ const fakeData = computed(() => {
 	}));
 });
 
-console.log(fakeData.value);
-
 const formatter = (value: number, i: number | undefined): string => {
 	return formatMoney(value);
 };
