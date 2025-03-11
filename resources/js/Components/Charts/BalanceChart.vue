@@ -47,7 +47,7 @@ const getColor = (transparency: number = 1) => {
 	<div class="relative">
 		<div v-if="isEmpty" class="absolute top-0 left-0 w-full h-full">
 			<div class="flex items-center justify-center h-full">
-				<span class="text-white text-sm text-center">
+				<span class="text-muted-foreground text-sm text-center">
 					Comece a registrar suas transações para acompanhar a evolução do seu saldo.
 				</span>
 			</div>

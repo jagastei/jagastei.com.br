@@ -27,7 +27,7 @@ const formatter = (value: number, i: number | undefined): string => {
 	<div class="relative">
 		<div v-if="isEmpty" class="absolute top-0 left-0 w-full h-full">
 			<div class="flex items-center justify-center h-full">
-				<span class="text-white text-sm text-center w-1/2">
+				<span class="text-muted-foreground text-sm text-center w-1/2">
 					Categorize seus gastos e veja como eles se distribuem.
 				</span>
 			</div>
