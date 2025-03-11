@@ -40,7 +40,7 @@ createInertiaApp({
 			posthog.capture('$pageview', {
 				path: event.detail.page.url,
 				component: event.detail.page.component,
-			})
+			});
 		});
 
 		app.use(plugin);

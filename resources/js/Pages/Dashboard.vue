@@ -260,7 +260,9 @@ const balanceData = computed<{
 										selecionado.</CardDescription
 									>
 								</CardHeader>
-								<CardContent class="flex justify-center items-center h-[calc(100%-98px)]">
+								<CardContent
+									class="flex justify-center items-center h-[calc(100%-98px)]"
+								>
 									<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
 								</CardContent>
 							</Card>
