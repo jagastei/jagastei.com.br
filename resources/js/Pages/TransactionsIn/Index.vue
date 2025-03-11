@@ -69,7 +69,7 @@ const onUploadDialogOpen = (open: boolean) => {
 	/>
 
 	<AuthenticatedLayout>
-		<div class="h-full p-4 lg:p-6">
+		<div :class="['p-4 lg:p-6', { 'h-full': transactions.data.length === 0 }]">
 			<div class="flex flex-1 flex-col h-full gap-4 lg:gap-6">
 				<div class="flex items-center justify-between">
 					<div>
