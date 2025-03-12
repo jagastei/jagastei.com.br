@@ -187,15 +187,15 @@ onMounted(() => {
 									:key="feature.id"
 									:class="[
 										'relative p-6 transition-all duration-200 cursor-pointer group border',
-										selectedFeature === feature.id ? 'bg-card border-border shadow-sm' : 'border-transparent',
+										selectedFeature === feature.id
+											? 'bg-card border-border shadow-sm'
+											: 'border-transparent',
 									]"
 									@click="selectedFeature = feature.id"
 								>
 									<div class="flex items-start gap-4">
 										<div
-											:class="[
-												'p-2 rounded-lg transition-colors text-muted-foreground',
-											]"
+											:class="['p-2 rounded-lg transition-colors text-muted-foreground']"
 										>
 											<component :is="feature.icon" class="h-5 w-5" />
 										</div>
