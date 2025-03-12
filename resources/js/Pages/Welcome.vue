@@ -186,18 +186,15 @@ onMounted(() => {
 									v-for="feature in features"
 									:key="feature.id"
 									:class="[
-										'relative rounded-xl p-6 transition-all duration-200 hover:bg-card/80 cursor-pointer group',
-										selectedFeature === feature.id ? 'bg-card shadow-sm' : '',
+										'relative p-6 transition-all duration-200 cursor-pointer group border',
+										selectedFeature === feature.id ? 'bg-card border-border shadow-sm' : 'border-transparent',
 									]"
 									@click="selectedFeature = feature.id"
 								>
 									<div class="flex items-start gap-4">
 										<div
 											:class="[
-												'p-2 rounded-lg transition-colors',
-												selectedFeature === feature.id
-													? 'bg-primary/10 text-primary'
-													: 'bg-muted text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary/80',
+												'p-2 rounded-lg transition-colors text-muted-foreground',
 											]"
 										>
 											<component :is="feature.icon" class="h-5 w-5" />
@@ -216,11 +213,11 @@ onMounted(() => {
 						</div>
 						<div class="lg:col-span-7">
 							<div
-								class="overflow-hidden rounded-xl border border-border bg-background shadow-sm"
+								class="overflow-hidden border border-border bg-background shadow-sm"
 							>
 								<div class="relative">
 									<div
-										class="absolute top-0 pl-2.5 inset-x-0 h-8 bg-card flex items-center gap-2"
+										class="absolute top-0 pl-2.5 inset-x-0 h-8 bg-card flex items-center gap-2 border-b border-border"
 									>
 										<div class="size-3 rounded-full bg-red-500 hover:bg-red-600"></div>
 										<div
@@ -269,16 +266,11 @@ onMounted(() => {
 							class="overflow-hidden border border-border bg-card shadow-sm max-w-md w-full hover:shadow-lg transition-shadow duration-300"
 						>
 							<div class="p-8">
-								<div
-									class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4"
-								>
-									Mais popular
-								</div>
 								<h3 class="font-display text-xl font-medium text-foreground">
-									Plano Negócios
+									Plano individual
 								</h3>
 								<p class="mt-2 text-base text-muted-foreground">
-									Perfeito para pequenas e médias empresas.
+									Para pessoas e pequenos negócios.
 								</p>
 								<p
 									class="mt-6 font-display text-5xl font-light tracking-tight text-foreground"
@@ -289,45 +281,45 @@ onMounted(() => {
 								</p>
 
 								<ul role="list" class="mt-10 space-y-4">
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Envie 25 orçamentos e faturas</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Conecte até 5 contas bancárias</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Acompanhe até 50 despesas por mês</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Suporte automatizado de folha de pagamento</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Exporte até 12 relatórios</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Reconciliação em massa de transações</span
 										>
 									</li>
-									<li class="flex items-start">
-										<CircleCheck class="size-5 flex-none text-primary mt-0.5" />
-										<span class="ml-3 text-sm text-muted-foreground"
+									<li class="flex items-center">
+										<CircleCheck class="size-5 flex-none text-primary" />
+										<span class="ml-2 text-sm text-muted-foreground"
 											>Acompanhe em múltiplas moedas</span
 										>
 									</li>
