@@ -70,8 +70,11 @@ const selectedFeature = ref('payroll')
 				</div>
 			</div>
 
-			<section id="features" aria-label="Features for running your books"
-				class="relative overflow-hidden pt-20 pb-28 sm:py-32">
+			<section
+				id="features"
+				aria-label="Features for running your books"
+				class="relative overflow-hidden pt-20 pb-28 sm:py-32"
+			>
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
 					<div class="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
 						<h2 class="font-display text-3xl tracking-tight text-white sm:text-4xl md:text-5xl">Everything
@@ -179,13 +182,19 @@ const selectedFeature = ref('payroll')
 			<section id="pricing" aria-label="Pricing" class="py-20 sm:py-32">
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div class="md:text-center">
-						<h2 class="font-display text-3xl tracking-tight text-foreground sm:text-4xl">Simple pricing, for
-							everyone.</h2>
-						<p class="mt-4 text-lg text-muted-foreground">It doesn’t matter what size your business is, our
-							software won’t work well for you.</p>
+						<h2
+							class="font-display text-3xl tracking-tight text-foreground sm:text-4xl"
+						>
+							Simple pricing, for everyone.
+						</h2>
+						<p class="mt-4 text-lg text-muted-foreground">
+							It doesn’t matter what size your business is, our software won’t work
+							well for you.
+						</p>
 					</div>
 					<div
-						class="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
+						class="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8"
+					>
 						<div></div>
 						<section class="col-span-1 flex flex-col px-6 sm:px-8 order-first bg-card py-8 lg:order-none">
 							<h3 class="mt-5 font-display text-lg text-white">Small business</h3>
@@ -245,12 +254,12 @@ const selectedFeature = ref('payroll')
 					</Link>
 				</div>
 				<div class="flex justify-center items-center py-10">
-					<p class="text-sm text-muted-foreground">2025 JaGastei © Todos os direitos reservados.
+					<p class="text-sm text-muted-foreground">
+						2025 JaGastei © Todos os direitos reservados.
 					</p>
 				</div>
 			</div>
 		</footer>
-
 	</div>
 
 </template>
