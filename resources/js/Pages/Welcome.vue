@@ -2,8 +2,8 @@
 import Button from '@/Components/ui/button/Button.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { useColorMode } from '@vueuse/core';
-import { CircleCheck, ArrowRight } from 'lucide-vue-next';
-import { ref } from 'vue';
+import { CircleCheck, ArrowRight, Users, BarChart3, Wallet, Settings } from 'lucide-vue-next';
+import { ref, onMounted } from 'vue';
 
 defineProps<{
 	canLogin?: boolean;
@@ -20,24 +20,36 @@ const features = [
 	{
 		id: 'payroll',
 		title: 'Folha de Pagamento',
-		description: 'Acompanhe os salários de todos e se foram pagos. Depósito direto não suportado.'
+		description: 'Acompanhe os salários de todos e se foram pagos. Depósito direto não suportado.',
+		icon: Users
 	},
 	{
 		id: 'expenses',
 		title: 'Despesas',
-		description: 'Registre e categorize todas as suas despesas. Visualize para onde seu dinheiro está indo.'
+		description: 'Registre e categorize todas as suas despesas. Visualize para onde seu dinheiro está indo.',
+		icon: Wallet
 	},
 	{
 		id: 'reports',
 		title: 'Relatórios',
-		description: 'Gere relatórios detalhados para entender seus padrões de gastos e receitas.'
+		description: 'Gere relatórios detalhados para entender seus padrões de gastos e receitas.',
+		icon: BarChart3
 	},
 	{
 		id: 'settings',
 		title: 'Configurações',
-		description: 'Personalize o sistema de acordo com as necessidades do seu negócio.'
+		description: 'Personalize o sistema de acordo com as necessidades do seu negócio.',
+		icon: Settings
 	}
 ];
+
+const isVisible = ref(false);
+
+onMounted(() => {
+	setTimeout(() => {
+		isVisible.value = true;
+	}, 100);
+});
 </script>
 
 <template>
@@ -48,13 +60,18 @@ const features = [
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<nav class="relative flex justify-between items-center">
 					<div class="flex items-center md:gap-x-12">
-						<Link href="/" class="flex items-center gap-2">
-							<img src="@/../images/green-diamond.svg" class="dark:hidden h-10 w-10" />
-							<img
-								src="@/../images/green-diamond-white.svg"
-								class="hidden dark:block h-10 w-10"
-							/>
-							<span class="font-medium text-xl hidden sm:inline-block">JaGastei</span>
+						<Link href="/" class="flex items-center gap-2 group">
+							<div class="relative overflow-hidden">
+								<img 
+									src="@/../images/green-diamond.svg" 
+									class="dark:hidden h-10 w-10 transition-transform duration-300 group-hover:scale-110" 
+								/>
+								<img
+									src="@/../images/green-diamond-white.svg"
+									class="hidden dark:block h-10 w-10 transition-transform duration-300 group-hover:scale-110"
+								/>
+							</div>
+							<span class="font-medium text-xl hidden sm:inline-block group-hover:text-primary transition-colors">JaGastei</span>
 						</Link>
 					</div>
 
@@ -83,28 +100,42 @@ const features = [
 			<!-- Hero Section -->
 			<div class="relative overflow-hidden">
 				<div class="absolute inset-0 bg-gradient-to-b from-background to-background/5 dark:from-background dark:to-background/20 -z-10"></div>
+				
+				<!-- Animated background elements -->
+				<div class="absolute inset-0 overflow-hidden -z-10">
+					<div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+					<div class="absolute top-60 -left-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"></div>
+				</div>
+				
 				<div
 					class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-24 lg:py-32"
 				>
 					<div class="flex flex-col items-center">
-						<h1
-							class="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-foreground sm:text-6xl lg:text-7xl"
-						>
-							Gestão financeira <span class="text-primary">simplificada</span>
-						</h1>
+						<div :class="['transition-all duration-1000 transform', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']">
+							<h1
+								class="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-foreground sm:text-6xl lg:text-7xl"
+							>
+								Gestão financeira <span class="text-primary relative">
+									simplificada
+									<span class="absolute bottom-2 left-0 w-full h-1 bg-primary/30 rounded-full"></span>
+								</span>
+							</h1>
 
-						<p
-							class="mx-auto mt-8 max-w-2xl text-xl tracking-tight text-muted-foreground"
-						>
-							Nosso sistema de controle de gastos é fácil de usar e ajuda você a manter
-							suas finanças em ordem.
-						</p>
+							<p
+								class="mx-auto mt-8 max-w-2xl text-xl tracking-tight text-muted-foreground"
+							>
+								Nosso sistema de controle de gastos é fácil de usar e ajuda você a manter
+								suas finanças em ordem.
+							</p>
+						</div>
 
-						<div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+						<div :class="['mt-10 flex flex-col sm:flex-row justify-center gap-4 transition-all duration-1000 delay-300 transform', isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']">
 							<Link :href="route('register')">
-								<Button size="lg" class="px-8">Comece agora <ArrowRight class="ml-2 h-4 w-4" /></Button>
+								<Button size="lg" class="px-8 group">
+									Comece agora 
+									<ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+								</Button>
 							</Link>
-							<Button variant="outline" size="lg">Saiba mais</Button>
 						</div>
 					</div>
 				</div>
@@ -138,19 +169,29 @@ const features = [
 							>
 								<div v-for="feature in features" :key="feature.id" 
 									:class="[
-										'relative rounded-xl p-6 transition-all duration-200 hover:bg-card/80',
+										'relative rounded-xl p-6 transition-all duration-200 hover:bg-card/80 cursor-pointer group',
 										selectedFeature === feature.id ? 'bg-card shadow-sm' : ''
 									]"
 									@click="selectedFeature = feature.id"
 								>
-									<h3
-										class="font-display text-lg font-medium text-foreground"
-									>
-										{{ feature.title }}
-									</h3>
-									<p class="mt-2 text-sm text-muted-foreground">
-										{{ feature.description }}
-									</p>
+									<div class="flex items-start gap-4">
+										<div :class="[
+											'p-2 rounded-lg transition-colors', 
+											selectedFeature === feature.id ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground group-hover:bg-primary/5 group-hover:text-primary/80'
+										]">
+											<component :is="feature.icon" class="h-5 w-5" />
+										</div>
+										<div>
+											<h3
+												class="font-display text-lg font-medium text-foreground"
+											>
+												{{ feature.title }}
+											</h3>
+											<p class="mt-2 text-sm text-muted-foreground">
+												{{ feature.description }}
+											</p>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -196,8 +237,11 @@ const features = [
 						</p>
 					</div>
 					<div class="mt-16 flex justify-center">
-						<div class="overflow-hidden rounded-2xl border border-border bg-card shadow-sm max-w-md w-full">
+						<div class="overflow-hidden rounded-2xl border border-border bg-card shadow-sm max-w-md w-full hover:shadow-lg transition-shadow duration-300">
 							<div class="p-8">
+								<div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary mb-4">
+									Mais popular
+								</div>
 								<h3 class="font-display text-xl font-medium text-foreground">Plano Negócios</h3>
 								<p class="mt-2 text-base text-muted-foreground">
 									Perfeito para pequenas e médias empresas.
@@ -238,8 +282,15 @@ const features = [
 								</ul>
 								
 								<Link :href="route('register')" class="mt-8 block">
-									<Button class="w-full" size="lg">Comece agora</Button>
+									<Button class="w-full group" size="lg">
+										Comece agora
+										<ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+									</Button>
 								</Link>
+								
+								<p class="mt-4 text-xs text-center text-muted-foreground">
+									Sem contratos longos. Cancele a qualquer momento.
+								</p>
 							</div>
 						</div>
 					</div>
@@ -250,20 +301,47 @@ const features = [
 		<footer class="border-t border-border/40 bg-muted/30">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="py-12 flex flex-col items-center gap-8">
-					<Link href="/" class="flex items-center gap-2">
-						<img src="@/../images/green-diamond.svg" class="dark:hidden h-8 w-8" />
+					<Link href="/" class="flex items-center gap-2 group">
+						<img src="@/../images/green-diamond.svg" class="dark:hidden h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
 						<img
 							src="@/../images/green-diamond-white.svg"
-							class="hidden dark:block h-8 w-8"
+							class="hidden dark:block h-8 w-8 transition-transform duration-300 group-hover:scale-110"
 						/>
-						<span class="font-medium text-lg">JaGastei</span>
+						<span class="font-medium text-lg group-hover:text-primary transition-colors">JaGastei</span>
 					</Link>
 					
-					<div class="flex gap-8 text-sm text-muted-foreground">
+					<div class="flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
 						<a href="#" class="hover:text-foreground transition-colors">Sobre</a>
 						<a href="#" class="hover:text-foreground transition-colors">Recursos</a>
 						<a href="#" class="hover:text-foreground transition-colors">Preços</a>
 						<a href="#" class="hover:text-foreground transition-colors">Contato</a>
+						<a href="#" class="hover:text-foreground transition-colors">Blog</a>
+						<a href="#" class="hover:text-foreground transition-colors">Carreiras</a>
+						<a href="#" class="hover:text-foreground transition-colors">Privacidade</a>
+						<a href="#" class="hover:text-foreground transition-colors">Termos</a>
+					</div>
+					
+					<div class="flex items-center gap-6">
+						<a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+							</svg>
+						</a>
+						<a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+							</svg>
+						</a>
+						<a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+							</svg>
+						</a>
+						<a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
+							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clip-rule="evenodd" />
+							</svg>
+						</a>
 					</div>
 					
 					<p class="text-sm text-muted-foreground">
@@ -274,3 +352,20 @@ const features = [
 		</footer>
 	</div>
 </template>
+
+<style scoped>
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
