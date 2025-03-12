@@ -54,7 +54,7 @@ const features = [
 	},
 ];
 
-const isVisible = ref(false);
+const isVisible = ref(true);
 
 onMounted(() => {
 	setTimeout(() => {
@@ -118,16 +118,6 @@ onMounted(() => {
 				<div
 					class="absolute inset-0 bg-gradient-to-b from-background to-background/5 dark:from-background dark:to-background/20 -z-10"
 				></div>
-
-				<!-- Animated background elements -->
-				<div class="absolute inset-0 overflow-hidden -z-10">
-					<div
-						class="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl"
-					></div>
-					<div
-						class="absolute top-60 -left-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"
-					></div>
-				</div>
 
 				<div
 					class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-24 lg:py-32"
