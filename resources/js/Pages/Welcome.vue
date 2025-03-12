@@ -86,6 +86,7 @@ onBeforeUnmount(() => {
 	<Head title="Welcome" />
 
 	<div class="relative flex flex-col scroll-smooth">
+
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
 		<header class="py-6">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -133,6 +134,33 @@ onBeforeUnmount(() => {
 		<main>
 			<!-- Hero Section -->
 			<section class="relative">
+				<!-- Background SVG pattern -->
+				<svg v-if="false"
+					class="-z-10 absolute left-[max(50%,25rem)] rotate-90 top-[32rem] h-[64rem] w-[128rem]  stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-card transition-all duration-1000 transform"
+					:class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'"
+					aria-hidden="true"
+				>
+					<defs>
+						<pattern
+							id="e813992c-7d03-4cc4-a2bd-151760b470a0"
+							width="100"
+							height="100"
+							x="50%"
+							y="-1"
+							patternUnits="userSpaceOnUse"
+						>
+							<path d="M100 200V.5M.5 .5H200" fill="none" />
+						</pattern>
+					</defs>
+					
+					<rect
+						width="100%"
+						height="100%"
+						stroke-width="0"
+						fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
+					/>
+				</svg>
+				
 				<div
 					class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-24 lg:py-32"
 				>
@@ -363,7 +391,7 @@ onBeforeUnmount(() => {
 			</section>
 		</main>
 
-		<footer class="border-t border-border/40 bg-muted/30">
+		<footer class="border-t border-border bg-card">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div class="py-12 flex flex-col items-center gap-8">
 					<Link href="/" class="flex items-center gap-2 group">
