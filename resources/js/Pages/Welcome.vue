@@ -27,8 +27,7 @@ const features = [
 	{
 		id: 'reports',
 		title: 'Relatórios',
-		description:
-			'Acompanhe a evolução do seu saldo de forma visual e detalhada.',
+		description: 'Acompanhe a evolução do seu saldo de forma visual e detalhada.',
 		icon: BarChart3,
 	},
 	{
@@ -70,7 +69,9 @@ onMounted(() => {
 
 	autoRotateInterval = setInterval(() => {
 		if (Date.now() - lastUserInteraction.value > 30000) {
-			const currentIndex = features.findIndex(f => f.id === selectedFeature.value);
+			const currentIndex = features.findIndex(
+				(f) => f.id === selectedFeature.value
+			);
 			const nextIndex = (currentIndex + 1) % features.length;
 			selectedFeature.value = features[nextIndex].id;
 		}
