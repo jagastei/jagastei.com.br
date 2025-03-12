@@ -87,7 +87,6 @@ onBeforeUnmount(() => {
 	<Head title="Welcome" />
 
 	<div class="relative flex flex-col scroll-smooth">
-
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
 		<header class="py-6">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -136,9 +135,12 @@ onBeforeUnmount(() => {
 			<!-- Hero Section -->
 			<section class="relative">
 				<!-- Background SVG pattern -->
-				<svg v-if="false"
-					class="-z-10 absolute left-[max(50%,25rem)] rotate-90 top-[32rem] h-[64rem] w-[128rem]  stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-card transition-all duration-1000 transform"
-					:class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'"
+				<svg
+					v-if="false"
+					class="-z-10 absolute left-[max(50%,25rem)] rotate-90 top-[32rem] h-[64rem] w-[128rem] stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-card transition-all duration-1000 transform"
+					:class="
+						isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+					"
 					aria-hidden="true"
 				>
 					<defs>
@@ -153,7 +155,7 @@ onBeforeUnmount(() => {
 							<path d="M100 200V.5M.5 .5H200" fill="none" />
 						</pattern>
 					</defs>
-					
+
 					<rect
 						width="100%"
 						height="100%"
@@ -161,7 +163,7 @@ onBeforeUnmount(() => {
 						fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"
 					/>
 				</svg>
-				
+
 				<div
 					class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-24 lg:py-32"
 				>
