@@ -196,8 +196,8 @@ const balanceData = computed<{
 							<Card class="col-span-1 xl:col-span-7">
 								<CardHeader>
 									<CardTitle class="flex items-center gap-x-2">
-										<span>
-											<span>Saldo&nbsp;</span>
+										<span class="flex gap-1.5">
+											<span>Saldo de</span>
 											<span
 												:class="[
 													{
