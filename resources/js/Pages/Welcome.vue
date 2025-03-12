@@ -70,7 +70,7 @@ onMounted(() => {
 	<div class="relative flex flex-col scroll-smooth">
 
 		<div class="absolute inset-0 -z-10">
-						
+
 		</div>
 
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
@@ -212,7 +212,7 @@ onMounted(() => {
 			</section>
 
 			<!-- Pricing Section -->
-			<section  aria-label="Pricing" class="py-24 sm:py-32">
+			<section aria-label="Pricing" class="py-24 sm:py-32">
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div class="md:text-center">
 						<h2 class="font-display text-3xl tracking-tight text-foreground sm:text-4xl">
