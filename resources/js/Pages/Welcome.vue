@@ -113,7 +113,7 @@ onMounted(() => {
 				</div>
 
 				<!-- Animated background elements -->
-				<div class="absolute inset-0 overflow-hidden -z-10">
+				<div class="absolute inset-0 overflow-hidden -z-10 border">
 					<div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
 					<div class="absolute top-60 -left-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"></div>
 				</div>
