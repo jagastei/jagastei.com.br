@@ -69,10 +69,6 @@ onMounted(() => {
 
 	<div class="relative flex flex-col scroll-smooth">
 
-		<div class="absolute inset-0 -z-10">
-
-		</div>
-
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
 		<header class="py-6">
 			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
