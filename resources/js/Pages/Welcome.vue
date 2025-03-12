@@ -10,7 +10,7 @@ import {
 	Wallet,
 	Settings,
 } from 'lucide-vue-next';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 defineProps<{
 	canLogin?: boolean;
@@ -21,14 +21,20 @@ defineProps<{
 
 useColorMode();
 
-const selectedFeature = ref('payroll');
+const selectedFeature = ref('reports');
 
 const features = [
 	{
-		id: 'payroll',
-		title: 'Folha de Pagamento',
+		id: 'reports',
+		title: 'Relatórios',
 		description:
-			'Acompanhe os salários de todos e se foram pagos. Depósito direto não suportado.',
+			'Acompanhe a evolução do seu saldo de forma visual e detalhada.',
+		icon: BarChart3,
+	},
+	{
+		id: 'receipts',
+		title: 'Receitas',
+		description: 'Registre e categorize todas as suas receitas.',
 		icon: Users,
 	},
 	{
@@ -37,13 +43,6 @@ const features = [
 		description:
 			'Registre e categorize todas as suas despesas. Visualize para onde seu dinheiro está indo.',
 		icon: Wallet,
-	},
-	{
-		id: 'reports',
-		title: 'Relatórios',
-		description:
-			'Gere relatórios detalhados para entender seus padrões de gastos e receitas.',
-		icon: BarChart3,
 	},
 	{
 		id: 'settings',
@@ -56,10 +55,30 @@ const features = [
 
 const isVisible = ref(true);
 
+let autoRotateInterval: any = null;
+const lastUserInteraction = ref(0);
+
+const selectFeature = (feature: string) => {
+	selectedFeature.value = feature;
+	lastUserInteraction.value = Date.now();
+};
+
 onMounted(() => {
 	setTimeout(() => {
 		isVisible.value = true;
 	}, 100);
+
+	autoRotateInterval = setInterval(() => {
+		if (Date.now() - lastUserInteraction.value > 30000) {
+			const currentIndex = features.findIndex(f => f.id === selectedFeature.value);
+			const nextIndex = (currentIndex + 1) % features.length;
+			selectedFeature.value = features[nextIndex].id;
+		}
+	}, 15000);
+});
+
+onBeforeUnmount(() => {
+	clearInterval(autoRotateInterval);
 });
 </script>
 
@@ -189,7 +208,7 @@ onMounted(() => {
 										'relative p-6 transition-all duration-200 cursor-pointer group border',
 										selectedFeature === feature.id ? 'bg-card border-border shadow-sm' : 'border-transparent',
 									]"
-									@click="selectedFeature = feature.id"
+									@click="selectFeature(feature.id)"
 								>
 									<div class="flex items-start gap-4">
 										<div
