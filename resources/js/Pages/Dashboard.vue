@@ -16,6 +16,8 @@ import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import type { DateRange } from 'radix-vue';
 import { formatMoney } from '@/utils';
 import { computed } from 'vue';
+import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
+import { FlaskConical } from 'lucide-vue-next';
 
 const props = defineProps<{
 	startDate: string;
@@ -72,6 +74,16 @@ const balanceData = computed<{
 	<Head title="Painel" />
 
 	<AuthenticatedLayout>
+		<div v-if="$page.props.auth.on_generic_trial" class="p-4 lg:p-6 pb-0 lg:pb-0">
+			<Alert variant="default" class="[&>svg]:text-purple-500">
+				<FlaskConical class="size-4" />
+				<AlertTitle>Você está no período de avaliação</AlertTitle>
+				<AlertDescription class="text-muted-foreground">
+					Aproveite todos os recursos gratuitamente até {{ new Date($page.props.auth.user.trial_ends_at).toLocaleDateString('pt-BR') }}
+				</AlertDescription>
+			</Alert>
+		</div>
+
 		<div class="p-4 lg:p-6">
 			<div class="flex flex-1 flex-col h-full">
 				<div

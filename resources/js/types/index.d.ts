@@ -11,6 +11,7 @@ export interface User {
 	wallets: Wallet[];
 	current_wallet: Wallet;
 	stripe_id: string;
+	trial_ends_at: string;
 }
 
 export type PageProps<
@@ -18,6 +19,7 @@ export type PageProps<
 > = T & {
 	auth: {
 		user: User;
+		on_generic_trial: boolean;
 	};
 };
 

@@ -17,6 +17,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        /** @var \App\Models\User $user */
+        $user = auth('web')->user();
+
         $startDate = $request->query('startDate');
         $endDate = $request->query('endDate');
 
@@ -50,7 +53,7 @@ class DashboardController extends Controller
         $datesSubquery = DB::raw("(SELECT generate_series('$startDateString'::date, '$endDateString'::date, interval '1 day') AS date) AS date_series");
 
         $transactionsSubquery = Transaction::query()
-            ->ofWallet(auth('web')->user()->currentWallet)
+            ->ofWallet($user->currentWallet)
             ->out()
             ->orderBy('created_at')
             ->select(
@@ -84,9 +87,9 @@ class DashboardController extends Controller
         $wastedByCategory = Category::query()
             ->out()
             ->withCount([
-                'transactions as transactions_count' => function ($query) use ($startDate, $endDate) {
+                'transactions as transactions_count' => function ($query) use ($startDate, $endDate, $user) {
                     $query
-                        ->ofWallet(auth('web')->user()->currentWallet)
+                        ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
                             DB::raw('created_at'),
@@ -95,9 +98,9 @@ class DashboardController extends Controller
                 },
             ])
             ->withSum([
-                'transactions as transactions_sum_value' => function ($query) use ($startDate, $endDate) {
+                'transactions as transactions_sum_value' => function ($query) use ($startDate, $endDate, $user) {
                     $query
-                        ->ofWallet(auth('web')->user()->currentWallet)
+                        ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
                             DB::raw('created_at'),
@@ -106,9 +109,9 @@ class DashboardController extends Controller
                 },
             ], 'value')
             ->withAvg([
-                'transactions as transactions_avg_value' => function ($query) use ($startDate, $endDate) {
+                'transactions as transactions_avg_value' => function ($query) use ($startDate, $endDate, $user) {
                     $query
-                        ->ofWallet(auth('web')->user()->currentWallet)
+                        ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
                             DB::raw('created_at'),
@@ -117,9 +120,9 @@ class DashboardController extends Controller
                 },
             ], 'value')
             ->withMin([
-                'transactions as transactions_min_value' => function ($query) use ($startDate, $endDate) {
+                'transactions as transactions_min_value' => function ($query) use ($startDate, $endDate, $user) {
                     $query
-                        ->ofWallet(auth('web')->user()->currentWallet)
+                        ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
                             DB::raw('created_at'),
@@ -128,9 +131,9 @@ class DashboardController extends Controller
                 },
             ], 'value')
             ->withMax([
-                'transactions as transactions_max_value' => function ($query) use ($startDate, $endDate) {
+                'transactions as transactions_max_value' => function ($query) use ($startDate, $endDate, $user) {
                     $query
-                        ->ofWallet(auth('web')->user()->currentWallet)
+                        ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
                             DB::raw('created_at'),
@@ -147,7 +150,7 @@ class DashboardController extends Controller
         $wastedByCategoryTotal = $wastedByCategory->sum('transactions_sum_value');
 
         $accounts = Account::query()
-            ->ofWallet(auth('web')->user()->currentWallet)
+            ->ofWallet($user->currentWallet)
             ->get();
 
         $balanceByDay = collect();
@@ -176,7 +179,7 @@ class DashboardController extends Controller
             ->values()
             ->all();
 
-        $currentBalance = WalletState::load(auth('web')->user()->currentWallet->id)->balance / 100;
+        $currentBalance = WalletState::load($user->currentWallet->id)->balance / 100;
 
         return Inertia::render('Dashboard', [
             'startDate' => $startDateString,

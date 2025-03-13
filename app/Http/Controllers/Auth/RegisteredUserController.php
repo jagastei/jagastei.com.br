@@ -45,8 +45,9 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        $event = UserStartedTrial::fire();
-        $event->user_id;
+        UserStartedTrial::fire(
+            user_id: $user->id,
+        );
 
         Auth::login($user);
 

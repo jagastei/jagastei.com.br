@@ -2,28 +2,24 @@
 
 namespace App\Events;
 
+use App\Models\User;
 use App\States\UserState;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
 class UserStartedTrial extends Event
 {
-    #[StateId(UserState::class)]
-    public ?int $user_id = null;
+    public function __construct(
+        #[StateId(UserState::class)]
+        public int $user_id,
+    ) {}
 
-    public function authorize() {}
-
-    public function validate(UserState $user)
+    public function handle()
     {
-        $this->assert($user->trial_started_at === null, 'This user has not started a trial yet.');
+        $user = User::find($this->user_id);
+
+        $user->update([
+            'trial_ends_at' => now()->addDays(7),
+        ]);
     }
-
-    public function apply(UserState $user)
-    {
-        $user->trial_started_at = now();
-    }
-
-    public function fired() {}
-
-    public function handle() {}
 }

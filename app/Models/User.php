@@ -21,12 +21,20 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasUuids;
     use Notifiable;
 
+    // available locales
+    public const LOCALES = [
+        'pt-BR' => 'Português (Brasil)',
+        'en-US' => 'English (USA)',
+    ];
+
     protected $fillable = [
         'identifier',
         'name',
         'email',
         'password',
         'current_wallet_id',
+        'locale',
+        'metadata',
     ];
 
     protected $hidden = [
@@ -40,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
+            'metadata' => 'array',
         ];
     }
 
@@ -62,6 +71,20 @@ class User extends Authenticatable implements MustVerifyEmail
                 $customer->syncStripeCustomerDetails();
             }
         }));
+    }
+
+    public function getMetadata(?string $key = null): array|string|null
+    {
+        if ($key) {
+            return $this->metadata[$key] ?? null;
+        }
+
+        return $this->metadata;
+    }
+
+    public function setMetadata(string $key, mixed $value): void
+    {
+        $this->metadata[$key] = $value;
     }
 
     public function wallets(): HasMany

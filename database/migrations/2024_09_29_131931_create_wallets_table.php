@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('personal')->default(true);
             // $table->enum('type', ['PERSONAL', 'BUSINESS'])->default('PERSONAL');
+            $table->string('currency')->default('BRL');
             $table->timestamps();
             $table->softDeletes();
         });

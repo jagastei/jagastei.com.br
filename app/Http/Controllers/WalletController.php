@@ -13,12 +13,22 @@ class WalletController extends Controller
     {
         $input = $request->validated();
 
-        $userId = auth('web')->id();
+        $user = auth('web')->user();
 
-        WalletCreated::fire(
-            user_id: $userId,
+        $walletCreated = WalletCreated::fire(
+            user_id: $user->id,
             name: $input['name'],
         );
+
+        // dump($walletCreated, $walletCreated->wallet_id);
+
+        // $wallet = Wallet::query()
+        //     // ->ofUser($user)
+        //     ->find($walletCreated->wallet_id);
+
+        // dd($wallet);
+
+        // $user->subscription('default')->incrementQuantity();
 
         return back();
     }
@@ -26,6 +36,8 @@ class WalletController extends Controller
     public function destroy(Wallet $wallet)
     {
         $wallet->delete();
+
+        // $user->subscription('default')->decrementQuantity();
 
         return redirect()->route('dashboard');
     }

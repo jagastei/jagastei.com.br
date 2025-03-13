@@ -24,6 +24,8 @@ class AccountCreated extends Event
     {
         $account->wallet_id = $this->wallet_id;
         $account->balance = $this->initial_balance;
+
+        WalletState::load($account->wallet_id)->balance = $this->initial_balance;
     }
 
     public function handle()

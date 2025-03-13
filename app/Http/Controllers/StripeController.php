@@ -10,7 +10,7 @@ class StripeController extends Controller
     public function billing(Request $request)
     {
         if (! $request->user()->hasStripeId()) {
-            abort(403, 'User does not have a Stripe customer ID.');
+            return redirect()->route('subscription.checkout');
         }
 
         return $request->user()->redirectToBillingPortal(route('dashboard'));
@@ -19,26 +19,17 @@ class StripeController extends Controller
     public function checkout(Request $request)
     {
         try {
-            // $request->user()
-            //     ->forceFill([
-            //         'trial_ends_at' => now()->addDays(5),
-            //     ])->save();
-
-            $subscription = $request->user()
-                ->newSubscription('prod_Qqo7VkRXdZR60n', 'price_1Pz6VRChkwYDN5df8JO1WARg')
-                // ->create($paymentMethod)
-                ->trialDays(5)
+            return $request->user()
+                ->newSubscription('prod_RvrAGkmPd6GfFt', 'price_1R1zSbChkwYDN5dfkxKF3ec1')
                 ->allowPromotionCodes()
                 ->checkout([
                     'success_url' => route('subscription.checkout-success'),
                     'cancel_url' => route('subscription.checkout-cancel'),
                 ]);
-
-            return $subscription;
         } catch (IncompletePayment $exception) {
             return redirect()->route(
                 'cashier.payment',
-                [$exception->payment->id, 'redirect' => route('home')]
+                [$exception->payment->id, 'redirect' => route('dashboard')]
             );
         }
     }

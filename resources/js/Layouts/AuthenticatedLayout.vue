@@ -1,10 +1,10 @@
-<script setup lang="ts">
+ 	<script setup lang="ts">
 import UserNav from '@/Components/UserNav.vue';
 import { Button } from '@/Components/ui/button';
 import Nav, { type LinkProp } from '@/Components/Nav.vue';
 import { TooltipProvider } from '@/Components/ui/tooltip';
 import { Separator } from '@/Components/ui/separator';
-import { GripVerticalIcon, MenuIcon } from 'lucide-vue-next';
+import { BellIcon, GripVerticalIcon, MenuIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
 import {
 	Sheet,
 	SheetContent,
@@ -183,17 +183,17 @@ onMounted(() => {
 				</Sheet>
 
 				<div class="ml-auto flex items-center space-x-2">
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
+					<Button v-if="false" variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
                         <SearchIcon class="h-4 w-4" />
-                    </Button> -->
+                    </Button>
 
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
+					<Button v-if="false" variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
                         <BellIcon class="h-4 w-4" />
-                    </Button> -->
+                    </Button>
 
-					<!-- <Button variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
+					<Button v-if="false" variant="outline" size="sm" class="hidden md:flex h-10 space-x-2">
 						<SparklesIcon class="h-4 w-4" />
-					</Button> -->
+					</Button>
 
 					<WalletSwitcher />
 
@@ -216,22 +216,8 @@ onMounted(() => {
 							<Separator />
 							<Nav :is-collapsed="isCollapsed" :links="links2" />
 
-							<!-- <div class="mt-auto p-6">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle>Upgrade to Pro</CardTitle>
-                                        <CardDescription>
-                                            Unlock all features and get unlimited access to our
-                                            support team.
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Button size="sm" class="w-full">
-                                            Upgrade
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            </div> -->
+							<div v-if="false" class="mt-auto p-6">
+                            </div>
 
 							<button
 								@click="isCollapsed = !isCollapsed"

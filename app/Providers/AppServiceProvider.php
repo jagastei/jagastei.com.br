@@ -28,9 +28,6 @@ class AppServiceProvider extends ServiceProvider
         // Cashier::keepPastDueSubscriptionsActive();
         // Cashier::keepIncompleteSubscriptionsActive();
 
-        setlocale(LC_TIME, config('app.locale'));
-        Carbon::setLocale(config('app.locale'));
-
         PostHog::init(config('services.posthog.key'), [
             'host' => config('services.posthog.host'),
         ]);

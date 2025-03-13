@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->snowflake('current_wallet_id')->index()->nullable();
-            $table->enum('locale', ['pt-BR', 'en-US']);
-            $table->enum('currency', ['BRL', 'USD', 'EUR', 'GBP']);
+            $table->string('locale')->default('pt-BR');
+            $table->json('metadata')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

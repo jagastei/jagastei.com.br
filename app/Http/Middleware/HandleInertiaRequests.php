@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
                     'wallets',
                     'currentWallet',
                 ]),
+                'on_generic_trial' => $request->user()?->onGenericTrial(),
             ],
             'notify' => $request->session()->get('notify', []),
         ];

@@ -8,19 +8,29 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wallet extends Model
 {
     use HasFactory;
     use HasSnowflakes;
+    use SoftDeletes;
 
     protected $keyType = 'string';
+
+    public const CURRENCIES = [
+        'BRL' => 'Real Brasileiro',
+        'USD' => 'Dólar Americano',
+        'EUR' => 'Euro',
+        'GBP' => 'Libra Esterlina',
+    ];
 
     protected $fillable = [
         'id',
         'user_id',
         'name',
         'personal',
+        'currency',
     ];
 
     protected $casts = [
