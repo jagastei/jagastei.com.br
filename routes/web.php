@@ -26,6 +26,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/documentacao', function () {
+    return Inertia::render('Docs');
+});
+
 Route::redirect('/convite', '/register');
 
 Route::middleware('auth')->group(function () {
