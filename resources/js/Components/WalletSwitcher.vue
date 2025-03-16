@@ -199,7 +199,8 @@ const onClose = () => {
 					</div> -->
 
 					<p class="text-xs text-muted-foreground italic">
-						Cada carteira adicional acarreta um aumento de R$ 19,90 no valor da assinatura.
+						Cada carteira adicional acarreta um aumento de R$ 19,90 no valor da
+						assinatura.
 					</p>
 				</div>
 			</div>

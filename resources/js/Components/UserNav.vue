@@ -59,16 +59,19 @@ const getSubscriptionRoute = computed(() => {
 		<DropdownMenuContent class="w-56" align="end">
 			<DropdownMenuGroup>
 				<Link :href="route('profile.edit')">
-				<DropdownMenuItem class="cursor-pointer">
-					<UserIcon class="mr-2 size-4" />
-					<span>Minha conta</span>
-				</DropdownMenuItem>
+					<DropdownMenuItem class="cursor-pointer">
+						<UserIcon class="mr-2 size-4" />
+						<span>Minha conta</span>
+					</DropdownMenuItem>
 				</Link>
 				<a :href="getSubscriptionRoute">
 					<DropdownMenuItem class="cursor-pointer">
 						<DollarSignIcon class="mr-2 size-4" />
 						<span>Meu plano</span>
-						<FlaskConical v-if="$page.props.auth.on_generic_trial" class="ml-auto size-4 text-purple-500" />
+						<FlaskConical
+							v-if="$page.props.auth.on_generic_trial"
+							class="ml-auto size-4 text-purple-500"
+						/>
 					</DropdownMenuItem>
 				</a>
 			</DropdownMenuGroup>
@@ -77,10 +80,14 @@ const getSubscriptionRoute = computed(() => {
 
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger class="relative">
-					<Icon icon="radix-icons:sun"
-						class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-					<Icon icon="radix-icons:moon"
-						class="mr-2 absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+					<Icon
+						icon="radix-icons:sun"
+						class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+					/>
+					<Icon
+						icon="radix-icons:moon"
+						class="mr-2 absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+					/>
 					<span>Tema</span>
 				</DropdownMenuSubTrigger>
 				<DropdownMenuPortal>
@@ -103,17 +110,26 @@ const getSubscriptionRoute = computed(() => {
 
 			<DropdownMenuSeparator />
 
-			<DropdownMenuItem @click="$emitter.emit('open-invite-dialog')" class="cursor-pointer">
+			<DropdownMenuItem
+				@click="$emitter.emit('open-invite-dialog')"
+				class="cursor-pointer"
+			>
 				<UserPlusIcon class="mr-2 size-4" />
 				<span>Convidar</span>
 			</DropdownMenuItem>
 
-			<DropdownMenuItem @click="$emitter.emit('open-feedback-dialog')" class="cursor-pointer">
+			<DropdownMenuItem
+				@click="$emitter.emit('open-feedback-dialog')"
+				class="cursor-pointer"
+			>
 				<LightbulbIcon class="mr-2 size-4" />
 				<span>Sugestão</span>
 			</DropdownMenuItem>
 
-			<DropdownMenuItem @click="$emitter.emit('open-support-dialog')" class="cursor-pointer">
+			<DropdownMenuItem
+				@click="$emitter.emit('open-support-dialog')"
+				class="cursor-pointer"
+			>
 				<LifeBuoyIcon class="mr-2 size-4" />
 				<span>Suporte</span>
 			</DropdownMenuItem>
@@ -127,7 +143,7 @@ const getSubscriptionRoute = computed(() => {
 				</DropdownMenuItem>
 			</a>
 
-			<DropdownMenuSeparator v-if="false"/>
+			<DropdownMenuSeparator v-if="false" />
 
 			<DropdownMenuItem class="cursor-pointer" @click="logout">
 				<LogOutIcon class="mr-2 size-4" />
