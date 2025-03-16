@@ -24,7 +24,8 @@ class TransactionOutCreated extends Event
         public int $account_id,
         // #[StateId(CategoryState::class)]
         public int $category_id,
-        public CarbonImmutable $created_at,
+        public CarbonImmutable $datetime,
+        public ?array $metadata = [],
     ) {}
 
     public function apply(AccountState $account)
@@ -46,13 +47,16 @@ class TransactionOutCreated extends Event
             'balance' => $account->balance - $this->value,
         ]);
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'type' => 'OUT',
             'title' => $this->title,
             'value' => $this->value,
             'account_id' => $account->id,
             'category_id' => $this->category_id,
-            'created_at' => $this->created_at,
+            'datetime' => $this->datetime,
+            'metadata' => $this->metadata,
         ]);
+
+        return $transaction;
     }
 }

@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Events\TransactionOutCreated;
 use App\Events\TransactionOutDeleted;
+use App\Helper;
+use App\Http\Requests\StoreImportTransactionOutRequest;
 use App\Http\Requests\StoreTransactionOutRequest;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use EchoLabs\Prism\Enums\Provider;
 use EchoLabs\Prism\Prism;
 use EchoLabs\Prism\Schema\ArraySchema;
+use EchoLabs\Prism\Schema\EnumSchema;
 use EchoLabs\Prism\Schema\ObjectSchema;
 use EchoLabs\Prism\Schema\StringSchema;
 use EchoLabs\Prism\ValueObjects\Messages\Support\Image;
@@ -18,6 +22,7 @@ use EchoLabs\Prism\ValueObjects\Messages\UserMessage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -83,6 +88,7 @@ class TransactionOutController extends Controller
             'accounts' => $accounts,
             'transactions' => $transactions,
             'ai' => session()->get('ai'),
+            'file_path' => session()->get('file_path'),
         ]);
     }
 
@@ -95,7 +101,7 @@ class TransactionOutController extends Controller
             value: $input['value'],
             account_id: (int) $input['account'],
             category_id: (int) $input['category'],
-            created_at: now()->toImmutable(),
+            datetime: now()->toImmutable(),
         );
 
         return back();
@@ -112,12 +118,25 @@ class TransactionOutController extends Controller
         $fileBase64 = base64_encode($file->get());
         $fileMimeType = $file->getMimeType();
 
+        // store image not public
+        $filePath = $request->file('files')[0]->store('transactions');
+
+        $categories = Category::query()
+            ->ofWallet(auth('web')->user()->currentWallet)
+            ->out()
+            ->orderBy('name')
+            ->get();
+
         try {
             $schema = new ObjectSchema(
                 name: 'nota_fiscal',
                 description: 'A nota fiscal é um documento financeiro que contém uma informações sobre a compra e uma lista de itens.',
                 properties: [
                     new StringSchema('empresa', 'A empresa que emitiu a nota fiscal'),
+
+                    new StringSchema('titulo', 'Descrição curta do gasto'),
+                    new StringSchema('descricao', 'Descrição longa e detalhada do gasto'),
+
                     new ArraySchema(
                         name: 'itens',
                         description: 'Os itens da nota fiscal',
@@ -133,11 +152,17 @@ class TransactionOutController extends Controller
                             ],
                         ),
                     ),
+                    
                     new StringSchema('total', 'O total da nota fiscal'),
-                    new StringSchema('data', 'A data da nota fiscal'),
+                    new StringSchema('data', 'A data da nota fiscal no formato dd/mm/yyyy'),
+                    
                     new StringSchema('localizacao', 'A localização da nota fiscal'),
-                    new StringSchema('metodo_pagamento', 'O método de pagamento da nota fiscal'),
-                    new StringSchema('categoria', 'Tipo de gasto'),
+                    
+                    new EnumSchema('metodo_pagamento', 'O método de pagamento da nota fiscal', Transaction::METHODS),
+                    new StringSchema('metodo_pagamento_sugerido', 'O método de pagamento sugerido'),
+
+                    new EnumSchema('categoria', 'Tipo de gasto', $categories->pluck('name')->toArray()),
+                    new StringSchema('categoria_sugerida', 'Tipo de gasto sugerido'),
                 ],
                 requiredFields: [],
             );
@@ -153,12 +178,32 @@ class TransactionOutController extends Controller
                 ->generate();
 
             session()->flash('ai', $response->structured);
+            session()->flash('file_path', $filePath);
         } catch (Exception $e) {
             dd($e);
             Log::error($e);
 
             return back();
         }
+    }
+
+    public function confirm(StoreImportTransactionOutRequest $request)
+    {
+        $input = $request->validated();
+
+        TransactionOutCreated::fire(
+            title: $input['title'],
+            value: $input['value'],
+            account_id: (int) $input['account'],
+            category_id: (int) $input['category'],
+            datetime: $input['datetime'],
+            metadata: [
+                'ai_data' => $input['ai'],
+                'file_path' => $input['file_path'],
+            ],
+        );
+
+        return back();
     }
 
     public function destroy(Transaction $transaction)

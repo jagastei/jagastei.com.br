@@ -1,9 +1,6 @@
  	<script setup lang="ts">
-import UserNav from '@/Components/UserNav.vue';
 import { Button } from '@/Components/ui/button';
-import Nav, { type LinkProp } from '@/Components/Nav.vue';
 import { TooltipProvider } from '@/Components/ui/tooltip';
-import { Separator } from '@/Components/ui/separator';
 import { BellIcon, GripVerticalIcon, MenuIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
 import {
 	Sheet,
@@ -13,19 +10,20 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from '@/Components/ui/sheet';
-import NavMobile from '@/Components/NavMobile.vue';
-import { useStorage } from '@vueuse/core';
+import { useColorMode, useStorage } from '@vueuse/core';
 import { ScrollArea } from '@/Components/ui/scroll-area';
-import WalletSwitcher from '@/Components/WalletSwitcher.vue';
 import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
-import InviteDialog from '@/Components/InviteDialog.vue';
 import { onMounted, ref } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
+import DocNav, { DocLinkProp } from '@/Components/DocNav.vue';
+import DocNavMobile from '@/Components/DocNavMobile.vue';
 
 const user = usePage().props.auth.user;
 const { posthog } = usePostHog();
+
+useColorMode();
 
 const isCollapsed = useStorage('is-collapsed', false);
 
@@ -37,72 +35,51 @@ const onExpand = () => {
 	isCollapsed.value = false;
 };
 
-const links: LinkProp[] = [
+const links: DocLinkProp[] = [
 	{
-		title: 'Painel',
-		label: '',
-		icon: 'lucide:chart-pie',
-		route: route('dashboard'),
-		active: route().current('dashboard'),
-	},
-	// {
-	// 	title: 'Movimentações',
-	// 	label: '',
-	// 	icon: 'lucide:arrow-left-right',
-	// 	route: route('transactions.index'),
-	// 	active: route().current('transactions.index'),
-	// },
-	{
-		title: 'Entradas',
-		label: '',
-		icon: 'lucide:arrow-up',
-		route: route('transactions.in.index'),
-		active: route().current('transactions.in.index'),
+		title: 'Introdução',
+		icon: 'lucide:book-open-text',
+		type: 'link',
+		route: route('docs.intro'),
+		active: route().current('docs.intro'),
 	},
 	{
-		title: 'Saídas',
-		label: '',
-		icon: 'lucide:arrow-down',
-		route: route('transactions.out.index'),
-		active: route().current('transactions.out.index'),
+		title: 'Autenticação',
+		icon: 'lucide:key-round',
+		type: 'link',
+		route: route('docs.auth'),
+		active: route().current('docs.auth'),
 	},
 	{
-		title: 'Metas',
-		label: '',
-		icon: 'lucide:goal',
-		route: route('goals.index'),
-		active: route().current('goals.index'),
+		type: 'divider',
 	},
 	{
-		title: 'Orçamentos',
-		label: '',
-		icon: 'lucide:box',
-		route: route('budgets.index'),
-		active: route().current('budgets.index'),
-	},
-];
-
-const links2: LinkProp[] = [
-	// {
-	// 	title: 'Categorias',
-	// 	// label: '342',
-	// 	icon: 'lucide:tags',
-	// 	route: route('categories.index'),
-	// 	active: route().current('categories.index'),
-	// },
-	{
-		title: 'Cartões',
-		// label: '342',
-		icon: 'lucide:wallet-cards',
-		route: route('cards.index'),
-		active: route().current('cards.index'),
+		title: 'Movimentações',
+		icon: 'lucide:arrow-up-down',
+		type: 'link',
+		route: route('docs.transactions'),
+		active: route().current('docs.transactions'),
 	},
 	{
-		title: 'Contas  ',
-		// label: '972',
-		icon: 'lucide:piggy-bank',
-		route: route('accounts.index'),
-		active: route().current('accounts.index'),
+		title: 'Listar',
+		type: 'link',
+		method: 'get',
+		route: route('docs.transactions.list'),
+		active: route().current('docs.transactions.list'),
+	},
+	{
+		title: 'Criar',
+		type: 'link',
+		method: 'post',
+		route: route('docs.transactions.create'),
+		active: route().current('docs.transactions.create'),
+	},
+	{
+		title: 'Excluir',
+		type: 'link',
+		method: 'delete',
+		route: route('docs.transactions.destroy'),
+		active: route().current('docs.transactions.destroy'),
 	},
 ];
 
@@ -118,10 +95,12 @@ onMounted(() => {
 		supportDialog.value = true;
 	});
 
-	posthog.identify(user.id, {
-		email: user.email,
-		name: user.name,
-	});
+	if(user) {
+		posthog.identify(user.id, {
+			email: user.email,
+			name: user.name,
+		});
+	}
 });
 </script>
 
@@ -152,8 +131,8 @@ onMounted(() => {
 						</Button>
 					</SheetTrigger>
 
-					<SheetContent side="left" class="px-4">
-						<SheetHeader>
+					<SheetContent side="left" class="px-0">
+						<SheetHeader class="px-6">
 							<SheetTitle>
 								<img
 									src="@/../images/green-diamond.svg"
@@ -168,11 +147,7 @@ onMounted(() => {
 							<SheetDescription></SheetDescription>
 						</SheetHeader>
 
-						<NavMobile :is-collapsed="false" :links="links" />
-						<div class="-mx-4">
-							<Separator />
-						</div>
-						<NavMobile :is-collapsed="false" :links="links2" />
+						<DocNavMobile :is-collapsed="false" :links="links" />
 					</SheetContent>
 				</Sheet>
 
@@ -192,15 +167,13 @@ onMounted(() => {
 					<div class="flex h-full">
 						<div
 							:class="[
-								'relative hidden md:flex flex-col border-r transition-all duration-300 ease-in-out',
+								'py-6 relative hidden md:flex flex-col border-r transition-all duration-300 ease-in-out',
 								isCollapsed
 									? 'min-w-[64px] max-w-[64px]'
 									: 'min-w-[280px] max-w-[280px]',
 							]"
 						>
-							<Nav :is-collapsed="isCollapsed" :links="links" />
-							<Separator />
-							<Nav :is-collapsed="isCollapsed" :links="links2" />
+							<DocNav :is-collapsed="isCollapsed" :links="links" />
 
 							<div v-if="false" class="mt-auto p-6">
                             </div>

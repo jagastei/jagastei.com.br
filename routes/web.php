@@ -26,10 +26,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/documentacao', function () {
-    return Inertia::render('Docs');
-});
-
 Route::redirect('/convite', '/register');
 
 Route::middleware('auth')->group(function () {
@@ -52,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/saidas', [TransactionOutController::class, 'index'])->name('transactions.out.index');
     Route::post('/saidas', [TransactionOutController::class, 'store'])->name('transactions.out.store');
     Route::post('/saidas/importar', [TransactionOutController::class, 'import'])->name('transactions.out.import');
+    Route::post('/saidas/confirmar', [TransactionOutController::class, 'confirm'])->name('transactions.out.confirm');
     Route::delete('/saidas/{transaction}', [TransactionOutController::class, 'destroy'])->name('transactions.out.destroy');
 
     Route::get('/metas', [GoalController::class, 'index'])->name('goals.index');
@@ -92,3 +89,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/docs.php';

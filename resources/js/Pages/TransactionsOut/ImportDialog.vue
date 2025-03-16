@@ -12,7 +12,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-import { Check, ChevronsUpDown, Loader2, CirclePlusIcon } from 'lucide-vue-next';
+import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -20,7 +20,6 @@ import {
 	CommandInput,
 	CommandItem,
 	CommandList,
-	CommandSeparator,
 } from '@/Components/ui/command';
 import {
 	Popover,
@@ -33,7 +32,7 @@ import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
 import { Category } from '@/Components/CategoryTable/columns';
 import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
-import InputError from '@/Components/InputError.vue';
+import UploadFile from '@/Components/UploadFile.vue';
 
 const props = defineProps<{
 	categories: Category[];
@@ -66,6 +65,39 @@ const onSelected = (ev: any) => {
 	categoryDialogOpen.value = false;
 };
 
+const selectCategoryByName = (name: string) => {
+	form.category = props.categories.find((c) => c.name === name);
+};
+
+const uploadForm = useForm<{
+	files: File[];
+}>({
+	files: [],
+});
+
+const ai = ref<any>(null);
+const file_path = ref<string | null>(null);
+
+const handleUpload = () => {
+	uploadForm.post(route('transactions.out.import'), {
+		preserveScroll: true,
+		preserveState: true,
+		forceFormData: true,
+		onSuccess: (response) => {
+			uploadForm.files = [];
+			ai.value = response.props.ai;
+			file_path.value = response.props.file_path;
+
+            console.log(response.props.ai);
+
+            form.title = response.props.ai.titulo;
+            form.value = response.props.ai.total;
+            selectCategoryByName(response.props.ai.categoria);
+            form.datetime = response.props.ai.data;
+		},
+	});
+};
+
 const form = useForm<{
 	type: 'OUT';
 	title: string;
@@ -78,6 +110,7 @@ const form = useForm<{
 	value: 0,
 	category: undefined,
 	account: undefined,
+    datetime: undefined,
 });
 
 const submit = () => {
@@ -86,6 +119,8 @@ const submit = () => {
 			...data,
 			category: data.category?.id,
 			account: data.account?.id,
+            ai: ai.value,
+            file_path: file_path.value,
 		}))
 		.post(route('transactions.out.store'), {
 			onSuccess: () => {
@@ -105,7 +140,49 @@ const onClose = () => {
 </script>
 
 <template>
-	<Dialog :open="open">
+    <Dialog v-if="!ai" :open="open">
+        <DialogTrigger as-child>
+            <slot />
+        </DialogTrigger>
+
+        <DialogContent class="sm:max-w-[425px]" @interactOutside="onClose"
+        @escapeKeyDown="onClose">
+            <DialogHeader>
+                <DialogTitle>Importar registro</DialogTitle>
+                <DialogDescription>
+                    Faça o upload de uma notinha fiscal.
+                </DialogDescription>
+            </DialogHeader>
+            
+            <div class="py-2">
+                <UploadFile
+                    v-model="uploadForm.files"
+                    :preview-max-height="319"
+                    :loading="uploadForm.processing"
+                />
+            </div>
+            <DialogFooter>
+                <Button
+                    v-if="!uploadForm.processing && uploadForm.files.length > 0"
+                    variant="outline"
+                    @click="uploadForm.files = []"
+                >
+                    Usar outra imagem
+                </Button>
+
+                <Button
+                    type="submit"
+                    @click="handleUpload"
+                    :disabled="uploadForm.files.length === 0 || uploadForm.processing"
+                >
+                    <Loader2 v-if="uploadForm.processing" class="size-4 mr-2 animate-spin" />
+                    Enviar
+                </Button>
+            </DialogFooter>
+        </DialogContent>
+    </Dialog>
+    
+	<Dialog v-else :open="open">
 		<DialogTrigger as-child>
 			<slot />
 		</DialogTrigger>
@@ -235,33 +312,15 @@ const onClose = () => {
 										</CommandItem>
 									</CommandGroup>
 								</CommandList>
-								<CommandSeparator />
-									<CommandList>
-										<CommandGroup>
-											<!-- <DialogTrigger as-child> -->
-												<CommandItem
-													value="create-category"
-													
-												>
-													<CirclePlusIcon class="mr-2 h-5 w-5" />
-													Adicionar categoria
-												</CommandItem>
-											<!-- </DialogTrigger> -->
-										</CommandGroup>
-									</CommandList>
 							</Command>
 						</PopoverContent>
 					</Popover>
-
-					<InputError class="mt-2" :message="form.errors.category" />
 				</div>
 
 				<div class="flex flex-col">
 					<Label for="account">Conta</Label>
 
 					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
-
-					<InputError class="mt-2" :message="form.errors.account" />
 				</div>
 			</div>
 			<DialogFooter>

@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Helper;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTransactionOutRequest extends FormRequest
+class StoreImportTransactionOutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +24,8 @@ class StoreTransactionOutRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'ai' => ['required', 'array'],
+            'file_path' => ['required', 'string'],
             'title' => ['nullable', 'string', 'min:2', 'max:30'],
             'description' => ['nullable', 'string', 'min:2', 'max:255'],
             'value' => ['required', 'integer', 'min:0'],
@@ -30,6 +33,7 @@ class StoreTransactionOutRequest extends FormRequest
             'account' => ['required', 'exists:accounts,id,wallet_id,'.auth('web')->user()->currentWallet->id],
             'method' => ['nullable', 'in:CASH,CARD,TED,PIX,OTHER,UNKNOWN'],
             'card' => ['nullable', 'exists:cards,id,wallet_id,'.auth('web')->user()->currentWallet->id],
+            'datetime' => ['required'],
         ];
     }
 
@@ -43,6 +47,7 @@ class StoreTransactionOutRequest extends FormRequest
         $data = $this->all();
 
         $data['value'] = Helper::extractNumbersFromString($data['value'], forceInteger: true);
+        $data['datetime'] = Carbon::createFromFormat('d/m/Y', $data['datetime'])->toImmutable();
 
         return $data;
     }

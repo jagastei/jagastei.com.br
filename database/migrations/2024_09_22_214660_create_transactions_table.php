@@ -21,6 +21,8 @@ return new class extends Migration
             $table->snowflake('account_id')->index();
             $table->enum('method', ['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN'])->nullable();
             $table->snowflake('card_id')->index()->nullable();
+            $table->json('metadata')->nullable();
+            $table->timestamp('datetime')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,6 +18,15 @@ class Transaction extends Model
 
     protected $keyType = 'string';
 
+    public const METHODS = [
+        'CASH',
+        'CARD',
+        'TED',
+        'PIX',
+        'OTHER',
+        'UNKNOWN',
+    ];
+
     protected $fillable = [
         'title',
         'type',
@@ -26,15 +35,19 @@ class Transaction extends Model
         'account_id',
         'method',
         'card_id',
+        'metadata',
+        'datetime',
         'created_at',
     ];
 
     protected $casts = [
+        'metadata' => 'array',
+        'datetime' => 'datetime',
     ];
 
     protected $appends = [
         'formatted_value',
-        'formatted_created_at',
+        'formatted_datetime',
     ];
 
     public function getFormattedValueAttribute(): string
@@ -42,9 +55,23 @@ class Transaction extends Model
         return Helper::formatMoney($this->value);
     }
 
-    public function getFormattedCreatedAtAttribute(): string
+    public function getFormattedDatetimeAttribute(): string
     {
-        return $this->created_at->format('d/m/Y H:i');
+        return $this->datetime->format('d/m/Y H:i');
+    }
+
+    public function getMetadata(?string $key = null): array|string|null
+    {
+        if ($key) {
+            return $this->metadata[$key] ?? null;
+        }
+
+        return $this->metadata;
+    }
+
+    public function setMetadata(string $key, mixed $value): void
+    {
+        $this->metadata[$key] = $value;
     }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder

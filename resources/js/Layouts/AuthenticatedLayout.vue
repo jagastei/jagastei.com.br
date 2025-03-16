@@ -206,14 +206,14 @@ onMounted(() => {
 					<div class="flex h-full">
 						<div
 							:class="[
-								'relative hidden md:flex flex-col border-r transition-all duration-300 ease-in-out',
+								'py-6 relative hidden md:flex flex-col border-r transition-all duration-300 ease-in-out',
 								isCollapsed
 									? 'min-w-[64px] max-w-[64px]'
 									: 'min-w-[280px] max-w-[280px]',
 							]"
 						>
 							<Nav :is-collapsed="isCollapsed" :links="links" />
-							<Separator />
+							<Separator class="my-6" />
 							<Nav :is-collapsed="isCollapsed" :links="links2" />
 
 							<div v-if="false" class="mt-auto p-6">

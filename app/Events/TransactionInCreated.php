@@ -24,7 +24,7 @@ class TransactionInCreated extends Event
         public int $account_id,
         // #[StateId(CategoryState::class)]
         public int $category_id,
-        public CarbonImmutable $created_at,
+        public CarbonImmutable $datetime,
     ) {}
 
     public function apply(AccountState $accountState)
@@ -52,7 +52,7 @@ class TransactionInCreated extends Event
             'value' => $this->value,
             'account_id' => $account->id,
             'category_id' => $this->category_id,
-            'created_at' => $this->created_at,
+            'datetime' => $this->datetime,
         ]);
     }
 }

@@ -28,7 +28,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $fillable = [
-        'identifier',
         'name',
         'email',
         'password',
@@ -50,18 +49,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'trial_ends_at' => 'datetime',
             'metadata' => 'array',
         ];
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        static::creating(function (User $user) {
-            $user->identifier = Str::random(7);
-
-            $user->locale = 'pt-BR';
-            $user->currency = 'BRL';
-        });
     }
 
     protected static function booted(): void

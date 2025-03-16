@@ -8,33 +8,37 @@ import {
 	TooltipTrigger,
 } from '@/Components/ui/tooltip';
 import { Link } from '@inertiajs/vue3';
+import Separator from './ui/separator/Separator.vue';
 
-export interface LinkProp {
-	title: string;
-	label?: string;
-	icon: string;
+export interface DocLinkProp {
+	title?: string;
+	icon?: string;
+	type: 'link' | 'divider';
+	method?: 'get' | 'post' | 'put' | 'delete';
 	route?: string;
-	active: boolean;
+	active?: boolean;
 }
 
-export interface NavProps {
+export interface DocNavProps {
 	isCollapsed: boolean;
-	links: LinkProp[];
+	links: DocLinkProp[];
 }
 
-defineProps<NavProps>();
+defineProps<DocNavProps>();
 </script>
 
 <template>
 	<div :data-collapsed="isCollapsed" class="group flex flex-col">
 		<nav
-			class="grid gap-2 px-6 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2"
+			class="grid gap-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2"
 		>
-			<template v-for="(link, index) of links">
-				<Tooltip v-if="isCollapsed" :key="`1-${index}`" :delay-duration="0">
+			<template v-for="link of links" :key="link.route">
+
+				<Separator v-if="link.type === 'divider'" class="my-6" />
+
+				<Tooltip v-if="link.type === 'link' && isCollapsed" :delay-duration="0">
 					<TooltipTrigger as-child>
-						<Link
-							:href="link.route ? link.route : '#'"
+						<div
 							:class="
 								cn(
 									buttonVariants({
@@ -47,22 +51,17 @@ defineProps<NavProps>();
 								)
 							"
 						>
-							<Icon :icon="link.icon" class="size-4" />
+							<Icon v-if="link.icon" :icon="link.icon" class="size-4" />
 							<span class="sr-only">{{ link.title }}</span>
-						</Link>
+						</div>
 					</TooltipTrigger>
 					<TooltipContent side="right" class="ml-1 flex items-center gap-4">
 						{{ link.title }}
-						<span v-if="link.label" class="ml-auto text-muted-foreground">
-							{{ link.label }}
-						</span>
 					</TooltipContent>
 				</Tooltip>
 
-				<Link
-					v-else
-					:key="`2-${index}`"
-					:href="link.route ? link.route : '#'"
+				<Link v-if="link.type === 'link' && !isCollapsed"
+					:href="link.route!"
 					:class="
 						cn(
 							buttonVariants({
@@ -71,20 +70,23 @@ defineProps<NavProps>();
 							}),
 							link.active &&
 								'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
-							'justify-start'
+							'mx-6 justify-start'
 						)
 					"
 				>
-					<Icon :icon="link.icon" class="mr-2 size-4" />
+					<Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
-					<span
-						v-if="link.label"
-						:class="cn('ml-auto', link.active && 'text-background dark:text-white')"
-					>
-						{{ link.label }}
-					</span>
-				</Link>
-			</template>
+
+					<span v-if="link.method" :class="['ml-auto uppercase text-xs font-medium', {
+						'text-green-500': link.method === 'get',
+						'text-blue-500': link.method === 'post',
+						'text-yellow-500': link.method === 'put',
+						'text-red-500': link.method === 'delete',
+					}]"
+					>{{ link.method }}</span
+				>
+			</Link>
+		</template>
 		</nav>
 	</div>
 </template>
