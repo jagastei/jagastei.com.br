@@ -34,6 +34,26 @@ import { Category } from '@/Components/CategoryTable/columns';
 import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
 import UploadFile from '@/Components/UploadFile.vue';
 
+interface AI {
+	empresa: string;
+	titulo: string;
+	descricao: string;
+	itens: {
+		descricao: string;
+		quantidade: number;
+		valor: number;
+		total: number;
+		categoria: string;
+	};
+	total: number;
+	data: string;
+	localizacao: string;
+	metodo_pagamento: string;
+	metodo_pagamento_sugerido: string;
+	categoria: string;
+	categoria_sugerida: string;
+}
+
 const props = defineProps<{
 	categories: Category[];
 	accounts: Account[];
@@ -75,7 +95,7 @@ const uploadForm = useForm<{
 	files: [],
 });
 
-const ai = ref<any>(null);
+const ai = ref<AI | null>(null);
 const file_path = ref<string | null>(null);
 
 const handleUpload = () => {
@@ -85,15 +105,15 @@ const handleUpload = () => {
 		forceFormData: true,
 		onSuccess: (response) => {
 			uploadForm.files = [];
-			ai.value = response.props.ai;
-			file_path.value = response.props.file_path;
+			ai.value = response.props.ai as AI;
+			file_path.value = response.props.file_path as string | null;
 
 			console.log(response.props.ai);
 
-			form.title = response.props.ai.titulo;
-			form.value = response.props.ai.total;
-			selectCategoryByName(response.props.ai.categoria);
-			form.datetime = response.props.ai.data;
+			form.title = ai.value.titulo as string;
+			form.value = ai.value.total as number;
+			selectCategoryByName(ai.value.categoria as string);
+			form.datetime = ai.value.data as string;
 		},
 	});
 };
@@ -104,6 +124,7 @@ const form = useForm<{
 	value: number;
 	category: Category | undefined;
 	account: Account | undefined;
+	datetime: string | undefined;
 }>({
 	type: 'OUT',
 	title: '',
