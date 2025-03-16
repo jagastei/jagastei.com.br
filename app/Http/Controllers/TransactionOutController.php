@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\TransactionOutCreated;
 use App\Events\TransactionOutDeleted;
-use App\Helper;
 use App\Http\Requests\StoreImportTransactionOutRequest;
 use App\Http\Requests\StoreTransactionOutRequest;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
-use Carbon\Carbon;
 use EchoLabs\Prism\Enums\Provider;
 use EchoLabs\Prism\Prism;
 use EchoLabs\Prism\Schema\ArraySchema;
@@ -22,7 +20,6 @@ use EchoLabs\Prism\ValueObjects\Messages\UserMessage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -152,12 +149,12 @@ class TransactionOutController extends Controller
                             ],
                         ),
                     ),
-                    
+
                     new StringSchema('total', 'O total da nota fiscal'),
                     new StringSchema('data', 'A data da nota fiscal no formato dd/mm/yyyy'),
-                    
+
                     new StringSchema('localizacao', 'A localização da nota fiscal'),
-                    
+
                     new EnumSchema('metodo_pagamento', 'O método de pagamento da nota fiscal', Transaction::METHODS),
                     new StringSchema('metodo_pagamento_sugerido', 'O método de pagamento sugerido'),
 
