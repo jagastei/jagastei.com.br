@@ -17,6 +17,24 @@ class Category extends Model
     use HasSnowflakes;
     use SoftDeletes;
 
+    public const IN_RECOMMENDED = [
+        'Salário' => '#4CAF50',
+        'Investimentos' => '#2196F3',
+        'Freelance' => '#9C27B0',
+    ];
+
+    public const OUT_RECOMMENDED = [
+        'Alimentação' => '#FF5252',
+        'Transporte' => '#4CAF50',
+        'Moradia' => '#2196F3',
+        'Entretenimento' => '#FFC107',
+        'Saúde' => '#E91E63',
+        'Educação' => '#3F51B5',
+        'Roupas' => '#009688',
+        'Assinaturas' => '#F44336',
+        'Pets' => '#8BC34A',
+    ];
+
     protected $fillable = [
         'wallet_id',
         'name',

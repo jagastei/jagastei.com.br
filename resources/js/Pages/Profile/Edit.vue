@@ -25,9 +25,6 @@ const exportData = () => {
 			<div class="flex items-center justify-between">
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Minha conta</h2>
-					<!-- <p class="text-muted-foreground">
-						Here&apos;s a list of your tasks for this month!
-					</p> -->
 				</div>
 
 				<div class="flex items-center space-x-2">

@@ -112,6 +112,15 @@ const links2: LinkProp[] = [
 	},
 ];
 
+const links3: LinkProp[] = [
+	{
+		title: 'Configurações',
+		icon: 'lucide:settings',
+		route: route('wallets.show'),
+		active: route().current('wallets.show'),
+	},
+];
+
 const inviteDialog = ref(false);
 const feedbackDialog = ref(false);
 const supportDialog = ref(false);
@@ -185,6 +194,10 @@ onMounted(() => {
 							<Separator />
 						</div>
 						<NavMobile :is-collapsed="false" :links="links2" />
+						<div class="-mx-4">
+							<Separator />
+						</div>
+						<NavMobile :is-collapsed="false" :links="links3" />
 					</SheetContent>
 				</Sheet>
 
@@ -236,6 +249,8 @@ onMounted(() => {
 							<Nav :is-collapsed="isCollapsed" :links="links" />
 							<Separator class="my-6" />
 							<Nav :is-collapsed="isCollapsed" :links="links2" />
+							<Separator class="my-6" />
+							<Nav :is-collapsed="isCollapsed" :links="links3" />
 
 							<div v-if="false" class="mt-auto p-6"></div>
 

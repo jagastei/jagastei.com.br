@@ -13,6 +13,7 @@ use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TransactionInController;
 use App\Http\Controllers\TransactionOutController;
 use App\Http\Controllers\WalletController;
+use App\Http\Middleware\Subscribed;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,48 +33,51 @@ Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
     // wallets
-    // Route::get('/carteiras', [WalletController::class, 'index'])->name('wallets.index');
-    Route::post('/carteiras', [WalletController::class, 'store'])->name('wallets.store');
-    Route::delete('/carteiras/{wallet}', [WalletController::class, 'destroy'])->name('wallets.destroy');
+    Route::post('/carteiras', [WalletController::class, 'store'])->name('wallets.store')->middleware([Subscribed::class]);
+    
+    // wallet
+    Route::get('/carteira', [WalletController::class, 'show'])->name('wallets.show');
+    Route::put('/carteira', [WalletController::class, 'update'])->name('wallets.update');
+    Route::delete('/carteira', [WalletController::class, 'destroy'])->name('wallets.destroy');
 
     Route::put('/trocar-carteira', [WalletController::class, 'switch'])->name('wallets.switch');
 
     // transaction in
     Route::get('/entradas', [TransactionInController::class, 'index'])->name('transactions.in.index');
-    Route::post('/entradas', [TransactionInController::class, 'store'])->name('transactions.in.store');
-    Route::post('/entradas/importar', [TransactionInController::class, 'import'])->name('transactions.in.import');
-    Route::delete('/entradas/{transaction}', [TransactionInController::class, 'destroy'])->name('transactions.in.destroy');
+    Route::post('/entradas', [TransactionInController::class, 'store'])->name('transactions.in.store')->middleware([Subscribed::class]);
+    Route::post('/entradas/importar', [TransactionInController::class, 'import'])->name('transactions.in.import')->middleware([Subscribed::class]);
+    Route::delete('/entradas/{transaction}', [TransactionInController::class, 'destroy'])->name('transactions.in.destroy')->middleware([Subscribed::class]);
 
     // transaction out
     Route::get('/saidas', [TransactionOutController::class, 'index'])->name('transactions.out.index');
-    Route::post('/saidas', [TransactionOutController::class, 'store'])->name('transactions.out.store');
-    Route::post('/saidas/importar', [TransactionOutController::class, 'import'])->name('transactions.out.import');
-    Route::post('/saidas/confirmar', [TransactionOutController::class, 'confirm'])->name('transactions.out.confirm');
-    Route::delete('/saidas/{transaction}', [TransactionOutController::class, 'destroy'])->name('transactions.out.destroy');
+    Route::post('/saidas', [TransactionOutController::class, 'store'])->name('transactions.out.store')->middleware([Subscribed::class]);
+    Route::post('/saidas/importar', [TransactionOutController::class, 'import'])->name('transactions.out.import')->middleware([Subscribed::class]);
+    Route::post('/saidas/confirmar', [TransactionOutController::class, 'confirm'])->name('transactions.out.confirm')->middleware([Subscribed::class]);
+    Route::delete('/saidas/{transaction}', [TransactionOutController::class, 'destroy'])->name('transactions.out.destroy')->middleware([Subscribed::class]);
 
     Route::get('/metas', [GoalController::class, 'index'])->name('goals.index');
-    Route::post('/metas', [GoalController::class, 'store'])->name('goals.store');
-    Route::put('/metas/{goal}', [GoalController::class, 'update'])->name('goals.update');
-    Route::delete('/metas/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy');
+    Route::post('/metas', [GoalController::class, 'store'])->name('goals.store')->middleware([Subscribed::class]);
+    Route::put('/metas/{goal}', [GoalController::class, 'update'])->name('goals.update')->middleware([Subscribed::class]);
+    Route::delete('/metas/{goal}', [GoalController::class, 'destroy'])->name('goals.destroy')->middleware([Subscribed::class]);
 
     Route::get('/orcamentos', [BudgetController::class, 'index'])->name('budgets.index');
-    Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store');
-    Route::put('/orcamentos/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
-    Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
+    Route::post('/orcamentos', [BudgetController::class, 'store'])->name('budgets.store')->middleware([Subscribed::class]);
+    Route::put('/orcamentos/{budget}', [BudgetController::class, 'update'])->name('budgets.update')->middleware([Subscribed::class]);
+    Route::delete('/orcamentos/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy')->middleware([Subscribed::class]);
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
-    Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store');
-    Route::put('/contas/{account}', [AccountController::class, 'update'])->name('accounts.update');
-    Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy');
+    Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store')->middleware([Subscribed::class]);
+    Route::put('/contas/{account}', [AccountController::class, 'update'])->name('accounts.update')->middleware([Subscribed::class]);
+    Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy')->middleware([Subscribed::class]);
 
     Route::get('/cartoes', [CardController::class, 'index'])->name('cards.index');
-    Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store');
-    Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update');
-    Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
+    Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store')->middleware([Subscribed::class]);
+    Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update')->middleware([Subscribed::class]);
+    Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy')->middleware([Subscribed::class]);
 
     // Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
-    Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store');
-    Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store')->middleware([Subscribed::class]);
+    Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy')->middleware([Subscribed::class]);
 
     Route::get('/minha-conta', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/minha-conta', [ProfileController::class, 'update'])->name('profile.update');

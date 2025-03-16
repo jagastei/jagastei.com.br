@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\StripeEventListener;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
+use Laravel\Cashier\Events\WebhookReceived;
 use PostHog\PostHog;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Cashier::keepPastDueSubscriptionsActive();
         // Cashier::keepIncompleteSubscriptionsActive();
+
+        Event::listen(WebhookReceived::class, StripeEventListener::class);
 
         PostHog::init(config('services.posthog.key'), [
             'host' => config('services.posthog.host'),

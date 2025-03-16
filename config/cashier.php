@@ -122,4 +122,6 @@ return [
 
     'logger' => env('CASHIER_LOGGER'),
 
+    'product' => env('STRIPE_PRODUCT_ID'),
+    'price' => env('STRIPE_PRICE_ID'),
 ];

@@ -13,6 +13,10 @@ class StripeController extends Controller
             return redirect()->route('subscription.checkout');
         }
 
+        if (! $request->user()->subscribed(config('cashier.product'))) {
+            return redirect()->route('subscription.checkout');
+        }
+
         return $request->user()->redirectToBillingPortal(route('dashboard'));
     }
 
@@ -20,7 +24,7 @@ class StripeController extends Controller
     {
         try {
             return $request->user()
-                ->newSubscription('prod_RvrAGkmPd6GfFt', 'price_1R1zSbChkwYDN5dfkxKF3ec1')
+                ->newSubscription(config('cashier.product'), config('cashier.price'))
                 ->allowPromotionCodes()
                 ->checkout([
                     'success_url' => route('subscription.checkout-success'),
