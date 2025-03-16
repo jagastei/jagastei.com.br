@@ -33,7 +33,6 @@ defineProps<DocNavProps>();
 			class="grid gap-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2"
 		>
 			<template v-for="link of links" :key="link.route">
-
 				<Separator v-if="link.type === 'divider'" class="my-6" />
 
 				<Tooltip v-if="link.type === 'link' && isCollapsed" :delay-duration="0">
@@ -60,7 +59,8 @@ defineProps<DocNavProps>();
 					</TooltipContent>
 				</Tooltip>
 
-				<Link v-if="link.type === 'link' && !isCollapsed"
+				<Link
+					v-if="link.type === 'link' && !isCollapsed"
 					:href="link.route!"
 					:class="
 						cn(
@@ -77,16 +77,21 @@ defineProps<DocNavProps>();
 					<Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
 
-					<span v-if="link.method" :class="['ml-auto uppercase text-xs font-medium', {
-						'text-green-500': link.method === 'get',
-						'text-blue-500': link.method === 'post',
-						'text-yellow-500': link.method === 'put',
-						'text-red-500': link.method === 'delete',
-					}]"
-					>{{ link.method }}</span
-				>
-			</Link>
-		</template>
+					<span
+						v-if="link.method"
+						:class="[
+							'ml-auto uppercase text-xs font-medium',
+							{
+								'text-green-500': link.method === 'get',
+								'text-blue-500': link.method === 'post',
+								'text-yellow-500': link.method === 'put',
+								'text-red-500': link.method === 'delete',
+							},
+						]"
+						>{{ link.method }}</span
+					>
+				</Link>
+			</template>
 		</nav>
 	</div>
 </template>

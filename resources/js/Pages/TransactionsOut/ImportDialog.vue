@@ -88,12 +88,12 @@ const handleUpload = () => {
 			ai.value = response.props.ai;
 			file_path.value = response.props.file_path;
 
-            console.log(response.props.ai);
+			console.log(response.props.ai);
 
-            form.title = response.props.ai.titulo;
-            form.value = response.props.ai.total;
-            selectCategoryByName(response.props.ai.categoria);
-            form.datetime = response.props.ai.data;
+			form.title = response.props.ai.titulo;
+			form.value = response.props.ai.total;
+			selectCategoryByName(response.props.ai.categoria);
+			form.datetime = response.props.ai.data;
 		},
 	});
 };
@@ -110,7 +110,7 @@ const form = useForm<{
 	value: 0,
 	category: undefined,
 	account: undefined,
-    datetime: undefined,
+	datetime: undefined,
 });
 
 const submit = () => {
@@ -119,8 +119,8 @@ const submit = () => {
 			...data,
 			category: data.category?.id,
 			account: data.account?.id,
-            ai: ai.value,
-            file_path: file_path.value,
+			ai: ai.value,
+			file_path: file_path.value,
 		}))
 		.post(route('transactions.out.store'), {
 			onSuccess: () => {
@@ -140,48 +140,51 @@ const onClose = () => {
 </script>
 
 <template>
-    <Dialog v-if="!ai" :open="open">
-        <DialogTrigger as-child>
-            <slot />
-        </DialogTrigger>
+	<Dialog v-if="!ai" :open="open">
+		<DialogTrigger as-child>
+			<slot />
+		</DialogTrigger>
 
-        <DialogContent class="sm:max-w-[425px]" @interactOutside="onClose"
-        @escapeKeyDown="onClose">
-            <DialogHeader>
-                <DialogTitle>Importar registro</DialogTitle>
-                <DialogDescription>
-                    Faça o upload de uma notinha fiscal.
-                </DialogDescription>
-            </DialogHeader>
-            
-            <div class="py-2">
-                <UploadFile
-                    v-model="uploadForm.files"
-                    :preview-max-height="319"
-                    :loading="uploadForm.processing"
-                />
-            </div>
-            <DialogFooter>
-                <Button
-                    v-if="!uploadForm.processing && uploadForm.files.length > 0"
-                    variant="outline"
-                    @click="uploadForm.files = []"
-                >
-                    Usar outra imagem
-                </Button>
+		<DialogContent
+			class="sm:max-w-[425px]"
+			@interactOutside="onClose"
+			@escapeKeyDown="onClose"
+		>
+			<DialogHeader>
+				<DialogTitle>Importar registro</DialogTitle>
+				<DialogDescription>
+					Faça o upload de uma notinha fiscal.
+				</DialogDescription>
+			</DialogHeader>
 
-                <Button
-                    type="submit"
-                    @click="handleUpload"
-                    :disabled="uploadForm.files.length === 0 || uploadForm.processing"
-                >
-                    <Loader2 v-if="uploadForm.processing" class="size-4 mr-2 animate-spin" />
-                    Enviar
-                </Button>
-            </DialogFooter>
-        </DialogContent>
-    </Dialog>
-    
+			<div class="py-2">
+				<UploadFile
+					v-model="uploadForm.files"
+					:preview-max-height="319"
+					:loading="uploadForm.processing"
+				/>
+			</div>
+			<DialogFooter>
+				<Button
+					v-if="!uploadForm.processing && uploadForm.files.length > 0"
+					variant="outline"
+					@click="uploadForm.files = []"
+				>
+					Usar outra imagem
+				</Button>
+
+				<Button
+					type="submit"
+					@click="handleUpload"
+					:disabled="uploadForm.files.length === 0 || uploadForm.processing"
+				>
+					<Loader2 v-if="uploadForm.processing" class="size-4 mr-2 animate-spin" />
+					Enviar
+				</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Dialog>
+
 	<Dialog v-else :open="open">
 		<DialogTrigger as-child>
 			<slot />

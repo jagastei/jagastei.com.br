@@ -131,19 +131,16 @@ const resultList = computed(() => {
 					</CommandGroup>
 				</CommandList>
 				<CommandSeparator />
-					<CommandList>
-						<CommandGroup>
-							<!-- <DialogTrigger as-child> -->
-								<CommandItem
-									value="create-category"
-									
-								>
-									<CirclePlusIcon class="mr-2 h-5 w-5" />
-									Adicionar conta
-								</CommandItem>
-							<!-- </DialogTrigger> -->
-						</CommandGroup>
-					</CommandList>
+				<CommandList>
+					<CommandGroup>
+						<!-- <DialogTrigger as-child> -->
+						<CommandItem value="create-category">
+							<CirclePlusIcon class="mr-2 h-5 w-5" />
+							Adicionar conta
+						</CommandItem>
+						<!-- </DialogTrigger> -->
+					</CommandGroup>
+				</CommandList>
 			</Command>
 		</PopoverContent>
 	</Popover>

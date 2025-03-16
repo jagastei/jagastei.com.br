@@ -79,7 +79,10 @@ const balanceData = computed<{
 				<FlaskConical class="size-4" />
 				<AlertTitle>Você está no período de avaliação</AlertTitle>
 				<AlertDescription class="text-muted-foreground">
-					Aproveite todos os recursos gratuitamente até {{ new Date($page.props.auth.user.trial_ends_at).toLocaleDateString('pt-BR') }}
+					Aproveite todos os recursos gratuitamente até
+					{{
+						new Date($page.props.auth.user.trial_ends_at).toLocaleDateString('pt-BR')
+					}}
 				</AlertDescription>
 			</Alert>
 		</div>

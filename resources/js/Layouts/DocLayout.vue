@@ -1,7 +1,13 @@
- 	<script setup lang="ts">
+<script setup lang="ts">
 import { Button } from '@/Components/ui/button';
 import { TooltipProvider } from '@/Components/ui/tooltip';
-import { BellIcon, GripVerticalIcon, MenuIcon, SearchIcon, SparklesIcon } from 'lucide-vue-next';
+import {
+	BellIcon,
+	GripVerticalIcon,
+	MenuIcon,
+	SearchIcon,
+	SparklesIcon,
+} from 'lucide-vue-next';
 import {
 	Sheet,
 	SheetContent,
@@ -95,7 +101,7 @@ onMounted(() => {
 		supportDialog.value = true;
 	});
 
-	if(user) {
+	if (user) {
 		posthog.identify(user.id, {
 			email: user.email,
 			name: user.name,
@@ -175,8 +181,7 @@ onMounted(() => {
 						>
 							<DocNav :is-collapsed="isCollapsed" :links="links" />
 
-							<div v-if="false" class="mt-auto p-6">
-                            </div>
+							<div v-if="false" class="mt-auto p-6"></div>
 
 							<button
 								@click="isCollapsed = !isCollapsed"

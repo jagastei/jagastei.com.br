@@ -12,7 +12,12 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-import { Check, ChevronsUpDown, Loader2, CirclePlusIcon } from 'lucide-vue-next';
+import {
+	Check,
+	ChevronsUpDown,
+	Loader2,
+	CirclePlusIcon,
+} from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -236,19 +241,16 @@ const onClose = () => {
 									</CommandGroup>
 								</CommandList>
 								<CommandSeparator />
-									<CommandList>
-										<CommandGroup>
-											<!-- <DialogTrigger as-child> -->
-												<CommandItem
-													value="create-category"
-													
-												>
-													<CirclePlusIcon class="mr-2 h-5 w-5" />
-													Adicionar categoria
-												</CommandItem>
-											<!-- </DialogTrigger> -->
-										</CommandGroup>
-									</CommandList>
+								<CommandList>
+									<CommandGroup>
+										<!-- <DialogTrigger as-child> -->
+										<CommandItem value="create-category">
+											<CirclePlusIcon class="mr-2 h-5 w-5" />
+											Adicionar categoria
+										</CommandItem>
+										<!-- </DialogTrigger> -->
+									</CommandGroup>
+								</CommandList>
 							</Command>
 						</PopoverContent>
 					</Popover>

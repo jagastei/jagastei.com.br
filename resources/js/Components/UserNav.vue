@@ -67,7 +67,10 @@ const getSubscriptionRoute = computed(() => {
 					<DropdownMenuItem class="cursor-pointer">
 						<DollarSignIcon class="mr-2 size-4" />
 						<span>Meu plano</span>
-						<FlaskConical v-if="$page.props.auth.on_generic_trial" class="ml-auto size-4 text-purple-500" />
+						<FlaskConical
+							v-if="$page.props.auth.on_generic_trial"
+							class="ml-auto size-4 text-purple-500"
+						/>
 					</DropdownMenuItem>
 				</a>
 			</DropdownMenuGroup>

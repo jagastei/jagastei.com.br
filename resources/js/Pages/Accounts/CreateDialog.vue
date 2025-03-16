@@ -154,7 +154,10 @@ const onClose = () => {
 				<div class="flex flex-col">
 					<div class="flex items-center">
 						<Label for="bank">Banco</Label>
-						<button @click="$emitter.emit('open-support-dialog')" class="ml-auto inline-block text-sm underline">
+						<button
+							@click="$emitter.emit('open-support-dialog')"
+							class="ml-auto inline-block text-sm underline"
+						>
 							Não encontrou seu banco?
 						</button>
 					</div>
