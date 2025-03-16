@@ -14,7 +14,7 @@ class TransactionOutDeleted extends Event
 
     public ?int $current_balance = null;
 
-    public CarbonImmutable $created_at;
+    public CarbonImmutable $datetime;
 
     public function __construct(
         public int $transaction_id,
@@ -22,7 +22,7 @@ class TransactionOutDeleted extends Event
         #[StateId(AccountState::class)]
         public int $account_id,
     ) {
-        $this->created_at = now()->toImmutable();
+        $this->datetime = now()->toImmutable();
     }
 
     public function apply(AccountState $account)

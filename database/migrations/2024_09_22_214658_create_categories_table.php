@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->string('emoji')->nullable();
             $table->enum('type', ['IN', 'OUT']);
+            $table->bigInteger('budget')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

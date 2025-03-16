@@ -24,6 +24,7 @@ class Category extends Model
         'icon',
         'emoji',
         'type',
+        'budget',
     ];
 
     protected $casts = [

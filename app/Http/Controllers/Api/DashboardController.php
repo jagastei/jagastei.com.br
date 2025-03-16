@@ -55,14 +55,14 @@ class DashboardController extends Controller
         $transactionsSubquery = Transaction::query()
             ->ofWallet($user->currentWallet)
             ->out()
-            ->orderBy('created_at')
+            ->orderBy('datetime')
             ->select(
-                DB::raw('date(created_at) AS transaction_date'),
+                DB::raw('date(datetime) AS transaction_date'),
                 'type',
                 'value',
             )
             ->whereBetween(
-                DB::raw('created_at'),
+                DB::raw('datetime'),
                 [$startDate, $endDate]
             );
 
@@ -92,7 +92,7 @@ class DashboardController extends Controller
                         ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
-                            DB::raw('created_at'),
+                            DB::raw('datetime'),
                             [$startDate, $endDate]
                         );
                 },
@@ -103,7 +103,7 @@ class DashboardController extends Controller
                         ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
-                            DB::raw('created_at'),
+                            DB::raw('datetime'),
                             [$startDate, $endDate]
                         );
                 },
@@ -114,7 +114,7 @@ class DashboardController extends Controller
                         ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
-                            DB::raw('created_at'),
+                            DB::raw('datetime'),
                             [$startDate, $endDate]
                         );
                 },
@@ -125,7 +125,7 @@ class DashboardController extends Controller
                         ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
-                            DB::raw('created_at'),
+                            DB::raw('datetime'),
                             [$startDate, $endDate]
                         );
                 },
@@ -136,7 +136,7 @@ class DashboardController extends Controller
                         ->ofWallet($user->currentWallet)
                         ->out()
                         ->whereBetween(
-                            DB::raw('created_at'),
+                            DB::raw('datetime'),
                             [$startDate, $endDate]
                         );
                 },
@@ -158,9 +158,9 @@ class DashboardController extends Controller
         foreach ($accounts as $account) {
             $accountBalances = AccountState::load($account->id)
                 ->storedEvents()
-                ->sortBy('created_at')
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->groupBy(fn ($event) => Carbon::parse($event->created_at)->format('Y-m-d'))
+                ->sortBy('datetime')
+                ->whereBetween('datetime', [$startDate, $endDate])
+                ->groupBy(fn ($event) => Carbon::parse($event->datetime)->format('Y-m-d'))
                 ->map(fn ($events) => $events->last()->current_balance / 100);
 
             foreach ($accountBalances as $date => $balance) {

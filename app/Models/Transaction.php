@@ -37,7 +37,6 @@ class Transaction extends Model
         'card_id',
         'metadata',
         'datetime',
-        'created_at',
     ];
 
     protected $casts = [

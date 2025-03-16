@@ -29,7 +29,7 @@ class TransactionOutController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter');
-        $sort = $request->query('sort', '-created_at');
+        $sort = $request->query('sort', '-datetime');
 
         $categories = Category::query()
             ->ofWallet(auth('web')->user()->currentWallet)
@@ -52,7 +52,7 @@ class TransactionOutController extends Controller
             ])
             ->allowedSorts([
                 'value',
-                'created_at',
+                'datetime',
             ])
             ->defaultSort($sort)
             ->ofWallet(auth('web')->user()->currentWallet)

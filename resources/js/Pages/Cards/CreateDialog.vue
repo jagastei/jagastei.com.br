@@ -12,25 +12,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
-import {
-	Command,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from '@/Components/ui/command';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/Components/ui/popover';
+import { Loader2 } from 'lucide-vue-next';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Account } from '@/Components/AccountTable/columns';
 import { Brand } from '@/Components/CardTable/columns';
+import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
+import InputError from '@/Components/InputError.vue';
 
 const props = defineProps<{
 	brands: Brand[];
@@ -39,29 +28,6 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['close']);
-
-const accountDialogOpen = ref(false);
-
-const query = ref<string>('');
-
-const { results } = useFuse(query, props.accounts, {
-	fuseOptions: {
-		keys: ['name'],
-		isCaseSensitive: false,
-		threshold: 0.5,
-	},
-	resultLimit: 50,
-	matchAllWhenSearchEmpty: true,
-});
-
-const resultList = computed(() => {
-	return results.value?.map((r) => r.item);
-});
-
-const onSelected = (ev: any) => {
-	form.account = ev.detail.value as Account;
-	accountDialogOpen.value = false;
-};
 
 const form = useForm<{
 	account: Account | undefined;
@@ -152,80 +118,9 @@ const onClose = () => {
 
 				<div class="flex flex-col">
 					<Label for="account">Conta</Label>
+					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
 
-					<Popover v-model:open="accountDialogOpen">
-						<PopoverTrigger as-child>
-							<Button
-								tabindex="3"
-								id="bank"
-								variant="outline"
-								role="combobox"
-								class="w-[375px] justify-between mt-2 p-3"
-							>
-								<div class="flex items-center truncate">
-									<div v-if="form.account" class="min-w-4">
-										<img
-											:src="`https://jagastei.com.br.test/images/banks/${form.account.bank.code}.png`"
-											class="size-4 rounded-xl"
-										/>
-									</div>
-									<span
-										:class="[
-											'truncate',
-											{
-												'ml-3': form.account,
-											},
-										]"
-										>{{ form.account ? form.account?.name : 'Escolha uma conta' }}</span
-									>
-								</div>
-								<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-							</Button>
-						</PopoverTrigger>
-						<PopoverContent class="w-[375px] p-0">
-							<Command v-model="form.account" v-model:searchTerm="query">
-								<CommandInput
-									class="h-9"
-									placeholder="Buscar"
-									name="query"
-									autocomplete="off"
-								/>
-
-								<CommandEmpty>
-									<template v-if="query.length > 0">Nenhuma conta encontrada.</template>
-									<template v-else>Informe o nome da conta.</template>
-								</CommandEmpty>
-
-								<CommandList>
-									<CommandGroup>
-										<CommandItem
-											v-for="account in resultList"
-											:key="account.id"
-											:value="account"
-											@select="onSelected"
-											class="flex"
-										>
-											<div class="min-w-4">
-												<img
-													:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
-													class="size-4 rounded-xl"
-												/>
-											</div>
-											<span class="ml-3 block truncate">{{ account.name }}</span>
-											<Check
-												:class="
-													cn(
-														'ml-auto h-4 w-4',
-														form.account?.id === account.id ? 'opacity-100' : 'opacity-0'
-													)
-												"
-											/>
-										</CommandItem>
-									</CommandGroup>
-								</CommandList>
-							</Command>
-						</PopoverContent>
-					</Popover>
+					<InputError class="mt-2" :message="form.errors.account" />
 				</div>
 			</div>
 			<DialogFooter>

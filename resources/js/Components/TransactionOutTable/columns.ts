@@ -18,6 +18,8 @@ export const transactionSchema = z.object({
 	account_id: z.number(),
 	method: z.enum(['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN']).nullable(),
 	card_id: z.number().nullable(),
+	datetime: z.string(),
+	formatted_datetime: z.string(),
 	created_at: z.string(),
 	formatted_created_at: z.string(),
 	updated_at: z.string(),
@@ -125,8 +127,8 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 	},
 	{
-		id: 'created_at',
-		accessorKey: 'formatted_created_at',
+		id: 'datetime',
+		accessorKey: 'formatted_datetime',
 		meta: {
 			title: 'Quando',
 		},
@@ -137,7 +139,7 @@ export const columns: ColumnDef<Transaction>[] = [
 				{
 					class: 'flex items-center',
 				},
-				row.original.formatted_created_at
+				row.original.formatted_datetime
 			);
 		},
 		filterFn: (row, id, value) => {
