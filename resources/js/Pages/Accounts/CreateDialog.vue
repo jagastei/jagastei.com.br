@@ -30,7 +30,12 @@ import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Bank } from '@/Components/AccountTable/columns';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/Components/ui/tooltip';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/Components/ui/tooltip';
 
 const props = defineProps<{
 	banks: Bank[];
@@ -99,7 +104,11 @@ const onClose = () => {
 		<DialogTrigger as-child>
 			<slot />
 		</DialogTrigger>
-		<DialogContent class="sm:max-w-[425px]" @interactOutside="onClose" @escapeKeyDown="onClose">
+		<DialogContent
+			class="sm:max-w-[425px]"
+			@interactOutside="onClose"
+			@escapeKeyDown="onClose"
+		>
 			<DialogHeader>
 				<DialogTitle>Adicionar conta</DialogTitle>
 				<DialogDescription>
@@ -109,31 +118,43 @@ const onClose = () => {
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
 					<Label for="name" class="text-left"> Nome </Label>
-					<Input id="name" v-model="form.name" placeholder="Conta principal" class="mt-2" autocomplete="off"
-						tabindex="1" />
+					<Input
+						id="name"
+						v-model="form.name"
+						placeholder="Conta principal"
+						class="mt-2"
+						autocomplete="off"
+						tabindex="1"
+					/>
 				</div>
 
 				<div class="flex flex-col">
 					<Label for="initial_balance" class="text-left"> Saldo inicial </Label>
 
-					<Input id="initial_balance" v-model.lazy="form.initial_balance" class="mt-2" v-money3="{
-						prefix: 'R$',
-						suffix: '',
-						thousands: '.',
-						decimal: ',',
-						precision: 2,
-						disableNegative: false,
-						disabled: false,
-						min: null,
-						max: null,
-						allowBlank: false,
-						minimumNumberOfCharacters: 0,
-						shouldRound: false,
-						focusOnRight: false,
-						modelModifiers: {
-							number: false,
-						},
-					}" tabindex="2" />
+					<Input
+						id="initial_balance"
+						v-model.lazy="form.initial_balance"
+						class="mt-2"
+						v-money3="{
+							prefix: 'R$',
+							suffix: '',
+							thousands: '.',
+							decimal: ',',
+							precision: 2,
+							disableNegative: false,
+							disabled: false,
+							min: null,
+							max: null,
+							allowBlank: false,
+							minimumNumberOfCharacters: 0,
+							shouldRound: false,
+							focusOnRight: false,
+							modelModifiers: {
+								number: false,
+							},
+						}"
+						tabindex="2"
+					/>
 				</div>
 
 				<div class="flex flex-col">
@@ -143,13 +164,18 @@ const onClose = () => {
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger as-child>
-									<button @click="$emitter.emit('open-support-dialog')"
-										class="ml-auto inline-block text-sm underline">
+									<button
+										@click="$emitter.emit('open-support-dialog')"
+										class="ml-auto inline-block text-sm underline"
+									>
 										Não encontrou seu banco?
 									</button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>Clique aqui e envie uma mensagem para o nosso suporte solicitando o cadastro do seu banco.</p>
+									<p>
+										Clique aqui e envie uma mensagem para o nosso suporte solicitando o
+										cadastro do seu banco.
+									</p>
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
@@ -157,26 +183,41 @@ const onClose = () => {
 
 					<Popover v-model:open="bankDialogOpen">
 						<PopoverTrigger as-child>
-							<Button tabindex="3" id="bank" variant="outline" role="combobox"
-								class="w-[375px] justify-between mt-2 p-3">
+							<Button
+								tabindex="3"
+								id="bank"
+								variant="outline"
+								role="combobox"
+								class="w-[375px] justify-between mt-2 p-3"
+							>
 								<div class="flex items-center truncate">
 									<div v-if="form.bank" class="min-w-4">
-										<img :src="`https://jagastei.com.br.test/images/banks/${form.bank?.code}.png`"
-											class="size-4 rounded-xl" />
+										<img
+											:src="`https://jagastei.com.br.test/images/banks/${form.bank?.code}.png`"
+											class="size-4 rounded-xl"
+										/>
 									</div>
-									<span :class="[
-										'truncate',
-										{
-											'ml-3': form.bank,
-										},
-									]">{{ form.bank ? form.bank?.long_name : 'Escolha um banco' }}</span>
+									<span
+										:class="[
+											'truncate',
+											{
+												'ml-3': form.bank,
+											},
+										]"
+										>{{ form.bank ? form.bank?.long_name : 'Escolha um banco' }}</span
+									>
 								</div>
 								<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent class="w-[375px] p-0">
 							<Command v-model="form.bank" v-model:searchTerm="query">
-								<CommandInput class="h-9" placeholder="Buscar" name="query" autocomplete="off" />
+								<CommandInput
+									class="h-9"
+									placeholder="Buscar"
+									name="query"
+									autocomplete="off"
+								/>
 
 								<CommandEmpty>
 									<template v-if="query.length > 0">Nenhum banco encontrado.</template>
@@ -185,19 +226,30 @@ const onClose = () => {
 
 								<CommandList>
 									<CommandGroup>
-										<CommandItem v-for="bank in resultList" :key="bank.id" :value="bank"
-											@select="onSelected" class="flex">
+										<CommandItem
+											v-for="bank in resultList"
+											:key="bank.id"
+											:value="bank"
+											@select="onSelected"
+											class="flex"
+										>
 											<div class="min-w-4">
-												<img :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
-													class="size-4 rounded-xl" />
+												<img
+													:src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
+													class="size-4 rounded-xl"
+												/>
 											</div>
 											<span class="ml-3 block truncate">
-												{{ bank.code }} - {{ bank.long_name }}</span>
-											<Check :class="cn(
-												'ml-auto h-4 w-4',
-												form.bank?.id === bank.id ? 'opacity-100' : 'opacity-0'
-											)
-												" />
+												{{ bank.code }} - {{ bank.long_name }}</span
+											>
+											<Check
+												:class="
+													cn(
+														'ml-auto h-4 w-4',
+														form.bank?.id === bank.id ? 'opacity-100' : 'opacity-0'
+													)
+												"
+											/>
 										</CommandItem>
 									</CommandGroup>
 								</CommandList>
