@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
     // wallets
     Route::post('/carteiras', [WalletController::class, 'store'])->name('wallets.store')->middleware([Subscribed::class]);
-    
+
     // wallet
     Route::get('/carteira', [WalletController::class, 'show'])->name('wallets.show');
     Route::put('/carteira', [WalletController::class, 'update'])->name('wallets.update');

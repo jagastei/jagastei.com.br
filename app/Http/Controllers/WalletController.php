@@ -40,7 +40,7 @@ class WalletController extends Controller
         $request->user()->update([
             'current_wallet_id' => $wallet->id,
         ]);
-        
+
         return back();
     }
 
@@ -73,7 +73,7 @@ class WalletController extends Controller
         $user = $request->user();
 
         if ($user->wallets()->count() <= 1) {
-            return back()->with('error',  'Você não pode deletar sua única carteira.');
+            return back()->with('error', 'Você não pode deletar sua única carteira.');
         }
 
         $wallet = $user->currentWallet;
