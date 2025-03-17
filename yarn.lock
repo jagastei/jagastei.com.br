@@ -1454,13 +1454,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "@vitejs/plugin-vue@npm:5.2.1"
+"@vitejs/plugin-vue@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "@vitejs/plugin-vue@npm:5.2.3"
   peerDependencies:
     vite: ^5.0.0 || ^6.0.0
     vue: ^3.2.25
-  checksum: 10c0/927c06ccf591812c8195967ad550059a77a922cc9f9672f4e83451538a421427bd4daf8cce20366baa3a70882b2ff6c4e5fea2c1fdc3fd24a8caa061c893c2d8
+  checksum: 10c0/34a719c70567582c8f345378e4f46a7edd9242e7f1595cdda408d97fccf210b8ee66b97c8555ec867f777be86ae530bd19166a542b1d7ecd6894bc544096f047
   languageName: node
   linkType: hard
 
@@ -4452,7 +4452,7 @@ __metadata:
     "@unovis/ts": "npm:^1.5.1"
     "@unovis/vue": "npm:^1.5.1"
     "@vee-validate/zod": "npm:^4.15.0"
-    "@vitejs/plugin-vue": "npm:^5.2.1"
+    "@vitejs/plugin-vue": "npm:^5.2.3"
     "@vueuse/core": "npm:^13.0.0"
     "@vueuse/gesture": "npm:^2.0.0"
     "@vueuse/integrations": "npm:^13.0.0"

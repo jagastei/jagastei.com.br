@@ -9,14 +9,14 @@ use App\Http\Requests\StoreTransactionOutRequest;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
-use EchoLabs\Prism\Enums\Provider;
-use EchoLabs\Prism\Prism;
-use EchoLabs\Prism\Schema\ArraySchema;
-use EchoLabs\Prism\Schema\EnumSchema;
-use EchoLabs\Prism\Schema\ObjectSchema;
-use EchoLabs\Prism\Schema\StringSchema;
-use EchoLabs\Prism\ValueObjects\Messages\Support\Image;
-use EchoLabs\Prism\ValueObjects\Messages\UserMessage;
+use Prism\Prism\Enums\Provider;
+use Prism\Prism\Prism;
+use Prism\Prism\Schema\ArraySchema;
+use Prism\Prism\Schema\EnumSchema;
+use Prism\Prism\Schema\ObjectSchema;
+use Prism\Prism\Schema\StringSchema;
+use Prism\Prism\ValueObjects\Messages\Support\Image;
+use Prism\Prism\ValueObjects\Messages\UserMessage;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -172,7 +172,7 @@ class TransactionOutController extends Controller
                 ->using(Provider::OpenAI, 'gpt-4o-mini')
                 ->withSchema($schema)
                 ->withMessages([$message])
-                ->generate();
+                ->asStructured();
 
             session()->flash('ai', $response->structured);
             session()->flash('file_path', $filePath);

@@ -75,3 +75,5 @@ Route::middleware('auth')->name('api.')->group(function () {
     Route::post('sair', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+require __DIR__.'/webhooks.php';
