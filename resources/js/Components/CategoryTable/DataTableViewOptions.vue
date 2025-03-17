@@ -48,7 +48,9 @@ const columns = computed(() =>
 				:key="column.id"
 				class="capitalize"
 				:checked="column.getIsVisible()"
-				@update:checked="(value: AcceptableValue) => column.toggleVisibility(!!value)"
+				@update:checked="
+					(value: AcceptableValue) => column.toggleVisibility(!!value)
+				"
 			>
 				{{ column.id }}
 			</DropdownMenuCheckboxItem>

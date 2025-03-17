@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ContextMenuPortal, type ContextMenuPortalProps } from 'reka-ui'
+import { ContextMenuPortal, type ContextMenuPortalProps } from 'reka-ui';
 
-const props = defineProps<ContextMenuPortalProps>()
+const props = defineProps<ContextMenuPortalProps>();
 </script>
 
 <template>
-  <ContextMenuPortal v-bind="props">
-    <slot />
-  </ContextMenuPortal>
+	<ContextMenuPortal v-bind="props">
+		<slot />
+	</ContextMenuPortal>
 </template>
