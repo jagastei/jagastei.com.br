@@ -36,6 +36,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from '@/Components/ui/tooltip';
+import { TooltipArrow } from 'reka-ui';
 
 const props = defineProps<{
 	banks: Bank[];
@@ -172,10 +173,8 @@ const onClose = () => {
 									</button>
 								</TooltipTrigger>
 								<TooltipContent>
-									<p>
-										Clique aqui e envie uma mensagem para o nosso suporte solicitando o
-										cadastro do seu banco.
-									</p>
+									Envie uma mensagem solicitando o cadastro do seu banco.
+									<TooltipArrow class="fill-border" />
 								</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>

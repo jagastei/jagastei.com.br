@@ -64,7 +64,7 @@ const ratings = [
 	<Dialog :open="open" @update:open="emit('update:open')">
 		<DialogContent class="sm:max-w-[525px]">
 			<DialogHeader>
-				<DialogTitle>Compartilhe seu feedback</DialogTitle>
+				<DialogTitle>Compartilhe sua sugestão</DialogTitle>
 				<DialogDescription>
 					Ajude-nos a melhorar compartilhando sua experiência.
 				</DialogDescription>
@@ -90,9 +90,9 @@ const ratings = [
 				</div>
 
 				<div>
-					<Label>Comentários adicionais</Label>
+					<Label>Sugestão</Label>
 					<Textarea
-						placeholder="Conte-nos mais sobre sua experiência..."
+						placeholder="Digite aqui sua sugestão"
 						class="min-h-[120px] mt-2"
 						v-model="form.comment"
 					/>
@@ -107,7 +107,7 @@ const ratings = [
 						Cancelar
 					</Button>
 					<Button type="submit" :disabled="form.processing">
-						Enviar feedback
+						Enviar sugestão
 					</Button>
 				</DialogFooter>
 			</form>

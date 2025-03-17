@@ -13,6 +13,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
+import { AcceptableValue } from 'reka-ui';
 
 interface DataTableViewOptionsProps {
 	table: Table<Transaction>;
@@ -47,7 +48,7 @@ const columns = computed(() =>
 				:key="column.id"
 				class="capitalize"
 				:checked="column.getIsVisible()"
-				@update:checked="(value) => column.toggleVisibility(!!value)"
+				@update:checked="(value: AcceptableValue) => column.toggleVisibility(!!value)"
 				@select="(ev) => ev.preventDefault()"
 			>
 				{{ column.columnDef.meta?.title }}

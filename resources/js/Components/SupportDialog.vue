@@ -73,7 +73,7 @@ const submitForm = async () => {
 				<div>
 					<Label>Mensagem</Label>
 					<Textarea
-						placeholder="Descreva seu problema em detalhes"
+						placeholder="Digite aqui sua mensagem"
 						class="mt-2 min-h-[120px]"
 						v-model="form.message"
 					/>

@@ -181,7 +181,7 @@ const onClose = () => {
 								<div class="flex items-center truncate">
 									<div
 										v-if="form.category"
-										class="block size-6 rounded-xl"
+										class="block size-4 rounded-xl"
 										:style="{ backgroundColor: form.category.color ?? '#000000' }"
 									></div>
 									<span
@@ -225,14 +225,14 @@ const onClose = () => {
 											class="flex"
 										>
 											<div
-												class="block size-6 rounded-xl"
+												class="block size-4 rounded-xl"
 												:style="{ backgroundColor: category.color ?? '#000000' }"
 											></div>
 											<span class="ml-3 block truncate">{{ category.name }}</span>
 											<Check
 												:class="
 													cn(
-														'ml-auto h-4 w-4',
+														'ml-auto size-4',
 														form.category?.id === category.id ? 'opacity-100' : 'opacity-0'
 													)
 												"
