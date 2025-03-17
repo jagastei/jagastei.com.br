@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue'
-import { DrawerRoot } from 'vaul-vue'
+import type { DrawerRootEmits, DrawerRootProps } from 'vaul-vue';
+import { DrawerRoot } from 'vaul-vue';
 
 const props = withDefaults(defineProps<DrawerRootProps>(), {
-  shouldScaleBackground: true,
-})
+	shouldScaleBackground: true,
+});
 
-defineEmits<DrawerRootEmits>()
+defineEmits<DrawerRootEmits>();
 </script>
 
 <template>
-  <DrawerRoot :shouldScaleBackground="shouldScaleBackground">
-    <slot />
-  </DrawerRoot>
+	<DrawerRoot :shouldScaleBackground="shouldScaleBackground">
+		<slot />
+	</DrawerRoot>
 </template>
