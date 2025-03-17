@@ -27,19 +27,19 @@ class WhatsappController extends Controller
 
         $input = $request->all();
 
-        if($input['event'] !== 'messages.upsert') {
+        if ($input['event'] !== 'messages.upsert') {
             return response()->noContent(200);
         }
 
         $messageType = $input['data']['messageType'];
 
-        if($messageType !== 'conversation') {
+        if ($messageType !== 'conversation') {
             return response()->noContent(200);
         }
 
         $fromMe = $input['data']['key']['fromMe'];
 
-        if(!$fromMe) {
+        if (! $fromMe) {
             return response()->noContent(200);
         }
 
@@ -73,14 +73,14 @@ class WhatsappController extends Controller
 
         $prompt = new SystemMessage('Você é um assistente especializado em extrair informações de transações financeiras. Sua tarefa é interpretar a mensagem do usuário e retornar um objeto JSON.');
         $message = new UserMessage($message);
-        
+
         try {
             $response = Prism::structured()
                 ->using(Provider::OpenAI, 'gpt-4o')
                 ->withSchema($schema)
                 ->withMessages([
                     $prompt,
-                    $message
+                    $message,
                 ])
                 ->asStructured();
 
