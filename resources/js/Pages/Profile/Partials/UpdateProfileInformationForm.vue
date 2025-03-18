@@ -11,9 +11,23 @@ import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
-import { useToast } from '@/Components/ui/toast/use-toast'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/Components/ui/dialog'
+import {
+	PinInput,
+	PinInputGroup,
+	PinInputInput,
+} from '@/Components/ui/pin-input'
+import { ref } from 'vue';
 
-const props = defineProps<{
+defineProps<{
 	mustVerifyEmail?: Boolean;
 	status?: String;
 }>();
@@ -33,8 +47,31 @@ const verifyEmail = () => {
 	})
 }
 
+const verifyPhoneDialogOpen = ref(false);
+const code = ref<string[]>([]);
+
 const verifyPhone = () => {
+	verifyPhoneDialogOpen.value = true;
+	return;
+
 	router.post(route('phone.verification.send'), {}, {
+		preserveScroll: true,
+		preserveState: true,
+		onSuccess: () => {
+			verifyPhoneDialogOpen.value = true;
+		},
+		onError: () => {
+			// toast
+		}
+	})
+}
+
+const verifyCode = () => {
+	console.log(code.value.join(''));
+	return;
+	router.post(route('phone.verification.verify'), {
+		code: code.value.join(''),
+	}, {
 		preserveScroll: true,
 		preserveState: true,
 	})
@@ -42,7 +79,36 @@ const verifyPhone = () => {
 
 </script>
 
-<template>	
+<template>
+
+	<Dialog :open="verifyPhoneDialogOpen" @update:open="verifyPhoneDialogOpen = false; code = [];">
+		<DialogContent class="sm:max-w-[425px]">
+			<DialogHeader>
+				<DialogTitle>Verificar telefone</DialogTitle>
+				<DialogDescription>
+					Digite o código de verificação enviado para o seu número de telefone.
+				</DialogDescription>
+			</DialogHeader>
+			<div class="py-4">
+				<div>
+					<Label for="phone-verification-code">
+						Código de verificação
+					</Label>
+					<PinInput v-model="code" placeholder="○" class="mt-2">
+						<PinInputGroup>
+							<PinInputInput v-for="(id, index) in 6" :key="id" :index="index" class="bg-card"/>
+						</PinInputGroup>
+					</PinInput>
+				</div>
+			</div>
+			<DialogFooter class="sm:justify-start">
+				<Button @click="verifyCode" type="submit">
+					Confirmar
+				</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Dialog>
+
 	<Alert v-if="mustVerifyEmail && user.email_verified_at === null">
 		<AlertDescription class="flex items-center justify-between">
 			Seu endereço de e-mail não está verificado.
@@ -70,7 +136,7 @@ const verifyPhone = () => {
 			</Button>
 		</AlertDescription>
 	</Alert>
-	
+
 	<Card>
 		<CardHeader>
 			<CardTitle>Informações de perfil</CardTitle>
@@ -80,20 +146,10 @@ const verifyPhone = () => {
 		</CardHeader>
 
 		<CardContent>
-			<form
-				@submit.prevent="form.patch(route('profile.update'))"
-				class="space-y-6"
-			>
+			<form @submit.prevent="form.patch(route('profile.update'))" class="space-y-6">
 				<div class="space-y-2">
 					<Label for="name">Nome</Label>
-					<Input
-						id="name"
-						v-model="form.name"
-						type="text"
-						required
-						autofocus
-						autocomplete="name"
-					/>
+					<Input id="name" v-model="form.name" type="text" required autofocus autocomplete="name" />
 					<p v-if="form.errors.name" class="text-sm text-destructive">
 						{{ form.errors.name }}
 					</p>
@@ -101,13 +157,7 @@ const verifyPhone = () => {
 
 				<div class="space-y-2">
 					<Label for="email">Email</Label>
-					<Input
-						id="email"
-						v-model="form.email"
-						type="email"
-						required
-						autocomplete="username"
-					/>
+					<Input id="email" v-model="form.email" type="email" required autocomplete="username" />
 					<p v-if="form.errors.email" class="text-sm text-destructive">
 						{{ form.errors.email }}
 					</p>
@@ -115,13 +165,7 @@ const verifyPhone = () => {
 
 				<div class="space-y-2">
 					<Label for="phone">Telefone</Label>
-					<Input
-						id="phone"
-						v-model="form.phone"
-						type="tel"
-						required
-						autocomplete="tel"
-					/>
+					<Input id="phone" v-model="form.phone" type="tel" required autocomplete="tel" />
 					<p v-if="form.errors.phone" class="text-sm text-destructive">
 						{{ form.errors.phone }}
 					</p>
