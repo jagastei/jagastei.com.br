@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import {
 	Card,
 	CardContent,
@@ -16,6 +16,8 @@ const form = useForm({
 	password: '',
 	password_confirmation: '',
 });
+
+const user = usePage().props.auth.user;
 
 const updatePassword = () => {
 	form.put(route('password.update'), {

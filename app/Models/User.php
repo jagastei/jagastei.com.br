@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyPhone;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,12 +14,13 @@ use Laravel\Cashier\Billable;
 
 use function Illuminate\Events\queueable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
 {
     use Billable;
     use HasFactory;
     use HasUuids;
     use Notifiable;
+    use \App\Traits\MustVerifyPhone;
 
     // available locales
     public const LOCALES = [
@@ -29,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
         'current_wallet_id',
         'locale',
@@ -44,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'phone_verified_at' => 'datetime',
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
             'metadata' => 'array',

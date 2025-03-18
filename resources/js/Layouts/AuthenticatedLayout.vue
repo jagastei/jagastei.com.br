@@ -29,6 +29,7 @@ import InviteDialog from '@/Components/InviteDialog.vue';
 import { onMounted, ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
+import Toaster from '@/Components/ui/toast/Toaster.vue'
 
 const user = usePage().props.auth.user;
 const { posthog } = usePostHog();
@@ -147,6 +148,8 @@ onMounted(() => {
 
 <template>
 	<div>
+		<Toaster />
+
 		<InviteDialog :open="inviteDialog" @update:open="inviteDialog = $event" />
 		<FeedbackDialog
 			:open="feedbackDialog"

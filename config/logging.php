@@ -144,6 +144,14 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'whatsapp' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/whatsapp/whatsapp.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => env('LOG_DAILY_DAYS', 14),
+            'replace_placeholders' => true,
+        ],
+
         'betterstack' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),

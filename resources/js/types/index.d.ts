@@ -8,6 +8,8 @@ export interface User {
 	name: string;
 	email: string;
 	email_verified_at?: string;
+	phone: string;
+	phone_verified_at?: string;
 	wallets: Wallet[];
 	current_wallet: Wallet;
 	stripe_id: string;
