@@ -40,4 +40,10 @@ return [
         'host' => env('POSTHOG_HOST'),
     ],
 
+    'whatsapp' => [
+        'api_key' => env('WHATSAPP_API_KEY'),
+        'server_url' => env('WHATSAPP_SERVER_URL'),
+        'instance' => env('WHATSAPP_INSTANCE'),
+    ],
+
 ];

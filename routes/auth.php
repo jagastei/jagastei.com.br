@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\PhoneVerificationNotificationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\VerifyPhoneController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -47,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::post('email/verificacao-de-email', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
+
+    Route::post('verificar-telefone', VerifyPhoneController::class)
+        ->name('phone.verification.verify');
 
     Route::post('telefone/verificacao-de-telefone', [PhoneVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')

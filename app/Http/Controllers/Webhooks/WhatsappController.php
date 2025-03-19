@@ -11,10 +11,6 @@ class WhatsappController extends Controller
 {
     public function store(Request $request)
     {
-        return response()->noContent(200);
-
-        Log::channel('whatsapp')->info('Webhook recebido', $request->all());
-
         $input = $request->all();
 
         HandleWhatsappMessage::dispatch($input);

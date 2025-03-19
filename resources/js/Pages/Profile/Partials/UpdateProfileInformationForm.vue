@@ -26,6 +26,13 @@ import {
 	PinInputInput,
 } from '@/Components/ui/pin-input'
 import { ref } from 'vue';
+import { ShieldCheck } from 'lucide-vue-next';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger
+} from '@/Components/ui/tooltip'
 
 defineProps<{
 	mustVerifyEmail?: Boolean;
@@ -51,9 +58,6 @@ const verifyPhoneDialogOpen = ref(false);
 const code = ref<string[]>([]);
 
 const verifyPhone = () => {
-	verifyPhoneDialogOpen.value = true;
-	return;
-
 	router.post(route('phone.verification.send'), {}, {
 		preserveScroll: true,
 		preserveState: true,
@@ -67,8 +71,6 @@ const verifyPhone = () => {
 }
 
 const verifyCode = () => {
-	console.log(code.value.join(''));
-	return;
 	router.post(route('phone.verification.verify'), {
 		code: code.value.join(''),
 	}, {
@@ -96,7 +98,7 @@ const verifyCode = () => {
 					</Label>
 					<PinInput v-model="code" placeholder="○" class="mt-2">
 						<PinInputGroup>
-							<PinInputInput v-for="(id, index) in 6" :key="id" :index="index" class="bg-card"/>
+							<PinInputInput v-for="(id, index) in 6" :key="id" :index="index" class="bg-card" />
 						</PinInputGroup>
 					</PinInput>
 				</div>
@@ -127,8 +129,8 @@ const verifyCode = () => {
 		<AlertDescription class="flex items-center justify-between">
 			Seu número de telefone não está verificado.
 
-			<p v-if="status === 'verification-link-sent'" class="h-6 content-center">
-				Um novo link de verificação foi enviado para seu número de telefone.
+			<p v-if="status === 'verification-code-sent'" class="h-6 content-center">
+				Um novo código de verificação foi enviado para seu número de telefone.
 			</p>
 
 			<Button v-else @click="verifyPhone" variant="link" class="h-6 p-0">
@@ -157,7 +159,20 @@ const verifyCode = () => {
 
 				<div class="space-y-2">
 					<Label for="email">Email</Label>
-					<Input id="email" v-model="form.email" type="email" required autocomplete="username" />
+					<div class="relative">
+						<Input id="email" v-model="form.email" type="email" required autocomplete="username" />
+						<TooltipProvider v-if="user.email_verified_at">
+							<Tooltip>
+								<TooltipTrigger as="div" class="absolute right-3 top-1/2 -translate-y-1/2">
+									<ShieldCheck
+										class="size-4 text-primary" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Esse e-mail foi verificado.</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</div>
 					<p v-if="form.errors.email" class="text-sm text-destructive">
 						{{ form.errors.email }}
 					</p>
@@ -165,7 +180,20 @@ const verifyCode = () => {
 
 				<div class="space-y-2">
 					<Label for="phone">Telefone</Label>
-					<Input id="phone" v-model="form.phone" type="tel" required autocomplete="tel" />
+					<div class="relative">
+						<Input id="phone" v-model="form.phone" type="tel" required autocomplete="tel" />
+						<TooltipProvider v-if="user.phone_verified_at">
+							<Tooltip>
+								<TooltipTrigger as="div" class="absolute right-3 top-1/2 -translate-y-1/2">
+									<ShieldCheck
+										class="size-4 text-primary" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Esse número de telefone foi verificado.</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</div>
 					<p v-if="form.errors.phone" class="text-sm text-destructive">
 						{{ form.errors.phone }}
 					</p>

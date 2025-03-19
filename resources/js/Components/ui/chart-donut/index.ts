@@ -36,4 +36,9 @@ export interface BaseChartProps<T extends Record<string, any>> {
 	 * @default true
 	 */
 	showLegend?: boolean;
+	/**
+	 * Controls the visibility of the central label.
+	 * @default true
+	 */
+	showCentralLabel?: boolean;
 }

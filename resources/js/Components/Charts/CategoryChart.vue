@@ -42,7 +42,7 @@ const formatter = (value: number, i: number | undefined): string => {
 			:colors="fakeData.map((category) => `${category.color}33`)"
 			type="donut"
 			:showLegend="false"
-			:centralLabel="false"
+			:showCentralLabel="false"
 			:valueFormatter="formatter"
 			:showTooltip="false"
 		/>
@@ -56,7 +56,7 @@ const formatter = (value: number, i: number | undefined): string => {
 			:colors="data.map((category) => category.color)"
 			type="donut"
 			:showLegend="false"
-			:centralLabel="true"
+			:showCentralLabel="true"
 			:valueFormatter="formatter"
 		/>
 	</div>

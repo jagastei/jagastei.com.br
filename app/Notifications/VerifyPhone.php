@@ -2,53 +2,31 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Cache;
 
 class VerifyPhone extends Notification
 {
-    use Queueable;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
+    public function via(object $notifiable): string
     {
-        //
+        return WhatsappChannel::class;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
-    public function via(object $notifiable): array
+    public function toWhatsapp(object $notifiable): string
     {
-        return ['mail'];
+        return 'Olá, seu código de verificação é: ' . $this->verificationCode($notifiable);
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    protected function verificationCode(object $notifiable): string
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
-    }
+        $code = rand(100000, 999999);
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
-        ];
+        Cache::store('redis')->put(
+            'verification_code_' . $notifiable->getKey(),
+            sha1($code),
+            60
+        );
+
+        return $code;
     }
 }

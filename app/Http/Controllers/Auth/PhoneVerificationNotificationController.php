@@ -19,6 +19,6 @@ class PhoneVerificationNotificationController extends Controller
 
         $request->user()->sendPhoneVerificationNotification();
 
-        return back()->with('status', 'verification-link-sent');
+        return back()->with('status', 'verification-code-sent');
     }
 }

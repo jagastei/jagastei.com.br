@@ -35,6 +35,9 @@ class HandleWhatsappMessage implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::channel('whatsapp')->info('HandleWhatsappMessage', $this->input);
+        return;
+
         if ($this->input['event'] !== 'messages.upsert') {
             return;
         }
@@ -52,6 +55,7 @@ class HandleWhatsappMessage implements ShouldQueue
         }
 
         $message = $this->input['data']['message']['conversation'];
+        // $imageMessage = $this->input['data']['message']['imageMessage'];
 
         $categories = Category::query()
             // ->ofWallet(auth('web')->user()->currentWallet)

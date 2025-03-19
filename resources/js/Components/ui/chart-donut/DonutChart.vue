@@ -18,6 +18,7 @@ const props = withDefaults(
 			| 'showLegend'
 			| 'showTooltip'
 			| 'filterOpacity'
+			| 'showCentralLabel'
 		> & {
 			/**
 			 * Sets the name of the key containing the quantitative chart values.
@@ -49,6 +50,7 @@ const props = withDefaults(
 		filterOpacity: 0.2,
 		showTooltip: true,
 		showLegend: true,
+		showCentralLabel: true,
 	}
 );
 
@@ -104,7 +106,7 @@ const totalValue = computed(() =>
 				:color="colors"
 				:arc-width="type === 'donut' ? 20 : 0"
 				:show-background="false"
-				:central-label="type === 'donut' ? valueFormatter(totalValue) : ''"
+				:central-label="showCentralLabel ? valueFormatter(totalValue) : ''"
 				:events="{
 					[Donut.selectors.segment]: {
 						click: (

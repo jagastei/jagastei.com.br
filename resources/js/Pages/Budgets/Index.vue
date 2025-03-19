@@ -59,7 +59,7 @@ onMounted(() => {
                         Todas os seus orçamentos ficam aqui.
                     </p> -->
 				</div>
-				<div v-if="budgets.length > 0" class="flex items-center space-x-2">
+				<div v-if="false && budgets.length > 0" class="flex items-center space-x-2">
 					<Button @click="createBudgetDialogOpen = true">Adicionar orçamento</Button>
 				</div>
 			</div>
@@ -78,7 +78,7 @@ onMounted(() => {
 						<!-- Adiciona seu primeiro orçamento para começar sua evolução financeira. -->
 					</p>
 
-					<Button @click="createBudgetDialogOpen = true" class="mt-4">
+					<Button v-if="false" @click="createBudgetDialogOpen = true" class="mt-4">
 						Adicionar orçamento
 					</Button>
 				</div>

@@ -86,4 +86,9 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     {
         return $this->belongsTo(Wallet::class, 'current_wallet_id');
     }
+
+    public function routeNotificationForWhatsapp(): string
+    {
+        return $this->phone;
+    }
 }
