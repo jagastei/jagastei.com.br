@@ -11,8 +11,10 @@ import {
 	Settings,
 } from 'lucide-vue-next';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import * as THREE from 'three';
-
+import HeroChart from '@/Components/Charts/Welcome/HeroChart.vue';
+import FeaturesChart from '@/Components/Charts/Welcome/FeaturesChart.vue';
+import PricingChart from '@/Components/Charts/Welcome/PricingChart.vue';
+import FooterChart from '@/Components/Charts/Welcome/FooterChart.vue';
 
 defineProps<{
 	canLogin?: boolean;
@@ -64,57 +66,7 @@ const selectFeature = (feature: string) => {
 	lastUserInteraction.value = Date.now();
 };
 
-const createBarChartMesh = () => {
-	const group = new THREE.Group();
-
-	for (let i = 0; i < 20; i++) { // Create multiple columns
-		const barHeight = Math.random() * 3 + 1; // Random height
-		const barGeometry = new THREE.BoxGeometry(0.5, barHeight, 0.5);
-		const barMaterial = new THREE.MeshStandardMaterial({ // Use Standard for better lighting
-			color: 0x16a34a, // Hex color for green
-			roughness: 0.8,
-			metalness: 0.1
-		});
-
-		const barMesh = new THREE.Mesh(barGeometry, barMaterial);
-		barMesh.position.set(i * 1, barHeight / 2, 0); // Position columns side-by-side
-		group.add(barMesh);
-	}
-
-	group.position.set(-10, -2, 0); // Center roughly
-	return group;
-}
-
-const initThree = () => {
-	const scene = new THREE.Scene();
-
-	const barChartBackground = createBarChartMesh();
-	scene.add(barChartBackground);
-
-	const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-	scene.add(ambientLight);
-
-	const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-	directionalLight.position.set(5, 5, 5);
-	scene.add(directionalLight);
-
-	const camera = new THREE.PerspectiveCamera(100);
-	camera.position.z = 10;
-
-	const renderer = new THREE.WebGLRenderer({
-		canvas: document.querySelector('#canvas') as HTMLCanvasElement,
-		alpha: true,
-	});
-
-	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	renderer.render(scene, camera);
-}
-
 onMounted(() => {
-
-	initThree();
-
 	setTimeout(() => {
 		isVisible.value = true;
 	}, 100);
@@ -139,10 +91,6 @@ onBeforeUnmount(() => {
 	<!-- <Head title="Welcome" /> -->
 
 	<div class="relative flex flex-col scroll-smooth">
-
-		<div class="absolute">
-			<canvas id="canvas"></canvas>
-		</div>
 
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
 		<header class="py-6">
@@ -184,24 +132,10 @@ onBeforeUnmount(() => {
 
 		<main>
 			<!-- Hero Section -->
-			<section class="relative">
-				<!-- Background SVG pattern -->
-				<svg v-if="false"
-					class="-z-10 absolute left-[max(50%,25rem)] rotate-90 top-[32rem] h-[64rem] w-[128rem] stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-card transition-all duration-1000 transform"
-					:class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
-						" aria-hidden="true">
-					<defs>
-						<pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="100" height="100" x="50%" y="-1"
-							patternUnits="userSpaceOnUse">
-							<path d="M100 200V.5M.5 .5H200" fill="none" />
-						</pattern>
-					</defs>
+			<section class="relative py-24 lg:py-64">
+				<HeroChart :data="[]" />
 
-					<rect width="100%" height="100%" stroke-width="0"
-						fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
-				</svg>
-
-				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center py-24 lg:py-32">
+				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
 					<div class="flex flex-col items-center">
 						<div :class="[
 							'transition-all duration-1000 transform',
@@ -239,7 +173,7 @@ onBeforeUnmount(() => {
 			</section>
 
 			<!-- Features Section -->
-			<section class="relative py-24 sm:py-32">
+			<section class="relative py-24 sm:py-64">				
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
 					<div class="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
 						<h2 class="font-display text-3xl tracking-tight text-foreground sm:text-4xl md:text-5xl">
@@ -297,7 +231,9 @@ onBeforeUnmount(() => {
 			</section>
 
 			<!-- Pricing Section -->
-			<section aria-label="Pricing" class="py-24 sm:py-32">
+			<section class="relative py-24 sm:pt-32 sm:pb-[32rem]">
+				<PricingChart :data="[]" />
+
 				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div class="md:text-center">
 						<h2 class="font-display text-3xl tracking-tight text-foreground sm:text-4xl">
@@ -379,8 +315,10 @@ onBeforeUnmount(() => {
 			</section>
 		</main>
 
-		<footer class="border-t border-border bg-card">
-			<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<footer class="relative border-t border-primary bg-card">
+			<FooterChart :data="[]" />
+
+			<div class="absolute top-0 w-full h-full flex items-center justify-center mx-auto px-4 sm:px-6 lg:px-8">
 				<div class="py-12 flex flex-col items-center gap-8">
 					<Link href="/" class="flex items-center gap-2 group">
 					<img src="@/../images/green-diamond.svg"
@@ -390,7 +328,7 @@ onBeforeUnmount(() => {
 					<span class="font-medium text-lg group-hover:text-primary transition-colors">JaGastei</span>
 					</Link>
 
-					<div class="flex items-center gap-6">
+					<div v-if="false" class="flex items-center gap-6">
 						<a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
 							<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path fill-rule="evenodd"
@@ -407,7 +345,7 @@ onBeforeUnmount(() => {
 					</div>
 
 					<p class="text-sm text-muted-foreground">
-						2025 JaGastei © Todos os direitos reservados.
+						© JaGastei 2025
 					</p>
 				</div>
 			</div>
