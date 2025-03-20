@@ -176,7 +176,7 @@ const onClose = () => {
 				<div class="space-y-4 py-2 pb-4">
 					<div class="space-y-2">
 						<Label for="name">Nome da carteira</Label>
-						<Input id="name" v-model="form.name" placeholder="Carteira pessoal" />
+						<Input id="name" v-model="form.name" placeholder="Carteira da empresa" />
 						<InputError class="mt-2" :message="form.errors.name" />
 					</div>
 					<!-- <div class="space-y-2">
@@ -199,7 +199,7 @@ const onClose = () => {
 					</div> -->
 
 					<p class="text-xs text-muted-foreground italic">
-						Cada carteira adicional acarreta um aumento de R$ 19,90 no valor da
+						Cada carteira adicional acarreta um aumento de R$ 9,90 no valor da
 						assinatura.
 					</p>
 				</div>

@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
 						<template v-else>
 							<div class="hidden md:block">
 								<Link :href="route('login')">
-									<Button variant="ghost">Entrar</Button>
+									<Button variant="outline">Entrar</Button>
 								</Link>
 							</div>
 

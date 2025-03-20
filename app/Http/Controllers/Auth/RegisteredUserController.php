@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\UserStartedTrial;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,13 +41,18 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'trial_ends_at' => now()->addDays(7),
         ]);
 
-        event(new Registered($user));
+        $wallet = Wallet::create([
+            'user_id' => $user->id,
+            'name' => 'Carteira pessoal',
+        ]);
 
-        UserStartedTrial::fire(
-            user_id: $user->id,
-        );
+        $user->current_wallet_id = $wallet->id;
+        $user->save();
+
+        event(new Registered($user));
 
         Auth::login($user);
 

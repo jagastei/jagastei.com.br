@@ -82,7 +82,6 @@ const verifyCode = () => {
 </script>
 
 <template>
-
 	<Dialog :open="verifyPhoneDialogOpen" @update:open="verifyPhoneDialogOpen = false; code = [];">
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>
@@ -125,7 +124,7 @@ const verifyCode = () => {
 		</AlertDescription>
 	</Alert>
 
-	<Alert v-if="user.phone_verified_at === null">
+	<Alert v-if="user.phone && user.phone_verified_at === null">
 		<AlertDescription class="flex items-center justify-between">
 			Seu número de telefone não está verificado.
 

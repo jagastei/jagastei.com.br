@@ -13,12 +13,13 @@ import { Label } from '@/Components/ui/label';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Loader2 } from 'lucide-vue-next';
 import InputError from '@/Components/InputError.vue';
+import { Env } from '@/types/index.d';
 
 const form = useForm({
-	name: 'Test user',
-	email: 'test@example.com',
-	password: 'password',
-	password_confirmation: 'password',
+	name: window.env === Env.development ? 'Test user' : '',
+	email: window.env === Env.development ? 'test@example.com' : '',
+	password: window.env === Env.development ? 'password' : '',
+	password_confirmation: window.env === Env.development ? 'password' : '',
 });
 
 const submit = () => {

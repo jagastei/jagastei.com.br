@@ -117,7 +117,6 @@ const closeModal = () => {
 										v-model="form.name"
 										type="text"
 										:disabled="form.processing"
-										placeholder="Ex: Carteira Pessoal"
 										maxlength="30"
 									/>
 									<InputError :message="form.errors.name" />
