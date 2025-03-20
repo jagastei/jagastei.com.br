@@ -117,11 +117,11 @@ onBeforeUnmount(() => {
 						<template v-else>
 							<div class="hidden md:block">
 								<Link :href="route('login')">
-								<Button variant="ghost">Entrar</Button>
+									<Button variant="ghost">Entrar</Button>
 								</Link>
 							</div>
 
-							<Link v-if="canRegister" :href="route('register')">
+							<Link v-if="false && canRegister" :href="route('register')">
 							<Button>Cadastre-se</Button>
 							</Link>
 						</template>
@@ -255,45 +255,25 @@ onBeforeUnmount(() => {
 									Para pessoas e pequenos negócios.
 								</p>
 								<p class="mt-6 font-display text-5xl font-light tracking-tight text-foreground">
-									R$ 49,90<span class="text-base font-normal text-muted-foreground">/mês</span>
+									R$ 9,90<span class="text-base font-normal text-muted-foreground">/mês</span>
 								</p>
 
 								<ul role="list" class="mt-10 space-y-4">
 									<li class="flex items-center">
 										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Envie 25 orçamentos e
-											faturas</span>
+										<span class="ml-2 text-sm text-muted-foreground">Integração com WhatsApp</span>
 									</li>
 									<li class="flex items-center">
 										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Conecte até 5 contas
-											bancárias</span>
+										<span class="ml-2 text-sm text-muted-foreground">Sem limite de contas</span>
 									</li>
 									<li class="flex items-center">
 										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Acompanhe até 50 despesas por
-											mês</span>
+										<span class="ml-2 text-sm text-muted-foreground">Sem limite de cartões</span>
 									</li>
 									<li class="flex items-center">
 										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Suporte automatizado de folha
-											de
-											pagamento</span>
-									</li>
-									<li class="flex items-center">
-										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Exporte até 12
-											relatórios</span>
-									</li>
-									<li class="flex items-center">
-										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Reconciliação em massa de
-											transações</span>
-									</li>
-									<li class="flex items-center">
-										<CircleCheck class="size-5 flex-none text-primary" />
-										<span class="ml-2 text-sm text-muted-foreground">Acompanhe em múltiplas
-											moedas</span>
+										<span class="ml-2 text-sm text-muted-foreground">Sem limite de transações</span>
 									</li>
 								</ul>
 
