@@ -93,6 +93,7 @@ const totalValue = computed(() =>
 			:data="data"
 		>
 			<ChartSingleTooltip
+				v-if="showTooltip"
 				:selector="Donut.selectors.segment"
 				:index="category"
 				:items="legendItems"

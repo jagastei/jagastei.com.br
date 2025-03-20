@@ -12,7 +12,6 @@ import {
 } from 'lucide-vue-next';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import HeroChart from '@/Components/Charts/Welcome/HeroChart.vue';
-import FeaturesChart from '@/Components/Charts/Welcome/FeaturesChart.vue';
 import PricingChart from '@/Components/Charts/Welcome/PricingChart.vue';
 import FooterChart from '@/Components/Charts/Welcome/FooterChart.vue';
 
@@ -173,8 +172,8 @@ onBeforeUnmount(() => {
 			</section>
 
 			<!-- Features Section -->
-			<section class="relative py-24 sm:py-64">				
-				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+			<section class="relative py-24 sm:py-64">
+				<div class="mx-auto max-w-7xl  px-4 sm:px-6 lg:px-8 relative">
 					<div class="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
 						<h2 class="font-display text-3xl tracking-tight text-foreground sm:text-4xl md:text-5xl">
 							Tudo que você precisa para gerenciar suas finanças
@@ -240,7 +239,7 @@ onBeforeUnmount(() => {
 							Preço simples, para todos
 						</h2>
 						<p class="mt-4 text-lg text-muted-foreground">
-							Não importa o tamanho do seu negócio, nosso software é adaptável às suas
+							Não importa o tamanho do seu negócio, nosso sistema se adapta às suas
 							necessidades.
 						</p>
 					</div>
@@ -254,9 +253,12 @@ onBeforeUnmount(() => {
 								<p class="mt-2 text-base text-muted-foreground">
 									Para pessoas e pequenos negócios.
 								</p>
-								<p class="mt-6 font-display text-5xl font-light tracking-tight text-foreground">
-									R$ 9,90<span class="text-base font-normal text-muted-foreground">/mês</span>
-								</p>
+
+								<p class="mt-6 text-sm text-muted-foreground line-through">R$ 49,90</p>
+
+								<p class="font-display text-5xl font-light tracking-tight text-foreground">R$ 9,90<span class="text-base font-normal text-muted-foreground">/mês</span></p>
+
+								<p class="mt-2 text-sm text-primary font-medium">Preço promocional de lançamento</p>
 
 								<ul role="list" class="mt-10 space-y-4">
 									<li class="flex items-center">
