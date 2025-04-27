@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { ref, computed } from 'vue';
 // import { usePage } from '@inertiajs/vue3';
 
-export const availableLanguages = ['en', 'pt'];
+export const availableLanguages = ['pt', 'en'];
 export const defaultLanguage = 'pt';
 
 export const useLanguageStore = defineStore(
