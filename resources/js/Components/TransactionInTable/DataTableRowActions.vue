@@ -3,7 +3,6 @@ import type { Row } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import { transactionSchema } from './columns';
 import type { Transaction } from './columns';
-import { Icon } from '@iconify/vue';
 import { router } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {

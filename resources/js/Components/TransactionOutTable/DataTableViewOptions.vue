@@ -2,8 +2,6 @@
 import type { Table } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import type { Transaction } from './columns';
-import { Icon } from '@iconify/vue';
-
 import { Button } from '@/Components/ui/button';
 import {
 	DropdownMenu,
@@ -14,6 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import { AcceptableValue } from 'reka-ui';
+import { SlidersHorizontal } from 'lucide-vue-next';
 
 interface DataTableViewOptionsProps {
 	table: Table<Transaction>;
@@ -35,8 +34,8 @@ const columns = computed(() =>
 	<DropdownMenu>
 		<DropdownMenuTrigger as-child>
 			<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
-				<Icon icon="radix-icons:mixer-horizontal" class="mr-2 h-4 w-4" />
-				Visualização
+				<SlidersHorizontal class="mr-2 h-4 w-4" />
+				{{ $t('View') }}
 			</Button>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent align="end">

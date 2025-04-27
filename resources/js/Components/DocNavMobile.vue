@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Icon } from '@iconify/vue';
 import { cn } from '@/utils';
 import { buttonVariants } from '@/Components/ui/button';
 import {
@@ -34,7 +33,7 @@ defineProps<DocNavProps>();
 						)
 					"
 				>
-					<Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
+					<component v-if="link.icon" :is="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
 
 					<span

@@ -2,11 +2,8 @@
 import type { Table } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import type { Transaction } from './columns';
-
-// import { priorities, statuses } from './columns'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue';
 import DataTableViewOptions from './DataTableViewOptions.vue';
-import { Icon } from '@iconify/vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Category, categorySchema } from '../CategoryTable/columns';

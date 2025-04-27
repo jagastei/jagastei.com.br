@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table';
 import type { Budget } from './columns';
-import { Icon } from '@iconify/vue';
-
 import { Button } from '@/Components/ui/button';
 import {
 	Select,
@@ -12,6 +10,7 @@ import {
 	SelectValue,
 } from '@/Components/ui/select';
 import { AcceptableValue } from 'reka-ui';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-vue-next';
 
 interface DataTablePaginationProps {
 	table: Table<Budget>;
@@ -60,7 +59,7 @@ defineProps<DataTablePaginationProps>();
 					@click="table.setPageIndex(0)"
 				>
 					<span class="sr-only">Go to first page</span>
-					<Icon icon="radix-icons:double-arrow-left" class="h-4 w-4" />
+					<ChevronsLeft class="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -69,7 +68,7 @@ defineProps<DataTablePaginationProps>();
 					@click="table.previousPage()"
 				>
 					<span class="sr-only">Go to previous page</span>
-					<Icon icon="radix-icons:chevron-left" class="h-4 w-4" />
+					<ChevronLeft class="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -78,7 +77,7 @@ defineProps<DataTablePaginationProps>();
 					@click="table.nextPage()"
 				>
 					<span class="sr-only">Go to next page</span>
-					<Icon icon="radix-icons:chevron-right" class="h-4 w-4" />
+					<ChevronRight class="h-4 w-4" />
 				</Button>
 				<Button
 					variant="outline"
@@ -87,7 +86,7 @@ defineProps<DataTablePaginationProps>();
 					@click="table.setPageIndex(table.getPageCount() - 1)"
 				>
 					<span class="sr-only">Go to last page</span>
-					<Icon icon="radix-icons:double-arrow-right" class="h-4 w-4" />
+					<ChevronsRight class="h-4 w-4" />
 				</Button>
 			</div>
 		</div>

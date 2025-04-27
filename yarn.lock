@@ -455,33 +455,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@iconify-json/radix-icons@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "@iconify-json/radix-icons@npm:1.2.2"
-  dependencies:
-    "@iconify/types": "npm:*"
-  checksum: 10c0/518be50503e7a18c2dd44829ab69b30a2e313a0f8eb5dff38883b98e444cc15c938b2647a0aa9bce656475ecfafb321b6647763bbad827d0cb30e85d3f228a15
-  languageName: node
-  linkType: hard
-
-"@iconify/types@npm:*, @iconify/types@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@iconify/types@npm:2.0.0"
-  checksum: 10c0/65a3be43500c7ccacf360e136d00e1717f050b7b91da644e94370256ac66f582d59212bdb30d00788aab4fc078262e91c95b805d1808d654b72f6d2072a7e4b2
-  languageName: node
-  linkType: hard
-
-"@iconify/vue@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@iconify/vue@npm:4.3.0"
-  dependencies:
-    "@iconify/types": "npm:^2.0.0"
-  peerDependencies:
-    vue: ">=3"
-  checksum: 10c0/f4200f8aa9bf2986c1055a121adaeea5bda5ac1edc7a8d51c73599bcfac90af8d73217e4193f1866139d2ec03c31f6b233e4e9229434c3de543df6fc0b85da70
-  languageName: node
-  linkType: hard
-
 "@inertiajs/core@npm:2.0.8":
   version: 2.0.8
   resolution: "@inertiajs/core@npm:2.0.8"
@@ -5019,8 +4992,6 @@ __metadata:
   dependencies:
     "@formkit/auto-animate": "npm:^0.8.2"
     "@headlessui/vue": "npm:^1.7.23"
-    "@iconify-json/radix-icons": "npm:^1.2.2"
-    "@iconify/vue": "npm:^4.3.0"
     "@inertiajs/vue3": "npm:^2.0.8"
     "@tailwindcss/forms": "npm:^0.5.10"
     "@tanstack/vue-table": "npm:^8.21.2"

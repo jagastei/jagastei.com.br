@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Icon } from '@iconify/vue';
 import { cn } from '@/utils';
 import { buttonVariants } from '@/Components/ui/button';
 import {

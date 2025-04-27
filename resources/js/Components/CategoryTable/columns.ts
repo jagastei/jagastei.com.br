@@ -7,8 +7,6 @@ import { Checkbox } from '@/Components/ui/checkbox';
 import { Badge } from '@/Components/ui/badge';
 import { z } from 'zod';
 
-import { Icon } from '@iconify/vue';
-
 export const categorySchema = z.object({
 	id: z.string(),
 	wallet_id: z.string(),

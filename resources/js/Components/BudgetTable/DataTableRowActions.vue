@@ -3,7 +3,6 @@ import type { Row } from '@tanstack/vue-table';
 import { computed, ref } from 'vue';
 import { budgetSchema } from './columns';
 import type { Budget } from './columns';
-import { Icon } from '@iconify/vue';
 import { router } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {
@@ -32,6 +31,7 @@ import {
 	AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 import EditDialog from './EditDialog.vue';
+import { Ellipsis } from 'lucide-vue-next';
 
 interface DataTableRowActionsProps {
 	row: Row<Budget>;
@@ -53,7 +53,7 @@ const destroy = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>
 				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-					<Icon icon="radix-icons:dots-horizontal" class="h-4 w-4" />
+					<Ellipsis class="h-4 w-4" />
 					<span class="sr-only">Open menu</span>
 				</Button>
 			</DropdownMenuTrigger>

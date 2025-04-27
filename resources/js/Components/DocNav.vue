@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Icon } from '@iconify/vue';
 import { cn } from '@/utils';
 import { buttonVariants } from '@/Components/ui/button';
 import {
@@ -12,7 +11,7 @@ import Separator from './ui/separator/Separator.vue';
 
 export interface DocLinkProp {
 	title?: string;
-	icon?: string;
+	icon?: any;
 	type: 'link' | 'divider';
 	method?: 'get' | 'post' | 'put' | 'delete';
 	route?: string;
@@ -50,7 +49,7 @@ defineProps<DocNavProps>();
 								)
 							"
 						>
-							<Icon v-if="link.icon" :icon="link.icon" class="size-4" />
+							<component v-if="link.icon" :is="link.icon" class="size-4" />
 							<span class="sr-only">{{ link.title }}</span>
 						</div>
 					</TooltipTrigger>
@@ -74,7 +73,7 @@ defineProps<DocNavProps>();
 						)
 					"
 				>
-					<Icon v-if="link.icon" :icon="link.icon" class="mr-2 size-4" />
+					<component v-if="link.icon" :is="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
 
 					<span

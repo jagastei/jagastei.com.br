@@ -3,8 +3,6 @@ import type { Column } from '@tanstack/vue-table';
 import type { Component } from 'vue';
 import { computed } from 'vue';
 import type { Category } from './columns';
-import { Icon } from '@iconify/vue';
-
 import { Badge } from '@/Components/ui/badge';
 import { Button } from '@/Components/ui/button';
 import {
@@ -24,6 +22,7 @@ import {
 } from '@/Components/ui/popover';
 import { Separator } from '@/Components/ui/separator';
 import { cn } from '@/utils';
+import { Check, CirclePlus } from 'lucide-vue-next';
 
 interface DataTableFacetedFilter {
 	column?: Column<Category, any>;
@@ -58,7 +57,7 @@ const filterFn = (
 	<Popover>
 		<PopoverTrigger as-child>
 			<Button variant="outline" size="sm" class="h-8 border-dashed">
-				<Icon icon="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
+				<CirclePlus class="mr-2 h-4 w-4" />
 				{{ title }}
 				<template v-if="selectedValues.size > 0">
 					<Separator orientation="vertical" class="mx-2 h-4" />
@@ -123,7 +122,7 @@ const filterFn = (
 									)
 								"
 							>
-								<Icon icon="radix-icons:check" :class="cn('h-4 w-4')" />
+								<Check :class="cn('h-4 w-4')" />
 							</div>
 							<component
 								:is="option.icon"

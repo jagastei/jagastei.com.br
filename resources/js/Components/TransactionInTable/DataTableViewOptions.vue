@@ -2,8 +2,6 @@
 import type { Table } from '@tanstack/vue-table';
 import { computed } from 'vue';
 import type { Transaction } from './columns';
-import { Icon } from '@iconify/vue';
-
 import { Button } from '@/Components/ui/button';
 import {
 	DropdownMenu,

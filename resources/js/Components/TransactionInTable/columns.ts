@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { categorySchema } from '../CategoryTable/columns';
 import { accountSchema } from '../AccountTable/columns';
 import { cardSchema } from '../CardTable/columns';
-import { Icon } from '@iconify/vue';
+import { ArrowUp, ArrowDown } from 'lucide-vue-next';
 
 export const transactionSchema = z.object({
 	id: z.string(),
@@ -76,9 +76,7 @@ export const columns: ColumnDef<Transaction>[] = [
 		},
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Valor' }),
 		cell: ({ row }) => {
-			const icon = h(Icon, {
-				icon: row.original.type === 'IN' ? 'lucide:arrow-up' : 'lucide:arrow-down',
-			});
+			// const icon = row.original.type === 'IN' ? ArrowUp : ArrowDown;
 
 			return h(
 				'div',
