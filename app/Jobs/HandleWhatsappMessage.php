@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Models\Category;
+use App\Models\Wallet;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -13,9 +16,6 @@ use Prism\Prism\Schema\ObjectSchema;
 use Prism\Prism\Schema\StringSchema;
 use Prism\Prism\ValueObjects\Messages\SystemMessage;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
-use App\Models\Category;
-use App\Models\Wallet;
-use Exception;
 
 class HandleWhatsappMessage implements ShouldQueue
 {
@@ -36,6 +36,7 @@ class HandleWhatsappMessage implements ShouldQueue
     public function handle(): void
     {
         Log::channel('whatsapp')->info('HandleWhatsappMessage', $this->input);
+
         return;
 
         if ($this->input['event'] !== 'messages.upsert') {
@@ -94,7 +95,6 @@ class HandleWhatsappMessage implements ShouldQueue
                 ])
                 ->asStructured();
 
-            
         } catch (Exception $e) {
             Log::channel('whatsapp')->error($e);
         }

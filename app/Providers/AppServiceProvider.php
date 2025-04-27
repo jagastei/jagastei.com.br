@@ -4,13 +4,13 @@ namespace App\Providers;
 
 use App\Listeners\StripeEventListener;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
 use Laravel\Cashier\Events\WebhookReceived;
-use PostHog\PostHog;
-use Illuminate\Support\Facades\Lang;
 use Money\Money;
+use PostHog\PostHog;
 
 class AppServiceProvider extends ServiceProvider
 {

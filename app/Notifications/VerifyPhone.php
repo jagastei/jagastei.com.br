@@ -14,7 +14,7 @@ class VerifyPhone extends Notification
 
     public function toWhatsapp(object $notifiable): string
     {
-        return 'Olá, seu código de verificação é: ' . $this->verificationCode($notifiable);
+        return 'Olá, seu código de verificação é: '.$this->verificationCode($notifiable);
     }
 
     protected function verificationCode(object $notifiable): string
@@ -22,7 +22,7 @@ class VerifyPhone extends Notification
         $code = rand(100000, 999999);
 
         Cache::store('redis')->put(
-            'verification_code_' . $notifiable->getKey(),
+            'verification_code_'.$notifiable->getKey(),
             sha1($code),
             60
         );

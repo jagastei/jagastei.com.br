@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\PhoneVerificationRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Http\RedirectResponse;
 
 class VerifyPhoneController extends Controller
 {

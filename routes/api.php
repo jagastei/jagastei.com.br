@@ -1,14 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Api\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Api\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Api\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Api\Auth\NewPasswordController;
-use App\Http\Controllers\Api\Auth\PasswordController;
-use App\Http\Controllers\Api\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Api\Auth\RegisteredUserController;
-use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\FeedbackController;
 use App\Http\Controllers\Api\LanguageController;

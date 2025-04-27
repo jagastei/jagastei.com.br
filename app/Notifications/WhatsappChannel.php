@@ -18,16 +18,16 @@ class WhatsappChannel
         if (! $phone = $notifiable->routeNotificationFor('whatsapp', $notification)) {
             return;
         }
-        
+
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-                'apikey' => config('services.whatsapp.api_key')
-            ])->post(config('services.whatsapp.server_url') . "/message/sendText/" . config('services.whatsapp.instance'), [
+                'apikey' => config('services.whatsapp.api_key'),
+            ])->post(config('services.whatsapp.server_url').'/message/sendText/'.config('services.whatsapp.instance'), [
                 'number' => $phone,
                 'text' => $message,
             ]);
-            
+
             Log::info($response->json());
         } catch (Exception $e) {
             Log::error($e);

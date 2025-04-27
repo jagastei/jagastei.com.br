@@ -13,7 +13,7 @@ class LanguageController extends Controller
 
     public function index(string $language)
     {
-        if(! in_array($language, $this->availableLanguages)) {
+        if (! in_array($language, $this->availableLanguages)) {
             return abort(400);
         }
 

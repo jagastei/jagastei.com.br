@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Contracts\MustVerifyPhone;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,11 +16,11 @@ use function Illuminate\Events\queueable;
 
 class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
 {
+    use \App\Traits\MustVerifyPhone;
     use Billable;
     use HasFactory;
     use HasUuids;
     use Notifiable;
-    use \App\Traits\MustVerifyPhone;
 
     protected $fillable = [
         'name',

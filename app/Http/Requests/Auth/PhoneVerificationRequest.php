@@ -14,7 +14,7 @@ class PhoneVerificationRequest extends FormRequest
     {
         $user = $this->user();
 
-        $code = Cache::store('redis')->get('verification_code_' . $user->getKey());
+        $code = Cache::store('redis')->get('verification_code_'.$user->getKey());
 
         if (! $code) {
             return false;
@@ -24,7 +24,7 @@ class PhoneVerificationRequest extends FormRequest
             return false;
         }
 
-        Cache::store('redis')->delete('verification_code_' . $user->getKey());
+        Cache::store('redis')->delete('verification_code_'.$user->getKey());
 
         return true;
     }
