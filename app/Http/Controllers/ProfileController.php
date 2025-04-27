@@ -60,4 +60,17 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function switchLanguage(Request $request)
+    {
+        $request->validate([
+            'language' => ['required', 'string', 'in:pt,en'],
+        ]);
+
+        $request->user()->update([
+            'language' => $request->language,
+        ]);
+
+        return back();
+    }
 }

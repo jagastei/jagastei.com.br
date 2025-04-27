@@ -3,7 +3,6 @@ import type { Column } from '@tanstack/vue-table';
 import type { Component } from 'vue';
 import { computed, ref } from 'vue';
 import type { Transaction } from './columns';
-import { Icon } from '@iconify/vue';
 import { Badge } from '@/Components/ui/badge';
 import { Button } from '@/Components/ui/button';
 import {
@@ -31,7 +30,7 @@ import {
 } from '@/Components/ui/popover';
 import { Separator } from '@/Components/ui/separator';
 import { cn } from '@/utils';
-import { CirclePlusIcon, Loader2 } from 'lucide-vue-next';
+import { CirclePlusIcon, Loader2, Check } from 'lucide-vue-next';
 import { useForm } from '@inertiajs/vue3';
 import Label from '../ui/label/Label.vue';
 import Input from '../ui/input/Input.vue';
@@ -99,7 +98,7 @@ const onClose = () => {
 		<Popover>
 			<PopoverTrigger as-child>
 				<Button variant="outline" size="sm" class="h-8 border-dashed">
-					<Icon icon="radix-icons:plus-circled" class="mr-2 h-4 w-4" />
+					<CirclePlusIcon class="mr-2 h-4 w-4" />
 					{{ title }}
 					<template v-if="selectedValues.size > 0">
 						<Separator orientation="vertical" class="mx-2 h-4" />
@@ -166,7 +165,7 @@ const onClose = () => {
 										)
 									"
 								>
-									<Icon icon="radix-icons:check" :class="cn('h-4 w-4')" />
+									<Check :class="cn('h-4 w-4')" />
 								</div>
 								<component
 									:is="option.icon"

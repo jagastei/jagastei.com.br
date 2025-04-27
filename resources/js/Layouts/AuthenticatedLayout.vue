@@ -5,11 +5,17 @@ import Nav, { type LinkProp } from '@/Components/Nav.vue';
 import { TooltipProvider } from '@/Components/ui/tooltip';
 import { Separator } from '@/Components/ui/separator';
 import {
+	ArrowDown,
+	ArrowUp,
 	BellIcon,
+	ChartPie,
 	GripVerticalIcon,
 	MenuIcon,
+	PiggyBank,
 	SearchIcon,
+	Settings,
 	SparklesIcon,
+	WalletCards,
 } from 'lucide-vue-next';
 import {
 	Sheet,
@@ -30,6 +36,9 @@ import { onMounted, ref } from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
 import Toaster from '@/Components/ui/toast/Toaster.vue'
+import { useTranslation } from "i18next-vue";
+
+const { t } = useTranslation();
 
 const user = usePage().props.auth.user;
 const { posthog } = usePostHog();
@@ -46,9 +55,9 @@ const onExpand = () => {
 
 const links: LinkProp[] = [
 	{
-		title: 'Painel',
+		title: t('Dashboard'),
 		label: '',
-		icon: 'lucide:chart-pie',
+		icon: ChartPie,
 		route: route('dashboard'),
 		active: route().current('dashboard'),
 	},
@@ -62,14 +71,14 @@ const links: LinkProp[] = [
 	{
 		title: 'Entradas',
 		label: '',
-		icon: 'lucide:arrow-up',
+		icon: ArrowUp,
 		route: route('transactions.in.index'),
 		active: route().current('transactions.in.index'),
 	},
 	{
 		title: 'Saídas',
 		label: '',
-		icon: 'lucide:arrow-down',
+		icon: ArrowDown,
 		route: route('transactions.out.index'),
 		active: route().current('transactions.out.index'),
 	},
@@ -98,16 +107,16 @@ const links2: LinkProp[] = [
 	// 	active: route().current('categories.index'),
 	// },
 	{
-		title: 'Cartões',
+		title: t('Cards'),
 		// label: '342',
-		icon: 'lucide:wallet-cards',
+		icon: WalletCards,
 		route: route('cards.index'),
 		active: route().current('cards.index'),
 	},
 	{
-		title: 'Contas  ',
+		title: t('Accounts'),
 		// label: '972',
-		icon: 'lucide:piggy-bank',
+		icon: PiggyBank,
 		route: route('accounts.index'),
 		active: route().current('accounts.index'),
 	},
@@ -115,8 +124,8 @@ const links2: LinkProp[] = [
 
 const links3: LinkProp[] = [
 	{
-		title: 'Configurações',
-		icon: 'lucide:settings',
+		title: t('Settings'),
+		icon: Settings,
 		route: route('wallets.show'),
 		active: route().current('wallets.show'),
 	},

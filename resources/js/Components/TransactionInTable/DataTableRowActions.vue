@@ -31,6 +31,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
+import { Ellipsis } from 'lucide-vue-next';
 
 interface DataTableRowActionsProps {
 	row: Row<Transaction>;
@@ -49,7 +50,7 @@ const destroy = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>
 				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-					<Icon icon="radix-icons:dots-horizontal" class="h-4 w-4" />
+					<Ellipsis class="h-4 w-4" />
 					<span class="sr-only">Open menu</span>
 				</Button>
 			</DropdownMenuTrigger>

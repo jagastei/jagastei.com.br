@@ -122,7 +122,7 @@ const closeModal = () => {
 									<InputError :message="form.errors.name" />
 								</div>
 
-								<div class="space-y-2">
+								<div v-if="false" class="space-y-2">
                                     <Label for="currency">Moeda</Label>
                                     <Select v-model="form.currency" :disabled="form.processing">
                                         <SelectTrigger>

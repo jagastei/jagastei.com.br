@@ -13,8 +13,10 @@ import { usePostHog } from './composables/usePosthog';
 import i18next from 'i18next';
 import i18nextVue from 'i18next-vue';
 import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import { availableLanguages, defaultLanguage } from './stores/languageStore';
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 window.env = import.meta.env.MODE as Env;
 
@@ -27,7 +29,7 @@ window.emitter = emitter;
 const { posthog } = usePostHog();
 
 const pinia = createPinia();
-
+pinia.use(piniaPluginPersistedstate);
 createInertiaApp({
 	title: (title) => `${title} - ${appName}`,
 	resolve: (name) =>
@@ -51,14 +53,17 @@ createInertiaApp({
 			});
 		});
 
-		const i18n = i18next.use(Backend).init({
-			debug: false,
-			fallbackLng: defaultLanguage,
-			supportedLngs: availableLanguages,
-			backend: {
-				loadPath: '/api/language/{{lng}}',
-			},
-		});
+		const i18n = i18next
+			.use(Backend)
+			// .use(LanguageDetector)
+			.init({
+				debug: false,
+				fallbackLng: defaultLanguage,
+				supportedLngs: availableLanguages,
+				backend: {
+					loadPath: '/api/language/{{lng}}',
+				},
+			});
 
 		app.use(i18nextVue, { i18next });
 		app.use(plugin);
@@ -66,6 +71,7 @@ createInertiaApp({
 		app.use(autoAnimatePlugin);
 		app.use(money);
 		app.use(pinia);
+
 		i18n.then(() => {
 			app.mount(el);
 		});

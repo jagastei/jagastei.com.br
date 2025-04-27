@@ -31,7 +31,7 @@ defineProps<NavProps>();
 						)
 					"
 				>
-					<Icon :icon="link.icon" class="mr-2 size-4" />
+					<component :is="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
 					<span
 						v-if="link.label"

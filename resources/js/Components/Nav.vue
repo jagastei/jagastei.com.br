@@ -12,7 +12,7 @@ import { Link } from '@inertiajs/vue3';
 export interface LinkProp {
 	title: string;
 	label?: string;
-	icon: string;
+	icon: any;
 	route?: string;
 	active: boolean;
 }
@@ -22,7 +22,9 @@ export interface NavProps {
 	links: LinkProp[];
 }
 
-defineProps<NavProps>();
+const props = defineProps<NavProps>();
+
+console.log(props)
 </script>
 
 <template>
@@ -47,7 +49,7 @@ defineProps<NavProps>();
 								)
 							"
 						>
-							<Icon :icon="link.icon" class="size-4" />
+							<component :is="link.icon" class="size-4" />
 							<span class="sr-only">{{ link.title }}</span>
 						</Link>
 					</TooltipTrigger>
@@ -75,7 +77,7 @@ defineProps<NavProps>();
 						)
 					"
 				>
-					<Icon :icon="link.icon" class="mr-2 size-4" />
+					<component :is="link.icon" class="mr-2 size-4" />
 					{{ link.title }}
 					<span
 						v-if="link.label"

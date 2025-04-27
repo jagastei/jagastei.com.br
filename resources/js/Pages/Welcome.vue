@@ -110,18 +110,18 @@ onBeforeUnmount(() => {
 
 					<div class="flex items-center gap-x-4">
 						<Link v-if="$page.props.auth.user" :href="route('dashboard')">
-						<Button>Painel</Button>
+							<Button>{{ $t('Dashboard') }}</Button>
 						</Link>
 
 						<template v-else>
 							<div class="hidden md:block">
 								<Link :href="route('login')">
-									<Button variant="outline">Entrar</Button>
+									<Button variant="outline">{{ $t('Login') }}</Button>
 								</Link>
 							</div>
 
 							<Link v-if="false && canRegister" :href="route('register')">
-							<Button>Cadastre-se</Button>
+							<Button>{{ $t('Register') }}</Button>
 							</Link>
 						</template>
 					</div>
@@ -328,6 +328,10 @@ onBeforeUnmount(() => {
 
 					<p class="text-sm text-muted-foreground">
 						© JaGastei 2025
+					</p>
+
+					<p class="text-sm text-muted-foreground">
+						{{ $t('Made by') }} <a href="https://github.com/diego-lipinski-de-castro" target="_blank" class="text-primary hover:text-primary/80 transition-colors underline">diego-lipinski-de-castro</a>
 					</p>
 				</div>
 			</div>

@@ -1,29 +1,36 @@
 import { defineStore } from 'pinia';
 import i18next from 'i18next';
+import { ref, computed } from 'vue';
+// import { usePage } from '@inertiajs/vue3';
 
 export const availableLanguages = ['en', 'pt'];
 export const defaultLanguage = 'pt';
 
-export const useLanguageStore = defineStore('language', {
-	state: () => ({
-        availableLanguages,
-        currentLanguage: defaultLanguage,
-    }),
+export const useLanguageStore = defineStore('language', () => {
+    // const user = usePage().props.auth.user;
+    // console.log(user);
+    
+    const currentLanguage = ref(defaultLanguage);
 
-    getters: {
-        getAvailableLanguages: (state) => state.availableLanguages,
-        getCurrentLanguage: (state) => state.currentLanguage,
-    },
+    const getAvailableLanguages = computed(() => availableLanguages);
+    const getCurrentLanguage = computed(() => currentLanguage.value);
 
-    actions: {
-        async setLanguage(language: string) {
-            if(! availableLanguages.includes(language)) return;
+    const setLanguage = async (language: string) => {
+        if(! availableLanguages.includes(language)) return;
 
-            await i18next.changeLanguage(language);
+        await i18next.changeLanguage(language);
 
-            document.querySelector('html')?.setAttribute('lang', language);
+        document.querySelector('html')?.setAttribute('lang', language);
 
-            this.currentLanguage = language;
-        },
-    },
+        currentLanguage.value = language;
+    }
+
+    return {
+        currentLanguage,
+        getAvailableLanguages,
+        getCurrentLanguage,
+        setLanguage,
+    }
+}, {
+    persist: true,
 });

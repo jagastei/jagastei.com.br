@@ -32,6 +32,8 @@ Route::redirect('/convite', '/register');
 Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::put('/minha-conta/idioma', [ProfileController::class, 'switchLanguage'])->name('profile.switch-language');
+
     // wallets
     Route::post('/carteiras', [WalletController::class, 'store'])->name('wallets.store')->middleware([Subscribed::class]);
 

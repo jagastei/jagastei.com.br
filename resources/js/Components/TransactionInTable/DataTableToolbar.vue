@@ -6,10 +6,10 @@ import type { Transaction } from './columns';
 // import { priorities, statuses } from './columns'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue';
 import DataTableViewOptions from './DataTableViewOptions.vue';
-import { Icon } from '@iconify/vue';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Category, categorySchema } from '../CategoryTable/columns';
+import { X } from 'lucide-vue-next';
 
 interface DataTableToolbarProps {
 	table: Table<Transaction>;
@@ -58,8 +58,8 @@ const isFiltered = computed(
 				class="h-8 px-2 lg:px-3"
 				@click="table.resetColumnFilters()"
 			>
-				Limpar
-				<Icon icon="radix-icons:cross-2" class="ml-2 h-4 w-4" />
+				{{ $t('Clear') }}
+				<X class="ml-2 h-4 w-4" />
 			</Button>
 		</div>
 		<DataTableViewOptions :table="table" />
