@@ -78,6 +78,12 @@ const switchWallet = (wallet: Wallet) => {
 
 	router.put(route('wallets.switch'), {
 		wallet_id: wallet.id,
+	}, {
+		onSuccess: () => {
+			if(route().current('wallets.show')) {
+				window.location.reload();
+			}
+		},
 	});
 };
 

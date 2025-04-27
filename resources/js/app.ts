@@ -9,8 +9,14 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue';
 import money from 'v-money3';
 import mitt from 'mitt';
 import { Env } from './types/index';
-window.env = import.meta.env.MODE as Env;
 import { usePostHog } from './composables/usePosthog';
+import i18next from 'i18next';
+import i18nextVue from 'i18next-vue';
+import Backend from 'i18next-http-backend';
+import { availableLanguages, defaultLanguage } from './stores/languageStore';
+import { createPinia } from 'pinia'
+
+window.env = import.meta.env.MODE as Env;
 
 const appName = import.meta.env.VITE_APP_NAME || '';
 window.appUrl = import.meta.env.VITE_APP_URL || '';
@@ -19,6 +25,8 @@ const emitter = mitt();
 window.emitter = emitter;
 
 const { posthog } = usePostHog();
+
+const pinia = createPinia();
 
 createInertiaApp({
 	title: (title) => `${title} - ${appName}`,
@@ -43,11 +51,24 @@ createInertiaApp({
 			});
 		});
 
+		const i18n = i18next.use(Backend).init({
+			debug: false,
+			fallbackLng: defaultLanguage,
+			supportedLngs: availableLanguages,
+			backend: {
+				loadPath: '/api/language/{{lng}}',
+			},
+		});
+
+		app.use(i18nextVue, { i18next });
 		app.use(plugin);
 		app.use(ZiggyVue);
 		app.use(autoAnimatePlugin);
 		app.use(money);
-		app.mount(el);
+		app.use(pinia);
+		i18n.then(() => {
+			app.mount(el);
+		});
 	},
 	progress: {
 		color: '#4B5563',

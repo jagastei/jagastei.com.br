@@ -27,7 +27,7 @@ import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
 import { onMounted, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Link } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
 import Toaster from '@/Components/ui/toast/Toaster.vue'
 
@@ -73,20 +73,20 @@ const links: LinkProp[] = [
 		route: route('transactions.out.index'),
 		active: route().current('transactions.out.index'),
 	},
-	{
-		title: 'Metas',
-		label: '',
-		icon: 'lucide:goal',
-		route: route('goals.index'),
-		active: route().current('goals.index'),
-	},
-	{
-		title: 'Orçamentos',
-		label: '',
-		icon: 'lucide:box',
-		route: route('budgets.index'),
-		active: route().current('budgets.index'),
-	},
+	// {
+	// 	title: 'Metas',
+	// 	label: '',
+	// 	icon: 'lucide:goal',
+	// 	route: route('goals.index'),
+	// 	active: route().current('goals.index'),
+	// },
+	// {
+	// 	title: 'Orçamentos',
+	// 	label: '',
+	// 	icon: 'lucide:box',
+	// 	route: route('budgets.index'),
+	// 	active: route().current('budgets.index'),
+	// },
 ];
 
 const links2: LinkProp[] = [
@@ -161,13 +161,13 @@ onMounted(() => {
 			<div
 				class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0"
 			>
-				<div :class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']">
+				<Link :href="route('dashboard')" :class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']">
 					<img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12" />
 					<img
 						src="@/../images/green-diamond-white.svg"
 						class="hidden dark:block h-12 w-12"
 					/>
-				</div>
+				</Link>
 
 				<Sheet>
 					<SheetTrigger as-child class="ml-4 md:hidden mr-2">
@@ -179,14 +179,16 @@ onMounted(() => {
 					<SheetContent side="left" class="px-4">
 						<SheetHeader>
 							<SheetTitle>
-								<img
-									src="@/../images/green-diamond.svg"
-									class="dark:hidden h-12 w-12"
-								/>
-								<img
-									src="@/../images/green-diamond-white.svg"
-									class="hidden dark:block h-12 w-12"
-								/>
+								<Link :href="route('dashboard')">
+									<img
+										src="@/../images/green-diamond.svg"
+										class="dark:hidden h-12 w-12"
+									/>
+									<img
+										src="@/../images/green-diamond-white.svg"
+										class="hidden dark:block h-12 w-12"
+									/>
+								</Link>
 							</SheetTitle>
 
 							<SheetDescription></SheetDescription>

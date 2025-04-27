@@ -11,10 +11,13 @@ use App\Http\Controllers\Api\Auth\RegisteredUserController;
 use App\Http\Controllers\Api\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\FeedbackController;
+use App\Http\Controllers\Api\LanguageController;
 use App\Http\Controllers\Api\SupportController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\WalletController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/language/{language}', [LanguageController::class, 'index'])->name('language.index');
 
 Route::middleware('auth:sanctum')->name('api.')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');

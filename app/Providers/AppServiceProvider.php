@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
 use Laravel\Cashier\Events\WebhookReceived;
 use PostHog\PostHog;
+use Illuminate\Support\Facades\Lang;
+use Money\Money;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
         PostHog::init(config('services.posthog.key'), [
             'host' => config('services.posthog.host'),
         ]);
+
+        // Lang::stringable(function (Money $money) {
+        //     return $money->formatTo('en_GB');
+        // });
     }
 }

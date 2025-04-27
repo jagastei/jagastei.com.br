@@ -58,7 +58,7 @@ const currencies = {
 
 const form = useForm({
 	name: props.wallet.name,
-	// currency: props.wallet.currency,
+	currency: props.wallet.currency,
 });
 
 const deleteForm = useForm({});
@@ -122,7 +122,7 @@ const closeModal = () => {
 									<InputError :message="form.errors.name" />
 								</div>
 
-								<!-- <div class="space-y-2">
+								<div class="space-y-2">
                                     <Label for="currency">Moeda</Label>
                                     <Select v-model="form.currency" :disabled="form.processing">
                                         <SelectTrigger>
@@ -135,7 +135,7 @@ const closeModal = () => {
                                         </SelectContent>
                                     </Select>
                                     <InputError :message="form.errors.currency" />
-                                </div> -->
+                                </div>
 							</div>
 
 							<Button type="submit" :disabled="form.processing">

@@ -31,9 +31,11 @@ import { Link } from '@inertiajs/vue3';
 import { useColorMode } from '@vueuse/core';
 import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
+import { useLanguageStore } from '@/stores/languageStore';
 
-const { store } = useColorMode();
 const user = usePage().props.auth.user;
+const { store } = useColorMode();
+const languageStore = useLanguageStore();
 
 const logout = () => {
 	router.post(route('logout'));
@@ -77,6 +79,28 @@ const getSubscriptionRoute = computed(() => {
 			</DropdownMenuGroup>
 
 			<DropdownMenuSeparator />
+
+			<DropdownMenuSub>
+				<DropdownMenuSubTrigger class="relative">
+					<Icon
+						icon="lucide:globe"
+						class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+					/>
+					<span>{{ $t('Language') }}</span>
+				</DropdownMenuSubTrigger>
+				<DropdownMenuPortal>
+					<DropdownMenuSubContent>
+						<DropdownMenuItem @click="languageStore.setLanguage('pt')">
+							<span class="w-full">{{ $t('Portuguese') }}</span>
+							<Icon icon="lucide:check" v-if="languageStore.currentLanguage === 'pt'" />
+						</DropdownMenuItem>
+						<DropdownMenuItem @click="languageStore.setLanguage('en')">
+							<span class="w-full">{{ $t('English') }}</span>
+							<Icon icon="lucide:check" v-if="languageStore.currentLanguage === 'en'" />
+						</DropdownMenuItem>
+					</DropdownMenuSubContent>
+				</DropdownMenuPortal>
+			</DropdownMenuSub>
 
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger class="relative">

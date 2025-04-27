@@ -22,19 +22,13 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     use Notifiable;
     use \App\Traits\MustVerifyPhone;
 
-    // available locales
-    public const LOCALES = [
-        'pt-BR' => 'Português (Brasil)',
-        'en-US' => 'English (USA)',
-    ];
-
     protected $fillable = [
         'name',
         'email',
         'phone',
         'password',
         'current_wallet_id',
-        'locale',
+        'language',
         'metadata',
     ];
 

@@ -49,7 +49,10 @@ const columns = computed(() =>
 				class="capitalize"
 				:checked="column.getIsVisible()"
 				@update:checked="
-					(value: AcceptableValue) => column.toggleVisibility(!!value)
+					(value: AcceptableValue) => {
+						column.toggleVisibility(!!value);
+						console.log(value, column.getIsVisible());
+					}
 				"
 				@select="(ev) => ev.preventDefault()"
 			>

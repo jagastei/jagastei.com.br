@@ -26,9 +26,12 @@ class AccountController extends Controller
             ->orderBy('name')
             ->get();
 
+        $totalBalance = $accounts->sum('balance') / 100;
+
         return Inertia::render('Accounts/Index', [
             'banks' => $banks,
             'accounts' => $accounts,
+            'totalBalance' => $totalBalance,
         ]);
     }
 

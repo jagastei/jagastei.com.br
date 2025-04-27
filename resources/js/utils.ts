@@ -19,10 +19,10 @@ export function valueUpdater<T extends Updater<any>>(
 
 export function formatMoney(
 	value: number,
-	lang: string = 'pt-BR',
+	language: string = 'pt-BR',
 	currency: string = 'BRL'
 ) {
-	return new Intl.NumberFormat(lang, {
+	return new Intl.NumberFormat(language, {
 		style: 'currency',
 		currency: currency,
 	}).format(value);

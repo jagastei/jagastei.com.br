@@ -6,10 +6,12 @@ import { ref } from 'vue';
 import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/AccountTable/DataTable.vue';
 import { Account, Bank } from '@/Components/AccountTable/columns';
+import { formatMoney } from '@/utils';
 
 defineProps<{
 	banks: Bank[];
 	accounts: Account[];
+	totalBalance: number;
 }>();
 
 const createAccountDialogOpen = ref(false);
@@ -29,9 +31,9 @@ const createAccountDialogOpen = ref(false);
 			<div class="flex items-center justify-between">
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Contas</h2>
-					<!-- <p class="text-muted-foreground">
-                        Todas as suas contas ficam aqui.
-                    </p> -->
+					<p class="text-muted-foreground">
+						Saldo total: {{ formatMoney(totalBalance) }}
+					</p>
 				</div>
 				<div v-if="accounts.length > 0" class="flex items-center space-x-2">
 					<Button @click="createAccountDialogOpen = true">Adicionar conta</Button>

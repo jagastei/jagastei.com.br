@@ -40,10 +40,13 @@ class CardController extends Controller
             ->orderBy('name')
             ->get();
 
+        $totalLimit = $cards->sum('limit') / 100;
+
         return Inertia::render('Cards/Index', [
             'brands' => $brands,
             'accounts' => $accounts,
             'cards' => $cards,
+            'totalLimit' => $totalLimit,
         ]);
     }
 

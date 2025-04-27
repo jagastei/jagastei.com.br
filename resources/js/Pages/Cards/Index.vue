@@ -7,11 +7,13 @@ import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/CardTable/DataTable.vue';
 import type { Brand, Card } from '@/Components/CardTable/columns';
 import { Account } from '@/Components/AccountTable/columns';
+import { formatMoney } from '@/utils';
 
 defineProps<{
 	brands: Brand[];
 	accounts: Account[];
 	cards: Card[];
+	totalLimit: number;
 }>();
 
 const createCardDialogOpen = ref(false);
@@ -32,9 +34,9 @@ const createCardDialogOpen = ref(false);
 			<div class="flex items-center justify-between">
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Cartões</h2>
-					<!-- <p class="text-muted-foreground">
-                        Todas os seus cartões ficam aqui.
-                    </p> -->
+					<p class="text-muted-foreground">
+						Limite total: {{ formatMoney(totalLimit) }}
+					</p>
 				</div>
 				<div v-if="cards.length > 0" class="flex items-center space-x-2">
 					<Button @click="createCardDialogOpen = true">Adicionar cartão</Button>

@@ -92,7 +92,9 @@ const balanceData = computed<{
 				<div
 					class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 md:gap-y-0"
 				>
-					<h2 class="text-3xl font-bold tracking-tight">Painel</h2>
+					<h2 class="text-3xl font-bold tracking-tight">
+						{{ $t('Dashboard') }}
+					</h2>
 					<div class="flex items-center space-x-2">
 						<DateRangePicker
 							:start-date="startDate"

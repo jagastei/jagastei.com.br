@@ -103,7 +103,7 @@ const onClose = () => {
 </script>
 
 <template>
-	<Dialog :open="open">
+	<Dialog :open="open" @update:open="onClose">
 		<DialogTrigger as-child>
 			<slot />
 		</DialogTrigger>

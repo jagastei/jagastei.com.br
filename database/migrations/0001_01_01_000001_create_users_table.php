@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->snowflake('current_wallet_id')->index()->nullable();
-            $table->string('locale')->default('pt-BR');
+            $table->string('language')->default('pt');
             $table->json('metadata')->nullable();
             $table->timestamps();
             $table->softDeletes();
