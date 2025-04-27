@@ -76,15 +76,19 @@ const switchWallet = (wallet: Wallet) => {
 	selectedWallet.value = wallet;
 	open.value = false;
 
-	router.put(route('wallets.switch'), {
-		wallet_id: wallet.id,
-	}, {
-		onSuccess: () => {
-			if(route().current('wallets.show')) {
-				window.location.reload();
-			}
+	router.put(
+		route('wallets.switch'),
+		{
+			wallet_id: wallet.id,
 		},
-	});
+		{
+			onSuccess: () => {
+				if (route().current('wallets.show')) {
+					window.location.reload();
+				}
+			},
+		}
+	);
 };
 
 const onClose = () => {

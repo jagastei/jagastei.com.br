@@ -123,19 +123,23 @@ const closeModal = () => {
 								</div>
 
 								<div v-if="false" class="space-y-2">
-                                    <Label for="currency">Moeda</Label>
-                                    <Select v-model="form.currency" :disabled="form.processing">
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Selecione uma moeda" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem v-for="(name, code) in currencies" :key="code" :value="code">
-                                                {{ code }} - {{ name }}
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <InputError :message="form.errors.currency" />
-                                </div>
+									<Label for="currency">Moeda</Label>
+									<Select v-model="form.currency" :disabled="form.processing">
+										<SelectTrigger>
+											<SelectValue placeholder="Selecione uma moeda" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem
+												v-for="(name, code) in currencies"
+												:key="code"
+												:value="code"
+											>
+												{{ code }} - {{ name }}
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									<InputError :message="form.errors.currency" />
+								</div>
 							</div>
 
 							<Button type="submit" :disabled="form.processing">

@@ -11,7 +11,12 @@ import {
 	SelectValue,
 } from '@/Components/ui/select';
 import { AcceptableValue } from 'reka-ui';
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-vue-next';
+import {
+	ChevronLeft,
+	ChevronRight,
+	ChevronsLeft,
+	ChevronsRight,
+} from 'lucide-vue-next';
 
 interface DataTablePaginationProps {
 	table: Table<Category>;

@@ -15,8 +15,8 @@ import i18nextVue from 'i18next-vue';
 import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { availableLanguages, defaultLanguage } from './stores/languageStore';
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 window.env = import.meta.env.MODE as Env;
 

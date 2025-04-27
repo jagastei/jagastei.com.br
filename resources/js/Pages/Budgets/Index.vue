@@ -73,8 +73,8 @@ onMounted(() => {
 						Você ainda não adicionou um orçamento.
 					</h3>
 					<p class="text-sm text-muted-foreground">
-						Você pode começar a acompanhar seus orçamentos após adicionar seu
-						primeiro orçamento.
+						Você pode começar a acompanhar seus orçamentos após adicionar seu primeiro
+						orçamento.
 					</p>
 
 					<Button v-if="false" @click="createBudgetDialogOpen = true" class="mt-4">

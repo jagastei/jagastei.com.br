@@ -23,7 +23,7 @@ export interface NavProps {
 
 const props = defineProps<NavProps>();
 
-console.log(props)
+console.log(props);
 </script>
 
 <template>

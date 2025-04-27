@@ -35,8 +35,8 @@ import InviteDialog from '@/Components/InviteDialog.vue';
 import { onMounted, ref } from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
-import Toaster from '@/Components/ui/toast/Toaster.vue'
-import { useTranslation } from "i18next-vue";
+import Toaster from '@/Components/ui/toast/Toaster.vue';
+import { useTranslation } from 'i18next-vue';
 
 const { t } = useTranslation();
 
@@ -170,7 +170,10 @@ onMounted(() => {
 			<div
 				class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0"
 			>
-				<Link :href="route('dashboard')" :class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']">
+				<Link
+					:href="route('dashboard')"
+					:class="['hidden md:block', isCollapsed ? 'pl-4' : 'pl-6']"
+				>
 					<img src="@/../images/green-diamond.svg" class="dark:hidden h-12 w-12" />
 					<img
 						src="@/../images/green-diamond-white.svg"

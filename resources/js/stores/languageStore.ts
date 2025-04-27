@@ -6,31 +6,35 @@ import { ref, computed } from 'vue';
 export const availableLanguages = ['en', 'pt'];
 export const defaultLanguage = 'pt';
 
-export const useLanguageStore = defineStore('language', () => {
-    // const user = usePage().props.auth.user;
-    // console.log(user);
-    
-    const currentLanguage = ref(defaultLanguage);
+export const useLanguageStore = defineStore(
+	'language',
+	() => {
+		// const user = usePage().props.auth.user;
+		// console.log(user);
 
-    const getAvailableLanguages = computed(() => availableLanguages);
-    const getCurrentLanguage = computed(() => currentLanguage.value);
+		const currentLanguage = ref(defaultLanguage);
 
-    const setLanguage = async (language: string) => {
-        if(! availableLanguages.includes(language)) return;
+		const getAvailableLanguages = computed(() => availableLanguages);
+		const getCurrentLanguage = computed(() => currentLanguage.value);
 
-        await i18next.changeLanguage(language);
+		const setLanguage = async (language: string) => {
+			if (!availableLanguages.includes(language)) return;
 
-        document.querySelector('html')?.setAttribute('lang', language);
+			await i18next.changeLanguage(language);
 
-        currentLanguage.value = language;
-    }
+			document.querySelector('html')?.setAttribute('lang', language);
 
-    return {
-        currentLanguage,
-        getAvailableLanguages,
-        getCurrentLanguage,
-        setLanguage,
-    }
-}, {
-    persist: true,
-});
+			currentLanguage.value = language;
+		};
+
+		return {
+			currentLanguage,
+			getAvailableLanguages,
+			getCurrentLanguage,
+			setLanguage,
+		};
+	},
+	{
+		persist: true,
+	}
+);

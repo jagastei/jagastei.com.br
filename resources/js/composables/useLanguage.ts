@@ -1,6 +1,3 @@
 export function useLanguage() {
-
-	return {
-		
-	};
+	return {};
 }
