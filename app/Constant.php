@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Akaunting\Money\Money;
-
 class Constant
 {
     public const DEFAULT_LANGUAGE = 'pt';
