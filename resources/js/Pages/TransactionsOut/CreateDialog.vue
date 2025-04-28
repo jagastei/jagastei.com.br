@@ -12,12 +12,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/Components/ui/dialog';
-import {
-	Check,
-	ChevronsUpDown,
-	Loader2,
-	CirclePlus,
-} from 'lucide-vue-next';
+import { Check, ChevronsUpDown, Loader2, CirclePlus } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
