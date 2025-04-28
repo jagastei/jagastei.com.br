@@ -58,7 +58,7 @@ class WalletController extends Controller
     {
         $input = $request->validate([
             'name' => ['required', 'string', 'min:2', 'max:30'],
-            'currency' => ['required', 'string', 'in:' . implode(',', array_keys(Constant::AVAILABLE_CURRENCIES()))],
+            'currency' => ['required', 'string', 'in:'.implode(',', array_keys(Constant::AVAILABLE_CURRENCIES()))],
         ]);
 
         $wallet = $request->user()->currentWallet;
