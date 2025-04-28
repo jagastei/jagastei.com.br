@@ -875,5 +875,10 @@
     "United States Dollar": "Dólar Americano",
     "Euro": "Euro",
     "British Pound": "Libra Esterlina",
-    "formatMoney": "{{value, currency}}"
+    "formatMoney": "{{value, currency}}",
+    "Wallets": "Carteiras",
+    "Add wallet": "Adicionar carteira",
+    "Account": "Minha conta",
+    "Billing": "Meu plano",
+    "Invite": "Convidar"
 }

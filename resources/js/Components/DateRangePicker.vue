@@ -17,6 +17,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/Components/ui/popover';
+import { useLanguageStore } from '@/stores/languageStore';
+import { computed } from 'vue';
 
 const props = defineProps<{
 	startDate: string;
@@ -27,8 +29,12 @@ const emit = defineEmits<{
 	(e: 'update:value', value: DateRange): void;
 }>();
 
-const df = new DateFormatter('pt-BR', {
-	dateStyle: 'medium', // short
+const languageStore = useLanguageStore();
+
+const df = computed(() => {
+	return new DateFormatter(languageStore.getCurrentLanguage, {
+		dateStyle: 'medium', // short
+	});
 });
 
 const startDate = parseDate(props.startDate);
@@ -81,7 +87,7 @@ watch(value, (newVal: DateRange) => {
 			<PopoverContent class="w-auto p-0" align="end">
 				<RangeCalendar
 					v-model="value"
-					locale="pt-BR"
+					:locale="languageStore.getCurrentLanguage"
 					:week-starts-on="1"
 					weekday-format="short"
 					:number-of-months="2"

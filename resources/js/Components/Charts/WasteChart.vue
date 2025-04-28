@@ -2,7 +2,7 @@
 import { BarChart } from '@/Components/ui/chart-bar';
 import OverviewTooltip from '@/Components/OverviewTooltip.vue';
 import { useCurrency } from '@/composables/useCurrency';
-import { computed } from 'vue';
+import { computed, h } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
@@ -65,6 +65,14 @@ const xFormatter = (value: any, i: number) => {
 const yFormatter = (value: any, i: number) => {
 	return useCurrency(t, value);
 };
+
+const renderTooltip = (item: any) => {
+	return h(OverviewTooltip, {
+		title: item.title,
+		data: item.data,
+		t: t,
+	});
+};
 </script>
 
 <template>
@@ -104,7 +112,7 @@ const yFormatter = (value: any, i: number) => {
 			:showYAxis="true"
 			:showGridLine="true"
 			:showLegend="true"
-			:customTooltip="OverviewTooltip"
+			:customTooltip="renderTooltip"
 		/>
 	</div>
 </template>

@@ -73,13 +73,13 @@ const logout = () => {
 				<Link :href="route('profile.edit')">
 					<DropdownMenuItem class="cursor-pointer">
 						<UserIcon class="mr-2 size-4" />
-						<span>Minha conta</span>
+						<span>{{ $t('Account') }}</span>
 					</DropdownMenuItem>
 				</Link>
 				<a :href="getSubscriptionRoute">
 					<DropdownMenuItem class="cursor-pointer">
 						<DollarSignIcon class="mr-2 size-4" />
-						<span>Meu plano</span>
+						<span>{{ $t('Billing') }}</span>
 						<FlaskConical
 							v-if="$page.props.auth.on_generic_trial"
 							class="ml-auto size-4 text-purple-500"
@@ -92,7 +92,7 @@ const logout = () => {
 
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger class="relative">
-					<Globe class="mr-2 h-4 w-4" />
+					<Globe class="mr-4 size-4" />
 					<span>{{ $t('Language') }}</span>
 				</DropdownMenuSubTrigger>
 				<DropdownMenuPortal>
@@ -112,25 +112,25 @@ const logout = () => {
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger class="relative">
 					<Sun
-						class="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+						class="mr-4 size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 					/>
 					<Moon
-						class="mr-2 absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+						class="mr-4 absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 					/>
 					<span>{{ $t('Theme') }}</span>
 				</DropdownMenuSubTrigger>
 				<DropdownMenuPortal>
 					<DropdownMenuSubContent>
 						<DropdownMenuItem @click="store = 'light'">
-							<span class="w-full">Claro</span>
+							<span class="w-full">{{ $t('Light') }}</span>
 							<Check v-if="store === 'light'" />
 						</DropdownMenuItem>
 						<DropdownMenuItem @click="store = 'dark'">
-							<span class="w-full">Escuro</span>
+							<span class="w-full">{{ $t('Dark') }}</span>
 							<Check v-if="store === 'dark'" />
 						</DropdownMenuItem>
 						<DropdownMenuItem @click="store = 'auto'">
-							<span class="w-full">Sistema</span>
+							<span class="w-full">{{ $t('System') }}</span>
 							<Check v-if="store === 'auto'" />
 						</DropdownMenuItem>
 					</DropdownMenuSubContent>

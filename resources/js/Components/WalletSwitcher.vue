@@ -36,6 +36,8 @@ import {
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import { Wallet } from '@/types';
 import InputError from './InputError.vue';
+import { computed } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
 type Group = {
 	label: string;
@@ -43,13 +45,14 @@ type Group = {
 };
 
 const user = usePage().props.auth.user;
+const { t } = useTranslation();
 
-const groups: Group[] = [
+const groups = computed<Group[]>(() => [
 	{
-		label: 'Carteiras',
+		label: t('Wallets'),
 		wallets: user.wallets,
 	},
-];
+]);
 
 const open = ref(false);
 const showNewWalletDialog = ref(false);
@@ -163,7 +166,7 @@ const onClose = () => {
 									"
 								>
 									<CirclePlus class="mr-2 h-5 w-5" />
-									Adicionar carteira
+									{{ $t('Add wallet') }}
 								</CommandItem>
 							</DialogTrigger>
 						</CommandGroup>
