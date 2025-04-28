@@ -3,12 +3,13 @@ import { AreaChart } from '@/Components/ui/chart-area';
 import { useCurrency } from '@/composables/useCurrency';
 import { CurveType } from '@unovis/ts';
 import { computed } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const { formatMoney } = useCurrency();
+const { t } = useTranslation();
 
 const isEmpty = computed(() => props.data.length === 0);
 
@@ -25,7 +26,7 @@ const xFormatter = (value: any, i: number) => {
 };
 
 const yFormatter = (value: any, i: number) => {
-	return formatMoney(value);
+	return useCurrency(t, value);
 };
 
 const getColor = (transparency: number = 1) => {

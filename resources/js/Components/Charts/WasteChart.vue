@@ -3,12 +3,13 @@ import { BarChart } from '@/Components/ui/chart-bar';
 import OverviewTooltip from '@/Components/OverviewTooltip.vue';
 import { useCurrency } from '@/composables/useCurrency';
 import { computed } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const { formatMoney } = useCurrency();
+const { t } = useTranslation();
 
 const isEmpty = computed(() => props.data.every((item) => item.Saída === 0));
 
@@ -62,7 +63,7 @@ const xFormatter = (value: any, i: number) => {
 };
 
 const yFormatter = (value: any, i: number) => {
-	return formatMoney(value);
+	return useCurrency(t, value);
 };
 </script>
 

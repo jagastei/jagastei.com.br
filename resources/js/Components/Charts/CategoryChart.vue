@@ -2,12 +2,13 @@
 import { DonutChart } from '@/Components/ui/chart-donut';
 import { useCurrency } from '@/composables/useCurrency';
 import { computed } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const { formatMoney } = useCurrency();
+const { t } = useTranslation();
 
 const isEmpty = computed(() =>
 	props.data.every((item) => item.transactions_sum_value === 0)
@@ -21,7 +22,7 @@ const fakeData = computed(() => {
 });
 
 const formatter = (value: number, i: number | undefined): string => {
-	return formatMoney(value);
+	return useCurrency(t, value);
 };
 </script>
 

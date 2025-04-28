@@ -8,6 +8,7 @@ import DataTable from '@/Components/CardTable/DataTable.vue';
 import type { Brand, Card } from '@/Components/CardTable/columns';
 import { Account } from '@/Components/AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
 
 defineProps<{
 	brands: Brand[];
@@ -15,6 +16,8 @@ defineProps<{
 	cards: Card[];
 	totalLimit: number;
 }>();
+
+const { t } = useTranslation();
 
 const createCardDialogOpen = ref(false);
 </script>
@@ -35,7 +38,7 @@ const createCardDialogOpen = ref(false);
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Cartões</h2>
 					<p class="text-muted-foreground">
-						Limite total: {{ useCurrency(totalLimit) }}
+						Limite total: {{ useCurrency(t, totalLimit) }}
 					</p>
 				</div>
 				<div v-if="cards.length > 0" class="flex items-center space-x-2">

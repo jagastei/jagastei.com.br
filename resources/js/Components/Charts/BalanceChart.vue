@@ -3,15 +3,20 @@ import { AreaChart } from '@/Components/ui/chart-area';
 import OverviewTooltip from '@/Components/OverviewTooltip.vue';
 import { useCurrency } from '@/composables/useCurrency';
 import { CurveType } from '@unovis/ts';
-import { computed } from 'vue';
+import { computed, h } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
 
-const { formatMoney } = useCurrency();
+const { t } = useTranslation();
 
 const isEmpty = computed(() => props.data.length === 0);
+
+const yFormatter = (value: any, i: number) => {
+	return useCurrency(t, Number(value));
+};
 
 const xFormatter = (value: any, i: number) => {
 	if (!Number.isInteger(value)) {
@@ -23,10 +28,6 @@ const xFormatter = (value: any, i: number) => {
 	}
 
 	return props.data[value].name;
-};
-
-const yFormatter = (value: any, i: number) => {
-	return formatMoney(value);
 };
 
 const getColor = (transparency: number = 1) => {
@@ -44,6 +45,14 @@ const getColor = (transparency: number = 1) => {
 	return lastBalance > 0
 		? `rgba(34, 197, 94, ${transparency})`
 		: `rgba(239, 68, 68, ${transparency})`;
+};
+
+const renderTooltip = (item: any) => {
+	return h(OverviewTooltip, {
+		title: item.title,
+		data: item.data,
+		t: t,
+	});
 };
 </script>
 
@@ -100,7 +109,7 @@ const getColor = (transparency: number = 1) => {
 			:showGridLine="true"
 			:showLegend="true"
 			:showGradiant="true"
-			:customTooltip="OverviewTooltip"
+			:customTooltip="renderTooltip"
 			:curveType="CurveType.Linear"
 		/>
 	</div>

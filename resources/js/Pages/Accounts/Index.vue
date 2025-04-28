@@ -7,12 +7,15 @@ import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/AccountTable/DataTable.vue';
 import { Account, Bank } from '@/Components/AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
 
 defineProps<{
 	banks: Bank[];
 	accounts: Account[];
 	totalBalance: number;
 }>();
+
+const { t } = useTranslation();
 
 const createAccountDialogOpen = ref(false);
 </script>
@@ -32,7 +35,7 @@ const createAccountDialogOpen = ref(false);
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Contas</h2>
 					<p class="text-muted-foreground">
-						Saldo total: {{ useCurrency(totalBalance) }}
+						Saldo total: {{ useCurrency(t, totalBalance) }}
 					</p>
 				</div>
 				<div v-if="accounts.length > 0" class="flex items-center space-x-2">

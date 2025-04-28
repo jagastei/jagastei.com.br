@@ -9,9 +9,8 @@ defineProps<{
 		color: string;
 		value: any;
 	}[];
+	t: any;
 }>();
-
-const { formatMoney } = useCurrency();
 </script>
 
 <template>
@@ -36,7 +35,7 @@ const { formatMoney } = useCurrency();
 					</span>
 					<span>{{ item.name }}</span>
 				</div>
-				<span class="font-semibold ml-4">{{ formatMoney(item.value) }}</span>
+				<span class="font-semibold ml-4">{{ useCurrency(t, item.value) }}</span>
 			</div>
 		</CardContent>
 	</Card>

@@ -34,6 +34,8 @@ const props = defineProps<{
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 
+const { t } = useTranslation();
+
 const updateDateRange = (value: DateRange) => {
 	router.get(
 		route('dashboard', {
@@ -225,7 +227,7 @@ const balanceData = computed<{
 														'text-blue-500': currentBalance === 0,
 													},
 												]"
-												>{{ useCurrency(currentBalance) }}</span
+												>{{ useCurrency(t, currentBalance) }}</span
 											>
 										</span>
 
@@ -241,11 +243,11 @@ const balanceData = computed<{
 											O saldo inicial e final são iguais no período selecionado.
 										</span>
 										<span v-else-if="balanceData.startBalance < balanceData.endBalance">
-											Seu saldo aumentou {{ useCurrency(balanceData.diffBalance) }} no período
+											Seu saldo aumentou {{ useCurrency(t, balanceData.diffBalance) }} no período
 											selecionado.
 										</span>
 										<span v-else>
-											Seu saldo diminuiu {{ useCurrency(balanceData.diffBalance) }} no período
+											Seu saldo diminuiu {{ useCurrency(t, balanceData.diffBalance) }} no período
 											selecionado.
 										</span>
 										<!-- <span>
@@ -254,7 +256,7 @@ const balanceData = computed<{
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<!-- <BalanceChart key="balanceByDay" :data="balanceByDay" /> -->
+									<BalanceChart key="balanceByDay" :data="balanceByDay" />
 								</CardContent>
 							</Card>
 
@@ -267,7 +269,7 @@ const balanceData = computed<{
 									>
 								</CardHeader>
 								<CardContent>
-									<!-- <WasteChart key="wastedByDay" :data="wastedByDay" /> -->
+									<WasteChart key="wastedByDay" :data="wastedByDay" />
 								</CardContent>
 							</Card>
 
@@ -275,14 +277,14 @@ const balanceData = computed<{
 								<CardHeader>
 									<CardTitle>Por categoria</CardTitle>
 									<CardDescription
-										>Você gastou {{ wastedByCategoryTotal }} no período
+										>Você gastou {{ useCurrency(t, wastedByCategoryTotal) }} no período
 										selecionado.</CardDescription
 									>
 								</CardHeader>
 								<CardContent
 									class="flex justify-center items-center h-[calc(100%-98px)]"
 								>
-									<!-- <CategoryChart key="wastedByCategory" :data="wastedByCategory" /> -->
+									<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
 								</CardContent>
 							</Card>
 
