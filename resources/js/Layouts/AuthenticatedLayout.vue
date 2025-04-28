@@ -32,7 +32,7 @@ import WalletSwitcher from '@/Components/WalletSwitcher.vue';
 import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
 import Toaster from '@/Components/ui/toast/Toaster.vue';
@@ -53,7 +53,7 @@ const onExpand = () => {
 	isCollapsed.value = false;
 };
 
-const links: LinkProp[] = [
+const links = computed<LinkProp[]>(() => [
 	{
 		title: t('Dashboard'),
 		label: '',
@@ -96,9 +96,9 @@ const links: LinkProp[] = [
 	// 	route: route('budgets.index'),
 	// 	active: route().current('budgets.index'),
 	// },
-];
+]);
 
-const links2: LinkProp[] = [
+const links2 = computed	<LinkProp[]>(() => [
 	// {
 	// 	title: 'Categorias',
 	// 	// label: '342',
@@ -120,16 +120,16 @@ const links2: LinkProp[] = [
 		route: route('accounts.index'),
 		active: route().current('accounts.index'),
 	},
-];
+]);
 
-const links3: LinkProp[] = [
+const links3 = computed<LinkProp[]>(() => [
 	{
 		title: t('Settings'),
 		icon: Settings,
 		route: route('wallets.show'),
 		active: route().current('wallets.show'),
 	},
-];
+]);
 
 const inviteDialog = ref(false);
 const feedbackDialog = ref(false);

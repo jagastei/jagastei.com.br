@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import {
-	CirclePlusIcon,
+	CirclePlus,
 	CheckIcon,
 	ChevronsUpDown,
 	Loader2,
@@ -162,7 +162,7 @@ const onClose = () => {
 										}
 									"
 								>
-									<CirclePlusIcon class="mr-2 h-5 w-5" />
+									<CirclePlus class="mr-2 h-5 w-5" />
 									Adicionar carteira
 								</CommandItem>
 							</DialogTrigger>

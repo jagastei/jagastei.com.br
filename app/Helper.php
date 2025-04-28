@@ -3,11 +3,16 @@
 namespace App;
 
 use Akaunting\Money\Money;
+use Exception;
 
 class Helper
 {
-    public static function formatMoney(int $value, $currency = 'BRL'): string
+    public static function formatMoney(int $value, $currency = Constant::DEFAULT_CURRENCY): string
     {
+        if (! isset(Constant::AVAILABLE_CURRENCIES()[$currency])) {
+            throw new Exception('Invalid currency');
+        }
+
         return Money::{$currency}($value)->format();
     }
 

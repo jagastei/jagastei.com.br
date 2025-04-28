@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { BarChart } from '@/Components/ui/chart-bar';
 import OverviewTooltip from '@/Components/OverviewTooltip.vue';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 import { computed } from 'vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
+
+const { formatMoney } = useCurrency();
 
 const isEmpty = computed(() => props.data.every((item) => item.Saída === 0));
 

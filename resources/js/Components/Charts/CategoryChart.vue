@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { DonutChart } from '@/Components/ui/chart-donut';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 import { computed } from 'vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
+
+const { formatMoney } = useCurrency();
 
 const isEmpty = computed(() =>
 	props.data.every((item) => item.transactions_sum_value === 0)

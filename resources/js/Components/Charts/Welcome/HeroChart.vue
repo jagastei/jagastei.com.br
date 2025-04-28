@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { AreaChart } from '@/Components/ui/chart-area';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 import { CurveType } from '@unovis/ts';
 import { computed } from 'vue';
 
 const props = defineProps<{
 	data: Array<any>;
 }>();
+
+const { formatMoney } = useCurrency();
 
 const isEmpty = computed(() => props.data.length === 0);
 

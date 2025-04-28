@@ -173,7 +173,7 @@ class DashboardController extends Controller
 
         $balanceByDay = $balanceByDay
             ->map(fn ($balance, $date) => [
-                'name' => Carbon::parse($date)->format('l, d F Y'),
+                'name' => Carbon::parse($date)->translatedFormat('l, d F Y'),
                 'Saldo' => $balance,
             ])
             ->values()

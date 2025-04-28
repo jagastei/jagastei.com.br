@@ -1,6 +1,7 @@
 export interface Wallet {
 	id: string;
 	name: string;
+	currency: string;
 }
 
 export interface User {
@@ -10,6 +11,7 @@ export interface User {
 	email_verified_at?: string;
 	phone: string;
 	phone_verified_at?: string;
+	language: string;
 	wallets: Wallet[];
 	current_wallet: Wallet;
 	stripe_id: string;

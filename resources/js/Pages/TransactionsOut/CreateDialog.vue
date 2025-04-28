@@ -16,7 +16,7 @@ import {
 	Check,
 	ChevronsUpDown,
 	Loader2,
-	CirclePlusIcon,
+	CirclePlus,
 } from 'lucide-vue-next';
 import {
 	Command,
@@ -245,7 +245,7 @@ const onClose = () => {
 									<CommandGroup>
 										<!-- <DialogTrigger as-child> -->
 										<CommandItem value="create-category">
-											<CirclePlusIcon class="mr-2 h-5 w-5" />
+											<CirclePlus class="mr-2 h-5 w-5" />
 											Adicionar categoria
 										</CommandItem>
 										<!-- </DialogTrigger> -->

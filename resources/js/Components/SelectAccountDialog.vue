@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { cn } from '@/utils';
-import { Check, ChevronsUpDown, CirclePlusIcon } from 'lucide-vue-next';
+import { Check, ChevronsUpDown, CirclePlus } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -135,7 +135,7 @@ const resultList = computed(() => {
 					<CommandGroup>
 						<!-- <DialogTrigger as-child> -->
 						<CommandItem value="create-category">
-							<CirclePlusIcon class="mr-2 h-5 w-5" />
+							<CirclePlus class="mr-2 h-5 w-5" />
 							Adicionar conta
 						</CommandItem>
 						<!-- </DialogTrigger> -->

@@ -55,7 +55,8 @@ createInertiaApp({
 
 		const i18n = i18next
 			.use(Backend)
-			// .use(LanguageDetector)
+			// the great thing about language detector is that it caches language in localStorage
+			.use(LanguageDetector)
 			.init({
 				debug: false,
 				fallbackLng: defaultLanguage,

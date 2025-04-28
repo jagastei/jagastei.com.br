@@ -39,6 +39,8 @@
 		--vis-tooltip-shadow-color: none !important;
 		--vis-tooltip-backdrop-filter: none !important;
 		--vis-tooltip-padding: none !important;
+		--vis-legend-bullet-label-spacing: 0 !important;
+		--vis-legend-bullet-size: 16px !important;
 
 		--vis-primary-color: var(--primary);
 		/* change to any hsl value you want */

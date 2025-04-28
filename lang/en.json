@@ -870,5 +870,10 @@
     "Cards": "Cards",
     "Accounts": "Accounts",
     "Settings": "Settings",
-    "Made by": "Made by"
+    "Made by": "Made by",
+    "Brazilian Real": "Brazilian Real",
+    "United States Dollar": "United States Dollar",
+    "Euro": "Euro",
+    "British Pound": "British Pound",
+    "formatMoney": "{{value, currency}}"
 }

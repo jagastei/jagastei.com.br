@@ -117,7 +117,6 @@ watch(columnFilters, (newValue) => {
 
 watch(sorting, (newValue) => {
 	if (newValue.length === 0) {
-		console.log('no sort');
 		return;
 	}
 

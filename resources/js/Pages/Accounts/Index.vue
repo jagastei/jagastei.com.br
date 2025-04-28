@@ -6,7 +6,7 @@ import { ref } from 'vue';
 import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/AccountTable/DataTable.vue';
 import { Account, Bank } from '@/Components/AccountTable/columns';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 
 defineProps<{
 	banks: Bank[];
@@ -32,7 +32,7 @@ const createAccountDialogOpen = ref(false);
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Contas</h2>
 					<p class="text-muted-foreground">
-						Saldo total: {{ formatMoney(totalBalance) }}
+						Saldo total: {{ useCurrency(totalBalance) }}
 					</p>
 				</div>
 				<div v-if="accounts.length > 0" class="flex items-center space-x-2">

@@ -7,7 +7,7 @@ import CreateDialog from './CreateDialog.vue';
 import DataTable from '@/Components/CardTable/DataTable.vue';
 import type { Brand, Card } from '@/Components/CardTable/columns';
 import { Account } from '@/Components/AccountTable/columns';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 
 defineProps<{
 	brands: Brand[];
@@ -35,7 +35,7 @@ const createCardDialogOpen = ref(false);
 				<div>
 					<h2 class="text-3xl font-bold tracking-tight">Cartões</h2>
 					<p class="text-muted-foreground">
-						Limite total: {{ formatMoney(totalLimit) }}
+						Limite total: {{ useCurrency(totalLimit) }}
 					</p>
 				</div>
 				<div v-if="cards.length > 0" class="flex items-center space-x-2">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
-import { formatMoney } from '@/utils';
+import { useCurrency } from '@/composables/useCurrency';
 
 defineProps<{
 	title?: string;
@@ -10,6 +10,8 @@ defineProps<{
 		value: any;
 	}[];
 }>();
+
+const { formatMoney } = useCurrency();
 </script>
 
 <template>

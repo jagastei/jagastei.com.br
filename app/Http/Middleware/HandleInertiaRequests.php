@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Constant;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,7 +39,14 @@ class HandleInertiaRequests extends Middleware
                 ]),
                 'on_generic_trial' => $request->user()?->onGenericTrial(),
             ],
+
             'notify' => $request->session()->get('notify', []),
+
+            'defaultLanguage' => Constant::DEFAULT_LANGUAGE,
+            'availableLanguages' => Constant::AVAILABLE_LANGUAGES(),
+
+            'defaultCurrency' => Constant::DEFAULT_CURRENCY,
+            'availableCurrencies' => Constant::AVAILABLE_CURRENCIES(),
         ];
     }
 }

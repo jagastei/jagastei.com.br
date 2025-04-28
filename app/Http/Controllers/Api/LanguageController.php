@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constant;
 use App\Http\Controllers\Controller;
 
 class LanguageController extends Controller
 {
-    public $availableLanguages = [
-        'en',
-        'pt',
-    ];
-
     public function index(string $language)
     {
-        if (! in_array($language, $this->availableLanguages)) {
-            return abort(400);
+        if (! isset(Constant::AVAILABLE_LANGUAGES()[$language])) {
+            return abort(400, 'Invalid language');
         }
 
         return response()->file(

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, router } from '@inertiajs/vue3';
+import { Head, router, usePage } from '@inertiajs/vue3';
 import BalanceChart from '@/Components/Charts/BalanceChart.vue';
 import WasteChart from '@/Components/Charts/WasteChart.vue';
 import DateRangePicker from '@/Components/DateRangePicker.vue';
@@ -14,10 +14,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import type { DateRange } from 'radix-vue';
-import { formatMoney } from '@/utils';
-import { computed } from 'vue';
+import { useCurrency } from '@/composables/useCurrency';
+import { computed, ref, toRef, watch } from 'vue';
 import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 import { FlaskConical } from 'lucide-vue-next';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
 	startDate: string;
@@ -29,6 +30,9 @@ const props = defineProps<{
 	wastedByCategoryTotal: number;
 	currentBalance: number;
 }>();
+
+const page = usePage();
+const user = computed(() => page.props.auth.user);
 
 const updateDateRange = (value: DateRange) => {
 	router.get(
@@ -42,15 +46,15 @@ const updateDateRange = (value: DateRange) => {
 const balanceData = computed<{
 	startBalance: number;
 	endBalance: number;
+	diffBalance: number;
 	diffBalancePercentage: string;
-	formattedDiffBalance: string;
 }>(() => {
 	if (props.balanceByDay.length === 0) {
 		return {
 			startBalance: 0,
 			endBalance: 0,
+			diffBalance: 0,
 			diffBalancePercentage: '0',
-			formattedDiffBalance: '0,00',
 		};
 	}
 
@@ -59,13 +63,11 @@ const balanceData = computed<{
 	const diffBalance = Math.abs(endBalance - startBalance);
 	const diffBalancePercentage = ((diffBalance / startBalance) * 100).toFixed(2);
 
-	const formattedDiffBalance = formatMoney(diffBalance);
-
 	return {
 		startBalance,
 		endBalance,
+		diffBalance,
 		diffBalancePercentage,
-		formattedDiffBalance,
 	};
 });
 </script>
@@ -223,7 +225,7 @@ const balanceData = computed<{
 														'text-blue-500': currentBalance === 0,
 													},
 												]"
-												>{{ formatMoney(currentBalance) }}</span
+												>{{ useCurrency(currentBalance) }}</span
 											>
 										</span>
 
@@ -239,11 +241,11 @@ const balanceData = computed<{
 											O saldo inicial e final são iguais no período selecionado.
 										</span>
 										<span v-else-if="balanceData.startBalance < balanceData.endBalance">
-											Seu saldo aumentou {{ balanceData.formattedDiffBalance }} no período
+											Seu saldo aumentou {{ useCurrency(balanceData.diffBalance) }} no período
 											selecionado.
 										</span>
 										<span v-else>
-											Seu saldo diminuiu {{ balanceData.formattedDiffBalance }} no período
+											Seu saldo diminuiu {{ useCurrency(balanceData.diffBalance) }} no período
 											selecionado.
 										</span>
 										<!-- <span>
@@ -252,7 +254,7 @@ const balanceData = computed<{
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<BalanceChart key="balanceByDay" :data="balanceByDay" />
+									<!-- <BalanceChart key="balanceByDay" :data="balanceByDay" /> -->
 								</CardContent>
 							</Card>
 
@@ -265,7 +267,7 @@ const balanceData = computed<{
 									>
 								</CardHeader>
 								<CardContent>
-									<WasteChart key="wastedByDay" :data="wastedByDay" />
+									<!-- <WasteChart key="wastedByDay" :data="wastedByDay" /> -->
 								</CardContent>
 							</Card>
 
@@ -273,14 +275,14 @@ const balanceData = computed<{
 								<CardHeader>
 									<CardTitle>Por categoria</CardTitle>
 									<CardDescription
-										>Você gastou {{ formatMoney(wastedByCategoryTotal) }} no período
+										>Você gastou {{ wastedByCategoryTotal }} no período
 										selecionado.</CardDescription
 									>
 								</CardHeader>
 								<CardContent
 									class="flex justify-center items-center h-[calc(100%-98px)]"
 								>
-									<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
+									<!-- <CategoryChart key="wastedByCategory" :data="wastedByCategory" /> -->
 								</CardContent>
 							</Card>
 

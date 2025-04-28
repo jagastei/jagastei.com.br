@@ -21,9 +21,7 @@ export interface NavProps {
 	links: LinkProp[];
 }
 
-const props = defineProps<NavProps>();
-
-console.log(props);
+defineProps<NavProps>();
 </script>
 
 <template>

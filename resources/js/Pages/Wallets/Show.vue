@@ -40,6 +40,7 @@ import DialogTitle from '@/Components/ui/dialog/DialogTitle.vue';
 import DialogDescription from '@/Components/ui/dialog/DialogDescription.vue';
 import DialogFooter from '@/Components/ui/dialog/DialogFooter.vue';
 import { Loader2 } from 'lucide-vue-next';
+import { usePage } from '@inertiajs/vue3';
 
 const props = defineProps<{
 	wallet: {
@@ -49,12 +50,7 @@ const props = defineProps<{
 	};
 }>();
 
-const currencies = {
-	BRL: 'Real Brasileiro',
-	USD: 'Dólar Americano',
-	EUR: 'Euro',
-	GBP: 'Libra Esterlina',
-};
+const page = usePage();
 
 const form = useForm({
 	name: props.wallet.name,
@@ -122,7 +118,7 @@ const closeModal = () => {
 									<InputError :message="form.errors.name" />
 								</div>
 
-								<div v-if="false" class="space-y-2">
+								<div class="space-y-2">
 									<Label for="currency">Moeda</Label>
 									<Select v-model="form.currency" :disabled="form.processing">
 										<SelectTrigger>
@@ -130,11 +126,11 @@ const closeModal = () => {
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem
-												v-for="(name, code) in currencies"
+												v-for="(name, code) in page.props.availableCurrencies"
 												:key="code"
 												:value="code"
 											>
-												{{ code }} - {{ name }}
+												{{ name }} ({{ code }})
 											</SelectItem>
 										</SelectContent>
 									</Select>

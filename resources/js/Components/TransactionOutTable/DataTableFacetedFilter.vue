@@ -98,7 +98,7 @@ const onClose = () => {
 		<Popover>
 			<PopoverTrigger as-child>
 				<Button variant="outline" size="sm" class="h-8 border-dashed">
-					<CirclePlusIcon class="mr-2 h-4 w-4" />
+					<CirclePlus class="mr-2 h-4 w-4" />
 					{{ title }}
 					<template v-if="selectedValues.size > 0">
 						<Separator orientation="vertical" class="mx-2 h-4" />
@@ -207,7 +207,7 @@ const onClose = () => {
 										}
 									"
 								>
-									<CirclePlusIcon class="mr-2 h-5 w-5" />
+									<CirclePlus class="mr-2 h-5 w-5" />
 									Adicionar categoria
 								</CommandItem>
 							</DialogTrigger>

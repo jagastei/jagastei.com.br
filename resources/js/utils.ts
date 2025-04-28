@@ -16,14 +16,3 @@ export function valueUpdater<T extends Updater<any>>(
 			? updaterOrValue(ref.value)
 			: updaterOrValue;
 }
-
-export function formatMoney(
-	value: number,
-	language: string = 'pt-BR',
-	currency: string = 'BRL'
-) {
-	return new Intl.NumberFormat(language, {
-		style: 'currency',
-		currency: currency,
-	}).format(value);
-}
