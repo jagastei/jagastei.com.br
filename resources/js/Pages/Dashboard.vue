@@ -243,12 +243,12 @@ const balanceData = computed<{
 											O saldo inicial e final são iguais no período selecionado.
 										</span>
 										<span v-else-if="balanceData.startBalance < balanceData.endBalance">
-											Seu saldo aumentou {{ useCurrency(t, balanceData.diffBalance) }} no período
-											selecionado.
+											Seu saldo aumentou {{ useCurrency(t, balanceData.diffBalance) }} no
+											período selecionado.
 										</span>
 										<span v-else>
-											Seu saldo diminuiu {{ useCurrency(t, balanceData.diffBalance) }} no período
-											selecionado.
+											Seu saldo diminuiu {{ useCurrency(t, balanceData.diffBalance) }} no
+											período selecionado.
 										</span>
 										<!-- <span>
 											Seu saldo atual é de {{ formatMoney(balanceData.endBalance) }}.

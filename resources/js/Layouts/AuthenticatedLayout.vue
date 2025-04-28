@@ -98,7 +98,7 @@ const links = computed<LinkProp[]>(() => [
 	// },
 ]);
 
-const links2 = computed	<LinkProp[]>(() => [
+const links2 = computed<LinkProp[]>(() => [
 	// {
 	// 	title: 'Categorias',
 	// 	// label: '342',
