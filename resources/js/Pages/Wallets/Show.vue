@@ -85,7 +85,7 @@ const closeModal = () => {
 </script>
 
 <template>
-	<Head title="Carteira" />
+	<Head :title="$t('Wallet')" />
 
 	<AuthenticatedLayout>
 		<div class="flex flex-1 flex-col p-4 lg:p-6 gap-4 lg:gap-6">

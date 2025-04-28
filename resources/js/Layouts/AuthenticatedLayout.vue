@@ -69,14 +69,14 @@ const links = computed<LinkProp[]>(() => [
 	// 	active: route().current('transactions.index'),
 	// },
 	{
-		title: 'Entradas',
+		title: t('Incomes'),
 		label: '',
 		icon: ArrowUp,
 		route: route('transactions.in.index'),
 		active: route().current('transactions.in.index'),
 	},
 	{
-		title: 'Saídas',
+		title: t('Outcomes'),
 		label: '',
 		icon: ArrowDown,
 		route: route('transactions.out.index'),

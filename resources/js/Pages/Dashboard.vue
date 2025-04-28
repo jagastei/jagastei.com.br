@@ -75,7 +75,7 @@ const balanceData = computed<{
 </script>
 
 <template>
-	<Head title="Painel" />
+	<Head :title="$t('Dashboard')" />
 
 	<AuthenticatedLayout>
 		<div v-if="$page.props.auth.on_generic_trial" class="p-4 lg:p-6 pb-0 lg:pb-0">

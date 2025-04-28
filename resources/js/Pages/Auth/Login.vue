@@ -76,7 +76,7 @@ const submit = () => {
 										class="ml-auto inline-block text-sm underline"
 										tabindex="5"
 									>
-										Esqueceu sua senha?
+										{{ $t('Forgot your password?') }}
 									</Link>
 								</div>
 								<Input
@@ -100,9 +100,9 @@ const submit = () => {
 						</div>
 					</form>
 					<div class="mt-4 text-center text-sm">
-						Não tem uma conta?
+						{{ $t('Not registered?') }}
 						<Link :href="route('register')" class="underline" tabindex="4">
-							Cadastre-se
+							{{ $t('Register') }}
 						</Link>
 					</div>
 				</CardContent>

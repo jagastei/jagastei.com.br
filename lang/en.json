@@ -186,7 +186,7 @@
     "Create & Add Another": "Create & Add Another",
     "Create :resource": "Create :resource",
     "Create a new team to collaborate with others on projects.": "Create a new team to collaborate with others on projects.",
-    "Create Account": "Create Account",
+    "Create Account": "Create account",
     "Create API Token": "Create API Token",
     "Create New Team": "Create New Team",
     "Create Team": "Create Team",
@@ -283,7 +283,6 @@
     "Force Delete Selected": "Force Delete Selected",
     "Forgot Password": "Forgot Password",
     "Forgot your password?": "Forgot your password?",
-    "Forgot Your Password?": "Forgot Your Password?",
     "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.",
     "France": "France",
     "French Guiana": "French Guiana",
@@ -876,9 +875,13 @@
     "Euro": "Euro",
     "British Pound": "British Pound",
     "formatMoney": "{{value, currency}}",
+    "Wallet": "Wallet",
     "Wallets": "Wallets",
     "Add wallet": "Add wallet",
     "Account": "Account",
     "Billing": "Billing",
-    "Invite": "Invite"
+    "Invite": "Invite",
+    "Not registered?": "Not registered?",
+    "Incomes": "Incomes",
+    "Outcomes": "Outcomes"
 }

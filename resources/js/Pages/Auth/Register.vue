@@ -99,14 +99,14 @@ const submit = () => {
 								tabindex="5"
 							>
 								<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
-								Cadastrar
+								{{ $t('Create Account') }}
 							</Button>
 						</div>
 					</form>
 					<div class="mt-4 text-center text-sm">
-						Já tem uma conta?
+						{{ $t('Already registered?') }}
 						<Link :href="route('login')" class="underline" tabindex="6">
-							Entrar
+							{{ $t('Login') }}
 						</Link>
 					</div>
 				</CardContent>
