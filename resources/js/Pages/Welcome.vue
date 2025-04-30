@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-	<!-- <Head title="Welcome" /> -->
+	<Head :title="$t('Welcome')" />
 
 	<div class="relative flex flex-col scroll-smooth">
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
