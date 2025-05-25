@@ -41,6 +41,7 @@ class CardController extends Controller
             ->get()
             ->map(function ($card) {
                 $card->limit = $card->limit / 100;
+
                 return $card;
             });
 

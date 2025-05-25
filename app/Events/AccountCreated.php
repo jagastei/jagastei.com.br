@@ -6,7 +6,6 @@ use App\Models\Account;
 use App\States\AccountState;
 use App\States\WalletState;
 use Glhd\Bits\Snowflake;
-use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
 class AccountCreated extends Event
