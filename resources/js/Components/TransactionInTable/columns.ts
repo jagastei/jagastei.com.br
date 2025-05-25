@@ -6,14 +6,14 @@ import { z } from 'zod';
 import { categorySchema } from '../CategoryTable/columns';
 import { accountSchema } from '../AccountTable/columns';
 import { cardSchema } from '../CardTable/columns';
-import { ArrowUp, ArrowDown } from 'lucide-vue-next';
+import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
 
 export const transactionSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	type: z.enum(['IN', 'OUT']),
 	value: z.number(),
-	formatted_value: z.string(),
 	category_id: z.number(),
 	account_id: z.number(),
 	method: z.enum(['CASH', 'CARD', 'TED', 'PIX', 'OTHER', 'UNKNOWN']).nullable(),
@@ -70,13 +70,14 @@ export const columns: ColumnDef<Transaction>[] = [
 	},
 	{
 		id: 'value',
-		accessorKey: 'formatted_value',
+		accessorKey: 'value',
 		meta: {
 			title: 'Valor',
 		},
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Valor' }),
 		cell: ({ row }) => {
 			// const icon = row.original.type === 'IN' ? ArrowUp : ArrowDown;
+			const { t } = useTranslation();
 
 			return h(
 				'div',
@@ -91,7 +92,7 @@ export const columns: ColumnDef<Transaction>[] = [
 					// 		row.original.type === 'IN' ? 'text-green-500' : 'text-red-500',
 					// 	],
 					// }),
-					h('span', {}, row.original.formatted_value),
+					h('span', {}, useCurrency(t, row.original.value)),
 				]
 			);
 		},

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { cn } from '@/utils';
-import { Check, ChevronsUpDown, CirclePlus } from 'lucide-vue-next';
+import { Check, ChevronsUpDown, Star } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -18,18 +18,22 @@ import {
 	PopoverTrigger,
 } from '@/Components/ui/popover';
 import { Button } from '@/Components/ui/button';
-import { Account } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
+import { Brand } from '@/Components/CardTable/columns';
+import { useTranslation } from 'i18next-vue';
 
 const props = defineProps<{
-	modelValue: Account | undefined;
-	accounts: Account[];
+	modelValue: Brand | undefined;
+	brands: Brand[];
+	suggestedBrandIdentifier: string | null;
 }>();
 
 const emits = defineEmits<{
-	(e: 'update:modelValue', payload: Account | undefined): void;
+	(e: 'update:modelValue', payload: Brand | undefined): void;
 	(e: 'close'): void;
 }>();
+
+const { t } = useTranslation();
 
 const modelValue = useVModel(props, 'modelValue', emits, {
 	passive: true,
@@ -40,9 +44,9 @@ const dialogOpen = ref(false);
 
 const query = ref<string>('');
 
-const { results } = useFuse(query, props.accounts, {
+const { results } = useFuse(query, props.brands, {
 	fuseOptions: {
-		keys: ['name'],
+		keys: ['identifier', 'name'],
 		isCaseSensitive: false,
 		threshold: 0.5,
 	},
@@ -60,7 +64,7 @@ const resultList = computed(() => {
 		<PopoverTrigger as-child>
 			<Button
 				tabindex="3"
-				id="bank"
+				id="brand"
 				variant="outline"
 				role="combobox"
 				class="w-[375px] justify-between mt-2 p-3"
@@ -68,7 +72,7 @@ const resultList = computed(() => {
 				<div class="flex items-center truncate">
 					<div v-if="modelValue" class="min-w-4">
 						<img
-							:src="`https://jagastei.com.br.test/images/banks/${modelValue.bank.code}.png`"
+							:src="`https://jagastei.com.br.test/images/brands-svg/flat/${modelValue.identifier}.svg`"
 							class="size-4 rounded-xl"
 						/>
 					</div>
@@ -79,7 +83,7 @@ const resultList = computed(() => {
 								'ml-3': modelValue,
 							},
 						]"
-						>{{ modelValue ? modelValue?.name : 'Escolha uma conta' }}</span
+						>{{ modelValue ? modelValue?.name : 'Escolha uma bandeira' }}</span
 					>
 				</div>
 				<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -95,16 +99,16 @@ const resultList = computed(() => {
 				/>
 
 				<CommandEmpty>
-					<template v-if="query.length > 0">Nenhuma conta encontrada.</template>
-					<template v-else>Informe o nome da conta.</template>
+					<template v-if="query.length > 0">Nenhuma marca encontrada.</template>
+					<template v-else>Informe o nome da marca.</template>
 				</CommandEmpty>
 
 				<CommandList>
 					<CommandGroup>
 						<CommandItem
-							v-for="account in resultList"
-							:key="account.id"
-							:value="account"
+							v-for="brand in resultList"
+							:key="brand.id"
+							:value="brand"
 							@select="
 								() => {
 									dialogOpen = false;
@@ -114,31 +118,23 @@ const resultList = computed(() => {
 						>
 							<div class="min-w-4">
 								<img
-									:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
+									:src="`https://jagastei.com.br.test/images/brands-svg/flat/${brand.identifier}.svg`"
 									class="size-4 rounded-xl"
 								/>
 							</div>
-							<span class="ml-1 block truncate">{{ account.name }}</span>
+							<div class="ml-1 truncate flex items-center">
+                                <span>{{ brand.name }}</span>
+                                <Star v-if="brand.identifier === suggestedBrandIdentifier" fill="#eab308" class="size-2 text-yellow-500 ml-2" />
+                            </div>
 							<Check
 								:class="
 									cn(
 										'ml-auto h-4 w-4',
-										modelValue?.id === account.id ? 'opacity-100' : 'opacity-0'
+										modelValue?.id === brand.id ? 'opacity-100' : 'opacity-0'
 									)
 								"
 							/>
 						</CommandItem>
-					</CommandGroup>
-				</CommandList>
-				<CommandSeparator />
-				<CommandList>
-					<CommandGroup>
-						<!-- <DialogTrigger as-child> -->
-						<CommandItem value="create-category">
-							<CirclePlus class="mr-2 h-5 w-5" />
-							Adicionar conta
-						</CommandItem>
-						<!-- </DialogTrigger> -->
 					</CommandGroup>
 				</CommandList>
 			</Command>

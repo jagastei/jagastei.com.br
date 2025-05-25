@@ -6,7 +6,7 @@ const props = withDefaults(defineProps<DrawerRootProps>(), {
 	shouldScaleBackground: true,
 });
 
-defineEmits<DrawerRootEmits>();
+const emits = defineEmits<DrawerRootEmits>();
 </script>
 
 <template>

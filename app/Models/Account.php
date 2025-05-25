@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constant;
 use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Glhd\Bits\Snowflake;
@@ -31,15 +32,6 @@ class Account extends Model
         'id' => Snowflake::class,
         'wallet_id' => Snowflake::class,
     ];
-
-    protected $appends = [
-        'formatted_balance',
-    ];
-
-    public function getFormattedBalanceAttribute(): string
-    {
-        return Helper::formatMoney($this->balance);
-    }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {

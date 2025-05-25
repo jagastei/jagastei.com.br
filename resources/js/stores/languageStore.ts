@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import i18next from 'i18next';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 
 export const availableLanguages = ['pt', 'en'];
@@ -25,10 +25,6 @@ export const useLanguageStore = defineStore(
 
 			currentLanguage.value = language;
 		};
-
-		// onMounted(() => {
-		// 	setLanguage(currentLanguage.value);
-		// })
 
 		return {
 			currentLanguage,

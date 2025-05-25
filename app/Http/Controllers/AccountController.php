@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AccountCreated;
+use App\Events\AccountDeleted;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Models\Account;
@@ -24,9 +25,13 @@ class AccountController extends Controller
                 'bank',
             ])
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->transform(function (Account $account) {
+                $account->balance = $account->balance / 100;
+                return $account;
+            });
 
-        $totalBalance = $accounts->sum('balance') / 100;
+        $totalBalance = $accounts->sum('balance');
 
         return Inertia::render('Accounts/Index', [
             'banks' => $banks,
@@ -62,7 +67,9 @@ class AccountController extends Controller
 
     public function destroy(Account $account)
     {
-        $account->delete();
+        AccountDeleted::fire(
+            account_id: $account->id,
+        );
 
         return back();
     }

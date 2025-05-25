@@ -15,13 +15,13 @@ class Subscribed
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user()?->hasStripeId()) {
-            return inertia()->location(route('subscription.checkout'));
-        }
+        // if (! $request->user()?->hasStripeId()) {
+        //     return inertia()->location(route('subscription.checkout'));
+        // }
 
-        if (! $request->user()?->subscribed(config('cashier.product'))) {
-            return inertia()->location(route('subscription.checkout'));
-        }
+        // if (! $request->user()?->subscribed(config('cashier.product'))) {
+        //     return inertia()->location(route('subscription.checkout'));
+        // }
 
         return $next($request);
     }

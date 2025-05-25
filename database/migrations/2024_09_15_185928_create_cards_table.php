@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('digits')->nullable();
             $table->foreignUuid('brand_id')->nullable();
 
+            $table->string('expiration_date')->nullable();
+
             $table->boolean('digital')->default(false);
             $table->boolean('credit')->default(false);
             $table->boolean('international')->default(false);

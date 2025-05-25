@@ -3,6 +3,8 @@ import { h } from 'vue';
 import DataTableColumnHeader from './DataTableColumnHeader.vue';
 import DataTableRowActions from './DataTableRowActions.vue';
 import { z } from 'zod';
+import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
 
 export const bankSchema = z.object({
 	id: z.string(),
@@ -17,7 +19,6 @@ export const accountSchema = z.object({
 	bank_id: z.string().nullable(),
 	name: z.string(),
 	balance: z.number(),
-	formatted_balance: z.string(),
 	created_at: z.string(),
 	updated_at: z.string(),
 	bank: bankSchema,
@@ -66,11 +67,12 @@ export const columns: ColumnDef<Account>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'formatted_balance',
+		accessorKey: 'balance',
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Saldo' }),
 
 		cell: ({ row }) => {
-			return h('div', {}, row.getValue('formatted_balance'));
+			const { t } = useTranslation();
+			return h('div', {}, useCurrency(t, row.getValue('balance')));
 		},
 		enableSorting: false,
 		enableHiding: false,

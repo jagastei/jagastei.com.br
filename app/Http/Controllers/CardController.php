@@ -38,9 +38,13 @@ class CardController extends Controller
                 'brand',
             ])
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->map(function ($card) {
+                $card->limit = $card->limit / 100;
+                return $card;
+            });
 
-        $totalLimit = $cards->sum('limit') / 100;
+        $totalLimit = $cards->sum('limit');
 
         return Inertia::render('Cards/Index', [
             'brands' => $brands,

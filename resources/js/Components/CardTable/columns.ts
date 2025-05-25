@@ -4,11 +4,17 @@ import DataTableColumnHeader from './DataTableColumnHeader.vue';
 import DataTableRowActions from './DataTableRowActions.vue';
 import { z } from 'zod';
 import { accountSchema } from '../AccountTable/columns';
+import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
 
 export const brandSchema = z.object({
 	id: z.string(),
 	identifier: z.string(),
 	name: z.string(),
+	enabled: z.boolean(),
+	created_at: z.string(),
+	updated_at: z.string(),
+	deleted_at: z.string().nullable(),
 });
 
 export const cardSchema = z.object({
@@ -96,11 +102,12 @@ export const columns: ColumnDef<Card>[] = [
 		enableHiding: false,
 	},
 	{
-		accessorKey: 'formatted_limit',
+		accessorKey: 'limit',
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Limite' }),
 
 		cell: ({ row }) => {
-			return h('div', {}, row.getValue('formatted_limit'));
+			const { t } = useTranslation();
+			return h('div', {}, useCurrency(t, row.getValue('limit')));
 		},
 		enableSorting: false,
 		enableHiding: false,
