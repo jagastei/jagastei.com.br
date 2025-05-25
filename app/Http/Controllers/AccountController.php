@@ -28,6 +28,7 @@ class AccountController extends Controller
             ->get()
             ->transform(function (Account $account) {
                 $account->balance = $account->balance / 100;
+
                 return $account;
             });
 
