@@ -73,9 +73,11 @@ const destroy = () => {
 				<AlertDialogHeader>
 					<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Você está prestes a remover a conta
+						<!-- Você está prestes a remover a conta
 						<b>{{ account.name }}</b> com <b>{{ account.formatted_balance }}</b> de
-						saldo. Não será possível desfazer essa ação.
+						saldo. Não será possível desfazer essa ação. -->
+                        Você está prestes a remover a conta
+						<b>{{ account.name }}</b>. Não será possível desfazer essa ação.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
