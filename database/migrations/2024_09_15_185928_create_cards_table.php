@@ -22,8 +22,8 @@ return new class extends Migration
 
             $table->string('expiration_date')->nullable();
 
-            $table->boolean('digital')->default(false);
             $table->boolean('credit')->default(false);
+            $table->boolean('virtual')->default(false);
             $table->boolean('international')->default(false);
 
             $table->timestamps();

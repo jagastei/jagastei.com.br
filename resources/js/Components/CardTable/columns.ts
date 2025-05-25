@@ -7,6 +7,12 @@ import { accountSchema } from '../AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
 
+declare module '@tanstack/vue-table' {
+	interface TableMeta<TData> {
+		brands: Brand[];
+	}
+}
+
 export const brandSchema = z.object({
 	id: z.string(),
 	identifier: z.string(),
@@ -25,8 +31,8 @@ export const cardSchema = z.object({
 	formatted_limit: z.string(),
 	digits: z.string(),
 	brand_id: z.string(),
-	digital: z.boolean(),
 	credit: z.boolean(),
+	virtual: z.boolean(),
 	international: z.boolean(),
 	created_at: z.string(),
 	updated_at: z.string(),
@@ -114,13 +120,15 @@ export const columns: ColumnDef<Card>[] = [
 	},
 	{
 		id: 'actions',
-		cell: ({ row }) => {
+		cell: ({ row, table }) => {
+			const brands = table.options.meta?.brands as Brand[];
+
 			return h(
 				'div',
 				{
 					class: 'flex justify-end',
 				},
-				[h(DataTableRowActions, { row })]
+				[h(DataTableRowActions, { row, brands })]
 			);
 		},
 	},

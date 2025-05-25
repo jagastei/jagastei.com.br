@@ -67,7 +67,7 @@ const createCardDialogOpen = ref(false);
 			</div>
 
 			<div v-else>
-				<DataTable :data="cards" />
+				<DataTable :data="cards" :brands="brands" />
 			</div>
 		</div>
 	</AuthenticatedLayout>

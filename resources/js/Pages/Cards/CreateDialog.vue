@@ -78,7 +78,7 @@ const form = useForm<{
     brand: Brand | undefined;
     expiration_month: number | null;
     expiration_year: number | null;
-    digital: boolean;
+    virtual: boolean;
     credit: boolean;
     international: boolean;
 }>({
@@ -91,7 +91,7 @@ const form = useForm<{
     expiration_month: null,
     expiration_year: null,
 
-    digital: false,
+    virtual: false,
     credit: false,
     international: false,
 });

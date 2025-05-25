@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             name: 'Carteira pessoal',
         );
 
-        WalletCreated::fire(
+        $walletCreated = WalletCreated::fire(
             user_id: $user->id,
             name: 'Carteira da empresa',
         );
@@ -75,8 +75,8 @@ class DatabaseSeeder extends Seeder
             'limit' => 5_000_00,
             'digits' => '7348',
             'brand_id' => $brand->id,
-            'digital' => true,
             'credit' => true,
+            'virtual' => true,
             'international' => false,
         ]);
 

@@ -8,10 +8,13 @@ use App\States\WalletState;
 use Glhd\Bits\Snowflake;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
+use Thunk\Verbs\Support\StateCollection;
 
 class AccountCreated extends Event
 {
     public function __construct(
+        #[StateId(AccountState::class)]
+        public ?int $account_id = null,
         public Snowflake $wallet_id,
         public ?string $bank_id,
         public string $name,
@@ -28,13 +31,12 @@ class AccountCreated extends Event
 
     public function handle()
     {
-        $account = Account::create([
+        Account::create([
+            'id' => $this->account_id,
             'wallet_id' => $this->wallet_id,
             'bank_id' => $this->bank_id,
             'name' => $this->name,
             'balance' => $this->initial_balance,
         ]);
-
-        return $account;
     }
 }

@@ -47,7 +47,7 @@ class TransactionOutCreated extends Event
             'balance' => $account->balance - $this->value,
         ]);
 
-        $transaction = Transaction::create([
+        Transaction::create([
             'type' => 'OUT',
             'title' => $this->title,
             'value' => $this->value,
@@ -56,7 +56,5 @@ class TransactionOutCreated extends Event
             'datetime' => $this->datetime,
             'metadata' => $this->metadata,
         ]);
-
-        return $transaction;
     }
 }

@@ -23,7 +23,6 @@ class AccountDeleted extends Event
     public function handle()
     {
         $account = Account::find($this->account_id);
-
-        return $account->delete();
+        $account->delete();
     }
 }

@@ -2,7 +2,7 @@
 import type { Row } from '@tanstack/vue-table';
 import { computed, ref } from 'vue';
 import { cardSchema } from './columns';
-import type { Card } from './columns';
+import type { Brand, Card } from './columns';
 import { router } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {
@@ -29,6 +29,7 @@ import { Ellipsis } from 'lucide-vue-next';
 
 interface DataTableRowActionsProps {
     row: Row<Card>;
+    brands: Brand[];
 }
 
 const props = defineProps<DataTableRowActionsProps>();
@@ -63,7 +64,12 @@ const destroy = () => {
             </DropdownMenuContent>
         </DropdownMenu>
 
-        <EditDrawer :open="editDrawerOpen" :card="card" @close="editDrawerOpen = false" />
+        <EditDrawer
+            :open="editDrawerOpen"
+            :card="card"
+            :brands="brands"
+            @close="editDrawerOpen = false"
+        />
 
         <AlertDialog v-model:open="destroyDialogOpen">
             <AlertDialogContent>

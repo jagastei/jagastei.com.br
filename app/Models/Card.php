@@ -26,16 +26,16 @@ class Card extends Model
         'name',
         'limit',
         'digits',
-        'digital',
         'credit',
+        'virtual',
         'international',
     ];
 
     protected $casts = [
         'id' => Snowflake::class,
         'account_id' => Snowflake::class,
-        'digital' => 'boolean',
         'credit' => 'boolean',
+        'virtual' => 'boolean',
         'international' => 'boolean',
     ];
 

@@ -17,7 +17,7 @@ import {
 } from '@tanstack/vue-table';
 
 import { ref } from 'vue';
-import type { Card } from './columns';
+import type { Brand, Card } from './columns';
 import DataTablePagination from './DataTablePagination.vue';
 import DataTableToolbar from './DataTableToolbar.vue';
 import { valueUpdater } from '@/utils';
@@ -33,6 +33,7 @@ import { columns } from './columns';
 
 interface DataTableProps {
 	data: Card[];
+	brands: Brand[];
 }
 
 const props = defineProps<DataTableProps>();
@@ -43,6 +44,9 @@ const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
 const table = useVueTable({
+    meta: {
+        brands: props.brands,
+    },
 	get data() {
 		return props.data;
 	},

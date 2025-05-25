@@ -15,12 +15,10 @@ class CardCreated extends Event
 
     public function handle()
     {
-        $card = Card::create([
+        Card::create([
             'account_id' => $this->account_id,
             'name' => $this->name,
             'limit' => $this->limit,
         ]);
-
-        return $card;
     }
 }
