@@ -7,13 +7,12 @@ use App\States\AccountState;
 use App\States\WalletState;
 use Glhd\Bits\Snowflake;
 use Thunk\Verbs\Event;
-use Thunk\Verbs\Support\StateCollection;
 
 class AccountCreated extends Event
 {
     public function __construct(
         #[StateId(AccountState::class)]
-        public ?int $account_id = null,
+        public ?int $account_id,
         public Snowflake $wallet_id,
         public ?string $bank_id,
         public string $name,

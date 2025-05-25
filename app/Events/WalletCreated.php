@@ -6,13 +6,12 @@ use App\Models\Wallet;
 use App\States\WalletState;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
-use Thunk\Verbs\Support\StateCollection;
 
 class WalletCreated extends Event
 {
     public function __construct(
         #[StateId(WalletState::class)]
-        public ?int $wallet_id = null,
+        public ?int $wallet_id,
         public string $user_id,
         public string $name,
     ) {}
