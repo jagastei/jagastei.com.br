@@ -52,6 +52,18 @@ class CardController extends Controller
             'accounts' => $accounts,
             'cards' => $cards,
             'totalLimit' => $totalLimit,
+
+            'card' => fn () => request()->whenHas('card', function (string $card) {
+                return Card::find($card)
+                    ?->load([
+                        'account' => function ($query) {
+                            $query->with([
+                                'bank',
+                            ]);
+                        },
+                        'brand',
+                    ]);
+            }, fn () => null),
         ]);
     }
 
@@ -66,6 +78,13 @@ class CardController extends Controller
         );
 
         return back();
+    }
+
+    public function show(Card $card)
+    {
+        return Inertia::render('Cards/Show', [
+            'card' => $card,
+        ]);
     }
 
     public function update(UpdateCardRequest $request, Card $card)

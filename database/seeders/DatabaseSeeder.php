@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             name: 'Carteira pessoal',
         );
 
-        $walletCreated = WalletCreated::fire(
+        WalletCreated::fire(
             user_id: $user->id,
             name: 'Carteira da empresa',
         );
@@ -61,13 +61,22 @@ class DatabaseSeeder extends Seeder
             balance: 1_000_00,
         );
 
-        Account::factory()
+        $accounts = Account::factory()
             ->count(5)
             ->state([
                 'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->for($bank)
-            ->create();
+            ->make();
+
+        foreach ($accounts as $account) {
+            AccountCreated::fire(
+                wallet_id: $personalWalletCreated->wallet_id,
+                bank_id: $bank->id,
+                name: $account->name,
+                balance: $account->balance,
+            );
+        }
 
         Card::factory()->create([
             'account_id' => $accountCreated->account_id,

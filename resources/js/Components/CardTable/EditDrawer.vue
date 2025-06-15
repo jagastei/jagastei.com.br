@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { useFuse } from '@vueuse/integrations/useFuse';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { Check, ChevronsUpDown, Loader2 } from 'lucide-vue-next';
+import { Loader2 } from 'lucide-vue-next';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
@@ -33,18 +31,20 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from '@/Components/ui/select'
 import { findCardBrand } from '@/utils/findCardBrand';
 import SelectBrandDialog from '@/Components/SelectBrandDialog.vue';
 import InputError from '@/Components/InputError.vue';
-import { Switch } from '@/Components/ui/switch'
 import { Checkbox } from '@/Components/ui/checkbox'
+import { Separator } from '@/Components/ui/separator'
+import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
+import type { Account } from '@/Components/AccountTable/columns';
 
 const props = defineProps<{
     brands: Brand[];
+    accounts: Account[];
     card: Card;
     open: boolean;
 }>();
@@ -135,6 +135,13 @@ const onClose = () => {
                         v-money3="currencyInputFormat(user.current_wallet?.currency, languageStore.getCurrentLanguage)" />
                 </div>
 
+                <div class="flex flex-col relative">
+                    <Label for="account">Conta</Label>
+                    <SelectAccountDialog id="account" v-model="card.account" :accounts="accounts" :disabled="true" />
+                </div>
+
+                <Separator class="my-4 w-4" />
+
                 <div class="flex flex-col">
                     <Label for="digits" class="text-left"> Número </Label>
                     <Input id="digits" v-model="form.digits" placeholder="1234 5678 9012 3456" class="mt-2"
@@ -167,10 +174,8 @@ const onClose = () => {
                     <InputError class="mt-2" :message="form.errors.brand" />
                 </div>
 
-                <div class="flex flex-col">
-                    <Label for="expiration_date" class="text-left"> Data de validade </Label>
-                    <!-- <Input id="expiration_date" v-model="form.expiration_month" placeholder="MM" class="mt-2"
-                        autocomplete="off" /> -->
+                <fieldset class="flex flex-col">
+                    <legend class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-left"> Data de validade </legend>
 
                     <div class="mt-2 flex items-center gap-2">
                         <Select>
@@ -199,7 +204,7 @@ const onClose = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                </div>
+                </fieldset>
 
                 <div>
                     <div class="flex items-center space-x-2">

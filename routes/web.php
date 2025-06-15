@@ -69,11 +69,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/contas', [AccountController::class, 'index'])->name('accounts.index');
     Route::post('/contas', [AccountController::class, 'store'])->name('accounts.store')->middleware([Subscribed::class]);
+    Route::get('/contas/{account}', [AccountController::class, 'show'])->name('accounts.show');
     Route::put('/contas/{account}', [AccountController::class, 'update'])->name('accounts.update')->middleware([Subscribed::class]);
     Route::delete('/contas/{account}', [AccountController::class, 'destroy'])->name('accounts.destroy')->middleware([Subscribed::class]);
 
     Route::get('/cartoes', [CardController::class, 'index'])->name('cards.index');
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store')->middleware([Subscribed::class]);
+    Route::get('/cartoes/{card}', [CardController::class, 'show'])->name('cards.show');
     Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update')->middleware([Subscribed::class]);
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy')->middleware([Subscribed::class]);
 

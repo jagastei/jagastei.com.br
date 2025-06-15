@@ -33,7 +33,6 @@ import { columns } from './columns';
 
 interface DataTableProps {
 	data: Card[];
-	brands: Brand[];
 }
 
 const props = defineProps<DataTableProps>();
@@ -44,9 +43,10 @@ const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
 const table = useVueTable({
-    meta: {
-        brands: props.brands,
-    },
+    // meta: {
+    //     brands: props.brands,
+    //     accounts: props.accounts,
+    // },
 	get data() {
 		return props.data;
 	},

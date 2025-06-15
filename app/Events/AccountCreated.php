@@ -6,8 +6,8 @@ use App\Models\Account;
 use App\States\AccountState;
 use App\States\WalletState;
 use Glhd\Bits\Snowflake;
+use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
-use Thunk\Verbs\Support\StateCollection;
 
 class AccountCreated extends Event
 {
@@ -22,6 +22,7 @@ class AccountCreated extends Event
 
     public function apply(AccountState $account)
     {
+        $account->account_id = $this->account_id;
         $account->wallet_id = $this->wallet_id;
         $account->balance = $this->initial_balance;
 

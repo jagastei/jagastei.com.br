@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('recurrences', function (Blueprint $table) {
             $table->snowflakeId();
+            $table->enum('repeat', ['DAILY', 'WEEKLY', 'MONTHLY', 'YEARLY']);
+            $table->jsonb('repeat_options')->nullable();
+
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->enum('type', ['IN', 'OUT']);
@@ -23,7 +26,6 @@ return new class extends Migration
             $table->snowflake('card_id')->index()->nullable();
             $table->json('metadata')->nullable();
             $table->timestamp('datetime')->nullable();
-            $table->snowflake('recurrence_id')->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('recurrences');
     }
 };

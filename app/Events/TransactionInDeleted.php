@@ -2,8 +2,10 @@
 
 namespace App\Events;
 
+use App\Models\Account;
 use App\Models\Transaction;
 use App\States\AccountState;
+use App\States\WalletState;
 use Carbon\CarbonImmutable;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
@@ -28,14 +30,20 @@ class TransactionInDeleted extends Event
     public function apply(AccountState $account)
     {
         $this->previous_balance = $account->balance;
-
         $account->balance -= $this->value;
-
         $this->current_balance = $account->balance;
+
+        WalletState::load($account->wallet_id)->balance -= $this->value;
     }
 
     public function handle()
     {
+        $account = Account::find($this->account_id);
+
+        $account->update([
+            'balance' => $account->balance - $this->value,
+        ]);
+
         Transaction::destroy($this->transaction_id);
     }
 }

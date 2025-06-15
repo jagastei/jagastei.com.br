@@ -57,6 +57,13 @@ class AccountController extends Controller
         return back();
     }
 
+    public function show(Account $account)
+    {
+        return Inertia::render('Accounts/Show', [
+            'account' => $account,
+        ]);
+    }
+
     public function update(UpdateAccountRequest $request, Account $account)
     {
         $input = $request->validated();

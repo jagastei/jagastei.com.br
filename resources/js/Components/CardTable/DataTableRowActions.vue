@@ -2,8 +2,8 @@
 import type { Row } from '@tanstack/vue-table';
 import { computed, ref } from 'vue';
 import { cardSchema } from './columns';
-import type { Brand, Card } from './columns';
-import { router } from '@inertiajs/vue3';
+import type { Card } from './columns';
+import { router, Link } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {
     DropdownMenu,
@@ -22,21 +22,21 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
-import EditDrawer from './EditDrawer.vue';
-import { Ellipsis } from 'lucide-vue-next';
+import { Ellipsis, Eye } from 'lucide-vue-next';
 
 interface DataTableRowActionsProps {
     row: Row<Card>;
-    brands: Brand[];
 }
 
 const props = defineProps<DataTableRowActionsProps>();
 
 const card = computed(() => cardSchema.parse(props.row.original));
 
-const editDrawerOpen = ref(false);
+const edit = () => {
+    router.visit(route('cards.index', { card: card.value.id }));
+}
+
 const destroyDialogOpen = ref(false);
 
 const destroy = () => {
@@ -45,7 +45,11 @@ const destroy = () => {
 </script>
 
 <template>
-    <div>
+    <div class="flex items-center">
+        <Button :as="Link" :href="route('cards.show', card.id)" variant="ghost" class="flex h-8 w-8 p-0">
+            <Eye class="h-4 w-4" />
+        </Button>
+
         <DropdownMenu>
             <DropdownMenuTrigger as-child>
                 <Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
@@ -54,7 +58,7 @@ const destroy = () => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" class="w-[160px]">
-                <DropdownMenuItem @click="editDrawerOpen = true">Editar</DropdownMenuItem>
+                <DropdownMenuItem @click="edit">Editar</DropdownMenuItem>
                 <!-- <DropdownMenuItem>Favoritar</DropdownMenuItem> -->
                 <DropdownMenuSeparator />
 
@@ -63,13 +67,6 @@ const destroy = () => {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-
-        <EditDrawer
-            :open="editDrawerOpen"
-            :card="card"
-            :brands="brands"
-            @close="editDrawerOpen = false"
-        />
 
         <AlertDialog v-model:open="destroyDialogOpen">
             <AlertDialogContent>

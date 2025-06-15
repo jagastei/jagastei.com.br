@@ -31,12 +31,10 @@ class TransactionOutCreated extends Event
     public function apply(AccountState $account)
     {
         $this->previous_balance = $account->balance;
-
         $account->balance -= $this->value;
+        $this->current_balance = $account->balance;
 
         WalletState::load($account->wallet_id)->balance -= $this->value;
-
-        $this->current_balance = $account->balance;
     }
 
     public function handle()

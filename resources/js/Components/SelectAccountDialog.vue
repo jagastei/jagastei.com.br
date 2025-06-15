@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { cn } from '@/utils';
-import { Check, ChevronsUpDown, CirclePlus } from 'lucide-vue-next';
+import { Check, ChevronsUpDown, CirclePlus, ExternalLink } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -20,27 +20,32 @@ import {
 import { Button } from '@/Components/ui/button';
 import { Account } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
+import { withDefaults } from 'vue';;
 
-const props = defineProps<{
+const propsWithDefaults = withDefaults(defineProps<{
+    id: string;
 	modelValue: Account | undefined;
 	accounts: Account[];
-}>();
+	disabled?: boolean;
+}>(), {
+	disabled: false
+});
 
 const emits = defineEmits<{
 	(e: 'update:modelValue', payload: Account | undefined): void;
 	(e: 'close'): void;
 }>();
 
-const modelValue = useVModel(props, 'modelValue', emits, {
+const modelValue = useVModel(propsWithDefaults, 'modelValue', emits, {
 	passive: true,
-	defaultValue: props.modelValue,
+	defaultValue: propsWithDefaults.modelValue,
 });
 
 const dialogOpen = ref(false);
 
 const query = ref<string>('');
 
-const { results } = useFuse(query, props.accounts, {
+const { results } = useFuse(query, propsWithDefaults.accounts, {
 	fuseOptions: {
 		keys: ['name'],
 		isCaseSensitive: false,
@@ -60,10 +65,11 @@ const resultList = computed(() => {
 		<PopoverTrigger as-child>
 			<Button
 				tabindex="3"
-				id="bank"
+				:id="id"
 				variant="outline"
 				role="combobox"
-				class="w-[375px] justify-between mt-2 p-3"
+				class="w-[375px] justify-between mt-2 p-3 disabled:opacity-100"
+				:disabled="disabled"
 			>
 				<div class="flex items-center truncate">
 					<div v-if="modelValue" class="min-w-4">
@@ -82,8 +88,13 @@ const resultList = computed(() => {
 						>{{ modelValue ? modelValue?.name : 'Escolha uma conta' }}</span
 					>
 				</div>
-				<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+
+                <ChevronsUpDown v-if="!disabled" class="ml-2 size-4 shrink-0 opacity-50" />
 			</Button>
+
+            <a v-if="modelValue" :href="route('accounts.show', modelValue.id)" target="_blank" class="text-blue-500 absolute right-0 top-0">
+                <ExternalLink class="ml-2 size-4 shrink-0" />
+            </a>
 		</PopoverTrigger>
 		<PopoverContent class="w-[375px] p-0">
 			<Command v-model="modelValue" v-model:searchTerm="query">
