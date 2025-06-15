@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecurrenceRequest;
 use App\Http\Requests\UpdateRecurrenceRequest;
 use App\Models\Recurrence;
 
-class RecurrenceController extends Controller
+final class RecurrenceController extends Controller
 {
     /**
      * Display a listing of the resource.

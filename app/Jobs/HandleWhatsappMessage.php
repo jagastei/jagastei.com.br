@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Models\Category;
@@ -17,7 +19,7 @@ use Prism\Prism\Schema\StringSchema;
 use Prism\Prism\ValueObjects\Messages\SystemMessage;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
 
-class HandleWhatsappMessage implements ShouldQueue
+final class HandleWhatsappMessage implements ShouldQueue
 {
     use Queueable;
 

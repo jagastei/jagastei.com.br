@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Constant;
@@ -9,7 +11,7 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class WalletController extends Controller
+final class WalletController extends Controller
 {
     public function store(StoreWalletRequest $request)
     {

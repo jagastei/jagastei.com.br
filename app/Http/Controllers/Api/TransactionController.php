@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
-class TransactionController extends Controller
+final class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.

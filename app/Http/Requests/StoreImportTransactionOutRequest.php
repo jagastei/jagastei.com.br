@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Helper;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreImportTransactionOutRequest extends FormRequest
+final class StoreImportTransactionOutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

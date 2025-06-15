@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\TransactionOutCreated;
@@ -24,7 +26,7 @@ use Prism\Prism\ValueObjects\Messages\UserMessage;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class TransactionOutController extends Controller
+final class TransactionOutController extends Controller
 {
     public function index(Request $request)
     {

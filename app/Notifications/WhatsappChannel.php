@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Exception;
@@ -7,11 +9,11 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class WhatsappChannel
+final class WhatsappChannel
 {
     public function send(object $notifiable, Notification $notification)
     {
-        /** @var \App\Notifications\VerifyPhone $notification */
+        /** @var VerifyPhone $notification */
         $message = $notification->toWhatsapp($notifiable);
 
         /** @var \App\Models\User $notifiable */

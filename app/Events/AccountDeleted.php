@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Account;
@@ -8,7 +10,7 @@ use App\States\WalletState;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
-class AccountDeleted extends Event
+final class AccountDeleted extends Event
 {
     public function __construct(
         #[StateId(AccountState::class)]

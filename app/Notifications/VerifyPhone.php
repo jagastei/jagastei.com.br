@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Cache;
 
-class VerifyPhone extends Notification
+final class VerifyPhone extends Notification
 {
     public function via(object $notifiable): string
     {

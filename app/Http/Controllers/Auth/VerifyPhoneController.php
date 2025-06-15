@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Auth\PhoneVerificationRequest;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\RedirectResponse;
 
-class VerifyPhoneController extends Controller
+final class VerifyPhoneController extends Controller
 {
     /**
      * Mark the authenticated user's phone number as verified.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FeedbackRequest;
@@ -7,7 +9,7 @@ use App\Mail\Feedback;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class FeedbackController extends Controller
+final class FeedbackController extends Controller
 {
     public function store(FeedbackRequest $request)
     {

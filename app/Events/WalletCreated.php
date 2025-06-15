@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Wallet;
@@ -7,7 +9,7 @@ use App\States\WalletState;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
-class WalletCreated extends Event
+final class WalletCreated extends Event
 {
     public function __construct(
         #[StateId(WalletState::class)]

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Constant;
 use App\Http\Controllers\Controller;
 
-class LanguageController extends Controller
+final class LanguageController extends Controller
 {
     public function index(string $language)
     {

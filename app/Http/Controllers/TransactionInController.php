@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\TransactionInCreated;
@@ -13,7 +15,7 @@ use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class TransactionInController extends Controller
+final class TransactionInController extends Controller
 {
     public function index(Request $request)
     {

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Bank;
 use Illuminate\Database\Seeder;
 use JsonException;
 
-class BankSeeder extends Seeder
+final class BankSeeder extends Seeder
 {
     /**
      * Run the database seeds.

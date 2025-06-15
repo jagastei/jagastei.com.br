@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use App\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAccountRequest extends FormRequest
+final class StoreAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

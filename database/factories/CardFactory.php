@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Account;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Card>
  */
-class CardFactory extends Factory
+final class CardFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -21,7 +23,7 @@ class CardFactory extends Factory
             'account_id' => Account::factory(),
             'name' => fake()->name(),
             'limit' => fake()->numberBetween(100_00, 10_000_00),
-            'digits' => substr(fake()->creditCardNumber(), -4),
+            'digits' => mb_substr(fake()->creditCardNumber(), -4),
             'credit' => fake()->boolean(),
             'virtual' => fake()->boolean(),
             'international' => fake()->boolean(),

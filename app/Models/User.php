@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Contracts\MustVerifyPhone;
@@ -14,7 +16,7 @@ use Laravel\Cashier\Billable;
 
 use function Illuminate\Events\queueable;
 
-class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
+final class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
 {
     use \App\Traits\MustVerifyPhone;
     use Billable;
@@ -36,26 +38,6 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
         'password',
         'remember_token',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'phone_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'trial_ends_at' => 'datetime',
-            'metadata' => 'array',
-        ];
-    }
-
-    protected static function booted(): void
-    {
-        static::updated(queueable(function (User $customer) {
-            if ($customer->hasStripeId()) {
-                $customer->syncStripeCustomerDetails();
-            }
-        }));
-    }
 
     public function getMetadata(?string $key = null): array|string|null
     {
@@ -84,5 +66,25 @@ class User extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     public function routeNotificationForWhatsapp(): string
     {
         return $this->phone;
+    }
+
+    protected static function booted(): void
+    {
+        self::updated(queueable(function (User $customer) {
+            if ($customer->hasStripeId()) {
+                $customer->syncStripeCustomerDetails();
+            }
+        }));
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'phone_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'trial_ends_at' => 'datetime',
+            'metadata' => 'array',
+        ];
     }
 }

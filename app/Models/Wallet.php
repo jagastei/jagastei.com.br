@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Glhd\Bits\Database\HasSnowflakes;
@@ -10,13 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Wallet extends Model
+final class Wallet extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
-
-    protected $keyType = 'string';
 
     public const CURRENCIES = [
         'BRL' => 'Real Brasileiro',
@@ -24,6 +24,8 @@ class Wallet extends Model
         'EUR' => 'Euro',
         'GBP' => 'Libra Esterlina',
     ];
+
+    protected $keyType = 'string';
 
     protected $fillable = [
         'id',

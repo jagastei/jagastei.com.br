@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Helper;
@@ -10,13 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transaction extends Model
+final class Transaction extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
-
-    protected $keyType = 'string';
 
     public const METHODS = [
         'CASH',
@@ -26,6 +26,8 @@ class Transaction extends Model
         'OTHER',
         'UNKNOWN',
     ];
+
+    protected $keyType = 'string';
 
     protected $fillable = [
         'title',
