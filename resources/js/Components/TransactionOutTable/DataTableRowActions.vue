@@ -81,12 +81,13 @@ const destroy = () => {
 			<AlertDialogHeader>
 				<AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
 				<AlertDialogDescription>
-                    <!-- Você está prestes a remover a movimentação
+					<!-- Você está prestes a remover a movimentação
 					<b>{{ transaction.title }}</b> com o valor de
 					<b>{{ transaction.formatted_value }}</b
 					>. Não será possível desfazer essa ação. -->
-                    Você está prestes a remover a movimentação
-					<b>{{ transaction.title }}</b>. Não será possível desfazer essa ação.
+					Você está prestes a remover a movimentação
+					<b>{{ transaction.title }}</b
+					>. Não será possível desfazer essa ação.
 				</AlertDialogDescription>
 			</AlertDialogHeader>
 			<AlertDialogFooter>
