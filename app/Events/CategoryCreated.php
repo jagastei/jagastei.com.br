@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Category;
 use Thunk\Verbs\Event;
 
-class CategoryCreated extends Event
+final class CategoryCreated extends Event
 {
     public function __construct(
         public int $wallet_id,

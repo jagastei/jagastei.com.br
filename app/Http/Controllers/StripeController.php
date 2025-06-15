@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laravel\Cashier\Exceptions\IncompletePayment;
 
-class StripeController extends Controller
+final class StripeController extends Controller
 {
     public function billing(Request $request)
     {

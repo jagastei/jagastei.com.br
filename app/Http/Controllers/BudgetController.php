@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\BudgetCreated;
@@ -9,7 +11,7 @@ use App\Models\Budget;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class BudgetController extends Controller
+final class BudgetController extends Controller
 {
     public function index(Request $request)
     {

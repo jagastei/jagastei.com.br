@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Logtail\Monolog\LogtailHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Akaunting\Money\Money;
 use Exception;
 
-class Helper
+final class Helper
 {
     public static function formatMoney(int $value, $currency = Constant::DEFAULT_CURRENCY): string
     {

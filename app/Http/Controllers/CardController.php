@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
@@ -10,7 +12,7 @@ use App\Models\Brand;
 use App\Models\Card;
 use Inertia\Inertia;
 
-class CardController extends Controller
+final class CardController extends Controller
 {
     public function index()
     {

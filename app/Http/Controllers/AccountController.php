@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\AccountCreated;
@@ -10,7 +12,7 @@ use App\Models\Account;
 use App\Models\Bank;
 use Inertia\Inertia;
 
-class AccountController extends Controller
+final class AccountController extends Controller
 {
     public function index()
     {

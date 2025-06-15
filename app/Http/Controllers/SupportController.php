@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SupportRequest;
@@ -7,7 +9,7 @@ use App\Mail\Support;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class SupportController extends Controller
+final class SupportController extends Controller
 {
     public function store(SupportRequest $request)
     {

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Goal;
 use Thunk\Verbs\Event;
 
-class GoalCreated extends Event
+final class GoalCreated extends Event
 {
     public function __construct(
         public int $wallet_id,

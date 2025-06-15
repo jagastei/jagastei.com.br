@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Account;
@@ -9,7 +11,7 @@ use Glhd\Bits\Snowflake;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
-class AccountCreated extends Event
+final class AccountCreated extends Event
 {
     public function __construct(
         #[StateId(AccountState::class)]

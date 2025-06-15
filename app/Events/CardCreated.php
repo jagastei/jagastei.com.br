@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Card;
 use Thunk\Verbs\Event;
 
-class CardCreated extends Event
+final class CardCreated extends Event
 {
     public function __construct(
         public ?int $account_id,

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SupportRequest;
 use Illuminate\Support\Facades\Log;
 
-class SupportController extends Controller
+final class SupportController extends Controller
 {
     public function store(SupportRequest $request)
     {

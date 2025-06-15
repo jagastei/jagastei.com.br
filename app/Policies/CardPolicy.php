@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Card;
 use App\Models\User;
 
-class CardPolicy
+final class CardPolicy
 {
     /**
      * Determine whether the user can view any models.

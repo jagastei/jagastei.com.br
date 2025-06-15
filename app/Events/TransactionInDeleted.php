@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Events;
 
 use App\Models\Account;
@@ -10,7 +12,7 @@ use Carbon\CarbonImmutable;
 use Thunk\Verbs\Attributes\Autodiscovery\StateId;
 use Thunk\Verbs\Event;
 
-class TransactionInDeleted extends Event
+final class TransactionInDeleted extends Event
 {
     public ?int $previous_balance = null;
 
