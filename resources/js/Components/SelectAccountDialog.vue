@@ -20,7 +20,6 @@ import {
 import { Button } from '@/Components/ui/button';
 import { Account } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
-import { withDefaults } from 'vue';;
 
 const propsWithDefaults = withDefaults(defineProps<{
     id: string;

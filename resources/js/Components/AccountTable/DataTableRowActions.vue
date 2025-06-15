@@ -3,7 +3,7 @@ import type { Row } from '@tanstack/vue-table';
 import { computed, ref } from 'vue';
 import { accountSchema } from './columns';
 import type { Account } from './columns';
-import { router } from '@inertiajs/vue3';
+import { router, Link } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
 import {
 	DropdownMenu,
@@ -25,7 +25,7 @@ import {
 	AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 import EditDialog from './EditDialog.vue';
-import { Ellipsis } from 'lucide-vue-next';
+import { Ellipsis, Eye } from 'lucide-vue-next';
 
 interface DataTableRowActionsProps {
 	row: Row<Account>;
@@ -43,7 +43,11 @@ const destroy = () => {
 </script>
 
 <template>
-	<div>
+	<div class="flex items-center">
+        <Button :as="Link" :href="route('accounts.show', account.id)" variant="ghost" class="flex h-8 w-8 p-0">
+            <Eye class="h-4 w-4" />
+        </Button>
+
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>
 				<Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
