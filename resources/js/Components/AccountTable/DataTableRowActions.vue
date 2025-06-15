@@ -44,9 +44,14 @@ const destroy = () => {
 
 <template>
 	<div class="flex items-center">
-        <Button :as="Link" :href="route('accounts.show', account.id)" variant="ghost" class="flex h-8 w-8 p-0">
-            <Eye class="h-4 w-4" />
-        </Button>
+		<Button
+			:as="Link"
+			:href="route('accounts.show', account.id)"
+			variant="ghost"
+			class="flex h-8 w-8 p-0"
+		>
+			<Eye class="h-4 w-4" />
+		</Button>
 
 		<DropdownMenu>
 			<DropdownMenuTrigger as-child>

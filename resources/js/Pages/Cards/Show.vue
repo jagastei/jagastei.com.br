@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import type { Card } from '@/Components/CardTable/columns';
 
 const props = defineProps<{
-    card: Card;
+	card: Card;
 }>();
 </script>
 

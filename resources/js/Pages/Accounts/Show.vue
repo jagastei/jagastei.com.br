@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3';
 import { Account } from '@/Components/AccountTable/columns';
 
 const props = defineProps<{
-    account: Account;
+	account: Account;
 }>();
 </script>
 
