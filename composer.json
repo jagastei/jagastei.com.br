@@ -7,10 +7,10 @@
     "require": {
         "php": "^8.2",
         "akaunting/laravel-money": "^6.0.2",
-        "hirethunk/verbs": "^0.6.4",
+        "hirethunk/verbs": "^0.7.0",
         "inertiajs/inertia-laravel": "^2.0.1",
         "laravel/cashier": "^15.6.2",
-        "laravel/framework": "^11.44",
+        "laravel/framework": "^12.0p",
         "laravel/horizon": "^5.30.3",
         "laravel/pennant": "^1.16",
         "laravel/pulse": "^1.4",
