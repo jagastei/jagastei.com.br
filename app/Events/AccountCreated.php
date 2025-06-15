@@ -13,7 +13,7 @@ class AccountCreated extends Event
 {
     public function __construct(
         #[StateId(AccountState::class)]
-        public ?int $account_id = null,
+        public ?int $account_id,
         public Snowflake $wallet_id,
         public ?string $bank_id,
         public string $name,
