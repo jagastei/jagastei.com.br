@@ -43,10 +43,10 @@ const columnVisibility = ref<VisibilityState>({});
 const rowSelection = ref({});
 
 const table = useVueTable({
-    // meta: {
-    //     brands: props.brands,
-    //     accounts: props.accounts,
-    // },
+	// meta: {
+	//     brands: props.brands,
+	//     accounts: props.accounts,
+	// },
 	get data() {
 		return props.data;
 	},

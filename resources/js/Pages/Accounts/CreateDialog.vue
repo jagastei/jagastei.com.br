@@ -140,7 +140,12 @@ const onClose = () => {
 						id="initial_balance"
 						v-model.lazy="form.initial_balance"
 						class="mt-2"
-						v-money3="currencyInputFormat(user.current_wallet?.currency, languageStore.getCurrentLanguage)"
+						v-money3="
+							currencyInputFormat(
+								user.current_wallet?.currency,
+								languageStore.getCurrentLanguage
+							)
+						"
 						tabindex="2"
 					/>
 				</div>

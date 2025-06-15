@@ -2,7 +2,12 @@
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { cn } from '@/utils';
-import { Check, ChevronsUpDown, CirclePlus, ExternalLink } from 'lucide-vue-next';
+import {
+	Check,
+	ChevronsUpDown,
+	CirclePlus,
+	ExternalLink,
+} from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -21,14 +26,17 @@ import { Button } from '@/Components/ui/button';
 import { Account } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
 
-const propsWithDefaults = withDefaults(defineProps<{
-    id: string;
-	modelValue: Account | undefined;
-	accounts: Account[];
-	disabled?: boolean;
-}>(), {
-	disabled: false
-});
+const propsWithDefaults = withDefaults(
+	defineProps<{
+		id: string;
+		modelValue: Account | undefined;
+		accounts: Account[];
+		disabled?: boolean;
+	}>(),
+	{
+		disabled: false,
+	}
+);
 
 const emits = defineEmits<{
 	(e: 'update:modelValue', payload: Account | undefined): void;
@@ -88,12 +96,17 @@ const resultList = computed(() => {
 					>
 				</div>
 
-                <ChevronsUpDown v-if="!disabled" class="ml-2 size-4 shrink-0 opacity-50" />
+				<ChevronsUpDown v-if="!disabled" class="ml-2 size-4 shrink-0 opacity-50" />
 			</Button>
 
-            <a v-if="modelValue" :href="route('accounts.show', modelValue.id)" target="_blank" class="text-blue-500 absolute right-0 top-0">
-                <ExternalLink class="ml-2 size-4 shrink-0" />
-            </a>
+			<a
+				v-if="modelValue"
+				:href="route('accounts.show', modelValue.id)"
+				target="_blank"
+				class="text-blue-500 absolute right-0 top-0"
+			>
+				<ExternalLink class="ml-2 size-4 shrink-0" />
+			</a>
 		</PopoverTrigger>
 		<PopoverContent class="w-[375px] p-0">
 			<Command v-model="modelValue" v-model:searchTerm="query">

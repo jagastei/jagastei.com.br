@@ -123,9 +123,13 @@ const resultList = computed(() => {
 								/>
 							</div>
 							<div class="ml-1 truncate flex items-center">
-                                <span>{{ brand.name }}</span>
-                                <Star v-if="brand.identifier === suggestedBrandIdentifier" fill="#eab308" class="size-2 text-yellow-500 ml-2" />
-                            </div>
+								<span>{{ brand.name }}</span>
+								<Star
+									v-if="brand.identifier === suggestedBrandIdentifier"
+									fill="#eab308"
+									class="size-2 text-yellow-500 ml-2"
+								/>
+							</div>
 							<Check
 								:class="
 									cn(
