@@ -70,7 +70,7 @@ const logout = () => {
 		</DropdownMenuTrigger>
 		<DropdownMenuContent class="w-56" align="end">
 			<DropdownMenuGroup>
-				<Link :href="route('profile.edit')">
+				<Link :href="route('profile.show')">
 					<DropdownMenuItem class="cursor-pointer">
 						<UserIcon class="mr-2 size-4" />
 						<span>{{ $t('Account') }}</span>

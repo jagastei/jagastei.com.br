@@ -344,7 +344,11 @@ const onClose = () => {
 				<div class="flex flex-col">
 					<Label for="account">Conta</Label>
 
-					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
+					<SelectAccountDialog
+						id="account"
+						v-model="form.account"
+						:accounts="accounts"
+					/>
 				</div>
 			</div>
 			<DialogFooter>

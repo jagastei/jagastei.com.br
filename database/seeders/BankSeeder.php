@@ -112,8 +112,7 @@ final class BankSeeder extends Seeder
                     ]);
             }
         } catch (JsonException $e) {
-            dd($e->getMessage());
+            echo $e->getMessage();
         }
-
     }
 }

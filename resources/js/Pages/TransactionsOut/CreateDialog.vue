@@ -256,7 +256,11 @@ const onClose = () => {
 				<div class="flex flex-col">
 					<Label for="account">Conta</Label>
 
-					<SelectAccountDialog v-model="form.account" :accounts="accounts" />
+					<SelectAccountDialog
+						id="account"
+						v-model="form.account"
+						:accounts="accounts"
+					/>
 
 					<InputError class="mt-2" :message="form.errors.account" />
 				</div>

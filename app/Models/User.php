@@ -39,6 +39,14 @@ final class User extends Authenticatable implements MustVerifyEmail, MustVerifyP
         'remember_token',
     ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'trial_ends_at' => 'datetime',
+        'metadata' => 'array',
+    ];
+
     public function getMetadata(?string $key = null): array|string|null
     {
         if ($key) {
@@ -75,16 +83,5 @@ final class User extends Authenticatable implements MustVerifyEmail, MustVerifyP
                 $customer->syncStripeCustomerDetails();
             }
         }));
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'phone_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'trial_ends_at' => 'datetime',
-            'metadata' => 'array',
-        ];
     }
 }

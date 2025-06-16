@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Listeners\StripeEventListener;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
@@ -29,7 +31,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+        Model::shouldBeStrict();
+        // Model::unguard();
+
+
 
         // Cashier::keepPastDueSubscriptionsActive();
         // Cashier::keepIncompleteSubscriptionsActive();
@@ -43,5 +48,10 @@ final class AppServiceProvider extends ServiceProvider
         // Lang::stringable(function (Money $money) {
         //     return $money->formatTo('en_GB');
         // });
+
+        // Vite::prefetch(concurrency: 3);
+        Vite::useAggressivePrefetching();
+
+        // URL::forceScheme('https');
     }
 }

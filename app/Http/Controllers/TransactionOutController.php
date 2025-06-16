@@ -179,7 +179,6 @@ final class TransactionOutController extends Controller
             session()->flash('ai', $response->structured);
             session()->flash('file_path', $filePath);
         } catch (Exception $e) {
-            dd($e);
             Log::error($e);
 
             return back();

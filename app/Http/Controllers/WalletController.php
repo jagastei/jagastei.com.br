@@ -30,10 +30,6 @@ final class WalletController extends Controller
             'name' => $input['name'],
         ]);
 
-        // dd($walletCreated);
-
-        // dump($walletCreated, $walletCreated->wallet_id);
-
         $wallet = Wallet::query()
             ->ofUser($user)
             ->find($wallet->id);

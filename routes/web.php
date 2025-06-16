@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store')->middleware([Subscribed::class]);
     Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy')->middleware([Subscribed::class]);
 
-    Route::get('/minha-conta', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/minha-conta', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/minha-conta', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/minha-conta', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
