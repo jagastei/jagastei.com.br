@@ -41,15 +41,6 @@ final class Card extends Model
         'international' => 'boolean',
     ];
 
-    protected $appends = [
-        'formatted_limit',
-    ];
-
-    public function getFormattedLimitAttribute(): string
-    {
-        return Helper::formatMoney($this->limit);
-    }
-
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {
         return $query->whereHas('account', function ($query) use ($wallet) {

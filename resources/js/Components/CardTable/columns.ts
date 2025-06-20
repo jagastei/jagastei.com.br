@@ -29,7 +29,6 @@ export const cardSchema = z.object({
 	account_id: z.string(),
 	name: z.string(),
 	limit: z.number(),
-	formatted_limit: z.string(),
 	digits: z.string(),
 	brand_id: z.string(),
 	credit: z.boolean(),

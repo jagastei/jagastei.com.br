@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Helper;
 use Glhd\Bits\Database\HasSnowflakes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,14 +46,8 @@ final class Transaction extends Model
     ];
 
     protected $appends = [
-        'formatted_value',
         'formatted_datetime',
     ];
-
-    public function getFormattedValueAttribute(): string
-    {
-        return Helper::formatMoney($this->value);
-    }
 
     public function getFormattedDatetimeAttribute(): string
     {

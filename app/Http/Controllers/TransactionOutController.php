@@ -78,6 +78,11 @@ final class TransactionOutController extends Controller
                 },
             ])
             ->paginate($request->query('per_page', 10))
+            ->through(function ($transaction) {
+                $transaction->value = $transaction->value / 100;
+
+                return $transaction;
+            })
             ->appends(request()->query());
 
         return Inertia::render('TransactionsOut/Index', [
