@@ -33,7 +33,7 @@ final class Helper
         }
 
         if ($forceInteger) {
-            $value = preg_replace('/\D/', '', $value);
+            $value = preg_replace('/\D/', '', (string) $value);
 
             return (int) $value;
         }

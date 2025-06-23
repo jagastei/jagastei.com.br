@@ -90,7 +90,7 @@ const form = useForm<{
 	name: props.card.name,
 	limit: props.card.limit,
 	digits: props.card.digits,
-	brand: undefined,
+	brand: null,
 	expiration_month: null,
 	expiration_year: null,
 	credit: props.card.credit,
@@ -216,7 +216,7 @@ const onClose = () => {
 					</legend>
 
 					<div class="mt-2 flex items-center gap-2">
-						<Select>
+						<Select v-model="form.expiration_month">
 							<SelectTrigger>
 								<SelectValue placeholder="Mês" />
 							</SelectTrigger>
@@ -225,7 +225,7 @@ const onClose = () => {
 									<SelectItem
 										v-for="(month, index) in months"
 										:key="index"
-										:value="index"
+										:value="index + 1"
 									>
 										{{ t(month) }}
 									</SelectItem>
@@ -233,13 +233,13 @@ const onClose = () => {
 							</SelectContent>
 						</Select>
 
-						<Select>
+						<Select v-model="form.expiration_year">
 							<SelectTrigger>
 								<SelectValue placeholder="Ano" />
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectItem v-for="(year, index) in years" :key="index" :value="index">
+									<SelectItem v-for="(year, index) in years" :key="index" :value="years[index]">
 										{{ year }}
 									</SelectItem>
 								</SelectGroup>

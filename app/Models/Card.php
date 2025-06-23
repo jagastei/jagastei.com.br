@@ -36,6 +36,7 @@ final class Card extends Model
     protected $casts = [
         'id' => Snowflake::class,
         'account_id' => Snowflake::class,
+        'expiration_date' => 'date',
         'credit' => 'boolean',
         'virtual' => 'boolean',
         'international' => 'boolean',

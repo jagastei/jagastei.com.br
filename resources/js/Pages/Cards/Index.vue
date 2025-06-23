@@ -9,7 +9,7 @@ import type { Brand, Card } from '@/Components/CardTable/columns';
 import { Account } from '@/Components/AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
-import EditDrawer from '@/Components/CardTable/EditDrawer.vue';
+import EditDrawer from './EditDrawer.vue';
 
 const props = defineProps<{
 	brands: Brand[];
