@@ -25,7 +25,7 @@ import ImportDialog from './ImportDialog.vue';
 
 defineProps<{
 	sort?: string;
-	filter?: Object;
+	filter?: object;
 	categories: Category[];
 	accounts: Account[];
 	transactions: Pagination<Transaction>;

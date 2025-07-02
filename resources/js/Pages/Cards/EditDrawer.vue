@@ -90,16 +90,19 @@ const form = useForm<{
 	name: props.card.name,
 	limit: props.card.limit,
 	digits: props.card.digits,
-	brand: null,
-	expiration_month: null,
-	expiration_year: null,
+	brand: props.card.brand,
+	expiration_month: props.card.expiration_month,
+	expiration_year: props.card.expiration_year,
 	credit: props.card.credit,
 	virtual: props.card.virtual,
 	international: props.card.international,
 });
 
 const submit = () => {
-	form.put(route('cards.update', props.card.id), {
+	form.transform((data) => ({
+		...data,
+		brand_id: data.brand?.id,
+	})).put(route('cards.update', props.card.id), {
 		onFinish: () => {
 			onClose();
 		},

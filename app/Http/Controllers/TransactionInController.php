@@ -76,6 +76,7 @@ final class TransactionInController extends Controller
 
         return Inertia::render('TransactionsIn/Index', [
             'filter' => $filter,
+            'sort' => $sort,
             'categories' => $categories,
             'accounts' => $accounts,
             'transactions' => $transactions,

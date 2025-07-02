@@ -93,8 +93,6 @@ final class CardController extends Controller
     {
         $input = $request->validated();
 
-        dd($input);
-
         $card->update($input);
 
         return back();

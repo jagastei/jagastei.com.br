@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { accountSchema } from '../AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
+import { Globe, HandCoins, SmartphoneNfc } from 'lucide-vue-next';
 
 // declare module '@tanstack/vue-table' {
 // 	interface TableMeta<TData> {
@@ -34,6 +35,8 @@ export const cardSchema = z.object({
 	credit: z.boolean(),
 	virtual: z.boolean(),
 	international: z.boolean(),
+	last_digits: z.string().optional(),
+	formatted_expiration_date: z.string().nullable(),
 	created_at: z.string(),
 	updated_at: z.string(),
 	account: accountSchema,
@@ -86,7 +89,7 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
-	{
+    {
 		accessorKey: 'details',
 		header: ({ column }) =>
 			h(DataTableColumnHeader, { column, title: 'Detalhes' }),
@@ -101,13 +104,13 @@ export const columns: ColumnDef<Card>[] = [
 					},
 					row.original.brand.name
 				),
-				h('span', { class: 'ml-3' }, row.original.digits),
+				h('span', { class: 'ml-3' }, row.original.last_digits),
 			]);
 		},
 		enableSorting: false,
 		enableHiding: false,
 	},
-	{
+    {
 		accessorKey: 'limit',
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Limite' }),
 
@@ -118,6 +121,30 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
+    {
+		accessorKey: 'formatted_expiration_date',
+		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Validade' }),
+
+		cell: ({ row }) => {
+			return h('div', {}, row.getValue('formatted_expiration_date'));
+		},
+		enableSorting: false,
+		enableHiding: false,
+	},
+    // {
+	// 	accessorKey: 'options',
+	// 	header: ({ column }) =>
+	// 		h(DataTableColumnHeader, { column, title: '' }),
+	// 	cell: ({ row }) => {
+	// 		return h('div', { class: 'flex items-center gap-2' }, [
+	// 		    row.original.credit && h(HandCoins, { class: 'size-4' }),
+    //             row.original.virtual && h(SmartphoneNfc, { class: 'size-4' }),
+    //             row.original.international && h(Globe, { class: 'size-4' }),
+	// 		]);
+	// 	},
+	// 	enableSorting: false,
+	// 	enableHiding: false,
+	// },
 	{
 		id: 'actions',
 		cell: ({ row, table }) => {

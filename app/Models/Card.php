@@ -27,6 +27,7 @@ final class Card extends Model
         'name',
         'limit',
         'digits',
+        'expiration_date',
         'credit',
         'virtual',
         'international',
@@ -39,6 +40,13 @@ final class Card extends Model
         'credit' => 'boolean',
         'virtual' => 'boolean',
         'international' => 'boolean',
+    ];
+
+    protected $appends = [
+        'expiration_month',
+        'expiration_year',
+        'last_digits',
+        'formatted_expiration_date',
     ];
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
@@ -56,5 +64,25 @@ final class Card extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function getExpirationMonthAttribute(): ?int
+    {
+        return $this->expiration_date?->month;
+    }
+
+    public function getExpirationYearAttribute(): ?int
+    {
+        return $this->expiration_date?->year;
+    }
+
+    public function getLastDigitsAttribute(): ?string
+    {
+        return $this->digits ? substr($this->digits, -4) : null;
+    }
+
+    public function getFormattedExpirationDateAttribute(): ?string
+    {
+        return $this->expiration_date?->format('m/y');
     }
 }

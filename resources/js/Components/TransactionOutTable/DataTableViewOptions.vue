@@ -46,11 +46,10 @@ const columns = computed(() =>
 				v-for="column in columns"
 				:key="column.id"
 				class="capitalize"
-				:checked="column.getIsVisible()"
-				@update:checked="
-					(value: AcceptableValue) => column.toggleVisibility(!!value)
-				"
-				@select="(ev) => ev.preventDefault()"
+                :model-value="column.getIsVisible()"
+                @update:model-value="(value) => {
+                    column.toggleVisibility(!!value)
+                }"
 			>
 				{{ column.columnDef.meta?.title }}
 			</DropdownMenuCheckboxItem>

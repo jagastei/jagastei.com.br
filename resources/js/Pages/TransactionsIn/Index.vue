@@ -13,7 +13,7 @@ import { usePostHog } from '@/composables/usePosthog';
 
 defineProps<{
 	sort?: string;
-	filter: any;
+	filter?: object;
 	categories: Category[];
 	accounts: Account[];
 	transactions: Pagination<Transaction>;

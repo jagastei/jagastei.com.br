@@ -30,7 +30,7 @@ final class UpdateCardRequest extends FormRequest
             'limit' => ['required', 'integer', 'min:0'],
 
             'digits' => ['nullable', 'integer'],
-            'brand' => ['nullable'],
+            'brand_id' => ['nullable', 'exists:brands,id'],
 
             'expiration_month' => ['required', 'integer', 'min:1', 'max:12'],
             'expiration_year' => ['required', 'integer', 'min:2000', 'max:2100'],
@@ -51,7 +51,23 @@ final class UpdateCardRequest extends FormRequest
         $data = $this->all();
 
         $data['limit'] = Helper::extractNumbersFromString($data['limit'], forceInteger: true);
-        $data['expiration_date'] = Carbon::create($data['expiration_year'], $data['expiration_month'], 1)->format('Y-m-d');
+        $data['digits'] = Helper::extractNumbersFromString($data['digits'], forceInteger: true);
+
+        return $data;
+    }
+
+    /**
+     * Get the validated data from the request.
+     *
+     * @param  array|int|string|null  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public function validated($key = null, $default = null)
+    {
+        $data = $this->validator->validated();
+
+        $data['expiration_date'] = Carbon::create($data['expiration_year'], $data['expiration_month'])->endOfMonth()->format('Y-m-d');
 
         unset($data['expiration_month'], $data['expiration_year']);
 
