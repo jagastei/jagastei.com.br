@@ -78,7 +78,7 @@ final class Card extends Model
 
     public function getLastDigitsAttribute(): ?string
     {
-        return $this->digits ? substr($this->digits, -4) : null;
+        return $this->digits ? mb_substr($this->digits, -4) : null;
     }
 
     public function getFormattedExpirationDateAttribute(): ?string
