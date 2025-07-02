@@ -242,7 +242,11 @@ const onClose = () => {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectGroup>
-									<SelectItem v-for="(year, index) in years" :key="index" :value="years[index]">
+									<SelectItem
+										v-for="(year, index) in years"
+										:key="index"
+										:value="years[index]"
+									>
 										{{ year }}
 									</SelectItem>
 								</SelectGroup>
