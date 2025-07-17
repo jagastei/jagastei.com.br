@@ -10,7 +10,7 @@ import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
 
 export const transactionSchema = z.object({
-	id: z.string(),
+	id: z.number(),
 	title: z.string(),
 	type: z.enum(['IN', 'OUT']),
 	value: z.number(),
@@ -21,7 +21,6 @@ export const transactionSchema = z.object({
 	datetime: z.string(),
 	formatted_datetime: z.string(),
 	created_at: z.string(),
-	formatted_created_at: z.string(),
 	updated_at: z.string(),
 	category: categorySchema,
 	account: accountSchema,

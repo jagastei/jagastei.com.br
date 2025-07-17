@@ -10,6 +10,8 @@ use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Models\Account;
 use App\Models\Bank;
+use App\States\AccountState;
+use Carbon\Carbon;
 use Inertia\Inertia;
 
 final class AccountController extends Controller
@@ -61,8 +63,46 @@ final class AccountController extends Controller
 
     public function show(Account $account)
     {
+        $account->load([
+            'bank',
+        ]);
+
+        $accountState = AccountState::load($account->id);
+
+        $currentBalance = $accountState->balance / 100;
+
+        $balanceByDay = collect();
+
+        $startDateString = now()->startOfCentury()->format('Y-m-d');
+        $endDateString = now()->endOfYear()->format('Y-m-d');
+
+        $accountBalances = $accountState
+            ->storedEvents()
+            ->sortBy('datetime')
+            ->whereBetween('datetime', [$startDateString, $endDateString])
+            ->groupBy(fn ($event) => Carbon::parse($event->datetime)->format('Y-m-d'))
+            ->map(fn ($events) => $events->last()->current_balance / 100);
+
+        foreach ($accountBalances as $date => $balance) {
+            if (! $balanceByDay->has($date)) {
+                $balanceByDay[$date] = 0;
+            }
+
+            $balanceByDay[$date] += $balance;
+        }
+
+        $balanceByDay = $balanceByDay
+            ->map(fn ($balance, $date) => [
+                'name' => Carbon::parse($date)->translatedFormat('l, d F Y'),
+                'Saldo' => $balance,
+            ])
+            ->values()
+            ->all();
+
         return Inertia::render('Accounts/Show', [
             'account' => $account,
+            'currentBalance' => $currentBalance,
+            'balanceByDay' => $balanceByDay,
         ]);
     }
 
