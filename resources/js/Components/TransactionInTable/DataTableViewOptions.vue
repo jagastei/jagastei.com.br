@@ -47,9 +47,11 @@ const columns = computed(() =>
 				:key="column.id"
 				class="capitalize"
 				:model-value="column.getIsVisible()"
-                @update:model-value="(value) => {
-                    column.toggleVisibility(!!value)
-                }"
+				@update:model-value="
+					(value) => {
+						column.toggleVisibility(!!value);
+					}
+				"
 			>
 				{{ column.columnDef.meta?.title }}
 			</DropdownMenuCheckboxItem>

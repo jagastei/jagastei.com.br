@@ -89,7 +89,7 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
-    {
+	{
 		accessorKey: 'details',
 		header: ({ column }) =>
 			h(DataTableColumnHeader, { column, title: 'Detalhes' }),
@@ -110,7 +110,7 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
-    {
+	{
 		accessorKey: 'limit',
 		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Limite' }),
 
@@ -121,9 +121,10 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
-    {
+	{
 		accessorKey: 'formatted_expiration_date',
-		header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Validade' }),
+		header: ({ column }) =>
+			h(DataTableColumnHeader, { column, title: 'Validade' }),
 
 		cell: ({ row }) => {
 			return h('div', {}, row.getValue('formatted_expiration_date'));
@@ -131,15 +132,15 @@ export const columns: ColumnDef<Card>[] = [
 		enableSorting: false,
 		enableHiding: false,
 	},
-    // {
+	// {
 	// 	accessorKey: 'options',
 	// 	header: ({ column }) =>
 	// 		h(DataTableColumnHeader, { column, title: '' }),
 	// 	cell: ({ row }) => {
 	// 		return h('div', { class: 'flex items-center gap-2' }, [
 	// 		    row.original.credit && h(HandCoins, { class: 'size-4' }),
-    //             row.original.virtual && h(SmartphoneNfc, { class: 'size-4' }),
-    //             row.original.international && h(Globe, { class: 'size-4' }),
+	//             row.original.virtual && h(SmartphoneNfc, { class: 'size-4' }),
+	//             row.original.international && h(Globe, { class: 'size-4' }),
 	// 		]);
 	// 	},
 	// 	enableSorting: false,

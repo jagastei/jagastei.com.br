@@ -22,42 +22,42 @@ import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
 	account: AccountSchema;
-    currentBalance: number;
-    balanceByDay: Array<any>;
+	currentBalance: number;
+	balanceByDay: Array<any>;
 }>();
 
 const { t } = useTranslation();
 
 const form = useForm({
-    name: props.account.name,
+	name: props.account.name,
 });
 
 const submit = () => {
-    if(form.name === props.account.name) {
-        isEditing.value = false;
-        return;
-    }
+	if (form.name === props.account.name) {
+		isEditing.value = false;
+		return;
+	}
 
-    form.put(route('accounts.update', props.account.id), {
-        onSuccess: () => {
-            isEditing.value = false;
-        },
-    });
+	form.put(route('accounts.update', props.account.id), {
+		onSuccess: () => {
+			isEditing.value = false;
+		},
+	});
 };
 
 const isEditing = ref(false);
 const nameInput = ref<HTMLInputElement>();
 
 watch(isEditing, (value) => {
-    if (value) {
-        nextTick(() => {
-            nameInput.value?.focus();
-        });
-    }
+	if (value) {
+		nextTick(() => {
+			nameInput.value?.focus();
+		});
+	}
 
-    if (!value) {
-        form.name = props.account.name;
-    }
+	if (!value) {
+		form.name = props.account.name;
+	}
 });
 </script>
 
@@ -71,23 +71,41 @@ watch(isEditing, (value) => {
 					class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 md:gap-y-0"
 				>
 					<div class="flex items-center gap-x-4 group">
-                        <img
-                            :src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
-                            :alt="account.bank.long_name"
-                            class="size-10 rounded-xl"
-                        />
+						<img
+							:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
+							:alt="account.bank.long_name"
+							class="size-10 rounded-xl"
+						/>
 
-                        <h2 class="text-3xl font-bold tracking-tight">
-                            <span v-if="!isEditing">{{ account.name }}</span>
-                            <input ref="nameInput" v-if="isEditing" v-model="form.name" :size="account.name.length" class="max-w-96 bg-transparent border-b border-dashed outline-none" />
-                        </h2>
+						<h2 class="text-3xl font-bold tracking-tight">
+							<span v-if="!isEditing">{{ account.name }}</span>
+							<input
+								ref="nameInput"
+								v-if="isEditing"
+								v-model="form.name"
+								:size="account.name.length"
+								class="max-w-96 bg-transparent border-b border-dashed outline-none"
+							/>
+						</h2>
 
-                        <div class="flex items-center gap-x-4">
-                            <PenIcon v-if="!isEditing" class="invisible group-hover:visible size-4 text-muted-foreground cursor-pointer" @click="isEditing = true" />
-                            <XIcon v-if="isEditing" class="size-6 text-destructive cursor-pointer" @click="isEditing = false" />
-                            <CheckIcon v-if="isEditing" class="size-6 text-primary cursor-pointer" @click="submit" />
-                        </div>
-                    </div>
+						<div class="flex items-center gap-x-4">
+							<PenIcon
+								v-if="!isEditing"
+								class="invisible group-hover:visible size-4 text-muted-foreground cursor-pointer"
+								@click="isEditing = true"
+							/>
+							<XIcon
+								v-if="isEditing"
+								class="size-6 text-destructive cursor-pointer"
+								@click="isEditing = false"
+							/>
+							<CheckIcon
+								v-if="isEditing"
+								class="size-6 text-primary cursor-pointer"
+								@click="submit"
+							/>
+						</div>
+					</div>
 					<div v-if="false" class="flex items-center space-x-2">
 						<DateRangePicker
 							:start-date="startDate"
@@ -240,8 +258,8 @@ watch(isEditing, (value) => {
 						</div>
 					</TabsContent>
 
-                    <TabsContent value="incomes" class="space-y-4"></TabsContent>
-                    <TabsContent value="outcomes" class="space-y-4"></TabsContent>
+					<TabsContent value="incomes" class="space-y-4"></TabsContent>
+					<TabsContent value="outcomes" class="space-y-4"></TabsContent>
 				</Tabs>
 			</div>
 		</div>

@@ -5,10 +5,10 @@ export function usePostHog() {
 		api_host: import.meta.env.VITE_POSTHOG_HOST,
 		capture_pageview: false,
 		autocapture: false,
-        opt_out_capturing_by_default: true,
+		opt_out_capturing_by_default: true,
 	});
 
-    posthog.opt_out_capturing();
+	posthog.opt_out_capturing();
 
 	return {
 		posthog,

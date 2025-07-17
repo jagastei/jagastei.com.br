@@ -99,14 +99,16 @@ const form = useForm<{
 });
 
 const submit = () => {
-	form.transform((data) => ({
-		...data,
-		brand_id: data.brand?.id,
-	})).put(route('cards.update', props.card.id), {
-		onFinish: () => {
-			onClose();
-		},
-	});
+	form
+		.transform((data) => ({
+			...data,
+			brand_id: data.brand?.id,
+		}))
+		.put(route('cards.update', props.card.id), {
+			onFinish: () => {
+				onClose();
+			},
+		});
 };
 
 const onClose = () => {
