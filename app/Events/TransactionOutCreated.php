@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Events;
 
 use App\Models\Account;
+use App\Models\Card;
 use App\Models\Transaction;
 use App\States\AccountState;
 use App\States\CategoryState;
@@ -55,6 +56,9 @@ final class TransactionOutCreated extends Event
             'category_id' => $this->category_id,
             'datetime' => $this->datetime,
             'metadata' => $this->metadata,
+
+            // Temporary garbage
+            'card_id' => Card::inRandomOrder()->first()->id,
         ]);
     }
 }

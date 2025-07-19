@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 final class Transaction extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
+    use Searchable;
 
     public const METHODS = [
         'CASH',
@@ -75,6 +77,16 @@ final class Transaction extends Model
         });
     }
 
+    public function scopeOfAccount(Builder $query, Account $account): Builder
+    {
+        return $query->where('account_id', $account->id);
+    }
+
+    public function scopeOfCard(Builder $query, Card $card): Builder
+    {
+        return $query->where('card_id', $card->id);
+    }
+
     public function scopeIn(Builder $query): Builder
     {
         return $query->where('type', 'IN');
@@ -83,6 +95,11 @@ final class Transaction extends Model
     public function scopeOut(Builder $query): Builder
     {
         return $query->where('type', 'OUT');
+    }
+
+    public function scopeOfCategory(Builder $query, Category $category): Builder
+    {
+        return $query->where('category_id', $category->id);
     }
 
     public function category(): BelongsTo

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { accountSchema } from '../AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
-import { Globe, HandCoins, SmartphoneNfc } from 'lucide-vue-next';
+import { Globe, HandCoins, SmartphoneNfc, CreditCard } from 'lucide-vue-next';
 
 // declare module '@tanstack/vue-table' {
 // 	interface TableMeta<TData> {
@@ -30,17 +30,19 @@ export const cardSchema = z.object({
 	account_id: z.string(),
 	name: z.string(),
 	limit: z.number(),
-	digits: z.string(),
-	brand_id: z.string(),
+	digits: z.string().nullable(),
+	brand_id: z.string().nullable(),
 	credit: z.boolean(),
 	virtual: z.boolean(),
 	international: z.boolean(),
-	last_digits: z.string().optional(),
+	last_digits: z.string().nullable(),
 	formatted_expiration_date: z.string().nullable(),
 	created_at: z.string(),
 	updated_at: z.string(),
 	account: accountSchema,
-	brand: brandSchema,
+	brand: brandSchema.nullable(),
+	expiration_month: z.number().nullable(),
+	expiration_year: z.number().nullable(),
 });
 
 export type Brand = z.infer<typeof brandSchema>;
@@ -80,6 +82,9 @@ export const columns: ColumnDef<Card>[] = [
 						alt: row.original.account.bank.long_name,
 						src: `https://jagastei.com.br.test/images/banks/${row.original.account.bank.code}.png`,
 						class: 'size-6 rounded-xl',
+                        onError: (event: any) => {
+                            event.target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9Imx1Y2lkZSBsdWNpZGUtcGlnZ3ktYmFuay1pY29uIGx1Y2lkZS1waWdneS1iYW5rIj48cGF0aCBkPSJNMTEgMTdoM3YyYTEgMSAwIDAgMCAxIDFoMmExIDEgMCAwIDAgMS0xdi0zYTMuMTYgMy4xNiAwIDAgMCAyLTJoMWExIDEgMCAwIDAgMS0xdi0yYTEgMSAwIDAgMC0xLTFoLTFhNSA1IDAgMCAwLTItNFYzYTQgNCAwIDAgMC0zLjIgMS42bC0uMy40SDExYTYgNiAwIDAgMC02IDZ2MWE1IDUgMCAwIDAgMiA0djNhMSAxIDAgMCAwIDEgMWgyYTEgMSAwIDAgMCAxLTF6Ii8+PHBhdGggZD0iTTE2IDEwaC4wMSIvPjxwYXRoIGQ9Ik0yIDh2MWEyIDIgMCAwIDAgMiAyaDEiLz48L3N2Zz4=';
+                        },
 					},
 					row.getValue('name')
 				),
@@ -95,15 +100,15 @@ export const columns: ColumnDef<Card>[] = [
 			h(DataTableColumnHeader, { column, title: 'Detalhes' }),
 		cell: ({ row }) => {
 			return h('div', { class: 'flex items-center' }, [
-				h(
-					'img',
-					{
-						alt: row.original.brand.name,
-						src: `https://jagastei.com.br.test/images/brands-svg/flat/${row.original.brand.identifier}.svg`,
-						class: 'w-8',
-					},
-					row.original.brand.name
-				),
+				// h(
+				// 	'img',
+				// 	{
+				// 		alt: row.original.brand.name,
+				// 		src: `https://jagastei.com.br.test/images/brands-svg/flat/${row.original.brand.identifier}.svg`,
+				// 		class: 'w-8',
+				// 	},
+				// 	row.original.brand.name
+				// ),
 				h('span', { class: 'ml-3' }, row.original.last_digits),
 			]);
 		},

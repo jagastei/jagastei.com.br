@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 final class Category extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
+    use Searchable;
 
     public const IN_RECOMMENDED = [
         'Salário' => '#4CAF50',
@@ -52,6 +54,20 @@ final class Category extends Model
         'wallet_id' => Snowflake::class,
         'transactions_sum_value' => 'float',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id->id(),
+            'name' => $this->name,
+            'created_at' => $this->created_at->timestamp,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'categories_index';
+    }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {

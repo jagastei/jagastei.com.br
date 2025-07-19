@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 final class Card extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
+    use Searchable;
 
     protected $keyType = 'string';
 
@@ -48,6 +50,20 @@ final class Card extends Model
         'last_digits',
         'formatted_expiration_date',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id->id(),
+            'name' => $this->name,
+            'created_at' => $this->created_at->timestamp,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'cards_index';
+    }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {

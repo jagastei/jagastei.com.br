@@ -63,23 +63,6 @@ final class DatabaseSeeder extends Seeder
             balance: 1_000_00,
         );
 
-        $accounts = Account::factory()
-            ->count(5)
-            ->state([
-                'wallet_id' => $personalWalletCreated->wallet_id,
-            ])
-            ->for($bank)
-            ->make();
-
-        foreach ($accounts as $account) {
-            AccountCreated::fire(
-                wallet_id: $personalWalletCreated->wallet_id,
-                bank_id: $bank->id,
-                name: $account->name,
-                balance: $account->balance,
-            );
-        }
-
         Card::factory()->create([
             'account_id' => $accountCreated->account_id,
             'name' => 'Cartão principal',
@@ -91,20 +74,67 @@ final class DatabaseSeeder extends Seeder
             'international' => false,
         ]);
 
-        Card::factory()
-            ->count(5)
-            ->state([
-                'account_id' => $accountCreated->account_id,
-            ])
-            ->for($brand)
-            ->create();
-
         $categories = Category::factory()
             ->count(5)
             ->state([
                 'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->create();
+
+        $accounts = Account::factory()
+            ->count(5)
+            ->state([
+                'wallet_id' => $personalWalletCreated->wallet_id,
+            ])
+            ->make()
+            ->each(function ($account) {
+                $account->bank_id = Bank::enabled()->inRandomOrder()->first()->id;
+            });
+
+        foreach ($accounts as $account) {
+            $accountCreated = AccountCreated::fire(
+                wallet_id: $personalWalletCreated->wallet_id,
+                bank_id: $account->bank_id,
+                name: $account->name,
+                balance: $account->balance,
+            );
+
+            Card::factory()
+                ->count(1)
+                ->state([
+                    'account_id' => $accountCreated->account_id,
+                ])
+                ->for(Brand::enabled()->inRandomOrder()->first())
+                ->create();
+
+            // Generate transactions for account
+            $quantity = fake()->numberBetween(50, 100);
+
+            for ($i = 0; $i < $quantity; $i++) {
+                $date = fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month');
+
+                $account = $accounts->random();
+                $category = $categories->random();
+
+                if ($category->type === 'IN') {
+                    TransactionInCreated::fire(
+                        title: fake()->name(),
+                        value: fake()->numberBetween(50_00, 300_00),
+                        account_id: $accountCreated->account_id,
+                        category_id: $category->id->id(),
+                        datetime: $date,
+                    );
+                } else {
+                    TransactionOutCreated::fire(
+                        title: fake()->name(),
+                        value: fake()->numberBetween(50_00, 300_00),
+                        account_id: $accountCreated->account_id,
+                        category_id: $category->id->id(),
+                        datetime: $date,
+                    );
+                }
+            }
+        }
 
         Goal::factory()
             ->count(5)
@@ -119,29 +149,5 @@ final class DatabaseSeeder extends Seeder
                 'wallet_id' => $personalWalletCreated->wallet_id,
             ])
             ->create();
-
-        for ($i = 0; $i < 300; $i++) {
-            $date = fake()->dateTimeBetween(startDate: '-1 month', endDate: '+1 month');
-
-            $category = $categories->random();
-
-            if ($category->type === 'IN') {
-                TransactionInCreated::fire(
-                    title: fake()->name(),
-                    value: fake()->numberBetween(50_00, 300_00),
-                    account_id: $accountCreated->account_id,
-                    category_id: $category->id->id(),
-                    datetime: $date,
-                );
-            } else {
-                TransactionOutCreated::fire(
-                    title: fake()->name(),
-                    value: fake()->numberBetween(50_00, 300_00),
-                    account_id: $accountCreated->account_id,
-                    category_id: $category->id->id(),
-                    datetime: $date,
-                );
-            }
-        }
     }
 }

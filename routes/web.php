@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store')->middleware([Subscribed::class]);
     Route::get('/cartoes/{card}', [CardController::class, 'show'])->name('cards.show');
     Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update')->middleware([Subscribed::class]);
+    Route::put('/cartoes/{card}/nome', [CardController::class, 'updateName'])->name('cards.updateName')->middleware([Subscribed::class]);
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy')->middleware([Subscribed::class]);
 
     // Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');

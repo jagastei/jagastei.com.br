@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 final class Account extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
+    use Searchable;
 
     protected $keyType = 'string';
 
@@ -29,9 +31,25 @@ final class Account extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
+        // 'id' => Snowflake::class,
+        'id' => 'string',
         'wallet_id' => Snowflake::class,
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            // 'id' => (string) $this->id->id(),
+            'id' => $this->id,
+            'name' => $this->name,
+            'created_at' => $this->created_at->timestamp,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'accounts_index';
+    }
 
     public function scopeOfWallet(Builder $query, Wallet $wallet): Builder
     {

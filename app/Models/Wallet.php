@@ -11,12 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 final class Wallet extends Model
 {
     use HasFactory;
     use HasSnowflakes;
     use SoftDeletes;
+    use Searchable;
 
     public const CURRENCIES = [
         'BRL' => 'Real Brasileiro',
@@ -39,6 +41,20 @@ final class Wallet extends Model
         'id' => Snowflake::class,
         'personal' => 'boolean',
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (string) $this->id->id(),
+            'name' => $this->name,
+            'created_at' => $this->created_at->timestamp,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'wallets_index';
+    }
 
     public function scopeOfUser(Builder $query, User $user): Builder
     {

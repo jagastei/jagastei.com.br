@@ -1,4 +1,8 @@
 export function findCardBrand(digits: string): string | null {
+	if (!digits) {
+		return null;
+	}
+
 	const cleanDigits = digits.replace(/\D/g, '');
 
 	const patterns = {

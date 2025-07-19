@@ -73,7 +73,7 @@ final class DashboardController extends Controller
                 $join->on('date_series.date', '=', 't.transaction_date');
             })
             ->select(
-                DB::raw("TO_CHAR(date_series.date, 'TMDay, DD TMMonth YYYY') AS name"),
+                DB::raw("TO_CHAR(date_series.date, 'YYYY-MM-DD') AS name"),
                 DB::raw('SUM(t.value) AS "Saída"')
             )
             ->groupBy('date_series.date')
@@ -81,6 +81,7 @@ final class DashboardController extends Controller
             ->get();
 
         $wastedByDay->map(function ($day) {
+            $day->name = Carbon::parse($day->name)->translatedFormat('l, d F Y');
             $day->{'Saída'} /= 100;
         });
 

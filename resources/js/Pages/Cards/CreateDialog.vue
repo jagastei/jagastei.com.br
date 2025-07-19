@@ -43,7 +43,7 @@ const submit = () => {
 	form
 		.transform((data) => ({
 			...data,
-			account: data.account?.id,
+			account_id: data.account?.id,
 		}))
 		.post(route('cards.store'), {
 			onFinish: () => {

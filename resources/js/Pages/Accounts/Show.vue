@@ -62,7 +62,7 @@ watch(isEditing, (value) => {
 </script>
 
 <template>
-	<Head title="Cartão" />
+	<Head title="Conta" />
 
 	<AuthenticatedLayout>
 		<div class="p-4 lg:p-6">
@@ -75,6 +75,7 @@ watch(isEditing, (value) => {
 							:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
 							:alt="account.bank.long_name"
 							class="size-10 rounded-xl"
+                            @error="(event: any) => event.target.style.display = 'none'"
 						/>
 
 						<h2 class="text-3xl font-bold tracking-tight">
@@ -107,11 +108,11 @@ watch(isEditing, (value) => {
 						</div>
 					</div>
 					<div v-if="false" class="flex items-center space-x-2">
-						<DateRangePicker
+						<!-- <DateRangePicker
 							:start-date="startDate"
 							:end-date="endDate"
 							@update:value="updateDateRange"
-						/>
+						/> -->
 						<!-- <Button>Download</Button> -->
 					</div>
 				</div>

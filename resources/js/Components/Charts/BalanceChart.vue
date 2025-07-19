@@ -30,6 +30,14 @@ const xFormatter = (value: any, i: number) => {
 	return props.data[value].name;
 };
 
+const renderTooltip = (item: any) => {
+	return h(OverviewTooltip, {
+		title: item.title,
+		data: item.data,
+		t: t,
+	});
+};
+
 const getColor = (transparency: number = 1) => {
 	if (props.data.length === 0) {
 		return `rgba(77, 140, 253, ${transparency})`;
@@ -45,14 +53,6 @@ const getColor = (transparency: number = 1) => {
 	return lastBalance > 0
 		? `rgba(34, 197, 94, ${transparency})`
 		: `rgba(239, 68, 68, ${transparency})`;
-};
-
-const renderTooltip = (item: any) => {
-	return h(OverviewTooltip, {
-		title: item.title,
-		data: item.data,
-		t: t,
-	});
 };
 </script>
 

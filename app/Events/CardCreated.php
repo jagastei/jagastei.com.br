@@ -10,7 +10,7 @@ use Thunk\Verbs\Event;
 final class CardCreated extends Event
 {
     public function __construct(
-        public ?int $account_id,
+        public ?string $account_id,
         public string $name,
         public int $limit,
     ) {}

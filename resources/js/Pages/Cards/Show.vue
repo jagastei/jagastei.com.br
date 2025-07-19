@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import type { Card as CardSchema } from '@/Components/CardTable/columns';
 import { Head } from '@inertiajs/vue3';
-import BalanceChart from '@/Components/Charts/BalanceChart.vue';
 import WasteChart from '@/Components/Charts/WasteChart.vue';
 import DateRangePicker from '@/Components/DateRangePicker.vue';
 import {
@@ -15,10 +14,50 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import { useCurrency } from '@/composables/useCurrency';
+import { useTranslation } from 'i18next-vue';
+import { PenIcon, XIcon, CheckIcon } from 'lucide-vue-next';
+import { ref, watch, nextTick } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps<{
 	card: CardSchema;
+	totalWasted: number;
+	wastedByDay: Array<any>;
 }>();
+
+const { t } = useTranslation();
+
+const form = useForm({
+	name: props.card.name,
+});
+
+const submit = () => {
+	if (form.name === props.card.name) {
+		isEditing.value = false;
+		return;
+	}
+
+	form.put(route('cards.updateName', props.card.id), {
+		onSuccess: () => {
+			isEditing.value = false;
+		},
+	});
+};
+
+const isEditing = ref(false);
+const nameInput = ref<HTMLInputElement>();
+
+watch(isEditing, (value) => {
+	if (value) {
+		nextTick(() => {
+			nameInput.value?.focus();
+		});
+	}
+
+	if (!value) {
+		form.name = props.card.name;
+	}
+});
 </script>
 
 <template>
@@ -30,24 +69,55 @@ const props = defineProps<{
 				<div
 					class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 md:gap-y-0"
 				>
-					<h2 class="text-3xl font-bold tracking-tight">
-						{{ $t('Dashboard') }}
-					</h2>
+					<div class="flex items-center gap-x-4 group">
+						<!-- <img
+							:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
+							:alt="account.bank.long_name"
+							class="size-10 rounded-xl"
+						/> -->
+
+						<h2 class="text-3xl font-bold tracking-tight">
+							<span v-if="!isEditing">{{ card.name }}</span>
+							<input
+								ref="nameInput"
+								v-if="isEditing"
+								v-model="form.name"
+								:size="card.name.length"
+								class="max-w-96 bg-transparent border-b border-dashed outline-none"
+							/>
+						</h2>
+
+						<div class="flex items-center gap-x-4">
+							<PenIcon
+								v-if="!isEditing"
+								class="invisible group-hover:visible size-4 text-muted-foreground cursor-pointer"
+								@click="isEditing = true"
+							/>
+							<XIcon
+								v-if="isEditing"
+								class="size-6 text-destructive cursor-pointer"
+								@click="isEditing = false"
+							/>
+							<CheckIcon
+								v-if="isEditing"
+								class="size-6 text-primary cursor-pointer"
+								@click="submit"
+							/>
+						</div>
+					</div>
 					<div v-if="false" class="flex items-center space-x-2">
-						<DateRangePicker
+						<!-- <DateRangePicker
 							:start-date="startDate"
 							:end-date="endDate"
 							@update:value="updateDateRange"
-						/>
+						/> -->
 						<!-- <Button>Download</Button> -->
 					</div>
 				</div>
 				<Tabs default-value="overview" class="space-y-4 mt-4">
 					<TabsList>
-						<TabsTrigger value="overview"> Overview </TabsTrigger>
-						<TabsTrigger value="analytics" disabled> Analytics </TabsTrigger>
-						<TabsTrigger value="reports" disabled> Reports </TabsTrigger>
-						<TabsTrigger value="notifications" disabled> Notifications </TabsTrigger>
+						<TabsTrigger value="overview">{{ $t('Overview') }}</TabsTrigger>
+						<TabsTrigger value="outcomes">{{ $t('Outcomes') }}</TabsTrigger>
 					</TabsList>
 					<TabsContent value="overview" class="space-y-4">
 						<div v-if="false" class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -147,21 +217,16 @@ const props = defineProps<{
 								</CardContent>
 							</Card>
 						</div>
-						<div v-if="false" class="grid gap-4 grid-cols-1 xl:grid-cols-7">
+
+						<div class="grid gap-4 grid-cols-1 xl:grid-cols-7">
 							<Card class="col-span-1 xl:col-span-7">
 								<CardHeader>
 									<CardTitle class="flex items-center gap-x-2">
 										<span class="flex gap-1.5">
-											<span>Saldo de</span>
+											<span>Total gasto no período:</span>
 											<span
-												:class="[
-													{
-														'text-green-500': currentBalance > 0,
-														'text-red-500': currentBalance < 0,
-														'text-blue-500': currentBalance === 0,
-													},
-												]"
-												>{{ useCurrency(t, currentBalance) }}</span
+												class="text-red-500"
+												>{{ useCurrency(t, totalWasted) }}</span
 											>
 										</span>
 
@@ -173,68 +238,19 @@ const props = defineProps<{
 										</span> -->
 									</CardTitle>
 									<CardDescription>
-										<span v-if="balanceData.startBalance === balanceData.endBalance">
-											O saldo inicial e final são iguais no período selecionado.
-										</span>
-										<span v-else-if="balanceData.startBalance < balanceData.endBalance">
-											Seu saldo aumentou {{ useCurrency(t, balanceData.diffBalance) }} no
-											período selecionado.
-										</span>
-										<span v-else>
-											Seu saldo diminuiu {{ useCurrency(t, balanceData.diffBalance) }} no
-											período selecionado.
-										</span>
 										<!-- <span>
 											Seu saldo atual é de {{ formatMoney(balanceData.endBalance) }}.
 										</span> -->
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
-									<BalanceChart key="balanceByDay" :data="balanceByDay" />
-								</CardContent>
-							</Card>
-
-							<Card class="col-span-1 xl:col-span-5">
-								<CardHeader>
-									<CardTitle>Gastos</CardTitle>
-									<CardDescription
-										>Você realizou {{ wasteByDayTransactionCount }} saídas no período
-										selecionado.</CardDescription
-									>
-								</CardHeader>
-								<CardContent>
 									<WasteChart key="wastedByDay" :data="wastedByDay" />
 								</CardContent>
 							</Card>
-
-							<Card class="col-span-1 xl:col-span-2">
-								<CardHeader>
-									<CardTitle>Por categoria</CardTitle>
-									<CardDescription
-										>Você gastou {{ useCurrency(t, wastedByCategoryTotal) }} no período
-										selecionado.</CardDescription
-									>
-								</CardHeader>
-								<CardContent
-									class="flex justify-center items-center h-[calc(100%-98px)]"
-								>
-									<CategoryChart key="wastedByCategory" :data="wastedByCategory" />
-								</CardContent>
-							</Card>
-
-							<!--
-							<Card class="col-span-3">
-								<CardHeader>
-									<CardTitle>Recent Sales</CardTitle>
-									<CardDescription> You made 265 sales this month. </CardDescription>
-								</CardHeader>
-								<CardContent>
-									<RecentSales />
-								</CardContent>
-							</Card>
-							-->
 						</div>
 					</TabsContent>
+
+					<TabsContent value="outcomes" class="space-y-4"></TabsContent>
 				</Tabs>
 			</div>
 		</div>

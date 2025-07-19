@@ -11,44 +11,11 @@ const props = defineProps<{
 
 const { t } = useTranslation();
 
-const isEmpty = computed(() => props.data.every((item) => item.Saída === 0));
+const isEmpty = computed(() => props.data.every((item) => item['Saída'] === 0));
 
-const fakeData = computed(() => {
-	return [
-		{
-			name: 'Monday, 10 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 15000,
-		},
-		{
-			name: 'Tuesday, 11 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 4000,
-		},
-		{
-			name: 'Wednesday, 12 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 500,
-		},
-		{
-			name: 'Thursday, 13 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 2000,
-		},
-		{
-			name: 'Friday, 14 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 4000,
-		},
-		{
-			name: 'Saturday, 15 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 2000,
-		},
-		{
-			name: 'Sunday, 16 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 7000,
-		},
-		{
-			name: 'Monday, 17 March 2025',
-			Saída: Math.floor(Math.random() * 2000) + 10000,
-		},
-	];
-});
+const yFormatter = (value: any, i: number) => {
+	return useCurrency(t, value);
+};
 
 const xFormatter = (value: any, i: number) => {
 	if (!Number.isInteger(value)) {
@@ -60,10 +27,6 @@ const xFormatter = (value: any, i: number) => {
 	}
 
 	return props.data[value].name;
-};
-
-const yFormatter = (value: any, i: number) => {
-	return useCurrency(t, value);
 };
 
 const renderTooltip = (item: any) => {
@@ -87,7 +50,40 @@ const renderTooltip = (item: any) => {
 
 		<BarChart
 			v-if="isEmpty"
-			:data="fakeData"
+			:data="[
+				{
+					name: 'Monday, 10 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 15000,
+				},
+				{
+					name: 'Tuesday, 11 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 4000,
+				},
+				{
+					name: 'Wednesday, 12 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 500,
+				},
+				{
+					name: 'Thursday, 13 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 2000,
+				},
+				{
+					name: 'Friday, 14 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 4000,
+				},
+				{
+					name: 'Saturday, 15 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 2000,
+				},
+				{
+					name: 'Sunday, 16 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 7000,
+				},
+				{
+					name: 'Monday, 17 March 2025',
+					Saída: Math.floor(Math.random() * 2000) + 10000,
+				},
+			]"
 			index="name"
 			:xFormatter="xFormatter"
 			:yFormatter="yFormatter"
