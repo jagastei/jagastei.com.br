@@ -16,8 +16,8 @@ final class Transaction extends Model
 {
     use HasFactory;
     use HasSnowflakes;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     public const METHODS = [
         'CASH',

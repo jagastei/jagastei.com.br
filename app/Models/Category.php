@@ -18,8 +18,8 @@ final class Category extends Model
 {
     use HasFactory;
     use HasSnowflakes;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     public const IN_RECOMMENDED = [
         'Salário' => '#4CAF50',
