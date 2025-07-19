@@ -92,7 +92,7 @@ const destroy = () => {
 			</AlertDialogHeader>
 			<AlertDialogFooter>
 				<AlertDialogCancel>Voltar</AlertDialogCancel>
-				<AlertDialogAction @click="destroy">Confirmar</AlertDialogAction>
+				<AlertDialogAction @click="destroy" class="bg-destructive text-destructive-foreground hover:bg-destructive/90">Confirmar</AlertDialogAction>
 			</AlertDialogFooter>
 		</AlertDialogContent>
 	</AlertDialog>

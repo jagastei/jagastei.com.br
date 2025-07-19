@@ -36,7 +36,8 @@ final class Card extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
+        // 'id' => Snowflake::class,
+        'id' => 'string',
         'account_id' => Snowflake::class,
         'expiration_date' => 'date',
         'credit' => 'boolean',
@@ -54,7 +55,8 @@ final class Card extends Model
     public function toSearchableArray(): array
     {
         return [
-            'id' => (string) $this->id->id(),
+            // 'id' => (string) $this->id->id(),
+            'id' => $this->id,
             'name' => $this->name,
             'created_at' => $this->created_at->timestamp,
         ];

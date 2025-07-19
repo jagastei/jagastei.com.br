@@ -86,6 +86,8 @@ watch(isEditing, (value) => {
 								v-model="form.name"
 								:size="account.name.length"
 								class="max-w-96 bg-transparent border-b border-dashed outline-none"
+								@keydown.esc="isEditing = false"
+								@keydown.enter="submit"
 							/>
 						</h2>
 

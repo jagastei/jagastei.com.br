@@ -217,7 +217,7 @@ return [
                             'type' => 'int64',
                         ],
                     ],
-                    'default_sorting_field' => 'created_at',
+                    'default_sorting_field' => 'created_at,name',
                 ],
                 'search-parameters' => [
                     'query_by' => 'name'
@@ -239,7 +239,7 @@ return [
                             'type' => 'int64',
                         ],
                     ],
-                    'default_sorting_field' => 'created_at',
+                    'default_sorting_field' => 'created_at,name',
                 ],
                 'search-parameters' => [
                     'query_by' => 'name'

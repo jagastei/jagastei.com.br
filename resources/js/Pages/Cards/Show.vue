@@ -70,11 +70,11 @@ watch(isEditing, (value) => {
 					class="flex flex-col md:flex-row md:items-center justify-between gap-y-4 md:gap-y-0"
 				>
 					<div class="flex items-center gap-x-4 group">
-						<!-- <img
-							:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
-							:alt="account.bank.long_name"
+						<img
+							:src="`https://jagastei.com.br.test/images/banks/${card.account.bank.code}.png`"
+							:alt="card.account.bank.long_name"
 							class="size-10 rounded-xl"
-						/> -->
+						/>
 
 						<h2 class="text-3xl font-bold tracking-tight">
 							<span v-if="!isEditing">{{ card.name }}</span>
@@ -84,6 +84,8 @@ watch(isEditing, (value) => {
 								v-model="form.name"
 								:size="card.name.length"
 								class="max-w-96 bg-transparent border-b border-dashed outline-none"
+								@keydown.esc="isEditing = false"
+								@keydown.enter="submit"
 							/>
 						</h2>
 

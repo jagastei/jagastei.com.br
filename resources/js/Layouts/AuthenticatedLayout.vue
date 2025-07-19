@@ -32,11 +32,14 @@ import WalletSwitcher from '@/Components/WalletSwitcher.vue';
 import FeedbackDialog from '@/Components/FeedbackDialog.vue';
 import SupportDialog from '@/Components/SupportDialog.vue';
 import InviteDialog from '@/Components/InviteDialog.vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { usePage, Link } from '@inertiajs/vue3';
 import { usePostHog } from '@/composables/usePosthog';
 import Toaster from '@/Components/ui/toast/Toaster.vue';
 import { useTranslation } from 'i18next-vue';
+import Input from '@/Components/ui/input/Input.vue';
+import { useMagicKeys } from '@vueuse/core';
+import CommandDialog from '@/Components/CommandDialog.vue';
 
 const { t } = useTranslation();
 
@@ -135,6 +138,24 @@ const inviteDialog = ref(false);
 const feedbackDialog = ref(false);
 const supportDialog = ref(false);
 
+const commandDialog = ref(false);
+
+const { Meta_K, Ctrl_K } = useMagicKeys({
+    passive: false,
+    onEventFired(event) {
+        if(event.key === 'k' && (event.metaKey || event.ctrlKey) && event.type === 'keydown') {
+            // commandDialog.value = !commandDialog.value;
+            event.preventDefault();
+        }
+    }
+});
+
+watch([Meta_K, Ctrl_K], (value) => {
+    if(value[0] || value[1]) {
+        commandDialog.value = !commandDialog.value;
+    }
+});
+
 onMounted(() => {
 	window.emitter.on('open-invite-dialog', () => {
 		inviteDialog.value = true;
@@ -166,6 +187,8 @@ onMounted(() => {
 		/>
 		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
 
+        <CommandDialog :open="commandDialog" @update:open="commandDialog = $event" />
+
 		<div class="flex-col md:flex">
 			<div
 				class="z-50 flex h-[4.5rem] items-center pr-4 md:pr-4 lg:pr-6 border-b sticky top-0"
@@ -181,7 +204,7 @@ onMounted(() => {
 					/>
 				</Link>
 
-				<Sheet>
+				<Sheet class="md:hidden">
 					<SheetTrigger as-child class="ml-4 md:hidden mr-2">
 						<Button variant="outline" size="sm" class="h-10">
 							<MenuIcon class="h-4 w-4" />
@@ -217,6 +240,21 @@ onMounted(() => {
 						<NavMobile :is-collapsed="false" :links="links3" />
 					</SheetContent>
 				</Sheet>
+
+                <div class="hidden md:block absolute w-[280px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                    <button class="relative cursor-pointer w-full">
+                        <Input
+                            id="search"
+                            :placeholder="t('Search')"
+                            readonly
+                            class="cursor-pointer w-full bg-muted border-transparent focus-visible:ring-0 placeholder:text-muted-foreground"
+                        />
+
+                        <kbd class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-sans">
+                            ⌘ + K
+                        </kbd>
+                    </button>
+                </div>
 
 				<div class="ml-auto flex items-center space-x-2">
 					<Button

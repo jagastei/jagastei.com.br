@@ -83,6 +83,7 @@ const closeModal = () => {
 								type="password"
 								placeholder="Senha"
 								@keyup.esc="closeModal"
+                                class="focus-visible:ring-destructive"
 							/>
 							<p v-if="form.errors.password" class="text-sm text-destructive">
 								{{ form.errors.password }}

@@ -88,6 +88,15 @@ final class CardController extends Controller
 
     public function show(Card $card)
     {
+        $card->load([
+            'account' => function ($query) {
+                $query->with([
+                    'bank',
+                ]);
+            },
+            'brand',
+        ]);
+
         $startDate = now()->startOfMonth();
         $endDate = now()->endOfMonth();
 

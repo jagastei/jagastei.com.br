@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TransactionInController;
@@ -97,6 +98,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
     Route::post('/suporte', [SupportController::class, 'store'])->name('support.store');
+
+    Route::get('/pesquisa', SearchController::class)->name('search');
 });
 
 require __DIR__.'/auth.php';
