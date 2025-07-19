@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Card;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+final class SearchController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -15,7 +17,7 @@ class SearchController extends Controller
     {
         $search = $request->input('search');
 
-        if(blank($search)) {
+        if (blank($search)) {
             return response()->json([
                 'accounts' => [],
                 'cards' => [],
