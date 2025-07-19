@@ -17,8 +17,8 @@ final class Wallet extends Model
 {
     use HasFactory;
     use HasSnowflakes;
-    use SoftDeletes;
     use Searchable;
+    use SoftDeletes;
 
     public const CURRENCIES = [
         'BRL' => 'Real Brasileiro',
