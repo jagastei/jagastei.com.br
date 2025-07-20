@@ -12,7 +12,6 @@ use App\Models\Brand;
 use App\Models\Card;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class WaitlistController extends Controller
+final class WaitlistController extends Controller
 {
     /**
      * Handle the incoming request.

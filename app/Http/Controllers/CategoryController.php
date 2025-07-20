@@ -18,10 +18,10 @@ final class CategoryController extends Controller
             ->ofWallet(auth('web')->user()->currentWallet)
             ->in()
             ->withCount([
-                'transactions'
+                'transactions',
             ])
             ->withSum([
-                'transactions'
+                'transactions',
             ], 'value')
             ->get()
             ->map(function ($category) {
@@ -34,10 +34,10 @@ final class CategoryController extends Controller
             ->ofWallet(auth('web')->user()->currentWallet)
             ->out()
             ->withCount([
-                'transactions'
+                'transactions',
             ])
             ->withSum([
-                'transactions'
+                'transactions',
             ], 'value')
             ->get()
             ->map(function ($category) {
