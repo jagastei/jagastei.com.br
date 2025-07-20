@@ -14,7 +14,7 @@ defineOptions({
 });
 
 const props = withDefaults(
-	defineProps<PopoverContentProps & { class?: HTMLAttributes['class'] }>(),
+	defineProps<PopoverContentProps & { class?: HTMLAttributes['class'], style?: HTMLAttributes['style'] }>(),
 	{
 		align: 'center',
 		sideOffset: 4,
@@ -23,7 +23,7 @@ const props = withDefaults(
 const emits = defineEmits<PopoverContentEmits>();
 
 const delegatedProps = computed(() => {
-	const { class: _, ...delegated } = props;
+	const { class: _, style: __, ...delegated } = props;
 
 	return delegated;
 });
@@ -41,6 +41,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 					props.class
 				)
 			"
+			:style="props.style"
 		>
 			<slot />
 		</PopoverContent>

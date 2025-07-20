@@ -137,7 +137,7 @@ const onUploadDialogOpen = (open: boolean) => {
 				</div>
 
 				<div
-					v-if="transactions.data.length === 0"
+					v-if="transactions.data.length === 0 && !filter"
 					class="p-4 flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
 				>
 					<div class="flex flex-col items-center gap-1 text-center">

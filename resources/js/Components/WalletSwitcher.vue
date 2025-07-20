@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref,computed,  useTemplateRef, watch } from 'vue';
 import {
 	CirclePlus,
 	CheckIcon,
@@ -36,7 +36,6 @@ import {
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import { Wallet } from '@/types';
 import InputError from './InputError.vue';
-import { computed } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
 type Group = {
@@ -53,6 +52,8 @@ const groups = computed<Group[]>(() => [
 		wallets: user.wallets,
 	},
 ]);
+
+const popoverTrigger = useTemplateRef('popoverTrigger');
 
 const open = ref(false);
 const showNewWalletDialog = ref(false);
@@ -105,19 +106,22 @@ const onClose = () => {
 		<Popover v-model:open="open">
 			<PopoverTrigger as-child>
 				<Button
+                    ref="popoverTrigger"
 					variant="outline"
 					role="combobox"
 					aria-expanded="open"
 					aria-label="Select a wallet"
 					:class="
-						cn('w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')
+						cn('w-full md:w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')
 					"
 				>
 					{{ selectedWallet.name }}
 					<ChevronsUpDown class="h-4 w-4" />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent class="w-[200px] p-0">
+			<PopoverContent class="p-0" align="start" :style="{
+                width: `${popoverTrigger?.$el.clientWidth + 2}px`,
+            }">
 				<Command>
 					<CommandList>
 						<CommandGroup

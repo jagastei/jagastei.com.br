@@ -241,8 +241,8 @@ onMounted(() => {
 					</SheetContent>
 				</Sheet>
 
-                <div class="hidden md:block absolute w-[280px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                    <button class="relative cursor-pointer w-full">
+                <button @click="commandDialog = true" class="hidden md:block absolute w-[280px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                    <div class="relative cursor-pointer w-full">
                         <Input
                             id="search"
                             :placeholder="t('Search')"
@@ -253,10 +253,10 @@ onMounted(() => {
                         <kbd class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-sans">
                             ⌘ + K
                         </kbd>
-                    </button>
-                </div>
+                    </div>
+                </button>
 
-				<div class="ml-auto flex items-center space-x-2">
+				<div class="md:ml-auto w-full md:w-auto flex items-center space-x-2">
 					<Button
 						v-if="false"
 						variant="outline"

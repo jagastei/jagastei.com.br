@@ -17,7 +17,7 @@ final class SearchController extends Controller
     {
         $search = $request->input('search');
 
-        if (blank($search)) {
+        if (blank($search) || strlen($search) < 2) {
             return response()->json([
                 'accounts' => [],
                 'cards' => [],

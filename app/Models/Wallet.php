@@ -38,14 +38,15 @@ final class Wallet extends Model
     ];
 
     protected $casts = [
-        'id' => Snowflake::class,
+        // 'id' => Snowflake::class,
+        'id' => 'string',
         'personal' => 'boolean',
     ];
 
     public function toSearchableArray(): array
     {
         return [
-            'id' => (string) $this->id->id(),
+            'id' => $this->id,
             'name' => $this->name,
             'created_at' => $this->created_at->timestamp,
         ];

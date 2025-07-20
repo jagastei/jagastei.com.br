@@ -230,7 +230,7 @@ const table = useVueTable({
 
 					<TableRow v-else>
 						<TableCell :colspan="columns.length" class="h-24 text-center">
-							No results.
+							{{ $t('No results found.') }}
 						</TableCell>
 					</TableRow>
 				</TableBody>

@@ -10,7 +10,7 @@ use Thunk\Verbs\Event;
 final class CategoryCreated extends Event
 {
     public function __construct(
-        public int $wallet_id,
+        public string $wallet_id,
         public string $name,
         public string $color,
         public string $type,
