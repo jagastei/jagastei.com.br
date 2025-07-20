@@ -10,7 +10,7 @@ import {
 	BarChart3,
 	Wallet,
 	Settings,
-    MoveRight,
+	MoveRight,
 } from 'lucide-vue-next';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import HeroChart from '@/Components/Charts/Welcome/HeroChart.vue';
@@ -27,24 +27,24 @@ defineProps<{
 useColorMode();
 
 const form = useForm({
-    email: window.env === Env.development ? 'teste@jagastei.com.br' : '',
-})
+	email: window.env === Env.development ? 'teste@jagastei.com.br' : '',
+});
 
 const joinWaitlist = () => {
-    form.post(route('waitlist.join'), {
-        onSuccess: () => {
-            toast({
+	form.post(route('waitlist.join'), {
+		onSuccess: () => {
+			toast({
 				title: 'Você foi adicionado à lista de espera!',
 				description: 'Obrigado pelo interesse!',
 			});
 
-            form.reset();
-        },
-        onError: (error) => {
-            console.log(error);
-        }
-    });
-}
+			form.reset();
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
+};
 
 const selectedFeature = ref('reports');
 
@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
 <template>
 	<Head :title="$t('Welcome')" />
 
-    <Toaster />
+	<Toaster />
 
 	<div class="relative flex flex-col scroll-smooth">
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
@@ -206,15 +206,22 @@ onBeforeUnmount(() => {
 								</Button>
 							</Link>
 
-                            <div v-else>
-                                <div class="flex w-full items-center gap-2">
-                                    <Input v-model="form.email" @keyup.enter="joinWaitlist" id="email" type="email" :placeholder="$t('Enter your email')" class="w-[280px]" />
-                                    <Button @click="joinWaitlist" type="button">
-                                        <span>{{ $t('Join the waitlist') }}</span>
-                                        <MoveRight class="size-4" />
-                                    </Button>
-                                </div>
-                            </div>
+							<div v-else>
+								<div class="flex w-full items-center gap-2">
+									<Input
+										v-model="form.email"
+										@keyup.enter="joinWaitlist"
+										id="email"
+										type="email"
+										:placeholder="$t('Enter your email')"
+										class="w-[280px]"
+									/>
+									<Button @click="joinWaitlist" type="button">
+										<span>{{ $t('Join the waitlist') }}</span>
+										<MoveRight class="size-4" />
+									</Button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -382,7 +389,10 @@ onBeforeUnmount(() => {
 									</Button>
 								</Link>
 
-								<p v-if="canRegister" class="mt-4 text-xs text-center text-muted-foreground">
+								<p
+									v-if="canRegister"
+									class="mt-4 text-xs text-center text-muted-foreground"
+								>
 									Sem contratos. Cancele a qualquer momento.
 								</p>
 							</div>

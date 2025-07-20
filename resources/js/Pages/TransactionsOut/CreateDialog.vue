@@ -62,16 +62,14 @@ const submitCategory = () => {
 			createCategoryDialogOpen.value = false;
 			categoryForm.reset();
 
-            console.log(res);
+			console.log(res);
 
-            router.visit(route('transactions.out.index'), {
-                only: ['categories'],
-                preserveState: true,
-                preserveScroll: true,
-                onSuccess: () => {
-
-                },
-            });
+			router.visit(route('transactions.out.index'), {
+				only: ['categories'],
+				preserveState: true,
+				preserveScroll: true,
+				onSuccess: () => {},
+			});
 		},
 	});
 };
@@ -319,13 +317,16 @@ const onClose = () => {
 		</DialogContent>
 	</Dialog>
 
-	<Dialog :open="createCategoryDialogOpen" @update:open="(value) => {
-			if (!value) {
-				createCategoryDialogOpen = false;
-				categoryForm.reset();
+	<Dialog
+		:open="createCategoryDialogOpen"
+		@update:open="
+			(value) => {
+				if (!value) {
+					createCategoryDialogOpen = false;
+					categoryForm.reset();
+				}
 			}
-		}
-	"
+		"
 	>
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>
