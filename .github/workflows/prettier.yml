@@ -1,28 +1,36 @@
 name: Prettier
- 
+
 on: [push]
- 
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
- 
+
+      matrix:
+        node-version: [20]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
- 
+        with:
+          fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
- 
+          node-version: ${{ matrix.node-version }}
+
       - name: Install dependencies
         run: npm install
- 
+
       - name: Run Prettier
         run: npm run prettier
- 
+
+      - name: Pull changes
+        run: git pull origin main
+
       - name: Commit linted files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
