@@ -47,7 +47,7 @@ const closeEditDrawer = () => {
 </script>
 
 <template>
-	<Head title="Cartões" />
+	<Head :title="$t('Cards')" />
 
 	<CreateDialog
 		:open="createCardDialogOpen"
@@ -61,7 +61,6 @@ const closeEditDrawer = () => {
 		:open="editDrawerOpen"
 		:card="card"
 		:brands="brands"
-		:accounts="accounts"
 		@close="closeEditDrawer"
 	/>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import type { Card as CardSchema } from '@/Components/CardTable/columns';
-import { Head } from '@inertiajs/vue3';
+import type { Brand, Card as CardSchema } from '@/Components/CardTable/columns';
+import { Head, router } from '@inertiajs/vue3';
 import WasteChart from '@/Components/Charts/WasteChart.vue';
 import DateRangePicker from '@/Components/DateRangePicker.vue';
 import {
@@ -15,11 +15,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/ui/tabs';
 import CategoryChart from '@/Components/Charts/CategoryChart.vue';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
-import { PenIcon, XIcon, CheckIcon } from 'lucide-vue-next';
-import { ref, watch, nextTick } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { PenIcon } from 'lucide-vue-next';
+import { ref } from 'vue';
+import EditDrawer from './EditDrawer.vue';
 
-const props = defineProps<{
+defineProps<{
+	brands: Brand[];
 	card: CardSchema;
 	totalWasted: number;
 	wastedByDay: Array<any>;
@@ -27,41 +28,23 @@ const props = defineProps<{
 
 const { t } = useTranslation();
 
-const form = useForm({
-	name: props.card.name,
-});
+const editDrawerOpen = ref(false);
 
-const submit = () => {
-	if (form.name === props.card.name) {
-		isEditing.value = false;
-		return;
-	}
-
-	form.put(route('cards.updateName', props.card.id), {
-		onSuccess: () => {
-			isEditing.value = false;
-		},
-	});
+const closeEditDrawer = () => {
+	editDrawerOpen.value = false;
 };
-
-const isEditing = ref(false);
-const nameInput = ref<HTMLInputElement>();
-
-watch(isEditing, (value) => {
-	if (value) {
-		nextTick(() => {
-			nameInput.value?.focus();
-		});
-	}
-
-	if (!value) {
-		form.name = props.card.name;
-	}
-});
 </script>
 
 <template>
 	<Head title="Cartão" />
+
+	<EditDrawer
+		v-if="!!card"
+		:open="editDrawerOpen"
+		:card="card"
+		:brands="brands"
+		@close="closeEditDrawer"
+	/>
 
 	<AuthenticatedLayout>
 		<div class="p-4 lg:p-6">
@@ -77,33 +60,13 @@ watch(isEditing, (value) => {
 						/>
 
 						<h2 class="text-3xl font-bold tracking-tight">
-							<span v-if="!isEditing">{{ card.name }}</span>
-							<input
-								ref="nameInput"
-								v-if="isEditing"
-								v-model="form.name"
-								:size="card.name.length"
-								class="max-w-96 bg-transparent border-b border-dashed outline-none"
-								@keydown.esc="isEditing = false"
-								@keydown.enter="submit"
-							/>
+							<span>{{ card.name }}</span>
 						</h2>
 
 						<div class="flex items-center gap-x-4">
 							<PenIcon
-								v-if="!isEditing"
 								class="invisible group-hover:visible size-4 text-muted-foreground cursor-pointer"
-								@click="isEditing = true"
-							/>
-							<XIcon
-								v-if="isEditing"
-								class="size-6 text-destructive cursor-pointer"
-								@click="isEditing = false"
-							/>
-							<CheckIcon
-								v-if="isEditing"
-								class="size-6 text-primary cursor-pointer"
-								@click="submit"
+								@click="editDrawerOpen = true"
 							/>
 						</div>
 					</div>
@@ -226,10 +189,7 @@ watch(isEditing, (value) => {
 									<CardTitle class="flex items-center gap-x-2">
 										<span class="flex gap-1.5">
 											<span>Total gasto no período:</span>
-											<span
-												class="text-red-500"
-												>{{ useCurrency(t, totalWasted) }}</span
-											>
+											<span class="text-red-500">{{ useCurrency(t, totalWasted) }}</span>
 										</span>
 
 										<!-- <span v-if="balanceData.startBalance !== balanceData.endBalance" :class="['flex items-center', balanceData.startBalance > balanceData.endBalance ? 'text-red-500' : 'text-green-500']">

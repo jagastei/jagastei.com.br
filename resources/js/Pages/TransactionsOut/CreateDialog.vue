@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import { cn } from '@/utils';
 import {
 	Dialog,
@@ -41,13 +41,46 @@ const props = defineProps<{
 	open: boolean;
 }>();
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'categoryCreated']);
 
 const categoryDialogOpen = ref(false);
+const createCategoryDialogOpen = ref(false);
+
+const categoryForm = useForm<{
+	name: string;
+	color: string;
+	type: string;
+}>({
+	name: '',
+	color: '#22C55E',
+	type: 'OUT',
+});
+
+const submitCategory = () => {
+	categoryForm.post(route('categories.store'), {
+		onSuccess: (res) => {
+			createCategoryDialogOpen.value = false;
+			categoryForm.reset();
+
+            console.log(res);
+
+            router.visit(route('transactions.out.index'), {
+                only: ['categories'],
+                preserveState: true,
+                preserveScroll: true,
+                onSuccess: () => {
+
+                },
+            });
+		},
+	});
+};
 
 const query = ref<string>('');
 
-const { results } = useFuse(query, props.categories, {
+const categories = computed(() => props.categories);
+
+const { results } = useFuse(query, categories, {
 	fuseOptions: {
 		keys: ['name'],
 		isCaseSensitive: false,
@@ -119,6 +152,7 @@ const onClose = () => {
 				<DialogTitle>Adicionar saída</DialogTitle>
 				<DialogDescription> Informe o valor e a categoria. </DialogDescription>
 			</DialogHeader>
+
 			<div class="grid gap-4 py-4">
 				<div class="flex flex-col">
 					<Label for="title" class="text-left"> Nome </Label>
@@ -194,6 +228,7 @@ const onClose = () => {
 								<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 							</Button>
 						</PopoverTrigger>
+
 						<PopoverContent class="w-[375px] p-0">
 							<Command v-model="form.category" v-model:searchTerm="query">
 								<CommandInput
@@ -239,7 +274,17 @@ const onClose = () => {
 								<CommandList>
 									<CommandGroup>
 										<!-- <DialogTrigger as-child> -->
-										<CommandItem value="create-category">
+										<CommandItem
+											value="create-category"
+											@select="
+												(event) => {
+													event.preventDefault();
+
+													categoryDialogOpen = false;
+													createCategoryDialogOpen = true;
+												}
+											"
+										>
 											<CirclePlus class="mr-2 h-5 w-5" />
 											Adicionar categoria
 										</CommandItem>
@@ -268,6 +313,62 @@ const onClose = () => {
 			<DialogFooter>
 				<Button :disabled="form.processing" @click="submit" type="button">
 					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
+					Adicionar
+				</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Dialog>
+
+	<Dialog :open="createCategoryDialogOpen" @update:open="(value) => {
+			if (!value) {
+				createCategoryDialogOpen = false;
+				categoryForm.reset();
+			}
+		}
+	"
+	>
+		<DialogContent class="sm:max-w-[425px]">
+			<DialogHeader>
+				<DialogTitle>Adicionar categoria</DialogTitle>
+				<DialogDescription>
+					Adicione uma nova categoria para gerenciar suas entradas.
+				</DialogDescription>
+			</DialogHeader>
+			<div class="grid gap-4 py-4">
+				<div class="flex flex-col">
+					<Label for="name" class="text-left"> Nome </Label>
+					<Input
+						id="name"
+						v-model="categoryForm.name"
+						placeholder="Alimentação"
+						class="mt-2"
+						autocomplete="off"
+						tabindex="1"
+					/>
+				</div>
+
+				<div class="flex flex-col">
+					<Label for="color" class="text-left w-fit"> Cor </Label>
+					<Input
+						id="color"
+						type="color"
+						v-model="categoryForm.color"
+						class="mt-2 cursor-pointer"
+						tabindex="2"
+					/>
+				</div>
+			</div>
+			<DialogFooter>
+				<Button
+					:disabled="categoryForm.processing"
+					@click="submitCategory"
+					type="button"
+					tabindex="3"
+				>
+					<Loader2
+						v-show="categoryForm.processing"
+						class="w-4 h-4 mr-2 animate-spin"
+					/>
 					Adicionar
 				</Button>
 			</DialogFooter>

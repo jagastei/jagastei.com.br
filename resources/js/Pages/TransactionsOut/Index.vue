@@ -23,7 +23,7 @@ import { Account } from '@/Components/AccountTable/columns';
 import { usePostHog } from '@/composables/usePosthog';
 import ImportDialog from './ImportDialog.vue';
 
-defineProps<{
+const props = defineProps<{
 	sort?: string;
 	filter?: object;
 	categories: Category[];

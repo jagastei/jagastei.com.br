@@ -26,8 +26,8 @@ defineProps<DataTablePaginationProps>();
 <template>
 	<div class="flex items-center justify-between">
 		<div class="flex-1 text-sm text-muted-foreground">
-			{{ table.getFilteredSelectedRowModel().rows.length }} de
-			{{ table.getFilteredRowModel().rows.length }} linhas selecionadas.
+			Exibindo {{ table.options.rowCount }}
+			{{ table.options.rowCount === 1 ? 'resultado' : 'resultados' }}.
 		</div>
 		<div class="flex items-center space-x-6 lg:space-x-8">
 			<div class="flex items-center space-x-2">

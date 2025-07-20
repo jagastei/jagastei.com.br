@@ -15,22 +15,21 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\TransactionInController;
 use App\Http\Controllers\TransactionOutController;
+use App\Http\Controllers\WaitlistController;
 use App\Http\Controllers\WalletController;
 use App\Http\Middleware\Subscribed;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'canRegister' => config('auth.can_register'),
     ]);
 });
 
 Route::redirect('/convite', '/register');
+
+Route::post('/waitlist', WaitlistController::class)->name('waitlist.join');
 
 Route::middleware('auth')->group(function () {
     Route::get('/painel', [DashboardController::class, 'index'])->name('dashboard');
@@ -80,11 +79,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/cartoes', [CardController::class, 'store'])->name('cards.store')->middleware([Subscribed::class]);
     Route::get('/cartoes/{card}', [CardController::class, 'show'])->name('cards.show');
     Route::put('/cartoes/{card}', [CardController::class, 'update'])->name('cards.update')->middleware([Subscribed::class]);
-    Route::put('/cartoes/{card}/nome', [CardController::class, 'updateName'])->name('cards.updateName')->middleware([Subscribed::class]);
     Route::delete('/cartoes/{card}', [CardController::class, 'destroy'])->name('cards.destroy')->middleware([Subscribed::class]);
 
-    // Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categorias', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categorias', [CategoryController::class, 'store'])->name('categories.store')->middleware([Subscribed::class]);
+    Route::get('/categorias/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::put('/categorias/{category}', [CategoryController::class, 'update'])->name('categories.update')->middleware([Subscribed::class]);
     Route::delete('/categorias/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy')->middleware([Subscribed::class]);
 
     Route::get('/minha-conta', [ProfileController::class, 'show'])->name('profile.show');

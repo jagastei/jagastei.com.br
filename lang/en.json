@@ -885,5 +885,10 @@
     "Incomes": "Incomes",
     "Outcomes": "Outcomes",
     "Welcome": "Welcome",
-    "Overview": "Resumo"
+    "Overview": "Overview",
+    "Categories": "Categories",
+    "Transactions": "Transactions",
+    "Total": "Total",
+    "Enter your email": "Enter your email",
+    "Join the waitlist": "Join the waitlist"
 }

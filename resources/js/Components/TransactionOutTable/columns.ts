@@ -8,6 +8,7 @@ import { accountSchema } from '../AccountTable/columns';
 import { cardSchema } from '../CardTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
+import { TriangleAlert } from 'lucide-vue-next';
 
 export const transactionSchema = z.object({
 	id: z.number(),
@@ -22,7 +23,7 @@ export const transactionSchema = z.object({
 	formatted_datetime: z.string(),
 	created_at: z.string(),
 	updated_at: z.string(),
-	category: categorySchema,
+	category: categorySchema.nullable(),
 	account: accountSchema,
 	card: cardSchema.nullable(),
 });
@@ -110,6 +111,15 @@ export const columns: ColumnDef<Transaction>[] = [
 			h(DataTableColumnHeader, { column, title: 'Categoria' }),
 
 		cell: ({ row }) => {
+			if (row.original.category === null) {
+				return h('div', { class: 'flex items-center' }, [
+					h(TriangleAlert, {
+						class: 'block size-6 text-yellow-500',
+					}),
+					h('span', { class: 'ml-3' }, 'Sem categoria'),
+				]);
+			}
+
 			return h('div', { class: 'flex items-center' }, [
 				h('span', {
 					class: 'block size-6 rounded-xl',

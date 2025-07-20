@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Button from '@/Components/ui/button/Button.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import Input from '@/Components/ui/input/Input.vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { useColorMode } from '@vueuse/core';
 import {
 	CircleCheck,
@@ -9,20 +10,41 @@ import {
 	BarChart3,
 	Wallet,
 	Settings,
+    MoveRight,
 } from 'lucide-vue-next';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import HeroChart from '@/Components/Charts/Welcome/HeroChart.vue';
 import PricingChart from '@/Components/Charts/Welcome/PricingChart.vue';
 import FooterChart from '@/Components/Charts/Welcome/FooterChart.vue';
+import { toast } from '@/Components/ui/toast';
+import { Env } from '@/types/index.d';
+import Toaster from '@/Components/ui/toast/Toaster.vue';
 
 defineProps<{
-	canLogin?: boolean;
 	canRegister?: boolean;
-	laravelVersion: string;
-	phpVersion: string;
 }>();
 
 useColorMode();
+
+const form = useForm({
+    email: window.env === Env.development ? 'teste@jagastei.com.br' : '',
+})
+
+const joinWaitlist = () => {
+    form.post(route('waitlist.join'), {
+        onSuccess: () => {
+            toast({
+				title: 'Você foi adicionado à lista de espera!',
+				description: 'Obrigado pelo interesse!',
+			});
+
+            form.reset();
+        },
+        onError: (error) => {
+            console.log(error);
+        }
+    });
+}
 
 const selectedFeature = ref('reports');
 
@@ -89,6 +111,8 @@ onBeforeUnmount(() => {
 <template>
 	<Head :title="$t('Welcome')" />
 
+    <Toaster />
+
 	<div class="relative flex flex-col scroll-smooth">
 		<!-- sticky top-0 bg-background/80 backdrop-blur-sm z-50 border-b border-border/40 -->
 		<header class="py-6">
@@ -118,14 +142,14 @@ onBeforeUnmount(() => {
 							<Button>{{ $t('Dashboard') }}</Button>
 						</Link>
 
-						<template v-else>
+						<template v-else-if="canRegister">
 							<div class="hidden md:block">
 								<Link :href="route('login')">
 									<Button variant="outline">{{ $t('Login') }}</Button>
 								</Link>
 							</div>
 
-							<Link v-if="false && canRegister" :href="route('register')">
+							<Link :href="route('register')">
 								<Button>{{ $t('Register') }}</Button>
 							</Link>
 						</template>
@@ -173,7 +197,7 @@ onBeforeUnmount(() => {
 								isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
 							]"
 						>
-							<Link :href="route('register')">
+							<Link v-if="canRegister" :href="route('register')">
 								<Button size="lg" class="px-8 group">
 									Comece agora
 									<ArrowRight
@@ -181,6 +205,16 @@ onBeforeUnmount(() => {
 									/>
 								</Button>
 							</Link>
+
+                            <div v-else>
+                                <div class="flex w-full items-center gap-2">
+                                    <Input v-model="form.email" @keyup.enter="joinWaitlist" id="email" type="email" :placeholder="$t('Enter your email')" class="w-[280px]" />
+                                    <Button @click="joinWaitlist" type="button">
+                                        <span>{{ $t('Join the waitlist') }}</span>
+                                        <MoveRight class="size-4" />
+                                    </Button>
+                                </div>
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -339,7 +373,7 @@ onBeforeUnmount(() => {
 									</li>
 								</ul>
 
-								<Link :href="route('register')" class="mt-8 block">
+								<Link v-if="canRegister" :href="route('register')" class="mt-8 block">
 									<Button class="w-full group" size="lg">
 										Comece agora
 										<ArrowRight
@@ -348,7 +382,7 @@ onBeforeUnmount(() => {
 									</Button>
 								</Link>
 
-								<p class="mt-4 text-xs text-center text-muted-foreground">
+								<p v-if="canRegister" class="mt-4 text-xs text-center text-muted-foreground">
 									Sem contratos. Cancele a qualquer momento.
 								</p>
 							</div>

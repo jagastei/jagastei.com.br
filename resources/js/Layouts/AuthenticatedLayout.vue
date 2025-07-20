@@ -15,6 +15,7 @@ import {
 	SearchIcon,
 	Settings,
 	SparklesIcon,
+	Tags,
 	WalletCards,
 } from 'lucide-vue-next';
 import {
@@ -102,13 +103,13 @@ const links = computed<LinkProp[]>(() => [
 ]);
 
 const links2 = computed<LinkProp[]>(() => [
-	// {
-	// 	title: 'Categorias',
-	// 	// label: '342',
-	// 	icon: 'lucide:tags',
-	// 	route: route('categories.index'),
-	// 	active: route().current('categories.index'),
-	// },
+	{
+		title: t('Categories'),
+		// label: '342',
+		icon: Tags,
+		route: route('categories.index'),
+		active: route().current('categories.index'),
+	},
 	{
 		title: t('Cards'),
 		// label: '342',
@@ -138,23 +139,23 @@ const inviteDialog = ref(false);
 const feedbackDialog = ref(false);
 const supportDialog = ref(false);
 
-const commandDialog = ref(false);
+// const commandDialog = ref(false);
 
-const { Meta_K, Ctrl_K } = useMagicKeys({
-    passive: false,
-    onEventFired(event) {
-        if(event.key === 'k' && (event.metaKey || event.ctrlKey) && event.type === 'keydown') {
-            // commandDialog.value = !commandDialog.value;
-            event.preventDefault();
-        }
-    }
-});
+// const { Meta_K, Ctrl_K } = useMagicKeys({
+//     passive: false,
+//     onEventFired(event) {
+//         if(event.key === 'k' && (event.metaKey || event.ctrlKey) && event.type === 'keydown') {
+//             // commandDialog.value = !commandDialog.value;
+//             event.preventDefault();
+//         }
+//     }
+// });
 
-watch([Meta_K, Ctrl_K], (value) => {
-    if(value[0] || value[1]) {
-        commandDialog.value = !commandDialog.value;
-    }
-});
+// watch([Meta_K, Ctrl_K], (value) => {
+//     if(value[0] || value[1]) {
+//         commandDialog.value = !commandDialog.value;
+//     }
+// });
 
 onMounted(() => {
 	window.emitter.on('open-invite-dialog', () => {
@@ -187,7 +188,7 @@ onMounted(() => {
 		/>
 		<SupportDialog :open="supportDialog" @update:open="supportDialog = $event" />
 
-        <CommandDialog :open="commandDialog" @update:open="commandDialog = $event" />
+		<!-- <CommandDialog :open="commandDialog" @update:open="commandDialog = $event" /> -->
 
 		<div class="flex-col md:flex">
 			<div
@@ -241,7 +242,7 @@ onMounted(() => {
 					</SheetContent>
 				</Sheet>
 
-                <button @click="commandDialog = true" class="hidden md:block absolute w-[280px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+				<!-- <button @click="commandDialog = true" class="hidden md:block absolute w-[280px] -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                     <div class="relative cursor-pointer w-full">
                         <Input
                             id="search"
@@ -254,7 +255,7 @@ onMounted(() => {
                             ⌘ + K
                         </kbd>
                     </div>
-                </button>
+                </button> -->
 
 				<div class="md:ml-auto w-full md:w-auto flex items-center space-x-2">
 					<Button

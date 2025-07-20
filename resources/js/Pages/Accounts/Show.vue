@@ -75,7 +75,7 @@ watch(isEditing, (value) => {
 							:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
 							:alt="account.bank.long_name"
 							class="size-10 rounded-xl"
-                            @error="(event: any) => event.target.style.display = 'none'"
+							@error="(event: any) => (event.target.style.display = 'none')"
 						/>
 
 						<h2 class="text-3xl font-bold tracking-tight">

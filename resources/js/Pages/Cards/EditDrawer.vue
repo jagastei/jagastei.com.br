@@ -40,11 +40,9 @@ import InputError from '@/Components/InputError.vue';
 import { Checkbox } from '@/Components/ui/checkbox';
 import { Separator } from '@/Components/ui/separator';
 import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
-import type { Account } from '@/Components/AccountTable/columns';
 
 const props = defineProps<{
 	brands: Brand[];
-	accounts: Account[];
 	card: Card;
 	open: boolean;
 }>();
@@ -89,8 +87,8 @@ const form = useForm<{
 }>({
 	name: props.card.name,
 	limit: props.card.limit,
-	digits: props.card.digits,
-	brand: props.card.brand,
+	digits: props.card.digits ?? '',
+	brand: props.card.brand ?? undefined,
 	expiration_month: props.card.expiration_month,
 	expiration_year: props.card.expiration_year,
 	credit: props.card.credit,
@@ -123,7 +121,9 @@ const onClose = () => {
 			<slot />
 		</SheetTrigger>
 
-		<SheetContent class="sm:max-w-[calc(375px+48px)] flex flex-col">
+		<SheetContent
+			class="sm:max-w-[calc(375px+48px)] flex flex-col focus-visible:outline-none"
+		>
 			<SheetHeader>
 				<SheetTitle>Editar cartão</SheetTitle>
 				<SheetDescription>Edite as informações do cartão.</SheetDescription>
@@ -162,7 +162,7 @@ const onClose = () => {
 					<SelectAccountDialog
 						id="account"
 						v-model="card.account"
-						:accounts="accounts"
+						:accounts="[]"
 						:disabled="true"
 					/>
 				</div>

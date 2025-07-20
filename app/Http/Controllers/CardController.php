@@ -88,6 +88,11 @@ final class CardController extends Controller
 
     public function show(Card $card)
     {
+        $brands = Brand::query()
+            ->enabled()
+            ->orderBy('name')
+            ->get();
+
         $card->load([
             'account' => function ($query) {
                 $query->with([
@@ -139,6 +144,7 @@ final class CardController extends Controller
         $totalWasted = $wastedByDay->sum('Saída');
 
         return Inertia::render('Cards/Show', [
+            'brands' => $brands,
             'card' => $card,
             'totalWasted' => $totalWasted,
             'wastedByDay' => $wastedByDay,
@@ -148,17 +154,6 @@ final class CardController extends Controller
     public function update(UpdateCardRequest $request, Card $card)
     {
         $input = $request->validated();
-
-        $card->update($input);
-
-        return back();
-    }
-
-    public function updateName(Request $request, Card $card)
-    {
-        $input = $request->validate([
-            'name' => ['required', 'string', 'min:2', 'max:30'],
-        ]);
 
         $card->update($input);
 

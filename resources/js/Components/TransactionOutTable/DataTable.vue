@@ -39,7 +39,7 @@ interface DataTableProps {
 	data: Pagination<Transaction>;
 	columns: ColumnDef<Transaction, any>[];
 	sort?: string;
-	filter?: Object;
+	filter?: any;
 	categories: Category[];
 }
 
@@ -197,7 +197,9 @@ const table = useVueTable({
 	<div class="space-y-4">
 		<DataTableToolbar :table="table" :categories="categories" />
 
-		<div class="rounded-md border max-h-[calc(100vh-72px-48px-40px-32px-32px-16px-16px-1.5rem)] overflow-y-auto">
+		<div
+			class="rounded-md border max-h-[calc(100vh-72px-48px-40px-32px-32px-16px-16px-1.5rem)] overflow-y-auto"
+		>
 			<Table>
 				<TableHeader>
 					<TableRow

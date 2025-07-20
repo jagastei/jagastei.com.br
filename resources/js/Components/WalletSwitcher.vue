@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,computed,  useTemplateRef, watch } from 'vue';
+import { ref, computed, useTemplateRef, watch } from 'vue';
 import {
 	CirclePlus,
 	CheckIcon,
@@ -106,22 +106,29 @@ const onClose = () => {
 		<Popover v-model:open="open">
 			<PopoverTrigger as-child>
 				<Button
-                    ref="popoverTrigger"
+					ref="popoverTrigger"
 					variant="outline"
 					role="combobox"
 					aria-expanded="open"
 					aria-label="Select a wallet"
 					:class="
-						cn('w-full md:w-[200px] justify-between py-0 pl-3 pr-2 h-10', $attrs.class ?? '')
+						cn(
+							'w-full md:w-[200px] justify-between py-0 pl-3 pr-2 h-10',
+							$attrs.class ?? ''
+						)
 					"
 				>
 					{{ selectedWallet.name }}
 					<ChevronsUpDown class="h-4 w-4" />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent class="p-0" align="start" :style="{
-                width: `${popoverTrigger?.$el.clientWidth + 2}px`,
-            }">
+			<PopoverContent
+				class="p-0"
+				align="start"
+				:style="{
+					width: `${popoverTrigger?.$el.clientWidth + 2}px`,
+				}"
+			>
 				<Command>
 					<CommandList>
 						<CommandGroup

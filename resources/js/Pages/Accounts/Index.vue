@@ -21,7 +21,7 @@ const createAccountDialogOpen = ref(false);
 </script>
 
 <template>
-	<Head title="Contas" />
+	<Head :title="$t('Accounts')" />
 
 	<CreateDialog
 		:banks="banks"

@@ -3,8 +3,6 @@ import { h } from 'vue';
 
 import DataTableColumnHeader from './DataTableColumnHeader.vue';
 import DataTableRowActions from './DataTableRowActions.vue';
-import { Checkbox } from '@/Components/ui/checkbox';
-import { Badge } from '@/Components/ui/badge';
 import { z } from 'zod';
 
 export const categorySchema = z.object({
@@ -15,6 +13,8 @@ export const categorySchema = z.object({
 	type: z.enum(['IN', 'OUT']),
 	created_at: z.string(),
 	updated_at: z.string(),
+	transactions_count: z.number().optional(),
+	transactions_sum_value: z.number().optional(),
 });
 
 export type Category = z.infer<typeof categorySchema>;
