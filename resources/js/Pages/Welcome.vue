@@ -233,7 +233,10 @@ onBeforeUnmount(() => {
 										</Button>
 									</div>
 
-									<div v-else-if="form.wasSuccessful" class="flex w-full items-center gap-2">
+									<div
+										v-else-if="form.wasSuccessful"
+										class="flex w-full items-center gap-2"
+									>
 										<span>{{ $t('Thank you for joining!') }}</span>
 									</div>
 								</Transition>
