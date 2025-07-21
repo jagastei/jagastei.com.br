@@ -19,12 +19,15 @@ import FooterChart from '@/Components/Charts/Welcome/FooterChart.vue';
 import { toast } from '@/Components/ui/toast';
 import { Env } from '@/types/index.d';
 import Toaster from '@/Components/ui/toast/Toaster.vue';
+import { useTranslation } from 'i18next-vue';
 
 defineProps<{
 	canRegister?: boolean;
 }>();
 
 useColorMode();
+
+const { t } = useTranslation();
 
 const form = useForm({
 	email: window.env === Env.development ? 'teste@jagastei.com.br' : '',
@@ -34,8 +37,8 @@ const joinWaitlist = () => {
 	form.post(route('waitlist.join'), {
 		onSuccess: () => {
 			toast({
-				title: 'Você foi adicionado à lista de espera!',
-				description: 'Obrigado pelo interesse!',
+				title: t('You have been added to the waitlist!'),
+				description: t('Thank you for joining!'),
 			});
 
 			form.reset();
@@ -207,20 +210,33 @@ onBeforeUnmount(() => {
 							</Link>
 
 							<div v-else>
-								<div class="flex w-full items-center gap-2">
-									<Input
-										v-model="form.email"
-										@keyup.enter="joinWaitlist"
-										id="email"
-										type="email"
-										:placeholder="$t('Enter your email')"
-										class="w-[280px]"
-									/>
-									<Button @click="joinWaitlist" type="button">
-										<span>{{ $t('Join the waitlist') }}</span>
-										<MoveRight class="size-4" />
-									</Button>
-								</div>
+								<Transition name="fade" mode="out-in">
+									<div
+										v-if="!form.hasErrors && !form.wasSuccessful"
+										class="flex w-full items-center gap-2"
+									>
+										<Input
+											v-model="form.email"
+											@keyup.enter="joinWaitlist"
+											id="email"
+											type="email"
+											:placeholder="$t('Enter your email')"
+											class="w-[280px]"
+										/>
+										<Button
+											@click="joinWaitlist"
+											type="button"
+											:disabled="form.processing"
+										>
+											<span>{{ $t('Join the waitlist') }}</span>
+											<MoveRight class="size-4" />
+										</Button>
+									</div>
+
+									<div v-else-if="form.wasSuccessful" class="flex w-full items-center gap-2">
+										<span>{{ $t('Thank you for joining!') }}</span>
+									</div>
+								</Transition>
 							</div>
 						</div>
 					</div>
