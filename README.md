@@ -13,6 +13,7 @@ JaGastei is a personal project that I am using to learn new technologies such as
 - [Shadcn-vue](https://www.shadcn-vue.com/examples/mail)
 - [Posthog](https://posthog.com/)
 - [Monitoring and observability](https://betterstack.com/)
+- [Typesense](https://typesense.org/)
 - Usage of AI for reading images and summarization
 
 ## Screenshots

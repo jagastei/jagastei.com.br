@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
 
-    'can_register' => false,
+    'can_register' => true,
 
     /*
     |--------------------------------------------------------------------------
