@@ -19,6 +19,7 @@ import { computed, ref, toRef, watch } from 'vue';
 import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 import { FlaskConical } from 'lucide-vue-next';
 import { useTranslation } from 'i18next-vue';
+import { usePostHog } from '@/composables/usePosthog';
 
 const props = defineProps<{
 	startDate: string;
@@ -33,6 +34,8 @@ const props = defineProps<{
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
+
+const { posthog } = usePostHog();
 
 const { t } = useTranslation();
 

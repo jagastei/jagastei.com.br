@@ -58,7 +58,7 @@ final class CategoryController extends Controller
 
         $walletId = auth('web')->user()->currentWallet->id;
 
-        $category = CategoryCreated::fire(
+        CategoryCreated::fire(
             wallet_id: $walletId,
             name: $input['name'],
             color: $input['color'],

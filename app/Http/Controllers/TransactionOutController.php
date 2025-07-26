@@ -93,6 +93,7 @@ final class TransactionOutController extends Controller
             'transactions' => $transactions,
             'ai' => session()->get('ai'),
             'file_path' => session()->get('file_path'),
+            'category' => session()->get('category'),
         ]);
     }
 

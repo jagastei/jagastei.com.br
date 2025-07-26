@@ -32,9 +32,11 @@ const propsWithDefaults = withDefaults(
 		modelValue: Account | undefined;
 		accounts: Account[];
 		disabled?: boolean;
+		link?: boolean;
 	}>(),
 	{
 		disabled: false,
+		link: false,
 	}
 );
 
@@ -106,7 +108,7 @@ const resultList = computed(() => {
 			</Button>
 
 			<a
-				v-if="modelValue"
+				v-if="link && modelValue"
 				:href="route('accounts.show', modelValue.id)"
 				target="_blank"
 				class="text-primary absolute right-0 top-0"
@@ -147,6 +149,7 @@ const resultList = computed(() => {
 									class="size-4 rounded-xl"
 									@error="
 										(event: any) => {
+											event.target.style.background = '#fff';
 											event.target.src =
 												'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9Imx1Y2lkZSBsdWNpZGUtcGlnZ3ktYmFuay1pY29uIGx1Y2lkZS1waWdneS1iYW5rIj48cGF0aCBkPSJNMTEgMTdoM3YyYTEgMSAwIDAgMCAxIDFoMmExIDEgMCAwIDAgMS0xdi0zYTMuMTYgMy4xNiAwIDAgMCAyLTJoMWExIDEgMCAwIDAgMS0xdi0yYTEgMSAwIDAgMC0xLTFoLTFhNSA1IDAgMCAwLTItNFYzYTQgNCAwIDAgMC0zLjIgMS42bC0uMy40SDExYTYgNiAwIDAgMC02IDZ2MWE1IDUgMCAwIDAgMiA0djNhMSAxIDAgMCAwIDEgMWgyYTEgMSAwIDAgMCAxLTF6Ii8+PHBhdGggZD0iTTE2IDEwaC4wMSIvPjxwYXRoIGQ9Ik0yIDh2MWEyIDIgMCAwIDAgMiAyaDEiLz48L3N2Zz4=';
 										}

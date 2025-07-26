@@ -164,6 +164,7 @@ const onClose = () => {
 						v-model="card.account"
 						:accounts="[]"
 						:disabled="true"
+						:link="true"
 					/>
 				</div>
 

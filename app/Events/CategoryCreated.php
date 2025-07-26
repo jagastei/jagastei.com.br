@@ -18,7 +18,7 @@ final class CategoryCreated extends Event
 
     public function handle()
     {
-        Category::create([
+        return Category::create([
             'wallet_id' => $this->wallet_id,
             'name' => $this->name,
             'color' => $this->color,

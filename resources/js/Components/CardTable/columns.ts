@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { accountSchema } from '../AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
-import { Globe, HandCoins, SmartphoneNfc, CreditCard } from 'lucide-vue-next';
+// import { Globe, HandCoins, SmartphoneNfc, CreditCard } from 'lucide-vue-next';
 
 // declare module '@tanstack/vue-table' {
 // 	interface TableMeta<TData> {
@@ -155,7 +155,7 @@ export const columns: ColumnDef<Card>[] = [
 	// },
 	{
 		id: 'actions',
-		cell: ({ row, table }) => {
+		cell: ({ row }) => {
 			// const brands = table.options.meta?.brands as Brand[];
 			// const accounts = table.options.meta?.accounts as Account[];
 
