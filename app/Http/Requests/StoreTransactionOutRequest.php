@@ -32,6 +32,11 @@ final class StoreTransactionOutRequest extends FormRequest
             'account' => ['required', 'exists:accounts,id,wallet_id,'.auth('web')->user()->currentWallet->id],
             'method' => ['nullable', 'in:CASH,CARD,TED,PIX,OTHER,UNKNOWN'],
             'card' => ['nullable', 'exists:cards,id,wallet_id,'.auth('web')->user()->currentWallet->id],
+
+            'metadata' => ['nullable', 'array'],
+
+            'ai' => ['nullable', 'array'],
+            'file_path' => ['nullable', 'string'],
         ];
     }
 

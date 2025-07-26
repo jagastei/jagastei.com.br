@@ -105,10 +105,9 @@ const handleUpload = () => {
 		forceFormData: true,
 		onSuccess: (response) => {
 			uploadForm.files = [];
+
 			ai.value = response.props.ai as AI;
 			file_path.value = response.props.file_path as string | null;
-
-			console.log(response.props.ai);
 
 			form.title = ai.value.titulo as string;
 			form.value = ai.value.total as number;

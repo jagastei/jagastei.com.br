@@ -85,7 +85,7 @@ const openImportDialog = () => {
 						v-if="transactions.data.length > 0"
 						class="flex items-center space-x-2"
 					>
-						<Button v-if="false" variant="ghost" @click="openImportDialog">
+						<Button variant="ghost" @click="openImportDialog">
 							<CloudUploadIcon class="size-4" />
 						</Button>
 

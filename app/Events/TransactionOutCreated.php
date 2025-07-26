@@ -58,7 +58,7 @@ final class TransactionOutCreated extends Event
             'metadata' => $this->metadata,
 
             // Temporary garbage
-            'card_id' => Card::inRandomOrder()->first()->id,
+            // 'card_id' => Card::inRandomOrder()->first()->id,
         ]);
     }
 }

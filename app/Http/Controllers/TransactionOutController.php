@@ -101,13 +101,27 @@ final class TransactionOutController extends Controller
     {
         $input = $request->validated();
 
-        TransactionOutCreated::fire(
+        $transaction = TransactionOutCreated::commit(
             title: $input['title'],
             value: $input['value'],
             account_id: (int) $input['account'],
             category_id: (int) $input['category'],
             datetime: now()->toImmutable(),
+            metadata: $input['metadata'],
         );
+
+        $ai = $input['ai'];
+        $file_path = $input['file_path'];
+
+        if ($ai && $file_path) {
+            $transaction->setMetadata('ai', $ai);
+            $transaction->setMetadata('file_path', $file_path);
+
+            $transaction->save();
+        }
+
+        session()->forget('ai');
+        session()->forget('file_path');
 
         return back();
     }
@@ -139,7 +153,7 @@ final class TransactionOutController extends Controller
                 properties: [
                     new StringSchema('empresa', 'A empresa que emitiu a nota fiscal'),
 
-                    new StringSchema('titulo', 'Descrição curta do gasto'),
+                    new StringSchema('titulo', 'Descrição curta do gasto, por exemplo: "Almoço no restaurante", "Aluguel do apartamento", "Gasolina do carro", "Pagamento de conta de luz", "Supermercado", etc.'),
                     new StringSchema('descricao', 'Descrição longa e detalhada do gasto'),
 
                     new ArraySchema(
