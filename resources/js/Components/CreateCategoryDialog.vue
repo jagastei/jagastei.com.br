@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/Components/ui/dialog';
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogDescription,
+	DialogFooter,
+} from '@/Components/ui/dialog';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
@@ -33,7 +40,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Dialog
+	<Dialog
 		:open="open"
 		@update:open="
 			(value) => {
@@ -82,10 +89,7 @@ const submit = () => {
 					type="button"
 					tabindex="3"
 				>
-					<Loader2
-						v-show="form.processing"
-						class="w-4 h-4 mr-2 animate-spin"
-					/>
+					<Loader2 v-show="form.processing" class="w-4 h-4 mr-2 animate-spin" />
 					Adicionar
 				</Button>
 			</DialogFooter>

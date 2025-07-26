@@ -29,15 +29,15 @@ const props = defineProps<{
 const emit = defineEmits(['close']);
 
 const onCategoryCreated = (category: Category) => {
-    router.visit(route('transactions.out.index'), {
-        only: ['categories'],
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            form.category = category;
-        },
-    });
-}
+	router.visit(route('transactions.out.index'), {
+		only: ['categories'],
+		preserveState: true,
+		preserveScroll: true,
+		onSuccess: () => {
+			form.category = category;
+		},
+	});
+};
 
 const form = useForm<{
 	type: 'OUT';
@@ -138,11 +138,11 @@ const onClose = () => {
 				<div class="flex flex-col">
 					<Label for="category">Categoria</Label>
 
-                    <SelectCategoryDialog
-                        v-model="form.category"
-                        :categories="categories"
-                        @categoryCreated="onCategoryCreated"
-                    />
+					<SelectCategoryDialog
+						v-model="form.category"
+						:categories="categories"
+						@categoryCreated="onCategoryCreated"
+					/>
 
 					<InputError class="mt-2" :message="form.errors.category" />
 				</div>
@@ -154,7 +154,7 @@ const onClose = () => {
 						id="account"
 						v-model="form.account"
 						:accounts="accounts"
-                        :link="false"
+						:link="false"
 					/>
 
 					<InputError class="mt-2" :message="form.errors.account" />
