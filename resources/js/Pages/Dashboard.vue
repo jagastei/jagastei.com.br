@@ -130,7 +130,7 @@ const balanceData = computed<{
 							:start-date="startDate"
 							:end-date="endDate"
 							@update:value="updateDateRange"
-                            class="w-full"
+							class="w-full"
 						/>
 						<!-- <Button>Download</Button> -->
 					</div>
