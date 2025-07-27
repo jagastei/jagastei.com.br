@@ -4,16 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Events\AccountCreated;
-use App\Events\AccountDeleted;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAccountRequest;
-use App\Http\Requests\UpdateAccountRequest;
-use App\Models\Account;
-use App\Models\Bank;
-use App\States\AccountState;
-use Carbon\Carbon;
-use Inertia\Inertia;
 
 final class AccountController extends Controller
 {

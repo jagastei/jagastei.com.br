@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\LanguageController;
-use App\Http\Controllers\Api\AccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/language/{language}', [LanguageController::class, 'index'])->name('language.index');

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Events;
 
 use App\Models\Account;
-use App\Models\Card;
 use App\Models\Transaction;
 use App\States\AccountState;
 use App\States\CardState;
