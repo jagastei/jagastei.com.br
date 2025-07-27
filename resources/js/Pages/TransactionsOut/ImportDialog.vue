@@ -347,6 +347,7 @@ const onClose = () => {
 						id="account"
 						v-model="form.account"
 						:accounts="accounts"
+						:banks="[]"
 					/>
 				</div>
 			</div>

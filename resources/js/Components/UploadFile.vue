@@ -128,7 +128,7 @@ const isImage = (file: File) => file.type.startsWith('image/');
 			'relative rounded-lg',
 			previewUrl
 				? 'p-0 ring-2 ring-primary'
-				: 'p-10 border-2 border-dashed border-gray-300',
+				: 'p-10 border-2 border-dashed border-foreground-muted',
 			{ 'border-primary': dragOver },
 		]"
 		@dragover.prevent="dragOver = true"
@@ -144,12 +144,12 @@ const isImage = (file: File) => file.type.startsWith('image/');
 		/>
 
 		<div v-if="!file" class="text-center">
-			<CloudUploadIcon class="mx-auto size-8 text-gray-400" :stroke-width="1.5" />
+			<CloudUploadIcon class="mx-auto size-8 text-muted" :stroke-width="1.5" />
 			<div class="mt-2 flex flex-col">
 				<Button variant="link" @click="openFileDialog">
 					Clique aqui para enviar uma imagem
 				</Button>
-				<span class="text-gray-500 text-sm"> ou arraste e solte até aqui </span>
+				<span class="text-foreground text-sm"> ou arraste e solte até aqui </span>
 			</div>
 		</div>
 

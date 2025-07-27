@@ -110,6 +110,7 @@ const onClose = () => {
 						id="account"
 						v-model="form.account"
 						:accounts="accounts"
+						:banks="[]"
 					/>
 
 					<InputError class="mt-2" :message="form.errors.account" />
