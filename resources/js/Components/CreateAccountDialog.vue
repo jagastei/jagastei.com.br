@@ -14,9 +14,13 @@ import { Loader2 } from 'lucide-vue-next';
 import useAxios from '@/composables/useAxios';
 import { Account, Bank } from './AccountTable/columns';
 import SelectBankDialog from './SelectBankDialog.vue';
-import { TooltipProvider } from './ui/tooltip';
-import { Tooltip } from './ui/tooltip';
-import { TooltipTrigger } from './ui/tooltip';
+import {
+	Tooltip,
+	TooltipProvider,
+	TooltipTrigger,
+	TooltipContent,
+} from './ui/tooltip';
+import { TooltipArrow } from 'reka-ui';
 import { useLanguageStore } from '@/stores/languageStore';
 import { usePage } from '@inertiajs/vue3';
 import { currencyInputFormat } from '@/utils/currencyInputFormat';

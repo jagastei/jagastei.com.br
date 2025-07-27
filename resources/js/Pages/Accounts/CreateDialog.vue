@@ -29,7 +29,7 @@ import {
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
-import { Bank } from '@/Components/AccountTable/columns';
+import { Account, Bank } from '@/Components/AccountTable/columns';
 import {
 	Tooltip,
 	TooltipContent,
@@ -45,7 +45,7 @@ const props = defineProps<{
 	open: boolean;
 }>();
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'success']);
 
 const languageStore = useLanguageStore();
 const user = usePage().props.auth.user;
@@ -90,8 +90,10 @@ const submit = () => {
 			bank: data.bank?.id,
 		}))
 		.post(route('accounts.store'), {
-			onSuccess: () => {
-				onClose();
+			onSuccess: (res: any) => {
+				console.log('onSuccess', res);
+				emit('success', res.data as Account);
+				form.reset();
 			},
 			onError: (error) => {
 				console.log(error);

@@ -226,7 +226,6 @@ watch(
 					<Label for="account">Conta</Label>
 
 					<SelectAccountDialog
-						id="account"
 						v-model="form.account"
 						:accounts="accounts"
 						:banks="banks"

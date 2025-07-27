@@ -23,6 +23,8 @@ final class AccountController extends Controller
             initial_balance: $input['initial_balance'],
         );
 
+        $account->load('bank');
+
         return response()->json($account);
     }
 }

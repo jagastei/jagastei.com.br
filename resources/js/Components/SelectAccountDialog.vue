@@ -25,11 +25,10 @@ import {
 import { Button } from '@/Components/ui/button';
 import { Account, Bank } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
-import CreateAccountDialog from '@/Pages/Accounts/CreateDialog.vue';
+import CreateAccountDialog from '@/Components/CreateAccountDialog.vue';
 
 const propsWithDefaults = withDefaults(
 	defineProps<{
-		id: string;
 		modelValue: Account | undefined;
 		accounts: Account[];
 		banks: Bank[];
@@ -37,7 +36,6 @@ const propsWithDefaults = withDefaults(
 		link?: boolean;
 	}>(),
 	{
-		id: 'account',
 		modelValue: undefined,
 		accounts: () => [],
 		banks: () => [],
@@ -95,7 +93,6 @@ const onAccountCreated = (account: Account) => {
 		<PopoverTrigger as-child>
 			<Button
 				tabindex="3"
-				:id="id"
 				variant="outline"
 				role="combobox"
 				class="w-[375px] justify-between mt-2 p-3 disabled:opacity-100"

@@ -130,6 +130,7 @@ const balanceData = computed<{
 							:start-date="startDate"
 							:end-date="endDate"
 							@update:value="updateDateRange"
+                            class="w-full"
 						/>
 						<!-- <Button>Download</Button> -->
 					</div>
@@ -141,7 +142,7 @@ const balanceData = computed<{
 						<TabsTrigger value="reports" disabled> Reports </TabsTrigger>
 						<TabsTrigger value="notifications" disabled> Notifications </TabsTrigger>
 					</TabsList> -->
-					<TabsContent value="overview" class="space-y-4">
+					<TabsContent value="overview" class="space-y-4 mt-0 md:mt-2">
 						<div v-if="false" class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
 							<Card>
 								<CardHeader
