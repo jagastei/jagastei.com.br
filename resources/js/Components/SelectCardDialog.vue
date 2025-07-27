@@ -2,12 +2,7 @@
 import { ref, computed } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { cn } from '@/utils';
-import {
-	Check,
-	ChevronsUpDown,
-	CirclePlus,
-	ExternalLink,
-} from 'lucide-vue-next';
+import { Check, ChevronsUpDown, CirclePlus } from 'lucide-vue-next';
 import {
 	Command,
 	CommandEmpty,
@@ -23,47 +18,34 @@ import {
 	PopoverTrigger,
 } from '@/Components/ui/popover';
 import { Button } from '@/Components/ui/button';
-import { Account, Bank } from '@/Components/AccountTable/columns';
 import { useVModel } from '@vueuse/core';
-import CreateAccountDialog from '@/Pages/Accounts/CreateDialog.vue';
+import { Card } from './CardTable/columns';
 
-const propsWithDefaults = withDefaults(
-	defineProps<{
-		id: string;
-		modelValue: Account | undefined;
-		accounts: Account[];
-		banks: Bank[];
-		disabled?: boolean;
-		link?: boolean;
-	}>(),
-	{
-		id: 'account',
-		modelValue: undefined,
-		accounts: () => [],
-		banks: () => [],
-		disabled: false,
-		link: false,
-	}
-);
-
-const emits = defineEmits<{
-	(e: 'update:modelValue', payload: Account | undefined): void;
-	(e: 'accountCreated', payload: Account): void;
+const props = defineProps<{
+    id: string;
+    modelValue: Card | undefined;
+    cards: Card[];
 }>();
 
-const modelValue = useVModel(propsWithDefaults, 'modelValue', emits, {
+const emits = defineEmits<{
+	(e: 'update:modelValue', payload: Card | undefined): void;
+	(e: 'close'): void;
+}>();
+
+const modelValue = useVModel(props, 'modelValue', emits, {
 	passive: true,
-	defaultValue: propsWithDefaults.modelValue,
+	defaultValue: props.modelValue,
 });
 
 const dialogOpen = ref(false);
-const createDialogOpen = ref(false);
 
 const query = ref<string>('');
 
-const accounts = computed(() => propsWithDefaults.accounts);
+const cards = computed(() => {
+    return props.cards;
+})
 
-const { results } = useFuse(query, accounts, {
+const { results } = useFuse(query, cards, {
 	fuseOptions: {
 		keys: ['name'],
 		isCaseSensitive: false,
@@ -76,21 +58,9 @@ const { results } = useFuse(query, accounts, {
 const resultList = computed(() => {
 	return results.value?.map((r) => r.item);
 });
-
-const onAccountCreated = (account: Account) => {
-	createDialogOpen.value = false;
-	emits('accountCreated', account);
-};
 </script>
 
 <template>
-	<CreateAccountDialog
-		:banks="banks"
-		:open="createDialogOpen"
-		@close="createDialogOpen = false"
-		@success="onAccountCreated"
-	/>
-
 	<Popover v-model:open="dialogOpen">
 		<PopoverTrigger as-child>
 			<Button
@@ -99,12 +69,11 @@ const onAccountCreated = (account: Account) => {
 				variant="outline"
 				role="combobox"
 				class="w-[375px] justify-between mt-2 p-3 disabled:opacity-100"
-				:disabled="disabled"
 			>
 				<div class="flex items-center truncate">
 					<div v-if="modelValue" class="min-w-4">
 						<img
-							:src="`https://jagastei.com.br.test/images/banks/${modelValue.bank.code}.png`"
+							:src="`https://jagastei.com.br.test/images/banks/${modelValue.account.bank.code}.png`"
 							class="size-4 rounded-xl"
 							@error="
 								(event: any) => {
@@ -126,17 +95,8 @@ const onAccountCreated = (account: Account) => {
 					>
 				</div>
 
-				<ChevronsUpDown v-if="!disabled" class="ml-2 size-4 shrink-0 opacity-50" />
+				<ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
 			</Button>
-
-			<a
-				v-if="link && modelValue"
-				:href="route('accounts.show', modelValue.id)"
-				target="_blank"
-				class="text-primary absolute right-0 top-0"
-			>
-				<ExternalLink class="ml-2 size-4 shrink-0" />
-			</a>
 		</PopoverTrigger>
 		<PopoverContent class="w-[375px] p-0">
 			<Command v-model="modelValue" v-model:searchTerm="query">
@@ -148,16 +108,16 @@ const onAccountCreated = (account: Account) => {
 				/>
 
 				<CommandEmpty>
-					<template v-if="query.length > 0">Nenhuma conta encontrada.</template>
-					<template v-else>Informe o nome da conta.</template>
+					<template v-if="query.length > 0">Nenhum cartão encontrado.</template>
+					<template v-else>Informe o nome do cartão.</template>
 				</CommandEmpty>
 
 				<CommandList>
 					<CommandGroup>
 						<CommandItem
-							v-for="account in resultList"
-							:key="account.id"
-							:value="account"
+							v-for="card in resultList"
+							:key="card.id"
+							:value="card"
 							@select="
 								() => {
 									dialogOpen = false;
@@ -167,7 +127,7 @@ const onAccountCreated = (account: Account) => {
 						>
 							<div class="min-w-4">
 								<img
-									:src="`https://jagastei.com.br.test/images/banks/${account.bank.code}.png`"
+									:src="`https://jagastei.com.br.test/images/banks/${card.account.bank.code}.png`"
 									class="size-4 rounded-xl"
 									@error="
 										(event: any) => {
@@ -178,12 +138,12 @@ const onAccountCreated = (account: Account) => {
 									"
 								/>
 							</div>
-							<span class="ml-1 block truncate">{{ account.name }}</span>
+							<span class="ml-1 block truncate">{{ card.name }}</span>
 							<Check
 								:class="
 									cn(
 										'ml-auto h-4 w-4',
-										modelValue?.id === account.id ? 'opacity-100' : 'opacity-0'
+										modelValue?.id === card.id ? 'opacity-100' : 'opacity-0'
 									)
 								"
 							/>
@@ -194,19 +154,9 @@ const onAccountCreated = (account: Account) => {
 				<CommandList>
 					<CommandGroup>
 						<!-- <DialogTrigger as-child> -->
-						<CommandItem
-							value="create-account"
-							@select="
-								(event) => {
-									event.preventDefault();
-
-									dialogOpen = false;
-									createDialogOpen = true;
-								}
-							"
-						>
+						<CommandItem value="create-category">
 							<CirclePlus class="mr-2 h-5 w-5" />
-							Adicionar conta
+							Adicionar cartão
 						</CommandItem>
 						<!-- </DialogTrigger> -->
 					</CommandGroup>

@@ -155,6 +155,7 @@ export const columns: ColumnDef<Card>[] = [
 	// },
 	{
 		id: 'actions',
+        header: () => h('div'),
 		cell: ({ row }) => {
 			// const brands = table.options.meta?.brands as Brand[];
 			// const accounts = table.options.meta?.accounts as Account[];

@@ -53,7 +53,7 @@ const createCategoryDialog = ref(false);
 				</div>
 			</div>
 
-			<Tabs v-model="currentTab" class="space-y-4 mt-4 h-full">
+			<Tabs v-model="currentTab" class="space-y-4 h-full">
 				<!-- w-full justify-start rounded-none border-b bg-transparent p-0 -->
 				<TabsList>
 					<!-- relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-3 pt-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none -->

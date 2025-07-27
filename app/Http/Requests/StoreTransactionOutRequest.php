@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Helper;
+use App\Models\Transaction;
 use Illuminate\Foundation\Http\FormRequest;
 
 final class StoreTransactionOutRequest extends FormRequest
@@ -30,7 +31,7 @@ final class StoreTransactionOutRequest extends FormRequest
             'value' => ['required', 'integer', 'min:0'],
             'category' => ['required', 'exists:categories,id,wallet_id,'.auth('web')->user()->currentWallet->id.',type,OUT'],
             'account' => ['required', 'exists:accounts,id,wallet_id,'.auth('web')->user()->currentWallet->id],
-            'method' => ['nullable', 'in:CASH,CARD,TED,PIX,OTHER,UNKNOWN'],
+            'method' => ['required', 'in:'.implode(',', Transaction::METHODS)],
             'card' => ['nullable', 'exists:cards,id,wallet_id,'.auth('web')->user()->currentWallet->id],
 
             'metadata' => ['nullable', 'array'],

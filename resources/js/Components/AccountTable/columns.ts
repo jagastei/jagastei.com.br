@@ -84,6 +84,7 @@ export const columns: ColumnDef<Account>[] = [
 	},
 	{
 		id: 'actions',
+        header: () => h('div'),
 		cell: ({ row }) => {
 			return h(
 				'div',

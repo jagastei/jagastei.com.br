@@ -61,6 +61,7 @@ export const columns: ColumnDef<Category>[] = [
 	},
 	{
 		id: 'actions',
+        header: () => h('div'),
 		cell: ({ row }) => {
 			return h(
 				'div',

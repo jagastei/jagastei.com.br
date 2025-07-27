@@ -156,6 +156,7 @@ export const columns: ColumnDef<Transaction>[] = [
 	},
 	{
 		id: 'actions',
+		header: () => h('div'),
 		cell: ({ row }) => h(DataTableRowActions, { row }),
 	},
 ];

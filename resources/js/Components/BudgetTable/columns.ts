@@ -107,6 +107,7 @@ export const columns: ColumnDef<Budget>[] = [
 	},
 	{
 		id: 'actions',
+        header: () => h('div'),
 		cell: ({ row }) => {
 			return h(
 				'div',

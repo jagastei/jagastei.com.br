@@ -33,7 +33,7 @@ final class AccountCreated extends Event
 
     public function handle()
     {
-        Account::create([
+        return Account::create([
             'id' => $this->account_id,
             'wallet_id' => $this->wallet_id,
             'bank_id' => $this->bank_id,

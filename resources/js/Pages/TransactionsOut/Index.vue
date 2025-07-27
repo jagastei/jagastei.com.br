@@ -19,15 +19,18 @@ import { CloudUploadIcon, Loader2 } from 'lucide-vue-next';
 import UploadFile from '@/Components/UploadFile.vue';
 import { ref } from 'vue';
 import CreateDialog from './CreateDialog.vue';
-import { Account } from '@/Components/AccountTable/columns';
+import { Account, Bank } from '@/Components/AccountTable/columns';
 import { usePostHog } from '@/composables/usePosthog';
 import ImportDialog from './ImportDialog.vue';
+import { Card } from '@/Components/CardTable/columns';
 
 const props = defineProps<{
 	sort?: string;
 	filter?: object;
 	categories: Category[];
 	accounts: Account[];
+	cards: Card[];
+	banks: Bank[];
 	transactions: Pagination<Transaction>;
 }>();
 
@@ -59,6 +62,8 @@ const openImportDialog = () => {
 	<CreateDialog
 		:categories="categories"
 		:accounts="accounts"
+		:cards="cards"
+		:banks="banks"
 		:open="createTransactionDialogOpen"
 		@close="createTransactionDialogOpen = false"
 	/>

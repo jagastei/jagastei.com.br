@@ -8,5 +8,7 @@ use Thunk\Verbs\State;
 
 final class WalletState extends State
 {
+    public $wallet_id;
+
     public int $balance = 0;
 }

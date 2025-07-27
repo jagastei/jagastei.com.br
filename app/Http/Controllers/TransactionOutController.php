@@ -9,6 +9,8 @@ use App\Events\TransactionOutDeleted;
 use App\Http\Requests\StoreImportTransactionOutRequest;
 use App\Http\Requests\StoreTransactionOutRequest;
 use App\Models\Account;
+use App\Models\Bank;
+use App\Models\Card;
 use App\Models\Category;
 use App\Models\Transaction;
 use Exception;
@@ -45,6 +47,24 @@ final class TransactionOutController extends Controller
                 'bank',
             ])
             ->orderBy('name')
+            ->get();
+
+        $cards = Card::query()
+            ->ofWallet(auth('web')->user()->currentWallet)
+            ->with([
+                'account' => function ($query) {
+                    $query->with([
+                        'bank',
+                    ]);
+                },
+                'brand',
+            ])
+            ->orderBy('name')
+            ->get();
+
+        $banks = Bank::query()
+            ->enabled()
+            ->orderBy('code')
             ->get();
 
         $transactions = QueryBuilder::for(Transaction::class)
@@ -90,6 +110,8 @@ final class TransactionOutController extends Controller
             'sort' => $sort,
             'categories' => $categories,
             'accounts' => $accounts,
+            'cards' => $cards,
+            'banks' => $banks,
             'transactions' => $transactions,
             'ai' => session()->get('ai'),
             'file_path' => session()->get('file_path'),
@@ -106,6 +128,8 @@ final class TransactionOutController extends Controller
             value: $input['value'],
             account_id: (int) $input['account'],
             category_id: (int) $input['category'],
+            method: $input['method'],
+            card_id: $input['card'] ? (int) $input['card'] : null,
             datetime: now()->toImmutable(),
             metadata: $input['metadata'],
         );

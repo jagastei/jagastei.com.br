@@ -199,17 +199,18 @@ const table = useVueTable({
 		<div
 			class="rounded-md border max-h-[calc(100vh-72px-48px-40px-32px-32px-16px-16px-1.5rem)] overflow-y-auto"
 		>
-			<Table>
+        <Table wrapper-class="max-h-[calc(100vh-72px-48px-40px-32px-32px-16px-16px-1.5rem-2px)] border-separate border-spacing-0">
 				<TableHeader>
 					<TableRow
 						v-for="headerGroup in table.getHeaderGroups()"
 						:key="headerGroup.id"
 					>
-						<TableHead v-for="header in headerGroup.headers" :key="header.id">
+						<TableHead v-for="header in headerGroup.headers" :key="header.id" class="sticky top-0 bg-background p-0">
 							<FlexRender
 								v-if="!header.isPlaceholder"
 								:render="header.column.columnDef.header"
 								:props="header.getContext()"
+                                class="w-full flex items-center h-12 border-b px-[17px] py-[1px]"
 							/>
 						</TableHead>
 					</TableRow>
@@ -217,11 +218,13 @@ const table = useVueTable({
 				<TableBody>
 					<template v-if="table.getRowModel().rows?.length">
 						<TableRow
-							v-for="row in table.getRowModel().rows"
+							v-for="(row, rowIndex) in table.getRowModel().rows"
 							:key="row.id"
 							:data-state="row.getIsSelected() && 'selected'"
 						>
-							<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+							<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id" :class="{
+                                'border-b': rowIndex < table.getRowModel().rows.length - 1,
+                            }">
 								<FlexRender
 									:render="cell.column.columnDef.cell"
 									:props="cell.getContext()"

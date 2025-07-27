@@ -100,6 +100,7 @@ export const columns: ColumnDef<Goal>[] = [
 	},
 	{
 		id: 'actions',
+        header: () => h('div'),
 		cell: ({ row }) => {
 			return h(
 				'div',

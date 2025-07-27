@@ -37,17 +37,19 @@ const submit = () => {
 		},
 	});
 };
-
-const onClose = () => {
-	form.reset();
-	emit('close');
-};
 </script>
 
 <template>
 	<Dialog
 		:open="open"
-		@update:open="onClose"
+		@update:open="
+			(value) => {
+				if (!value) {
+					emit('close');
+					form.reset();
+				}
+			}
+		"
 	>
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>

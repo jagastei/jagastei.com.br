@@ -8,6 +8,7 @@ use App\Models\Account;
 use App\Models\Card;
 use App\Models\Transaction;
 use App\States\AccountState;
+use App\States\CardState;
 use App\States\CategoryState;
 use App\States\WalletState;
 use Carbon\CarbonImmutable;
@@ -27,6 +28,9 @@ final class TransactionOutCreated extends Event
         public int $account_id,
         // #[StateId(CategoryState::class)]
         public int $category_id,
+        public string $method,
+        // #[StateId(CardState::class)]
+        public ?int $card_id,
         public CarbonImmutable $datetime,
         public ?array $metadata = [],
     ) {}
@@ -54,11 +58,10 @@ final class TransactionOutCreated extends Event
             'value' => $this->value,
             'account_id' => $account->id,
             'category_id' => $this->category_id,
+            'method' => $this->method,
+            'card_id' => $this->card_id,
             'datetime' => $this->datetime,
             'metadata' => $this->metadata,
-
-            // Temporary garbage
-            // 'card_id' => Card::inRandomOrder()->first()->id,
         ]);
     }
 }
