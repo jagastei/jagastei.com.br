@@ -33,23 +33,25 @@ const user = usePage().props.auth.user;
 
 const form: any = useAxios({
 	bank: undefined,
-    name: '',
-    initial_balance: 0,
+	name: '',
+	initial_balance: 0,
 });
 
 const submit = () => {
-	form.transform((data: any) => ({
-		...data,
-		bank: data.bank?.id,
-	})).post(route('api.accounts.store'), {
-		onSuccess: (res: any) => {
-			emit('success', res.data as Account);
-			form.reset();
-		},
-		onError: (errors: any) => {
-			console.log(errors);
-		},
-	});
+	form
+		.transform((data: any) => ({
+			...data,
+			bank: data.bank?.id,
+		}))
+		.post(route('api.accounts.store'), {
+			onSuccess: (res: any) => {
+				emit('success', res.data as Account);
+				form.reset();
+			},
+			onError: (errors: any) => {
+				console.log(errors);
+			},
+		});
 };
 
 const onClose = () => {
@@ -59,15 +61,12 @@ const onClose = () => {
 </script>
 
 <template>
-	<Dialog
-		:open="open"
-		@update:open="onClose"
-	>
+	<Dialog :open="open" @update:open="onClose">
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>
 				<DialogTitle>Adicionar conta</DialogTitle>
 				<DialogDescription>
-				    Identifique sua conta bancária e clique em adicionar.
+					Identifique sua conta bancária e clique em adicionar.
 				</DialogDescription>
 			</DialogHeader>
 			<div class="grid gap-4 py-4">
@@ -121,10 +120,7 @@ const onClose = () => {
 						</TooltipProvider>
 					</div>
 
-					<SelectBankDialog
-						v-model="form.bank"
-						:banks="banks"
-					/>
+					<SelectBankDialog v-model="form.bank" :banks="banks" />
 				</div>
 			</div>
 			<DialogFooter>

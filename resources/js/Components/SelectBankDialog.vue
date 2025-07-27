@@ -60,82 +60,82 @@ const resultList = computed(() => {
 
 <template>
 	<Popover v-model:open="dialogOpen">
-        <PopoverTrigger as-child>
-            <Button
-                tabindex="3"
-                id="bank"
-                variant="outline"
-                role="combobox"
-                class="w-[375px] justify-between mt-2 p-3"
-            >
-                <div class="flex items-center truncate">
-                    <div v-if="modelValue" class="min-w-4">
-                        <img
-                            :src="`https://jagastei.com.br.test/images/banks/${modelValue?.code}.png`"
-                            class="size-4 rounded-xl"
-                        />
-                    </div>
-                    <span
-                        :class="[
-                            'truncate',
-                            {
-                                'ml-3': modelValue,
-                            },
-                        ]"
-                        >{{ modelValue ? modelValue?.long_name : 'Escolha um banco' }}</span
-                    >
-                </div>
-                <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-        </PopoverTrigger>
-        <PopoverContent class="w-[375px] p-0">
-            <Command v-model="modelValue" v-model:searchTerm="query">
-                <CommandInput
-                    class="h-9"
-                    placeholder="Buscar"
-                    name="query"
-                    autocomplete="off"
-                />
+		<PopoverTrigger as-child>
+			<Button
+				tabindex="3"
+				id="bank"
+				variant="outline"
+				role="combobox"
+				class="w-[375px] justify-between mt-2 p-3"
+			>
+				<div class="flex items-center truncate">
+					<div v-if="modelValue" class="min-w-4">
+						<img
+							:src="`https://jagastei.com.br.test/images/banks/${modelValue?.code}.png`"
+							class="size-4 rounded-xl"
+						/>
+					</div>
+					<span
+						:class="[
+							'truncate',
+							{
+								'ml-3': modelValue,
+							},
+						]"
+						>{{ modelValue ? modelValue?.long_name : 'Escolha um banco' }}</span
+					>
+				</div>
+				<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+			</Button>
+		</PopoverTrigger>
+		<PopoverContent class="w-[375px] p-0">
+			<Command v-model="modelValue" v-model:searchTerm="query">
+				<CommandInput
+					class="h-9"
+					placeholder="Buscar"
+					name="query"
+					autocomplete="off"
+				/>
 
-                <CommandEmpty>
-                    <template v-if="query.length > 0">Nenhum banco encontrado.</template>
-                    <template v-else>Informe o nome ou código do banco.</template>
-                </CommandEmpty>
+				<CommandEmpty>
+					<template v-if="query.length > 0">Nenhum banco encontrado.</template>
+					<template v-else>Informe o nome ou código do banco.</template>
+				</CommandEmpty>
 
-                <CommandList>
-                    <CommandGroup>
-                        <CommandItem
-                            v-for="bank in resultList"
-                            :key="bank.id"
-                            :value="bank"
-                            @select="
-                                () => {
-                                    dialogOpen = false;
-                                }
-                            "
-                            class="flex"
-                        >
-                            <div class="min-w-4">
-                                <img
-                                    :src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
-                                    class="size-4 rounded-xl"
-                                />
-                            </div>
-                            <span class="ml-1 block truncate">
-                                {{ bank.code }} - {{ bank.long_name }}</span
-                            >
-                            <Check
-                                :class="
-                                    cn(
-                                        'ml-auto h-4 w-4',
-                                        modelValue?.id === bank.id ? 'opacity-100' : 'opacity-0'
-                                    )
-                                "
-                            />
-                        </CommandItem>
-                    </CommandGroup>
-                </CommandList>
-            </Command>
-        </PopoverContent>
-    </Popover>
+				<CommandList>
+					<CommandGroup>
+						<CommandItem
+							v-for="bank in resultList"
+							:key="bank.id"
+							:value="bank"
+							@select="
+								() => {
+									dialogOpen = false;
+								}
+							"
+							class="flex"
+						>
+							<div class="min-w-4">
+								<img
+									:src="`https://jagastei.com.br.test/images/banks/${bank.code}.png`"
+									class="size-4 rounded-xl"
+								/>
+							</div>
+							<span class="ml-1 block truncate">
+								{{ bank.code }} - {{ bank.long_name }}</span
+							>
+							<Check
+								:class="
+									cn(
+										'ml-auto h-4 w-4',
+										modelValue?.id === bank.id ? 'opacity-100' : 'opacity-0'
+									)
+								"
+							/>
+						</CommandItem>
+					</CommandGroup>
+				</CommandList>
+			</Command>
+		</PopoverContent>
+	</Popover>
 </template>

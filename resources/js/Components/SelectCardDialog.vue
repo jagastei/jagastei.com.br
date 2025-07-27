@@ -22,9 +22,9 @@ import { useVModel } from '@vueuse/core';
 import { Card } from './CardTable/columns';
 
 const props = defineProps<{
-    id: string;
-    modelValue: Card | undefined;
-    cards: Card[];
+	id: string;
+	modelValue: Card | undefined;
+	cards: Card[];
 }>();
 
 const emits = defineEmits<{
@@ -42,8 +42,8 @@ const dialogOpen = ref(false);
 const query = ref<string>('');
 
 const cards = computed(() => {
-    return props.cards;
-})
+	return props.cards;
+});
 
 const { results } = useFuse(query, cards, {
 	fuseOptions: {

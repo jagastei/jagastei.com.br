@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'vue';
 import { cn } from '@/utils';
 
 const props = defineProps<{
-    wrapperClass?: HTMLAttributes['class'];
+	wrapperClass?: HTMLAttributes['class'];
 	class?: HTMLAttributes['class'];
 }>();
 </script>

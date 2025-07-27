@@ -45,10 +45,7 @@ const onClose = () => {
 </script>
 
 <template>
-	<Dialog
-		:open="open"
-		@update:open="onClose"
-	>
+	<Dialog :open="open" @update:open="onClose">
 		<DialogContent class="sm:max-w-[425px]">
 			<DialogHeader>
 				<DialogTitle>Adicionar categoria</DialogTitle>
