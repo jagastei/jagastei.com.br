@@ -8,6 +8,7 @@ use App\Events\CardCreated;
 use App\Http\Requests\StoreCardRequest;
 use App\Http\Requests\UpdateCardRequest;
 use App\Models\Account;
+use App\Models\Bank;
 use App\Models\Brand;
 use App\Models\Card;
 use App\Models\Transaction;
@@ -30,6 +31,11 @@ final class CardController extends Controller
                 'bank',
             ])
             ->orderBy('name')
+            ->get();
+
+        $banks = Bank::query()
+            ->enabled()
+            ->orderBy('code')
             ->get();
 
         $cards = Card::query()
@@ -55,6 +61,7 @@ final class CardController extends Controller
         return Inertia::render('Cards/Index', [
             'brands' => $brands,
             'accounts' => $accounts,
+            'banks' => $banks,
             'cards' => $cards,
             'totalLimit' => $totalLimit,
 

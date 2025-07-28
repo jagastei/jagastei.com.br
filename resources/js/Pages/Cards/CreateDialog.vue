@@ -13,7 +13,7 @@ import { Loader2 } from 'lucide-vue-next';
 import { Button } from '@/Components/ui/button';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
-import { Account } from '@/Components/AccountTable/columns';
+import { Account, Bank } from '@/Components/AccountTable/columns';
 import SelectAccountDialog from '@/Components/SelectAccountDialog.vue';
 import InputError from '@/Components/InputError.vue';
 import { currencyInputFormat } from '@/utils/currencyInputFormat';
@@ -21,7 +21,8 @@ import { useLanguageStore } from '@/stores/languageStore';
 
 defineProps<{
 	accounts: Account[];
-	open: boolean;
+	banks: Bank[];
+    open: boolean;
 }>();
 
 const emit = defineEmits(['close']);
@@ -107,10 +108,9 @@ const onClose = () => {
 				<div class="flex flex-col">
 					<Label for="account">Conta</Label>
 					<SelectAccountDialog
-						id="account"
 						v-model="form.account"
 						:accounts="accounts"
-						:banks="[]"
+						:banks="banks"
 					/>
 
 					<InputError class="mt-2" :message="form.errors.account" />

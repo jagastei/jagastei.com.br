@@ -10,10 +10,12 @@ import { Account } from '@/Components/AccountTable/columns';
 import { useCurrency } from '@/composables/useCurrency';
 import { useTranslation } from 'i18next-vue';
 import EditDrawer from './EditDrawer.vue';
+import type { Bank } from '@/Components/AccountTable/columns';
 
 const props = defineProps<{
 	brands: Brand[];
 	accounts: Account[];
+	banks: Bank[];
 	cards: Card[];
 	totalLimit: number;
 	card?: Card | undefined;
@@ -53,6 +55,7 @@ const closeEditDrawer = () => {
 		:open="createCardDialogOpen"
 		:brands="brands"
 		:accounts="accounts"
+		:banks="banks"
 		@close="createCardDialogOpen = false"
 	/>
 
