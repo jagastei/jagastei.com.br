@@ -22,7 +22,7 @@ import { useLanguageStore } from '@/stores/languageStore';
 defineProps<{
 	accounts: Account[];
 	banks: Bank[];
-    open: boolean;
+	open: boolean;
 }>();
 
 const emit = defineEmits(['close']);
